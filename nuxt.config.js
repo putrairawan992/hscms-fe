@@ -55,14 +55,14 @@ export default {
         defaultLocale: 'id',
         locales: ['id']
     }],
-    [  "@nuxtjs/recaptcha", {
-        hideBadge: false, // Hide badge element (v3 & v2 via size=invisible)
-        language: 'indonesia',   // Recaptcha language (v2)
-        mode: 'base',       // Mode: 'base', 'enterprise'
-        version: '1.1.2',    // Version
-        size: 'normal',        // Size: 'compact', 'normal', 'invisible' (v2)
-        siteKey: process.env.SITE_KEY,
-    }]
+    // [  "@nuxtjs/recaptcha", {
+    //     hideBadge: false, // Hide badge element (v3 & v2 via size=invisible)
+    //     language: 'indonesia',   // Recaptcha language (v2)
+    //     mode: 'base',       // Mode: 'base', 'enterprise'
+    //     version: '1.1.2',    // Version
+    //     size: 'normal',        // Size: 'compact', 'normal', 'invisible' (v2)
+    //     siteKey: process.env.SITE_KEY,
+    // }]
   ],
 
   axios: {
