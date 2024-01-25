@@ -87,6 +87,7 @@
                     </v-row>
                     <!-- <TalentSelection /> -->
                     <TalentSelection-Tahap1 />
+                    <!-- <TalentSelection-Tahap2 /> -->
 
                 </div>
             </div>
