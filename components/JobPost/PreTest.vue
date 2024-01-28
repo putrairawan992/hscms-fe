@@ -305,6 +305,7 @@ export default {
 .card-register {
     min-height: 882px;
     border-radius: 40px;
+    background: linear-gradient(90deg, #F1F5FE 0%, #FFF 98.82%);
     box-shadow: 5px 0px 5px #b3b9c5, -5px 0px 5px #b3b9c5 !important;
 }
 .label {

@@ -86,8 +86,9 @@
 
                     </v-row>
                     <!-- <TalentSelection /> -->
-                    <TalentSelection-Tahap1 />
+                    <!-- <TalentSelection-Tahap1 /> -->
                     <!-- <TalentSelection-Tahap2 /> -->
+                    <TalentSelection-Tahap3 />
 
                 </div>
             </div>
@@ -350,6 +351,7 @@ export default {
 }
 .card-register {
     border-radius: 40px;
+    background: linear-gradient(90deg, #F1F5FE 0%, #FFF 98.82%);
     box-shadow: 5px 0px 5px #b3b9c5, -5px 0px 5px #b3b9c5 !important;
 }.save-container {
     width: 100%;
@@ -373,7 +375,7 @@ export default {
     justify-content: flex-start;
     padding: 10px;
     font-size: 12px;
-    /* color: #b6b6b6; */
+    background-color: #fff;
 }.header-select-input::placeholder {
     font-style: italic;
 }

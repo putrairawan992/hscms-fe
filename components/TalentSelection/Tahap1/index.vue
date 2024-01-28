@@ -1,29 +1,122 @@
 <template>
     <div>
-        <v-row class="mt-3" align="start" style="height: 617px; overflow: auto;  overflow-x: hidden">
-        <v-col cols="3">
-
-        </v-col>
-        <v-col cols="9">
-            <div class="mt-0 ml-0" style="display: flex; column-gap: 20px;">
-                <div cols="3" class="total-kandidat">
-                    <div class="">
-                        Total Kandidat:
-                    </div>
-                    <div class="">
-                        38 Orang
-                    </div>
+        <div class="mt-0 ml-0" style="display: flex; column-gap: 20px;">
+            <div cols="3" class="total-kandidat">
+                <div class="">
+                    Total Kandidat:
                 </div>
-                <div cols="3" class="total-kandidat">
-                    <div class="">
-                        Total Kandidat Dipilih:
-                    </div>
-                    <div class="">
-                        5 Orang
-                    </div>
+                <div class="">
+                    38 Orang
                 </div>
             </div>
-        </v-col>
+            <div cols="3" class="total-kandidat">
+                <div class="">
+                    Total Kandidat Dipilih:
+                </div>
+                <div class="">
+                    5 Orang
+                </div>
+            </div>
+        </div>
+
+        <v-row class="mt-3" align="start" style="height: 581px; overflow: auto;  overflow-x: hidden">
+            <v-expansion-panels v-model="panel">
+                <v-col v-for="n in 12" :key="n" cols="12" class="pb-0">
+                    <div class="history-1">
+                        <div class="frame-parent-ts">
+                            <div class="foto-tahap1-parent">
+                                <v-checkbox class="input-checkbox" color="#ae445a" v-model="radios[n]">
+                                </v-checkbox>
+                                <img
+                                    class="foto-tahap1-icon"
+                                    alt=""
+                                    src="@/assets/svg/foto-perusaahaan.svg"
+                                />
+                                <b class="list-item-name">Annisa Nur Hafiza</b>
+                            </div>
+                            <div style="cursor: pointer;" @click="activatePanel(n)"><i>Review Kandidat</i></div>
+                            <div class="">22 Juli 2023 09:00 AM</div>
+                        </div>
+
+                    </div>
+                    <v-expansion-panel class="expansion-ts">
+                        <v-expansion-panel-content>
+                            <table class="panel-table mt-2">
+                                <tr>
+                                    <th>Module Name</th>
+                                    <th>Duration</th> 
+                                    <th>Detail</th>
+                                    <th>Score</th>
+                                </tr>
+                                <tr><th colspan="4" style="border-top: 2px solid #AE445A;"></th></tr>
+                                <tr class="panel-table-item">
+                                    <td class="text-left">Wawancara Mandiri</td>
+                                    <td>00:35:42</td> 
+                                    <td class="">
+                                        <div class="table-btn" style="">
+                                            <div class="" @click="$router.push('/talent-selection/detail')">
+                                                <b class="button mx-4">Detail</b>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <v-text-field
+                                            placeholder="Rata-Rata Nilai" 
+                                            solo class="search-text-field"
+                                        ></v-text-field>
+                                    </td>
+                                </tr>
+                                <tr class="panel-table-item">
+                                    <td class="text-left">Tes Potensi Akademik</td>
+                                    <td>00:10:27</td> 
+                                    <td class="">
+                                        <div class="table-btn" style="">
+                                            <div class="" @click="$router.push('/talent-selection/detail-1')">
+                                                <b class="button mx-4">Detail</b>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <v-text-field
+                                            placeholder="Nilai" 
+                                            solo class="search-text-field"
+                                        ></v-text-field>
+                                    </td>
+                                </tr>
+                                <tr class="panel-table-item">
+                                    <td class="text-left">Tes Excel</td>
+                                    <td>00:15:23</td> 
+                                    <td class="">
+                                        <div class="table-btn" style="">
+                                            <div class="" @click="$router.push('/talent-selection/detail-2')">
+                                                <b class="button mx-4">Detail</b>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <v-text-field
+                                            placeholder="Rata-Rata NIlai" 
+                                            solo class="search-text-field"
+                                        ></v-text-field>
+                                    </td>
+                                </tr>
+                                <tr><th colspan="4" style="border-top: 2px solid #AE445A;"></th></tr>
+                                <tr>
+                                    <th colspan="3">Average Score</th>
+                                    <th>0</th>
+                                </tr>
+                            </table>
+                            <div class="mt-2" style="display: flex; justify-content: end;">
+                                <div class="orange-btn" style="">
+                                    <div class="" @click="">
+                                        <b class="button mx-4">Save</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                </v-col>
+            </v-expansion-panels>
         </v-row>
         <div style="position: relative; display: flex; justify-content: end; column-gap: 20px; margin-top: 60px; padding-bottom: 30px;">
             <div class="orange-btn" style="">
@@ -335,6 +428,7 @@ export default {
 }
 .card-register {
     border-radius: 40px;
+    background: linear-gradient(90deg, #F1F5FE 0%, #FFF 98.82%);
     box-shadow: 5px 0px 5px #b3b9c5, -5px 0px 5px #b3b9c5 !important;
 }
 </style>

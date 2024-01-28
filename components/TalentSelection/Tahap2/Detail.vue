@@ -1,153 +1,99 @@
 <template>
     <div>
-        <v-card class="card-register" style="z-index: 201;">
+        <v-card class="card-register" style="">
             <div class="my-2" style="position: relative;">
                 <div class="blokade-parent ma-8 pt-10">
-                    <div class="open-job-dan-draft">
-                        Isi Data Diri dan Berkas Lampiran
-                    </div>
-                    <div class="milestones mt-10">
-                        <div class="milestones-item" />
-                        
-                        <div class="stepts">
-                            <div class="steps-process">
-                                <div class="round">
-                                    <div class="round-child" />
-                                    <div class="bicheck1">
-                                    <img class="vector-icon1" alt="" src="@/assets/svg/vector-register.svg" />
-                                    <b class="b3">1</b>
-                                    </div>
-                                </div>
-                                <div class="sub">
-                                    <img class="crown-icon" alt="" src="@/assets/svg/crown.svg" />
-                                    <div class="box">
-                                        <div class="primery">
-                                            <div class="on-color" />
-                                            <b class="fill-in">Fill In</b>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div v-if="preview" class="steps-process">
-                                <div class="round">
-                                    <div class="round-child" />
-                                    <div class="bicheck1">
-                                    <img class="vector-icon1" alt="" src="@/assets/svg/vector-register.svg" />
-                                    <b class="b3">2</b>
-                                    </div>
-                                </div>
-                                <div class="sub">
-                                    <img class="crown-icon" alt="" src="@/assets/svg/crown.svg" />
-                                    <div class="box">
-                                        <div class="primery">
-                                            <div class="on-color" />
-                                            <b class="preview">Preview</b>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div v-else class="steps-process1">
-                                <div class="round">
-                                    <div class="round-child" />
-                                    <div class="bicheck2">
-                                    <img class="vector-icon" alt="" src="@/assets/svg/rectangle-4137.svg" />
-                                    <b class="b2">2</b>
-                                    </div>
-                                </div>
-                                <div class="sub1">
-                                    <img class="crown-icon1" alt="" src="@/assets/svg/crown1.svg" />
-                                    <div class="box">
-                                        <div class="process-name" />
-                                        <b class="preview">Preview</b>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="steps-process1">
-                                <div class="round">
-                                    <div class="round-child" />
-                                    <div class="bicheck2">
-                                        <img class="vector-icon" alt="" src="@/assets/svg/rectangle-4137.svg" />
-                                        <b class="b2">3</b>
-                                    </div>
-                                </div>
-                                <div class="sub1">
-                                    <img class="crown-icon1" alt="" src="@/assets/svg/crown2.svg" />
-                                    <div class="box">
-                                        <div class="process-name" />
-                                        <b class="publish">Publish</b>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="open-job-dan-draft mb-14 d-flex" style="justify-content: space-between;">
+                        <div>
+                            Talent Selection - Tahap 2
                         </div>
+
+                        <div class="orange-btn" @click="" style="border-radius: 50%;">
+                            <img class="feath" alt="" src="@/assets/svg/bi-share.svg" />
+                        </div> 
                     </div>
 
-                    <div class="my-10">
-                        <p class="ma-0">
-                            Silakan terlebih dahulu melengkapi data diri dan berkas lampiran.
-                        </p>
-                        <p class="ma-0">
-                            Pastikan isi dengan lengkap dan benar.
-                        </p>
-                    </div>
-
-                    <v-row align="center">
+                    <v-row>
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                            <b>Nama Lengkap:</b>
-                        </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <input class="register-text-input" placeholder="Masukkan Nama Lengkap" v-model="fullname" :readonly="preview"/>
-                        </v-col>
-                    </v-row>
-                    <v-row align="center">
-                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                            <b>Tempat Tanggal Lahir:</b>
+                            
+                            <div class="pp-container">
+                                <img
+                                    class="pp-frame"
+                                    loading="eager"
+                                    alt=""
+                                    src="@/assets/img/wanita.jpeg"
+                                />
+                            </div>
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                             <v-row align="center">
-                                <v-col cols="6">
-                                    <input class="register-text-input" placeholder="Masukkan Nama Kota" v-model="place_birth" :readonly="preview" />
+                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                                    <b>Nama Lengkap:</b>
                                 </v-col>
-                                <v-col cols="6" class="calendar-input-container">
-                                    <v-menu
-                                    :ref="datePickerBirthDate"
-                                    v-model="datePickerBirthDate" offset-y
-                                    :close-on-content-click="false"
-                                    transition="scale-transition"
-                                    max-width="290px"
-                                    min-width="auto"
-                                    >
-                                        <template v-slot:activator="{ on, attrs }">
-                                            <div v-on="!preview && on" style="position: relative;">
-                                                <input
-                                                v-bind="attrs"
-                                                outlined readonly
-                                                v-model="date_birth"
-                                                @blur="date_birth = parseDate(date_birth)"
-                                                placeholder="Masukkan Tanggal Mulai"
-                                                class="register-text-input"
-                                                />
-                                                <img class="feather-icon-calendar" alt="" src="@/assets/svg/feathericon--calendar.svg" />
-                                            </div>
-                                        </template>
-                                        <v-date-picker
-                                            @input="datePickerBirthDate = false"
-                                            plas v-model="date_birth" no-title
-                                        ></v-date-picker>
-                                    </v-menu>
+                                <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                                    <input class="register-text-input" placeholder="Masukkan Nama Lengkap" v-model="fullname" :readonly="preview"/>
+                                </v-col>
+                            </v-row>
+                            <v-row align="center">
+                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                                    <b>Tempat Tanggal Lahir:</b>
+                                </v-col>
+                                <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                                    <v-row align="center">
+                                        <v-col cols="6">
+                                            <input class="register-text-input" placeholder="Masukkan Nama Kota" v-model="place_birth" :readonly="preview" />
+                                        </v-col>
+                                        <v-col cols="6" class="calendar-input-container">
+                                            <v-menu
+                                            :ref="datePickerBirthDate"
+                                            v-model="datePickerBirthDate" offset-y
+                                            :close-on-content-click="false"
+                                            transition="scale-transition"
+                                            max-width="290px"
+                                            min-width="auto"
+                                            >
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <div v-on="!preview && on" style="position: relative;">
+                                                        <input
+                                                        v-bind="attrs"
+                                                        outlined readonly
+                                                        v-model="date_birth"
+                                                        @blur="date_birth = parseDate(date_birth)"
+                                                        placeholder="Masukkan Tanggal Lahir"
+                                                        class="register-text-input"
+                                                        />
+                                                        <img class="feather-icon-calendar" alt="" src="@/assets/svg/feathericon--calendar.svg" />
+                                                    </div>
+                                                </template>
+                                                <v-date-picker
+                                                    @input="datePickerBirthDate = false"
+                                                    plas v-model="date_birth" no-title
+                                                ></v-date-picker>
+                                            </v-menu>
+                                        </v-col>
+                                    </v-row>
+                                </v-col>
+                            </v-row>
+                            <v-row align="center">
+                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                                    <b>Alamat E-Mail:</b>
+                                </v-col>
+                                <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                                    <input type="email" class="register-text-input" placeholder="Masukkan alamat E-Mail" v-model="email" :readonly="preview" />
+                                </v-col>
+                            </v-row>
+                            <v-row align="center">
+                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                                    <b>Alamat URL LinkedIn:</b>
+                                </v-col>
+                                <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                                    <input class="register-text-input" placeholder="Masukkan alamat URL LinkedIn" v-model="linkedin" :readonly="preview" />
                                 </v-col>
                             </v-row>
                         </v-col>
                     </v-row>
-                    <v-row align="center">
-                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                            <b>Alamat E-Mail:</b>
-                        </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <input type="email" class="register-text-input" placeholder="Masukkan alamat E-Mail" v-model="email" :readonly="preview" />
-                        </v-col>
-                    </v-row>
+                    
+
                     <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
                             <b>Password:</b>
@@ -162,14 +108,6 @@
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                             <input type="password" class="register-text-input" placeholder="Masukkan Ulang Password" v-model="confirm_password" :readonly="preview" />
-                        </v-col>
-                    </v-row>
-                    <v-row align="center">
-                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                            <b>Alamat URL LinkedIn:</b>
-                        </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <input class="register-text-input" placeholder="Masukkan alamat URL LinkedIn" v-model="linkedin" :readonly="preview" />
                         </v-col>
                     </v-row>
                     <v-row align="center">
@@ -274,12 +212,6 @@
                     </v-row>
 
                     <div class="group-inner" />
-                    <v-row>
-                        <v-col class="mb-6" style="position: relative;">
-                            <i class="opsional-dapat-dikosongkan"> *Opsional. Dapat dikosongkan jika belum memiliki pengalaman pekerjaan </i>
-                            <img class="pluscirclefill" alt="Tambah Pengalaman" src="@/assets/svg/pluscirclefill2.svg" @click="addForm('experience')"/>
-                        </v-col>
-                    </v-row>
                     <v-row align="start" v-for="(value, key) in department.length == 0 ? 1 : department" class="mb-4">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label mt-3">
                             <b>Pengalaman:</b>
@@ -366,12 +298,6 @@
                     </v-row>
 
                     <div class="group-inner" />
-                    <v-row>
-                        <v-col class="mb-6" style="position: relative;">
-                            <i class="opsional-dapat-dikosongkan"> &ensp; </i>
-                            <img class="pluscirclefill" alt="" src="@/assets/svg/pluscirclefill2.svg" @click="addForm('education')"/>
-                        </v-col>
-                    </v-row>
                     <v-row align="start" v-for="(value, key) in institute_name.length == 0 ? 1 : institute_name" class="mb-4">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label mt-3">
                             <b>Pendidikan:</b>
@@ -452,12 +378,6 @@
                     </v-row>
 
                     <div class="group-inner" />
-                    <v-row>
-                        <v-col class="mb-6" style="position: relative;">
-                            <i class="opsional-dapat-dikosongkan"> &ensp; </i>
-                            <img class="pluscirclefill" alt="" src="@/assets/svg/pluscirclefill2.svg" @click="addForm('certificate')"/>
-                        </v-col>
-                    </v-row>
                     <v-row align="start" v-for="(value, key) in certificate_name.length == 0 ? 1 : certificate_name" class="mb-4">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label mt-3">
                             <b>Sertifikat:</b>
@@ -491,9 +411,8 @@
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
                                     <input class="d-none" type="file" ref="fileInput1" @change="onSelectFile($event, 'curriculum_vitae')">
                                     <div class="pas-foto">
-                                        <button class="plus cursor-pointer" @click="!preview && $refs.fileInput1.click()">
-                                            <img v-if="curriculum_vitae" class="pluscirclefill-icon" alt="CV" src="@/assets/svg/doc.svg" />
-                                            <img v-else class="pluscirclefill-icon" alt="CV" src="@/assets/svg/pluscirclefill.svg" />
+                                        <button class="plus cursor-pointer" @click="openFile">
+                                            <img class="pluscirclefill-icon" alt="CV" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
                                             <div class="pas-foto-4x6">CV</div>
@@ -503,9 +422,8 @@
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
                                     <input class="d-none" type="file" ref="fileInput2" @change="onSelectFile($event, 'photo')">
                                     <div class="pas-foto">
-                                        <button class="plus cursor-pointer" @click="!preview && $refs.fileInput2.click()">
-                                            <img v-if="photo" class="pluscirclefill-icon" alt="Pas Foto 4x6" src="@/assets/svg/doc.svg" />
-                                            <img v-else class="pluscirclefill-icon" alt="Pas Foto 4x6" src="@/assets/svg/pluscirclefill.svg" />
+                                        <button class="plus cursor-pointer" @click="openFile">
+                                            <img class="pluscirclefill-icon" alt="CV" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
                                             <div class="pas-foto-4x6">Pas Foto 4x6</div>
@@ -515,9 +433,8 @@
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
                                     <input class="d-none" type="file" ref="fileInput3" @change="onSelectFile($event, 'ktp')">
                                     <div class="pas-foto">
-                                        <button class="plus cursor-pointer" @click="!preview && $refs.fileInput3.click()">
-                                            <img v-if="ktp" class="pluscirclefill-icon" alt="KTP" src="@/assets/svg/doc.svg" />
-                                            <img v-else class="pluscirclefill-icon" alt="KTP" src="@/assets/svg/pluscirclefill.svg" />
+                                        <button class="plus cursor-pointer" @click="openFile">
+                                            <img class="pluscirclefill-icon" alt="CV" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
                                             <div class="pas-foto-4x6">KTP</div>
@@ -528,9 +445,8 @@
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
                                     <input class="d-none" type="file" ref="fileInput4" @change="onSelectFile($event, 'kk')">
                                     <div class="pas-foto">
-                                        <button class="plus cursor-pointer" @click="!preview && $refs.fileInput4.click()">
-                                            <img v-if="kk" class="pluscirclefill-icon" alt="Kartu Keluarga" src="@/assets/svg/doc.svg" />
-                                            <img v-else class="pluscirclefill-icon" alt="Kartu Keluarga" src="@/assets/svg/pluscirclefill.svg" />
+                                        <button class="plus cursor-pointer" @click="openFile">
+                                            <img class="pluscirclefill-icon" alt="CV" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
                                             <div class="pas-foto-4x6">Kartu Keluarga</div>
@@ -541,9 +457,8 @@
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
                                     <input class="d-none" type="file" ref="fileInput5" @change="onSelectFile($event, 'npwp')">
                                     <div class="pas-foto">
-                                        <button class="plus cursor-pointer" @click="!preview && $refs.fileInput5.click()">
-                                            <img v-if="npwp" class="pluscirclefill-icon" alt="NPWP" src="@/assets/svg/doc.svg" />
-                                            <img v-else class="pluscirclefill-icon" alt="NPWP" src="@/assets/svg/pluscirclefill.svg" />
+                                        <button class="plus cursor-pointer" @click="openFile">
+                                            <img class="pluscirclefill-icon" alt="CV" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
                                             <div class="pas-foto-4x6">NPWP</div>
@@ -552,11 +467,9 @@
                                     </div>
                                 </v-col>
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
-                                    <input class="d-none" type="file" ref="fileInput6" @change="onSelectFile($event, 'bpjs')">
-                                    <div class="pas-foto">
-                                        <button class="plus cursor-pointer" @click="!preview && $refs.fileInput6.click()">
-                                            <img v-if="bpjs" class="pluscirclefill-icon" alt="BPJSKES & TK" src="@/assets/svg/doc.svg" />
-                                            <img v-else class="pluscirclefill-icon" alt="BPJSKES & TK" src="@/assets/svg/pluscirclefill.svg" />
+                                    <div class="pas-foto" @click="openFile()">
+                                        <button class="plus cursor-pointer">
+                                            <img class="pluscirclefill-icon" alt="CV" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
                                             <div class="pas-foto-4x6">BPJSKES & TK</div>
@@ -566,40 +479,23 @@
                                 </v-col>
                             </v-row>
                         </v-col>
-                        <v-col>
-                            <p class="disclaimer-seluruh-data">
-                                Disclaimer: Seluruh data milik pengguna tidak akan digunakan <br>
-                                untuk kepentingan lain selain untuk melamar pekerjaan di website ini
-                            </p>
-                        </v-col>
                     </v-row>
 
                     <v-row>
                         <div class="save-container">
-                            <div v-if="preview" class="button-wrapper" @click="back">
-                                <b class="tempat-tanggal-lahir">Back</b>
-                            </div> 
-                            <div v-else></div>
-                            
-                            <div v-if="preview" class="button-wrapper" @click="publish">
-                                <b class="tempat-tanggal-lahir">Publish</b>
-                            </div> 
-                            <div v-else class="button-wrapper" @click="submit">
-                                <b class="tempat-tanggal-lahir">Save</b>
+                            <div></div>
+                            <div class="button-wrapper" @click="">
+                                <b class="tempat-tanggal-lahir">Close</b>
                             </div> 
                         </div>
                     </v-row>
                 </div>
             </div>
         </v-card>
-        <div class="v-overlay v-overlay--active theme--dark" style="">
-            <div class="v-overlay__scrim" style="opacity: 0.46; background-color: rgb(33, 33, 33); border-color: rgb(33, 33, 33);">
-            </div>
-        </div>
+        <Dialog-OpenFile :show="fileDialog" :closeDialog="closeFile"/>
     </div>
 </template>
 <script>
-// import debounce from 'debounce';
 import { API } from '@/api/index'
 import Multiselect from 'vue-multiselect'
 
@@ -609,7 +505,8 @@ export default {
     layout: "register",
     components: { Multiselect },
     data: () => ({
-        preview: false,
+        preview: true,
+        fileDialog: false,
         id_registration: null,
         datePickerBirthDate: false,
         datePickerEndStudy: [false],
@@ -664,7 +561,11 @@ export default {
         npwp: null, // optional
         bpjs: null, // optional
     }),
-    watch: {},
+    watch: {
+        fileDialog(to, from){
+            console.log(to, from);;
+        },
+    },
     setup() {
         const { getRegistration, postRegistration } = API()
         return { getRegistration, postRegistration };
@@ -677,156 +578,18 @@ export default {
         }
     },
     methods: {
+        async openFile(){
+            console.log('openFile');
+            this.fileDialog = true;
+        },
+        async closeFile(){
+            console.log('openFile');
+            this.fileDialog = false;
+        },
         async getData(){
-            await this.getRegistration(this.id_registration).then((result)=>{
-                result && this.refreshForm(result);
-            })
-        },
-        async submit(){
-            // console.log({
-            //     fullname: this.fullname,
-            //     place_birth: this.place_birth,
-            //     date_birth: this.date_birth,
-            //     email: this.email,
-            //     linkedin: this.linkedin,
-            //     handphone: this.handphone,
-            //     residential_address: this.residential_address,
-            //     address_on_identity_card: this.address_on_identity_card,
-            //     marital_status: this.marital_status,
-            //     identity_number: this.identity_number,
-            //     npwp_number: this.npwp_number,
-            //     bpjskes: this.bpjskes,
-            //     bpjstik: this.bpjstik,
-            //     bank_account_number: this.bank_account_number,
-            //     work_position: this.work_position,
-            //     salary_exspectation: this.salary_exspectation,
-            //     password: this.password,
-            //     confirm_password: this.confirm_password,
-            //     // ======= experience =========
-            //     department: this.department,
-            //     company_name: this.company_name,
-            //     employment_contract: this.employment_contract,
-            //     start_working: this.start_working,
-            //     end_working: this.end_working,
-            //     location: this.location,
-            //     // ======= education ==========
-            //     institute_name: this.institute_name,
-            //     degree: this.degree,
-            //     education_program: this.education_program,
-            //     start_study: this.start_study,
-            //     end_study: this.end_study,
-            //     ipk: this.ipk,
-            //     // ======= certificate =========
-            //     certificate_name: this.certificate_name,
-            //     organizer: this.organizer,
-            //     scores: this.scores,
-            //     certificate_year: this.certificate_year,
-            //     // ======= document =========
-            //     curriculum_vitae: this.curriculum_vitae,
-            //     photo: this.photo,
-            //     ktp: this.ktp,  // optional
-            //     kk: this.kk,   // optional
-            //     npwp: this.npwp, // optional
-            //     bpjs: this.bpjs, // optional
-            // });
-            const body = new FormData();
-            body.append('fullname', this.fullname);
-            body.append('place_birth', this.place_birth);
-            body.append('date_birth', this.date_birth);
-            body.append('email', this.email);
-            body.append('linkedin', this.linkedin);
-            body.append('handphone', this.handphone);
-            body.append('residential_address', this.residential_address);
-            body.append('address_on_identity_card', this.address_on_identity_card);
-            body.append('marital_status', this.marital_status);
-            body.append('identity_number', this.identity_number);
-            if (this.npwp_number != null) {
-                body.append('npwp_number', this.npwp_number);
-            }
-            if (this.bpjskes != null) {
-                body.append('bpjskes', this.bpjskes);
-            }
-            if (this.bpjstik != null) {
-                body.append('bpjstik', this.bpjstik);
-            }
-            if (this.bank_account_number != null) {
-                body.append('bank_account_number', this.bank_account_number);
-            }
-            if (this.salary_exspectation != null) {
-                body.append('salary_exspectation', this.salary_exspectation);
-            }
-            body.append('work_position', this.work_position);
-            body.append('password', this.password);
-            body.append('confirm_password', this.confirm_password);
-            // ======= experience =========
-            if (this.department.length > 0) {
-                body.append('department[]', this.department);
-                body.append('company_name[]', this.company_name);
-                body.append('employment_contract[]', this.employment_contract);
-                body.append('start_working[]', this.start_working);
-                body.append('end_working[]', this.end_working);
-                body.append('location[]', this.location);
-            }
-            // ======= education ==========
-            body.append('institute_name[]', this.institute_name);
-            body.append('degree[]', this.degree);
-            body.append('education_program[]', this.education_program);
-            body.append('start_study[]', this.start_study);
-            body.append('end_study[]', this.end_study);
-            body.append('ipk[]', this.ipk);
-            // ======= certificate =========
-            body.append('certificate_name[]', this.certificate_name);
-            body.append('organizer[]', this.organizer);
-            if (this.scores.length > 0) {
-                body.append('scores[]', this.scores);
-            }
-            body.append('certificate_year[]', this.certificate_year);
-            // ======= document =========
-            body.append('curriculum_vitae', this.curriculum_vitae);
-            body.append('photo', this.photo);
-            if (this.ktp != null) {
-                body.append('ktp', this.ktp);   // optional
-            }
-            if (this.kk != null) {
-                body.append('kk', this.kk);     // optional
-            }
-            if (this.npwp != null) {
-                body.append('npwp', this.npwp); // optional
-            }
-            if (this.bpjs != null) {
-                body.append('bpjs', this.bpjs); // optional
-            }
-
-            await this.postRegistration(body, this.id_registration).then( async (result) => {
-                if(result){
-                    this.preview = true;
-                    this.id_registration = result.id_registration;
-                    localStorage.setItem('id_registration', result.id_registration);
-                    this.password && localStorage.setItem('password', this.password);
-                    return this.$notifier.showMessage({ content: 'Mohon koreksi data anda kembali.', status: 'success' });
-                }
-            })
-
-            // this.preview = true;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        },
-        async publish(){
-            let userPassword = localStorage.getItem('password');
-            this.$loader.showLoading({ show: true });
-            await this.$auth.loginWith('local', {
-            data: {
-                email: this.email,
-                password: userPassword
-            },
-            }).then((result) => {
-                this.$notifier.showMessage({ content: 'Anda berhasil Registrasi.', status: 'success' });
-                localStorage.removeItem('id_registration');
-                localStorage.removeItem('password');
-                this.$router.push('/')
-            }).catch((err) => {
-                this.$notifier.showMessage({ content: err.response ? err.response.data.message : err, status: 'warning' });
-                this.$loader.showLoading({ show: false });
-            });
+            // await this.getRegistration(this.id_registration).then((result)=>{
+            //     result && this.refreshForm(result);
+            // })
         },
         refreshForm(data){
             this.email = data.email;
@@ -877,36 +640,6 @@ export default {
             });
 
         },
-        addForm(key){
-            if(!this.preview){
-                switch (key) {
-                    case 'experience':
-                        this.department.push(null);
-                        this.company_name.push(null);
-                        this.employment_contract.push(null);
-                        this.start_working.push(null);
-                        this.end_working.push(null);
-                        this.location.push(null);
-                        break;
-                    case 'education':
-                        this.institute_name.push(null);
-                        this.degree.push(null);
-                        this.education_program.push(null);
-                        this.start_study.push(null);
-                        this.end_study.push(null);
-                        this.ipk.push(null);
-                        break;
-                    case 'certificate':
-                        this.certificate_name.push(null);
-                        this.organizer.push(null);
-                        this.scores.push(null);
-                        this.certificate_year.push(null);
-                        break;
-    
-                    default: break;
-                }
-            }
-        },
         onSelectFile (event, param) {
             const file = event.srcElement.files[0];
             switch (param) {
@@ -941,15 +674,34 @@ export default {
             this.preview = false;
             window.scrollTo({ top: 0, behavior: 'smooth' })
         },
-        // debounceInput: debounce(function (e) {
-        //     console.log('debounceInput', e);
-        // }, 2000),
     }
 
 };
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped>
+.pp-container {
+    flex: 1;
+    display: flex;
+    align-self: stretch;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 225px;
+}
+
+.pp-frame {
+    flex: 1;
+    width: 175px;
+    height: 225px;
+    align-self: stretch;
+    position: relative;
+    border-radius: 5px;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+    object-fit: cover;
+}
 .card-register {
     border-radius: 40px;
     background: linear-gradient(90deg, #F1F5FE 0%, #FFF 98.82%);

@@ -15,10 +15,10 @@
                             <b>Soal dan Jawaban</b>
                         </div>
                         <v-row class="" align="start" style="">
-                            <!-- <v-col cols="12" class="detail-selection-card mb-6">
+                            <v-col cols="12" class="detail-selection-card mb-6">
                                 <div class="history-1">
                                     <div class="frame-detail-text-question">
-                                        <ol class="w-100"><li>
+                                        <ol class="w-100"><li value="1">
                                             <div class="text-left detail-text-question">
                                                 Silahkan kerjakan rumus excel dengan panduan yang tersedia disini: https://adsdsdsdsd Beri nama file sesuai instruksi yang tersedia di link terkait.
                                             </div>
@@ -50,11 +50,83 @@
                                         </v-row>
                                     </div>
                                 </div>
-                            </v-col> -->
-                            <v-col v-for="n in 2" cols="12" class="detail-selection-card">
+                            </v-col>
+                            <v-col cols="12" class="detail-selection-card mb-6">
                                 <div class="history-1">
                                     <div class="frame-detail-text-question">
-                                        <ol class="w-100"><li value="1">
+                                        <ol class="w-100"><li value="2">
+                                            <div class="text-left detail-text-question">
+                                                Silahkan kerjakan rumus excel dengan panduan yang tersedia disini: https://adsdsdsdsd Beri nama file sesuai instruksi yang tersedia di link terkait.
+                                            </div>
+                                        </li></ol> 
+                                        <v-row class="mt-2" style="border-bottom: 2px solid #AE445A;">
+                                            <v-col cols="4">
+                                                <b>Tes Excel Pegawai ABC 1. XLS</b>
+                                            </v-col>
+                                            <v-col cols="4">
+                                                18 Juli 2023
+                                            </v-col>
+                                            <v-col cols="4">
+                                                <div class="edit-parent">
+                                                    <img class="" alt="" src="@/assets/svg/eye-circle.svg" />
+                                                    <img class="" alt="" src="@/assets/svg/arrow-down-to-line.svg" @click="" />
+                                                </div>
+                                            </v-col>
+                                        </v-row>
+                                        <v-row class="mt-2" >
+                                            <v-col cols="4" class="text-left" style="display: flex; align-items: center;">
+                                                <b>Score:</b>
+                                            </v-col>
+                                            <v-col cols="8" class="pb-2">
+                                                <v-text-field
+                                                    placeholder="Masukkan nilai 1 - 100" 
+                                                    solo class="search-text-field"
+                                                ></v-text-field>
+                                            </v-col>
+                                        </v-row>
+                                    </div>
+                                </div>
+                            </v-col>
+                            <v-col cols="12" class="detail-selection-card mb-6">
+                                <div class="history-1">
+                                    <div class="frame-detail-text-question">
+                                        <ol class="w-100"><li value="3">
+                                            <div class="text-left detail-text-question">
+                                                Silahkan kerjakan rumus excel dengan panduan yang tersedia disini: https://adsdsdsdsd Beri nama file sesuai instruksi yang tersedia di link terkait.
+                                            </div>
+                                        </li></ol> 
+                                        <v-row class="mt-2" style="border-bottom: 2px solid #AE445A;">
+                                            <v-col cols="4">
+                                                <b>Tes Excel Pegawai ABC 1. XLS</b>
+                                            </v-col>
+                                            <v-col cols="4">
+                                                18 Juli 2023
+                                            </v-col>
+                                            <v-col cols="4">
+                                                <div class="edit-parent">
+                                                    <img class="" alt="" src="@/assets/svg/eye-circle.svg" />
+                                                    <img class="" alt="" src="@/assets/svg/arrow-down-to-line.svg" @click="" />
+                                                </div>
+                                            </v-col>
+                                        </v-row>
+                                        <v-row class="mt-2" >
+                                            <v-col cols="4" class="text-left" style="display: flex; align-items: center;">
+                                                <b>Score:</b>
+                                            </v-col>
+                                            <v-col cols="8" class="pb-2">
+                                                <v-text-field
+                                                    placeholder="Masukkan nilai 1 - 100" 
+                                                    solo class="search-text-field"
+                                                ></v-text-field>
+                                            </v-col>
+                                        </v-row>
+                                    </div>
+                                </div>
+                            </v-col>
+                            <!-- <v-col cols="12" class="detail-selection-card mb-6">
+                                <div class="history-1">
+                                    <div class="frame-detail-text-question">
+                                        <ol class="w-100"><li>
                                             <div class="text-left detail-text-question">
                                                 Soal nomor satu,  jabarkan/tulis essai mengenai apa gitu
                                             </div>
@@ -77,7 +149,7 @@
                                         </v-row>
                                     </div>
                                 </div>
-                            </v-col>
+                            </v-col> -->
                         </v-row>
 
                         <!-- <v-row class="" align="start" style="">
@@ -134,6 +206,7 @@
         <Dialog-JobDetail :show="showDialog" :closeDialog="closeDialog"/>
         <AlertApproval content="Lowongan akan dihentikan. Anda yakin ingin menghentikan?" :onApprove="closeAlertApproval" :closeDialog="closeAlertApproval" :show="showAlertApproval"/>
     </div>
+    <!-- <TalentSelection-Tahap2-Detail /> -->
 </template>
 <script>
 import Multiselect from 'vue-multiselect'

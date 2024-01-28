@@ -76,7 +76,7 @@
                                                 <div class="edit-module-parent">
                                                     <img class="edit-icon" alt="edit" src="@/assets/svg/edit.svg" />
                                                     <img class="edit-icon" alt="delete" src="@/assets/svg/trash2.svg" @click="delModule(modules.id)"/>
-                                                    <img class="edit-icon" alt="view" src="@/assets/svg/eyecirclefill.svg" />
+                                                    <!-- <img class="edit-icon" alt="view" src="@/assets/svg/eyecirclefill.svg" /> -->
                                                 </div>
                                                 <div class="module-icon-parent">
                                                     <img class="module-icon" alt="" :src="getIcon(modules.logo)" />
@@ -318,7 +318,8 @@ export default {
     margin: 0 !important;
     position: absolute;
     top: 11.67px;
-    left: 150px;
+    /* left: 150px; untuk 3 icon */ 
+    left: 175px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -432,6 +433,7 @@ export default {
 .card-register {
     min-height: 882px;
     border-radius: 40px;
+    background: linear-gradient(90deg, #F1F5FE 0%, #FFF 98.82%);
     box-shadow: 5px 0px 5px #b3b9c5, -5px 0px 5px #b3b9c5 !important;
 }
 .label {

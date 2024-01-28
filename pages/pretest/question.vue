@@ -100,7 +100,7 @@
                                                 Silahkan jawab pertanyaan dengan jawaban yang sesuai, dengan meng-upload file terkait
                                             </div>
                                             <button class="mt-2 mb-6" :class="value.answer == null ? 'drop-file-big-parent' : 'drop-file-big-parent-filled'" @click="selectFile(value)">
-                                                <img v-if="value.answer == null" class="drop-file-icon" alt="" src="@/assets/group@2x.png" />
+                                                <img v-if="value.answer == null" class="drop-file-icon" alt="" src="@/assets/img/group@2x.png" />
                                                 <div v-if="value.answer == null" class="drop-file-here-or-click-to-upl-parent">
                                                     <b class="drop-file-here">Click to upload</b>
                                                     <div class="file-supported">

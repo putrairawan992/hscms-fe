@@ -108,7 +108,7 @@
                                             </li></ol>
                                             <button class="drop-file-parent mt-4 mb-6">
                                                 <input class="d-none" type="file" ref="previewInput1" @change="onSelectFile($event)">
-                                                <img class="drop-file-icon" alt="" src="@/assets/group@2x.png" />
+                                                <img class="drop-file-icon" alt="" src="@/assets/img/group@2x.png" />
                                                 <div class="drop-file-here-or-click-to-upl-parent">
                                                     <b class="drop-file-here">Drop file here or click to upload</b>
                                                     <div class="file-supported">

@@ -1,159 +1,20 @@
 <template>
-    <v-dialog persistent v-model="show" width="931" rounded>
-        <v-card class="pa-12" style="border-radius: 20px !important;"> 
-            <v-row>
-                <div class="detail-opening-container">
-                    <div></div>
-                    <div class="d-flex" style="column-gap: 20px;">
-                        <button class="detail-opening-button-wrapper" @click="closeDialog">
-                            <b class="detail-opening-btn-text">Cancel</b>
-                        </button> 
-                        <button class="detail-opening-button-wrapper">
-                            <b class="detail-opening-btn-text">Edit</b>
-                        </button> 
-                        <button class="detail-opening-button-wrapper">
-                            <b class="detail-opening-btn-text px-4">Stop Job Periode</b>
-                        </button> 
-                    </div>
-                </div>
-            </v-row>
-
-            <v-row align="center">
-                <v-col cols="12" class="pb-0">
-                    <b class="isilah-13-kolom-container">
-                        <p>Job Opening - Marketing Staff</p>
-                    </b>
-                </v-col>
-            </v-row>
-            <v-row align="start" class="mt-2 mb-4">
-                <v-col cols="12" class="label">
-                    <b>Periode Pekerjaan</b>
-                </v-col>
-                <v-col cols="12" xs="6" md="6" lg="6" xl="6" xxl="6" class="">
-                    <v-row>
-                        <v-col class="pt-0">
-                            <v-menu
-                            ref="datePicker1"
-                            v-model="datePicker1"
-                            :close-on-content-click="false"
-                            transition="scale-transition"
-                            offset-y
-                            max-width="290px"
-                            min-width="auto"
-                            >
-                                <template v-slot:activator="{ on, attrs }">
-                                    <div v-on="on" style="position: relative;">
-                                        <input
-                                        v-model="tanggal_lahir"
-                                        v-bind="attrs"
-                                        @blur="tanggal_lahir = parseDate(tanggal_lahir)"
-                                        outlined readonly
-                                        class="preview-text-input"
-                                        placeholder="2024-11-06"
-                                        />
-                                        <img class="feather-icon-calendar-preview" alt="" src="@/assets/svg/feathericon--calendar.svg" />
-                                    </div>
-                                </template>
-                                <v-date-picker
-                                    @input="datePicker1 = false"
-                                    plas v-model="tanggal_lahir" no-title
-                                ></v-date-picker>
-                            </v-menu>
-                        </v-col>
-                        <v-col cols="1" class="dash-container pt-0">
-                            <b class="dash">-</b>
-                        </v-col>
-                        <v-col class="pt-0">
-                            <v-menu
-                            ref="datePicker1"
-                            v-model="datePicker1"
-                            :close-on-content-click="false"
-                            transition="scale-transition"
-                            offset-y
-                            max-width="290px"
-                            min-width="auto"
-                            >
-                                <template v-slot:activator="{ on, attrs }">
-                                    <div v-on="on" style="position: relative;">
-                                        <input
-                                        v-model="tanggal_lahir"
-                                        v-bind="attrs"
-                                        @blur="tanggal_lahir = parseDate(tanggal_lahir)"
-                                        outlined readonly
-                                        class="preview-text-input"
-                                        placeholder="2024-11-06"
-                                        />
-                                        <img class="feather-icon-calendar-preview" alt="" src="@/assets/svg/feathericon--calendar.svg" />
-                                    </div>
-                                </template>
-                                <v-date-picker
-                                    @input="datePicker1 = false"
-                                    plas v-model="tanggal_lahir" no-title
-                                ></v-date-picker>
-                            </v-menu>
-                        </v-col>
-                    </v-row>
-                </v-col>
-            </v-row>
-
-            <v-row align="center" class="pa-2" style="border: 1px solid #AE445A; border-radius: 10px;">
-                <v-col cols="12" class="d-flex" style="justify-content: space-between;align-items: center;">
-                    <div class="d-flex" style="align-items: center;">
-                        <img class="foto-perusaahaan-icon" src="@/assets/svg/foto-perusaahaan.svg" />
-                        <div class="d-flex text-left ml-4" style="flex-direction: column;">
-                            <b class="marketing-staff">Marketing Staff</b>
-                            <div class="pt-gema-insani">PT. Gema Insani</div>
-                            <div class="idr-6000000-">IDR 6.000.000 - 7.500.000</div>
-                        </div>
-                    </div>
-
-                    <div class="text-right">
-                        <b class="jakarta-selatan-wfo">Jakarta Selatan (WFO)</b><br>
-                        <div class="active">Active</div>
-                    </div>
-                </v-col>
-                <v-col cols="12" class="text-left">
-                    <b class="">Jenis Pekerjaan</b>
-                    <div class="">Kontrak</div>
-                </v-col>
-                <v-col cols="12" class="text-left">
-                    <b class="">Periode Pekerjaan</b>
-                    <div class="">10 Juni 2023 - 10 Juni 2025 24 Bulan (2 Tahun)</div>
-                </v-col>
-                <v-col cols="12" class="text-left">
-                    <b class="">Tingkat Pekerjaan</b>
-                    <div class="">Staf (Non Manajemen & Non Supervisor)</div>
-                </v-col>
-                <v-col cols="12" class="text-left">
-                    <b class="">Jumlah Kandidat yang Dibutuhkan</b>
-                    <div class="">2</div>
-                </v-col>
-                <v-col cols="12" class="text-left">
-                    <b class="">Pengalaman</b>
-                    <div class="">Min. 0 tahun sampai 2 tahun</div>
-                </v-col>
-                <v-col cols="12" class="text-left">
-                    <b class="">Spesialisasi Pekerjaan</b>
-                    <div class="">Digital Marketing</div>
-                </v-col>
-                <v-col cols="12" class="text-left">
-                    <b class="">Pendidikan</b>
-                    <div class="">SMA/SMK, Sarjana S1, Sertifikat Profesional</div>
-                </v-col>
-                <v-col cols="12" class="text-left">
-                    <b class="">Keuntungan dari Perusahaan</b>
-                    <div class="">BPJS Kesehatan, BPJS Ketenagakerjaan, THR</div>
-                </v-col>
-                <v-col cols="12" class="text-left">
-                    <b class="">Deskripsi Pekerjaan</b>
-                    <!-- <div class="" v-html="html"/> -->
-                    <div class="">
-                        Lorem ipsum dolor sit amet, semper quis, sapien id natoque elit. Nostra urna at, magna at neque sed sed ante imperdiet, dolor mauris cursus velit, velit non, sem nec. Volutpat sem ridiculus placerat leo, augue in, duis erat proin condimentum in a eget, sed fermentum sed vestibulum varius ac, vestibulum volutpat orci ut elit eget tortor. Ultrices nascetur nulla gravida ante arcu. Pharetra rhoncus morbi ipsum, nunc tempor debitis, ipsum pellentesque, vitae id quam ut mauris dui tempor, aptent non. Quisque turpis. Phasellus quis lectus luctus orci eget rhoncus. Amet donec vestibulum mattis commodo, nulla aliquet, nibh praesent, elementum nulla. Sit lacus pharetra tempus magna neque pellentesque, nulla vel erat.
-                        Justo ex quisque nulla accusamus venenatis, sed quis. Nibh phasellus gravida metus in, fusce aenean ut erat commodo eros. Ut turpis, dui integer, nonummy pede placeat nec in sit leo. Faucibus porttitor illo taciti odio, amet viverra scelerisque quis quis et tortor, curabitur morbi a. Enim tempor at, rutrum elit condimentum, amet rutrum vitae tempor torquent nunc. Praesent vestibulum integer maxime felis. Neque aenean quia vitae nostra, tempus elit enim id dui, at egestas pulvinar. Integer libero vestibulum, quis blandit scelerisque mattis fermentum nulla, tortor donec vestibulum dolor amet eget, elit nullam. Aliquam leo phasellus aliquam curabitur metus a, nulla justo mattis duis interdum vel, mollis vitae et id, vestibulum erat ridiculus sit pulvinar justo sed. Vehicula convallis, et nulla wisi, amet vestibulum risus, quam ac egestas.
-                    </div>
-                </v-col>
-            </v-row>
-        </v-card>
+    <v-dialog persistent v-model="show" width="688" rounded content-class="elevation-0">
+        <div style="position: relative; display: flex; flex-direction: column;">
+            
+            <button class="close-icon-open-file" @click="closeDialog">
+                <img alt="close" src="@/assets/svg/close.svg" />
+            </button>
+            <v-card class="pa-12" style="border-radius: 20px !important; width: 668px;"> 
+                
+                <v-row align="center">
+                    <v-col cols="12" class="pa-0">
+                        <!-- <embed class="embeddedContent" src="https://images.unsplash.com/photo-1706023678015-c5fa48e09bcc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fHw%3D#zoom=60" /> -->
+                        <embed class="embeddedContent" width="585px" src="https://pdfobject.com/pdf/sample.pdf#zoom=60"/>
+                    </v-col>
+                </v-row>
+            </v-card>
+        </div>
     </v-dialog>
 </template>
 <script>
@@ -173,7 +34,6 @@
         closeDialog: { type: Function, default() { return {} } },
     },
     methods: {
-
         parseDate (date) {
             if (!date) return null
             const [year, month, day] = date.split('-')
@@ -184,6 +44,20 @@
 </script>
 
 <style scoped>
+.close-icon-open-file {
+    display: flex;
+    justify-content: end;
+    margin-bottom: -26px;
+    margin-right: 5px;
+    z-index: 2;
+}
+.embeddedContent {
+    background-color: #d3d3d3;
+    width: 100%;
+    height: 75vh;
+    top: 0;
+    left: 0;
+}
 .active {
     display: inline-flex;
     height: 17px;
