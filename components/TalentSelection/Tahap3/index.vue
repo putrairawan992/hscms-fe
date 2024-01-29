@@ -704,6 +704,7 @@ export default {
 .pilih-tanggal-container {
     height: 198px;
     overflow-y: auto;
+    overflow-x: hidden;
     border-radius: 10px;
     border: 1px solid #AE445A;
 }
