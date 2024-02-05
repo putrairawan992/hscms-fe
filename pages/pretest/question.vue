@@ -150,8 +150,8 @@ export default {
         }
     },
     computed: {
-		...mapState('jobseeker-pretest', ['question', 'preview']),
-        ...mapGetters('jobseeker-pretest', ['job_id', 'category_id', 'module_id']),
+		...mapState('seeker-pretest', ['question', 'preview']),
+        ...mapGetters('seeker-pretest', ['job_id', 'category_id', 'module_id']),
     },
     setup() {
         const { getQuestionAPI, postAnswerAPI, postEndTest } = API()
@@ -162,8 +162,8 @@ export default {
         console.log('this.question', this.question);
     },
     methods: {
-		...mapActions('jobseeker-pretest', ['getQuestion']),
-        ...mapMutations('jobseeker-pretest', ['setQuestion', 'endPretest']),
+		...mapActions('seeker-pretest', ['getQuestion']),
+        ...mapMutations('seeker-pretest', ['setQuestion', 'endPretest']),
 
         async getQuestions(){
             if(this.question?.type_test == 'Modul Essay'){

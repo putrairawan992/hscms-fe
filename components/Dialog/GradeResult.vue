@@ -1,50 +1,231 @@
 <template>
-    <v-dialog persistent v-model="show" width="688" rounded content-class="elevation-0">
+    <v-dialog persistent v-model="show" width="668" rounded content-class="elevation-0">
         <div style="position: relative; display: flex; flex-direction: column;">
-            
-            <button class="close-icon-open-file" @click="closeDialog">
-                <img alt="close" src="@/assets/svg/close.svg" />
-            </button>
-            <v-card class="pa-12" style="border-radius: 20px !important; width: 668px;"> 
-                <v-row align="center">
-                    <v-col cols="12" class="pa-0">
-                        <!-- <embed class="embeddedContent" src="https://images.unsplash.com/photo-1706023678015-c5fa48e09bcc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fHw%3D#zoom=60" /> -->
-                        <!-- <embed class="embeddedContent" width="585px" src="https://pdfobject.com/pdf/sample.pdf#zoom=60"/> -->
-                        <embed v-if="fileUrl" class="embeddedContent" width="585px" :src="fileUrl+'#zoom=60'"/>
+            <v-card class="pa-12" style="border-radius: 20px !important;"> 
+                <v-row>
+                    <v-col cols="12" class="text-left pt-0 pb-4">
+                        <div class="page-title">
+                            Grade
+                        </div>
+                    </v-col>
+
+                    <!-- Quantitative Score -->
+                    <v-col cols="12" class="text-left pt-0 pb-4">
+                        <div class="page-sub-title">
+                            Quantitative Score
+                        </div>
+                    </v-col>
+                    <v-col v-for="value, key in data?.category_list" cols="12" class="pt-0">
+                        <v-row>
+                            <v-col class="">
+                                <div class="technical-competence">
+                                    {{ value.category_name }}:
+                                </div>
+                            </v-col>
+                            <v-col class="input-checkbox-container" style="max-width: 130px;">
+                                <v-row>
+                                    <v-col cols="6" class="text-score text-left ma-auto">
+                                        Score:
+                                    </v-col>
+                                    <v-col cols="6" class="text-score text-right ma-auto">
+                                        {{ value.score }}
+                                    </v-col>
+                                </v-row>
+                                
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                    <v-col cols="12" class="pt-0">
+                        <div cols="12" style="height: 1px; background: #AE445A;"></div>
+                    </v-col>
+                    <v-col cols="12" class="py-0">
+                        <v-row>
+                            <v-col class="">
+                                <div class="technical-competence">
+                                    Average Total:
+                                </div>
+                            </v-col>
+                            <v-col class="input-checkbox-container" style="max-width: 130px;">
+                                <v-row>
+                                    <v-col cols="6" class="text-score text-left ma-auto">
+                                        Score:
+                                    </v-col>
+                                    <v-col cols="6" class="text-score text-right ma-auto">
+                                        {{ data?.average_total }}
+                                    </v-col>
+                                </v-row>
+                                
+                            </v-col>
+                        </v-row>
+                    </v-col>
+
+
+                    <!-- Qualitative Score -->
+                    <v-col cols="12" class="text-left pt-8 pb-4">
+                        <div class="page-sub-title">
+                            Qualitative Score
+                        </div>
+                    </v-col>
+                    <v-col cols="12" class="py-0">
+                        <v-row>
+                            <v-col class="">
+                                <div class="technical-competence">
+                                    Total:
+                                </div>
+                            </v-col>
+                            <v-col class="input-checkbox-container" style="max-width: 130px;">
+                                <v-row>
+                                    <v-col cols="6" class="text-score text-left ma-auto">
+                                        Score:
+                                    </v-col>
+                                    <v-col cols="6" class="text-score text-right ma-auto">
+                                        {{ data?.total }}
+                                    </v-col>
+                                </v-row>
+                                
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                    <v-col cols="12" class="pt-8">
+                        <v-row>
+                            <v-col class="">
+                                <div class="page-sub-title">
+                                    Total Score
+                                </div>
+                            </v-col>
+                            <v-col class="input-checkbox-container d-flex justify-end ma-auto" style="max-width: 130px;">
+                                <div class="page-sub-title">
+                                    {{ data?.total_score }}
+                                </div>
+                                
+                            </v-col>
+                        </v-row>
+                    </v-col>
+
+
+                    <!-- Qualitative Score -->
+                    <v-col cols="12" class="text-left pt-4 pb-4">
+                        <div class="page-sub-title">
+                            Notes
+                        </div>
+                    </v-col>
+                    <v-col cols="12" class="pt-0">
+                        
+                        <div class="notes-container pa-4">
+                            <div v-html="data?.notes"></div>
+                        </div>
+                    </v-col>
+
+
+                    <v-col cols="12" class="pb-0">
+                        <div class="save-container pb-0">
+                            <div></div>
+                            <div class="frame-container" style="width: 101px;" @click="closeDialog">
+                                <div class="attach-mpr-parent">
+                                    <b class="button">Close</b>
+                                </div>
+                            </div>
+                        </div>
                     </v-col>
                 </v-row>
+
             </v-card>
         </div>
     </v-dialog>
 </template>
 <script>
-    export default {
+import { API } from '@/api/index'
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
+export default {
     data () {
         return {
-            id_job_post: null,
-            tanggal_lahir: null,
-            datePicker1: false,
-            datePicker2: false,
+            data: null,
         }
     },
+    watch: {
+        jobSeekerId(to, from){
+            this.getData();
+        },
+    },
     props: {
-        show: { type: Boolean, default() { return false } },
-        fileUrl: { type: String, default() { return "" } },
         content: { type: String, default() { return "" } },
+        show: { type: Boolean, default() { return false } },
         onApprove: { type: Function, default() { return {} } },
         closeDialog: { type: Function, default() { return {} } },
+        jobSeekerId: { type: Number, default() { return null } },
+    },
+    setup() {
+        const { getResultGrade } = API();
+        return { getResultGrade };
+    },
+    computed: {
+        ...mapGetters('provider-selection', ['tahapanGetter']),
+    },
+    async mounted(){
+        console.log('GradeResult',this.jobSeekerId);
+        this.getData();
     },
     methods: {
-        parseDate (date) {
-            if (!date) return null
-            const [year, month, day] = date.split('-')
-            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+        async getData(){
+            if (this.jobSeekerId) {
+                await this.getResultGrade(this.jobSeekerId, this.tahapanGetter.jobSelected?.id).then((result)=>{
+                    if(result){ this.data = result; };
+                });
+            }
         },
     }
 }
 </script>
 
 <style scoped>
+.notes-container {
+    border-radius: 10px;
+    border: 1px solid #AE445A;
+    color: #404041;
+    text-align: justify;
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 200% */
+}
+.technical-competence {
+    color: #404041;
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 19px; 
+}
+.text-score {
+    color: #404041;
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 19px; 
+}
+.save-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.page-title {
+    color: #AE445A;
+    font-family: Nunito;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+}
+.page-sub-title {
+    color: #AE445A;
+    font-family: Poppins;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
 .close-icon-open-file {
     display: flex;
     justify-content: end;
@@ -159,6 +340,7 @@
     font-size: 12px;
     color: #fff;
     line-height: 50px;
+    cursor: pointer;
 }
 .gear-icon {
     width: 25px;

@@ -19,9 +19,8 @@
                             <div class="pp-container">
                                 <img
                                     class="pp-frame"
-                                    loading="eager"
-                                    alt=""
-                                    src="@/assets/img/wanita.jpeg"
+                                    loading="eager" alt="photo"
+                                    :src="photo ? photo : '@/assets/img/img-error.png'"
                                 />
                             </div>
                         </v-col>
@@ -93,23 +92,6 @@
                         </v-col>
                     </v-row>
                     
-
-                    <v-row align="center">
-                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                            <b>Password:</b>
-                        </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <input type="password" class="register-text-input" placeholder="Masukkan Password" v-model="password" :readonly="preview" />
-                        </v-col>
-                    </v-row>
-                    <v-row align="center">
-                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                            <b>Ulangi Password:</b>
-                        </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <input type="password" class="register-text-input" placeholder="Masukkan Ulang Password" v-model="confirm_password" :readonly="preview" />
-                        </v-col>
-                    </v-row>
                     <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
                             <b>Nomor Handphone:</b>
@@ -409,9 +391,8 @@
                         <v-col cols="12">
                             <v-row>
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
-                                    <input class="d-none" type="file" ref="fileInput1" @change="onSelectFile($event, 'curriculum_vitae')">
                                     <div class="pas-foto">
-                                        <button class="plus cursor-pointer" @click="openFile">
+                                        <button class="plus cursor-pointer" @click="openFile(curriculum_vitae)">
                                             <img class="pluscirclefill-icon" alt="CV" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
@@ -420,10 +401,9 @@
                                     </div>
                                 </v-col>
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
-                                    <input class="d-none" type="file" ref="fileInput2" @change="onSelectFile($event, 'photo')">
                                     <div class="pas-foto">
-                                        <button class="plus cursor-pointer" @click="openFile">
-                                            <img class="pluscirclefill-icon" alt="CV" src="@/assets/svg/doc.svg" />
+                                        <button class="plus cursor-pointer" @click="openFile(photo)">
+                                            <img class="pluscirclefill-icon" alt="Pas Foto 4x6" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
                                             <div class="pas-foto-4x6">Pas Foto 4x6</div>
@@ -431,10 +411,9 @@
                                     </div>
                                 </v-col>
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
-                                    <input class="d-none" type="file" ref="fileInput3" @change="onSelectFile($event, 'ktp')">
                                     <div class="pas-foto">
-                                        <button class="plus cursor-pointer" @click="openFile">
-                                            <img class="pluscirclefill-icon" alt="CV" src="@/assets/svg/doc.svg" />
+                                        <button class="plus cursor-pointer" @click="openFile(ktp)">
+                                            <img class="pluscirclefill-icon" alt="KTP" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
                                             <div class="pas-foto-4x6">KTP</div>
@@ -443,10 +422,9 @@
                                     </div>
                                 </v-col>
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
-                                    <input class="d-none" type="file" ref="fileInput4" @change="onSelectFile($event, 'kk')">
                                     <div class="pas-foto">
-                                        <button class="plus cursor-pointer" @click="openFile">
-                                            <img class="pluscirclefill-icon" alt="CV" src="@/assets/svg/doc.svg" />
+                                        <button class="plus cursor-pointer" @click="openFile(kk)">
+                                            <img class="pluscirclefill-icon" alt="Kartu Keluarga" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
                                             <div class="pas-foto-4x6">Kartu Keluarga</div>
@@ -455,10 +433,9 @@
                                     </div>
                                 </v-col>
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
-                                    <input class="d-none" type="file" ref="fileInput5" @change="onSelectFile($event, 'npwp')">
                                     <div class="pas-foto">
-                                        <button class="plus cursor-pointer" @click="openFile">
-                                            <img class="pluscirclefill-icon" alt="CV" src="@/assets/svg/doc.svg" />
+                                        <button class="plus cursor-pointer" @click="openFile(npwp)">
+                                            <img class="pluscirclefill-icon" alt="NPWP" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
                                             <div class="pas-foto-4x6">NPWP</div>
@@ -467,9 +444,9 @@
                                     </div>
                                 </v-col>
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
-                                    <div class="pas-foto" @click="openFile()">
+                                    <div class="pas-foto" @click="openFile(bpjs)">
                                         <button class="plus cursor-pointer">
-                                            <img class="pluscirclefill-icon" alt="CV" src="@/assets/svg/doc.svg" />
+                                            <img class="pluscirclefill-icon" alt="BPJSKES & TK" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
                                             <div class="pas-foto-4x6">BPJSKES & TK</div>
@@ -484,7 +461,7 @@
                     <v-row>
                         <div class="save-container">
                             <div></div>
-                            <div class="button-wrapper" @click="">
+                            <div class="button-wrapper" @click="$router.push('/talent-selection')">
                                 <b class="tempat-tanggal-lahir">Close</b>
                             </div> 
                         </div>
@@ -492,20 +469,19 @@
                 </div>
             </div>
         </v-card>
-        <Dialog-OpenFile :show="fileDialog" :closeDialog="closeFile"/>
+        <Dialog-OpenFile :show="fileDialog" :fileUrl="fileUrl" :closeDialog="closeFile"/>
     </div>
 </template>
 <script>
 import { API } from '@/api/index'
 import Multiselect from 'vue-multiselect'
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
-    auth: 'guest',
-    name: "register",
-    layout: "register",
     components: { Multiselect },
     data: () => ({
         preview: true,
+        fileUrl: null,
         fileDialog: false,
         id_registration: null,
         datePickerBirthDate: false,
@@ -563,33 +539,26 @@ export default {
     }),
     watch: {
         fileDialog(to, from){
-            console.log(to, from);;
+            // console.log(to, from);;
         },
     },
     setup() {
-        const { getRegistration, postRegistration } = API()
-        return { getRegistration, postRegistration };
+        const { getDetailJobSeeker } = API()
+        return { getDetailJobSeeker };
+    },
+    computed: {
+        ...mapGetters('provider-selection', ['tahapanGetter']),
     },
     async mounted() {
-        const storageIdRegistration = localStorage.getItem('id_registration');
-        if(storageIdRegistration){
-            this.id_registration = storageIdRegistration;
-            this.getData();
-        }
+        await this.getData();
     },
     methods: {
-        async openFile(){
-            console.log('openFile');
-            this.fileDialog = true;
-        },
-        async closeFile(){
-            console.log('openFile');
-            this.fileDialog = false;
-        },
         async getData(){
-            // await this.getRegistration(this.id_registration).then((result)=>{
-            //     result && this.refreshForm(result);
-            // })
+            if(this.tahapanGetter.detail?.job_seeker_id){
+                await this.getDetailJobSeeker(this.tahapanGetter.detail?.job_seeker_id).then((result)=>{
+                    result && this.refreshForm(result);
+                })
+            }
         },
         refreshForm(data){
             this.email = data.email;
@@ -640,31 +609,6 @@ export default {
             });
 
         },
-        onSelectFile (event, param) {
-            const file = event.srcElement.files[0];
-            switch (param) {
-                case 'curriculum_vitae':
-                    this.curriculum_vitae = file;
-                    break;
-                case 'photo':
-                    this.photo = file;
-                    break;
-                case 'ktp':
-                    this.ktp = file;
-                    break;
-                case 'kk':
-                    this.kk = file;
-                    break;
-                case 'npwp':
-                    this.npwp = file;
-                    break;
-                case 'bpjs':
-                    this.bpjs = file;
-                    break;
-                default:
-                    break;
-            }
-        },
         parseDate (date) {
             if (!date) return null
             const [year, month, day] = date.split('-')
@@ -673,6 +617,16 @@ export default {
         back(){
             this.preview = false;
             window.scrollTo({ top: 0, behavior: 'smooth' })
+        },
+        openFile(url){
+            if(url){
+                this.fileUrl = url;
+                this.fileDialog = true;
+            }
+        },
+        closeFile(){
+            this.fileDialog = false;
+            this.fileUrl = null;
         },
     }
 
@@ -858,6 +812,7 @@ export default {
     padding: 10px;
     box-sizing: border-box;
     color: #fff;
+    cursor: pointer;
 }
 .milestones-item {
     width: 90%;

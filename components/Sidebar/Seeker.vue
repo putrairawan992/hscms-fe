@@ -14,7 +14,7 @@
                 <div class="menu-child" />
                 <div :class="pageActive == 'pretest' ? 'dashboard1' : 'help-center'" @click="$router.push('/pretest')">Pre-test</div>
                 <div :class="pageActive == 'job' ? 'dashboard1' : 'help-center'" @click="$router.push('/job-vacancy')">Job Vacancy</div>
-                <div class="help-center" style="color: #a3a3a3;" @click="">Schedule</div>
+                <div :class="pageActive == 'schedule' ? 'dashboard1' : 'help-center'" @click="$router.push('/schedule')">Schedule</div>
             </div>
             <img class="menu-left-item" alt="" src="@/assets/svg/rectangle-4106.svg" />
             <img

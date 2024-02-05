@@ -68,6 +68,13 @@ input:-webkit-autofill:active{
     box-shadow: none !important;
     background: rgba(174, 68, 90, 0.20) !important;
 }
+.v-text-field.v-text-field--enclosed .v-text-field__details {
+    /* menghilangkan detail dibawah v-text-field */
+    display: none !important;
+}
+.v-text-field__details {
+    display: none !important;
+}
 
 .orange-btn {
     cursor: pointer;
@@ -903,7 +910,7 @@ input:-webkit-autofill:active{
     opacity: 1 !important;
 }
 .register-text-input.multiselect--disabled .multiselect__current, .multiselect--disabled .multiselect__select {
-    background: #fff !important;
+    background: #ffffff00 !important;
     border-radius: 10px;
 }
 
@@ -1017,6 +1024,7 @@ input:-webkit-autofill:active{
     padding: 10px !important;
     font-size: 12px !important;
     margin-bottom: 0 !important;
+    background-color: #00000000 !important;
 }
 .register-text-field.v-text-field.v-text-field--enclosed .v-text-field__details {
     display: none !important;
@@ -1037,6 +1045,7 @@ input:-webkit-autofill:active{
 .search-text-field.v-text-field input {
     padding: 5px !important;
     font-size: 12px !important;
+    background-color: #00000000 !important;
 }.search-text-field.v-text-field input::placeholder {
     font-style: italic !important;
 }
@@ -1044,6 +1053,7 @@ input:-webkit-autofill:active{
     box-shadow: none !important;
     border-radius: 10px !important;
     border: 1px solid #ae445a !important;
+    background-color: #00000000 !important;
     box-sizing: border-box !important;
     width: 100% !important;
     min-height: 40px !important;
@@ -1056,7 +1066,38 @@ input:-webkit-autofill:active{
     margin-bottom: 0 !important;
     margin-top: 3px !important;
 }
-.search-text-field.v-text-field.v-text-field--enclosed .v-text-field__details {
+.selection4-text-field.v-text-field.v-text-field--enclosed .v-text-field__details {
+    display: none !important;
+}
+.selection4-text-field.theme--light.v-text-field > .v-input__control > .v-input__slot:before {
+    border: none !important;
+}
+.selection4-text-field.v-text-field input {
+    padding: 5px !important;
+    font-size: 12px !important;
+    background-color: #00000000 !important;
+}.selection4-text-field.v-text-field input::placeholder {
+    font-style: italic !important;
+    text-align: center !important;
+}
+.selection4-text-field.v-text-field.v-text-field--solo:not(.v-text-field--solo-flat) > .v-input__control > .v-input__slot {
+    box-shadow: none !important;
+    border-radius: 10px !important;
+    border: 1px solid #ae445a !important;
+    background-color: #00000000 !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-height: 35px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: 0px 5px !important;
+    font-size: 12px !important;
+    margin-bottom: 0 !important;
+    margin-top: 3px !important;
+}
+.selection4-text-field.v-text-field.v-text-field--enclosed .v-text-field__details {
     display: none !important;
 }
 .selection-text-field.theme--light.v-text-field > .v-input__control > .v-input__slot:before {
@@ -1085,8 +1126,123 @@ input:-webkit-autofill:active{
     margin-top: 3px !important;
     background-color: #ffffff00;
 }
-.selection-text-field.v-text-field.v-text-field--enclosed .v-text-field__details {
+.grade-text-field.v-text-field.v-text-field--enclosed .v-text-field__details {
     display: none !important;
+}
+.grade-text-field.theme--light.v-text-field > .v-input__control > .v-input__slot:before {
+    border: none !important;
+}
+.grade-text-field.v-text-field input {
+    padding: 5px !important;
+    font-size: 12px !important;
+}.grade-text-field.v-text-field input::placeholder {
+    font-style: italic !important;
+}
+.grade-text-field.v-text-field.v-text-field--solo:not(.v-text-field--solo-flat) > .v-input__control > .v-input__slot {
+    box-shadow: none !important;
+    border-radius: 10px !important;
+    border: 1px solid #ae445a !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-height: 47px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: 0px 5px !important;
+    font-size: 12px !important;
+    margin-bottom: 0 !important;
+    margin-top: 3px !important;
+    background-color: #ffffff00;
+}
+.grade-text-field.v-text-field.v-text-field--enclosed .v-text-field__details {
+    display: none !important;
+}
+.plain-text-field.v-text-field.v-text-field--enclosed .v-text-field__details {
+    display: none !important;
+}
+.plain-text-field.theme--light.v-text-field > .v-input__control > .v-input__slot:before {
+    border: none !important;
+}
+
+.plain-text-field.v-text-field input {
+    padding: 5px !important;
+    font-size: 13px !important;
+    font-family: Poppins !important;
+    font-weight: 700 !important;
+}.plain-text-field.v-text-field input::placeholder {
+    color: #B6B6B6 !important;
+    font-family: Poppins !important;
+    font-size: 13px !important;
+    font-style: italic !important;
+    font-weight: 700 !important;
+}
+.plain-text-field.v-text-field.v-text-field--solo:not(.v-text-field--solo-flat) > .v-input__control > .v-input__slot {
+    box-shadow: none !important;
+    border-radius: 10px !important;
+    border: 1px solid #ae445a !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-height: 47px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: 0px 5px !important;
+    font-size: 13px !important;
+    margin-bottom: 0 !important;
+    margin-top: 3px !important;
+    background-color: #ffffff00;
+}
+.plain-text-field.v-text-field.v-text-field--enclosed .v-text-field__details {
+    display: none !important;
+}
+
+
+.small-plain-text-field.v-text-field.v-text-field--enclosed .v-text-field__details {
+    display: none !important;
+}
+.small-plain-text-field.theme--light.v-text-field > .v-input__control > .v-input__slot:before {
+    border: none !important;
+}
+.small-plain-text-field.v-input {
+    margin-top: 2px !important;
+    max-width: 80% !important;
+}
+.small-plain-text-field .v-input__slot {
+    margin-bottom: 0px !important;
+}
+.small-plain-text-field.v-text-field input {
+    padding: 5px !important;
+    color: #AE445A !important;
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}.small-plain-text-field.v-text-field input::placeholder {
+    color: #B6B6B6 !important;
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.small-plain-text-field.v-text-field.v-text-field--solo:not(.v-text-field--solo-flat) > .v-input__control > .v-input__slot {
+    box-shadow: none !important;
+    border-radius: 10px !important;
+    border: none !important;
+    box-sizing: border-box !important;
+    min-height: 27px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: 0px 5px !important;
+    font-size: 12px !important;
+    margin-bottom: 0 !important;
+    margin-top: 3px !important;
+    background-color: #ffffff00;
 }
 
 .job-text-field.theme--light.v-text-field > .v-input__control > .v-input__slot:before {
@@ -1122,6 +1278,56 @@ input:-webkit-autofill:active{
 }
 .job-text-field.v-text-field.v-text-field--enclosed .theme--light.v-icon {
     color: #ae445a !important;
+}
+
+
+.select-month.theme--light.v-text-field > .v-input__control > .v-input__slot:before {
+    border: none !important;
+}
+.select-month.v-text-field input {
+    padding: 10px !important;
+    padding-left: 0 !important;
+    font-size: 12px !important;
+}.select-month.v-text-field input::placeholder {
+    font-style: italic !important;
+}
+.select-month.v-text-field.v-text-field--solo:not(.v-text-field--solo-flat) > .v-input__control > .v-input__slot {
+    box-shadow: none !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    height: 11px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: 10px !important;
+    margin-bottom: 0 !important;
+    color: #fff !important;
+    font-size: 18px;
+}
+.select-month.v-text-field.v-text-field--enclosed .v-text-field__details {
+    display: none !important;
+}
+.select-month.v-text-field.v-text-field--enclosed .v-icon.v-icon {
+    color: #fff;
+    font-family: Nunito;
+    font-size: 18px !important;
+    font-weight: 900 !important;
+}
+.select-month .v-select__selection--comma {
+    color: #fff;
+    font-family: Nunito;
+    font-size: 18px !important;
+    font-weight: 900 !important;
+}
+.select-month.v-text-field.v-text-field--enclosed .theme--light.v-icon {
+    color: #FFF !important;
+}
+.select-month input {
+    display: none;
+}
+.select-month .theme--light.v-icon {
+    color: #FFF !important;
 }
     
 /* end job post */

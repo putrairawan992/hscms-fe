@@ -76,7 +76,7 @@ export default {
     middleware: "jobProvider",
     data: () => ({}),
     computed: {
-		...mapState('jobseeker-pretest', ['finish']),
+		...mapState('seeker-pretest', ['finish']),
     },
     mounted() {
         if(this.finish == null){

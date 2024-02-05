@@ -10,85 +10,17 @@
                             </div>
                         </v-col>
                     </v-row>
-                    <div style="height: 760px; overflow-y: auto; overflow-x: hidden">
-                        <!-- <div class="text-left text-soal-dan mb-4">
-                            <b>Soal dan Jawaban</b>
-                        </div>
-                        <v-row class="" align="start" style="">
-                            <v-col cols="12" class="detail-selection-card mb-6">
-                                <div class="history-1">
-                                    <div class="frame-detail-text-question">
-                                        <ol class="w-100"><li>
-                                            <div class="text-left detail-text-question">
-                                                Silahkan kerjakan rumus excel dengan panduan yang tersedia disini: https://adsdsdsdsd Beri nama file sesuai instruksi yang tersedia di link terkait.
-                                            </div>
-                                        </li></ol> 
-                                        <v-row class="mt-2" style="border-bottom: 2px solid #AE445A;">
-                                            <v-col cols="4">
-                                                <b>Tes Excel Pegawai ABC 1. XLS</b>
-                                            </v-col>
-                                            <v-col cols="4">
-                                                18 Juli 2023
-                                            </v-col>
-                                            <v-col cols="4">
-                                                <div class="edit-parent">
-                                                    <img class="" alt="" src="@/assets/svg/eye-circle.svg" />
-                                                    <img class="" alt="" src="@/assets/svg/arrow-down-to-line.svg" @click="" />
-                                                </div>
-                                            </v-col>
-                                        </v-row>
-                                        <v-row class="mt-2" >
-                                            <v-col cols="4" class="text-left" style="display: flex; align-items: center;">
-                                                <b>Score:</b>
-                                            </v-col>
-                                            <v-col cols="8" class="pb-2">
-                                                <v-text-field
-                                                    placeholder="Masukkan nilai 1 - 100" 
-                                                    solo class="search-text-field"
-                                                ></v-text-field>
-                                            </v-col>
-                                        </v-row>
-                                    </div>
-                                </div>
-                            </v-col>
-                            <v-col cols="12" class="detail-selection-card mb-6">
-                                <div class="history-1">
-                                    <div class="frame-detail-text-question">
-                                        <ol class="w-100"><li>
-                                            <div class="text-left detail-text-question">
-                                                Soal nomor satu,  jabarkan/tulis essai mengenai apa gitu
-                                            </div>
-                                        </li></ol> 
-                                        <v-row class="mt-2" style="border-bottom: 2px solid #AE445A;">
-                                            <v-col cols="12">
-                                                <TextEditor v-model="html" class="rich-editor" placeholder="Silahkan jawab pertanyaan dengan jawaban yang sesuai"/>
-                                            </v-col>
-                                        </v-row>
-                                        <v-row class="mt-2" >
-                                            <v-col cols="4" class="text-left" style="display: flex; align-items: center;">
-                                                <b>Score:</b>
-                                            </v-col>
-                                            <v-col cols="8" class="pb-2">
-                                                <v-text-field
-                                                    placeholder="Masukkan nilai 1 - 100" 
-                                                    solo class="search-text-field"
-                                                ></v-text-field>
-                                            </v-col>
-                                        </v-row>
-                                    </div>
-                                </div>
-                            </v-col>
-                        </v-row> -->
-
-                        <v-row class="" align="start" style="">
+                    <div  style="height: 760px; overflow-y: auto; overflow-x: hidden">
+                        <v-row v-if="data" align="start" style="">
                             <v-col cols="3">
                                 <div class="text-left text-soal-dan mb-4">
                                     <b>Jawaban Peserta</b>
                                 </div>
-                                <ol class="w-100">
-                                    <li v-for="n in 26" :key="n" class="mb-2">
+                                <ol class="w-100" v-if="data.detail.length">
+                                    <li v-for="value, key in data.detail" class="mb-2">
                                         <div class="text-left detail-text-question">
-                                            B. Jawaban yang Benar
+                                            <span style="text-transform: uppercase;">{{ value?.answer_user[0].alphabet }}</span>. 
+                                            Jawaban yang {{value?.answer_user[0].alphabet == value?.choise_question[0].alphabet ? 'Benar' : 'Salah'}}
                                         </div>
                                     </li>
                                 </ol> 
@@ -97,14 +29,16 @@
                                 <div class="text-left text-soal-dan mb-4">
                                     <b>Jawaban Soal</b>
                                 </div>
-                                <ol class="w-100">
-                                    <li v-for="n in 26" :key="n" class="mb-2">
+                                <ol class="w-100" v-if="data.detail.length">
+                                    <li v-for="value, key in data.detail" class="mb-2">
                                         <div class="text-left detail-text-question">
-                                            B. Jawaban yang Benar
+                                            <span style="text-transform: uppercase;">{{ value?.choise_question[0].alphabet }}</span>. 
+                                            Jawaban yang Benar
                                         </div>
                                     </li>
                                 </ol> 
                             </v-col>
+
                             <v-col cols="6">
                                 <div class="text-center text-soal-dan mb-6 mt-2">
                                     <b>Total Jawaban Salah:</b>
@@ -121,13 +55,21 @@
                                 <div class="text-center text-soal-dan mb-6">
                                     <b>Nilai Akhir:</b>
                                     <div class="text-center nilai-text">
-                                        76
+                                        {{ tahapanGetter.detail.module.score }}
                                     </div>
                                 </div>
                             </v-col>
                         </v-row>
                     </div>
 
+                    <div style="position: relative; display: flex; justify-content: end; column-gap: 20px; margin-top: 30px; padding-bottom: 30px;">
+                        <div></div>
+                        <div class="orange-btn">
+                            <div class="" @click="$router.push('/talent-selection')">
+                                <b class="button mx-4">Save</b>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </v-card>
@@ -136,26 +78,43 @@
     </div>
 </template>
 <script>
-import Multiselect from 'vue-multiselect'
+import { API } from '@/api/index'
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
     name: "jobProvider",
     layout: "jobPost",
-    components: { 
-        Multiselect,
-    },
+    components: {},
     data: () => ({
-        select1: null,
-        html: null,
+        data: null,
         showDialog: false,
         showAlertApproval: false,
-
-        arrayJalur: ['Seleksi', 'Non-Seleksi'],
-        arrayJobOpening: ['Marketing Staff', 'UI/UX Designer', 'Graphic Designer'],
-        arrayTahapan: ['Tahap 1', 'Tahap 2', 'Tahap 3', 'Tahap 4'],
     }),
     watch: {
     },
+    setup() {
+        const { getDetailAnswerAPI, putInputScore, postFinishScoring } = API()
+        return { getDetailAnswerAPI, putInputScore, postFinishScoring };
+    },
+    computed: {
+        ...mapState('provider-selection', ['detailAnswer']),
+        ...mapGetters('provider-selection', ['tahapanGetter']),
+    },
+    async mounted(){
+        await this.getData();
+        this.data = this.detailAnswer;
+        console.log('this.data', this.data);
+    },
     methods: {
+        ...mapMutations('provider-selection', ['setDetailAnswer']),
+        async getData(){
+            let job_post_id = this.tahapanGetter.jobSelected?.id;
+            let job_seeker_id = this.tahapanGetter.detail?.job_seeker_id;
+            let pretest_modul_detail_id = this.tahapanGetter.detail?.module?.pretest_modul_detail_id;
+
+            await this.getDetailAnswerAPI(job_seeker_id, job_post_id, pretest_modul_detail_id).then((result)=>{
+                if(result){ this.setDetailAnswer(result); }
+            })
+        },
         openDialog() {
             this.showDialog = true;
         },

@@ -2,33 +2,29 @@
     <div>
         <v-card class="card-register">
             <div class="my-2" style="position: relative;">
-                <div class="blokade-parent ma-8 pt-1" style="">
+                <div class="blokade-parent ma-8 pt-1" style="min-height: 850px;">
                     <v-row align="center" class="my-4">
                         <v-col cols="12" class="text-left">
-                            <div class="open-job-dan-draft">
+                            <div class="page-title">
                                 Talent Selection
                             </div>
                         </v-col>
-                        <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
+                        <!-- <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
                             <v-row align="center">
                                 <v-col cols="12" class="label pb-1">
                                     <b>Jalur</b>
                                 </v-col>
                                 <v-col cols="12" class="pt-0 input-checkbox-container">
                                     <multiselect
-                                        v-model="select1"
-                                        :options="arrayJalur"
+                                        value="Seleksi"
+                                        :options="arrayJalur" disabled
                                         placeholder="Pilih Jalur" :allow-empty="false"
                                         class="header-select-input"
                                         >
-                                        <!-- class="register-text-input" label="job_level_name" -->
-                                        <!-- <template slot="singleLabel" slot-scope="{ option }">
-                                            <span style="color: #000;">{{ option.job_level_name }}</span>
-                                        </template> -->
                                     </multiselect>
                                 </v-col>
                             </v-row>
-                        </v-col>
+                        </v-col> -->
                         <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
                             <v-row align="center">
                                 <v-col cols="12" class="label pb-1">
@@ -36,15 +32,11 @@
                                 </v-col>
                                 <v-col cols="12" class="pt-0 input-checkbox-container">
                                     <multiselect
-                                        v-model="select2"
+                                        v-model="jobSelected"
                                         :options="arrayJobOpening"
                                         placeholder="Pilih Job Opening" :allow-empty="false"
-                                        class="header-select-input"
+                                        class="header-select-input" label="job_title"
                                         >
-                                        <!-- class="register-text-input" label="job_level_name" -->
-                                        <!-- <template slot="singleLabel" slot-scope="{ option }">
-                                            <span style="color: #000;">{{ option.job_level_name }}</span>
-                                        </template> -->
                                     </multiselect>
                                 </v-col>
                             </v-row>
@@ -56,15 +48,11 @@
                                 </v-col>
                                 <v-col cols="12" class="pt-0 input-checkbox-container">
                                     <multiselect
-                                        v-model="select2"
+                                        v-model="tahapSelected"
                                         :options="arrayTahapan"
                                         placeholder="Pilih Tahapan" :allow-empty="false"
                                         class="header-select-input"
                                         >
-                                        <!-- class="register-text-input" label="job_level_name" -->
-                                        <!-- <template slot="singleLabel" slot-scope="{ option }">
-                                            <span style="color: #000;">{{ option.job_level_name }}</span>
-                                        </template> -->
                                     </multiselect>
                                 </v-col>
                             </v-row>
@@ -75,8 +63,8 @@
                                     &nbsp;
                                 </v-col>
                                 <v-col cols="12" class="pt-0 input-checkbox-container">
-                                    <div class="generate-btn">
-                                        <div class="attach-mpr-parent" @click="">
+                                    <div class="generate-btn ml-0" style="cursor: pointer;">
+                                        <div class="attach-mpr-parent" @click="generate">
                                             <b class="button mx-4">Generate</b>
                                         </div>
                                     </div>
@@ -85,11 +73,22 @@
                         </v-col>
 
                     </v-row>
-                    <!-- <TalentSelection /> -->
-                    <!-- <TalentSelection-Tahap1 /> -->
-                    <!-- <TalentSelection-Tahap2 /> -->
-                    <TalentSelection-Tahap3 />
-
+                    <Congratulation 
+                        v-if="showCongratulation"
+                        :closeDialogCongratulation="closeDialogCongratulation"
+                    />
+                    <div v-else>
+                        <div v-if="showDashboard">
+                            <TalentSelection />
+                        </div>
+                        <div v-else>
+                            <TalentSelection-Tahap1 v-if="tahap == 'Tahap 1'" :next="next"/>
+                            <TalentSelection-Tahap2  v-else-if="tahap == 'Tahap 2'" :next="next"/>
+                            <TalentSelection-Tahap3  v-else-if="tahap == 'Tahap 3'" :next="next"/>
+                            <TalentSelection-Tahap4  v-else-if="tahap == 'Tahap 4'" :next="next"/>
+                            <TalentSelection-Tahap5  v-else-if="tahap == 'Tahap 5'" :next="next" :finish="finish"/>
+                        </div>
+                    </div>
                 </div>
             </div>
         </v-card>
@@ -97,8 +96,10 @@
         <AlertApproval content="Lowongan akan dihentikan. Anda yakin ingin menghentikan?" :onApprove="closeAlertApproval" :closeDialog="closeAlertApproval" :show="showAlertApproval"/>
     </div>
 </template>
+
 <script>
 import Multiselect from 'vue-multiselect'
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
     name: "jobProvider",
     layout: "jobPost",
@@ -106,18 +107,71 @@ export default {
         Multiselect,
     },
     data: () => ({
-        select1: null,
-        select2: null,
+        tahap: null,
+        jobSelected: null,
+        tahapSelected: null,
+
         showDialog: false,
+        showDashboard: false,
         showAlertApproval: false,
+        showCongratulation: false,
 
         arrayJalur: ['Seleksi', 'Non-Seleksi'],
+        arrayTahapan: ['Tahap 1', 'Tahap 2', 'Tahap 3', 'Tahap 4', 'Tahap 5'],
         arrayJobOpening: ['Marketing Staff', 'UI/UX Designer', 'Graphic Designer'],
-        arrayTahapan: ['Tahap 1', 'Tahap 2', 'Tahap 3', 'Tahap 4'],
     }),
-    watch: {
+    watch: {},
+    computed: {
+		...mapState('provider-selection', ['jobOpening']),
+        ...mapGetters('provider-selection', ['tahapanGetter']),
+    },
+    async mounted(){
+        await this.getJobOpening();
+        this.arrayJobOpening = this.jobOpening;
+        console.log('this.tahapanGetter', this.tahapanGetter);
+        if(this.tahapanGetter){
+            this.tahap = this.tahapanGetter.tahap;
+            this.tahapSelected = this.tahapanGetter.tahap;
+            this.jobSelected = this.tahapanGetter.jobSelected;
+            if(!this.tahap){
+                this.showDashboard = true;
+            }
+        }else{
+            this.showDashboard = true;
+        }
     },
     methods: {
+		...mapActions('provider-selection', ['getJobOpening', 'getListCandidate']),
+        ...mapMutations('provider-selection', ['setTahapan']),
+
+        async generate(){
+            console.log('generate', this.jobSelected, this.tahapSelected);
+
+            if(this.jobSelected != null && this.tahapSelected != null){
+                this.tahap = this.tahapSelected;
+                this.showDashboard = false;
+                this.setTahapan({
+                    tahap: this.tahapSelected,
+                    jobSelected: {id: this.jobSelected.id, job_title: this.jobSelected.job_title},
+                })
+            }
+        },
+        next(tahap){
+            this.tahap = tahap;
+            this.tahapSelected = tahap;
+            this.generate();
+        },
+        finish(){
+            this.showCongratulation = true;
+        },
+        closeDialogCongratulation() {
+            this.showCongratulation = false;
+            this.showDashboard = true;
+            this.setTahapan({
+                tahap: null,
+                jobSelected: null,
+            });
+        },
         openDialog() {
             this.showDialog = true;
         },
@@ -480,6 +534,14 @@ export default {
     /* max-width: 100%; */
     overflow: hidden;
     /* max-height: 100%; */
+}
+.page-title {
+    color: #AE445A;
+    font-family: Nunito;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
 }
 .open-job-dan-draft {
     font-size: 20px;

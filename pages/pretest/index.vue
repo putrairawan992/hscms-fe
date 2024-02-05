@@ -84,7 +84,7 @@ export default {
     }),
     watch: {},
     computed: {
-		...mapState('jobseeker-pretest', ['pretests']),
+		...mapState('seeker-pretest', ['pretests']),
     },
     setup() {
         const { getListPretest } = API()
@@ -94,8 +94,8 @@ export default {
         await this.getPretest();
     },
     methods: {
-		...mapActions('jobseeker-pretest', ['getPretest']),
-        ...mapMutations('jobseeker-pretest', ['setJobID', 'setModuleID', 'setCategoryID']),
+		...mapActions('seeker-pretest', ['getPretest']),
+        ...mapMutations('seeker-pretest', ['setJobID', 'setModuleID', 'setCategoryID']),
 
         startTest(data, job_post_id){
             if(!data.modul){

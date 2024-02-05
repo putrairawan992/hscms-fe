@@ -20,93 +20,69 @@
         </div>
 
         <div style="height: 581px; overflow: auto;  overflow-x: hidden">
-            <v-row class="mt-3" align="start">
-                <v-expansion-panels v-model="panel">
-                    <v-col v-for="value, key in dataCandidate?.candidate_list" :key="key" cols="12" class="pb-0">
-                        <div class="history-1">
-                            <div class="frame-parent-ts">
-                                <div class="foto-tahap1-parent">
-                                    <v-checkbox class="input-checkbox" color="#ae445a" @change="onChecked($event, value.job_seeker_id)"></v-checkbox>
-                                    <img
-                                        class="foto-tahap1-icon"
-                                        :src="value.photo"
-                                        alt="photo"
-                                    />
-                                    <b class="list-item-name">{{ value.name }}</b>
+            <v-row class="mt-3" align="center">
+                <v-col v-for="value, key in dataCandidate?.candidate_list" :key="key" cols="12" class="pb-0">
+                    <div class="history-1">
+                        <div class="frame-parent-ts">
+                            <div class="foto-tahap1-parent">
+                                <v-checkbox class="input-checkbox" color="#ae445a"  @change="onChecked($event, value.job_seeker_id)">
+                                </v-checkbox>
+                                <img
+                                    class="foto-tahap1-icon"
+                                    :src="value.photo"
+                                    alt="photo"
+                                />
+                                <b class="list-item-name">{{ value.name }}</b>
+                            </div>
+                            <div>
+                                <v-row>
+                                    <v-col cols="12" class="">
+                                        <v-text-field
+                                            placeholder="Input zoom link here" :value="value.link_interview"
+                                            solo class="selection4-text-field" @input="debounceInput($event, value.job_seeker_id)"
+                                        ></v-text-field>
+                                    </v-col>
+                                </v-row>
+                            </div>
+    
+                            <div style="position: relative; display: flex; justify-content: end; column-gap: 10px;">
+                                <div class="orange-btn" style="">
+                                    <div class="" @click="clickAbstain(value.job_seeker_id)">
+                                        <b class="button mx-3">Abstain</b>
+                                    </div>
                                 </div>
-                                <div style="cursor: pointer;" @click="activatePanel(key+1)"><i>Review Kandidat</i></div>
-                                <div class="">{{ value.created_at }}</div>
+                                <div class="orange-btn" style="">
+                                    <div class="px-3 d-flex" style="align-items: center;" @click="clickGrade(value.job_seeker_id, value.grade_score)">
+                                        <b class="button">Grade</b>
+                                        <img v-if="value.grade_score" class="ml-2" alt="" src="@/assets/svg/eyecirclefill.svg" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <v-expansion-panel class="expansion-ts" style="background-color: #fff;">
-                            <v-expansion-panel-content>
-                                <table class="panel-table mt-2">
-                                    <tr>
-                                        <th>Module Name</th>
-                                        <th>Duration</th> 
-                                        <th>Detail</th>
-                                        <th>Score</th>
-                                    </tr>
-                                    <tr><th colspan="4" style="border-top: 2px solid #AE445A;"></th></tr>
-                                    <tr v-if="value.score.length" v-for="item in value.score" class="panel-table-item">
-                                        <td class="text-left">{{ item.title_test }}</td>
-                                        <td>00:00:00</td> 
-                                        <td class="">
-                                            <div class="table-btn" style="">
-                                                <div class="" @click="clickDetail(value.job_seeker_id, item)">
-                                                    <b class="button mx-4">Detail</b>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td style="max-width: 174px;">
-                                            <v-text-field
-                                                solo class="search-text-field" readonly
-                                                placeholder="Rata-Rata Nilai" :value="item.score"
-                                            ></v-text-field>
-                                        </td>
-                                    </tr>
-                                    <tr v-else class="panel-table-item">
-                                        <td>-</td> 
-                                        <td>-</td> 
-                                        <td>-</td> 
-                                        <td>-</td> 
-                                    </tr>
-                                    <tr><th colspan="4" style="border-top: 2px solid #AE445A;"></th></tr>
-                                    <tr>
-                                        <th colspan="3" class="mt-4">Average Score</th>
-                                        <th class="mt-4">0</th>
-                                    </tr>
-                                </table>
-                                <!-- <div class="mt-2" style="display: flex; justify-content: end;">
-                                    <div class="orange-btn" style="">
-                                        <div class="" @click="">
-                                            <b class="button mx-4">Save</b>
-                                        </div>
-                                    </div>
-                                </div> -->
-                            </v-expansion-panel-content>
-                        </v-expansion-panel>
-                    </v-col>
-                </v-expansion-panels>
+    
+                    </div>
+                </v-col>
             </v-row>
         </div>
         <div style="position: relative; display: flex; justify-content: end; column-gap: 20px; margin-top: 60px; padding-bottom: 30px;">
-            <!-- <div class="orange-btn" style="">
-                <div class="" @click="unselect">
+            <div class="orange-btn" style="">
+                <div class="" @click="">
                     <b class="button mx-4">Unselect All</b>
                 </div>
-            </div> -->
-            <div></div>
+            </div>
             <div class="orange-btn" style="">
                 <div class="" @click="continueStep">
-                    <b class="button mx-4">Continue to “Tahap 2”</b>
+                    <b class="button mx-4">Continue to “Tahap 5”</b>
                 </div>
             </div>
         </div>
+        <Dialog-GradeForm :show="gradeFormDialog" :closeDialog="closeDialog" :jobSeekerId="job_seeker_id"/>
+        <Dialog-GradeResult :show="gradeResultDialog" :closeDialog="closeDialogGradeResult" :jobSeekerId="job_seeker_id"/>
     </div>
 </template>
 
 <script>
+import debounce from 'debounce';
 import { API } from '@/api/index'
 import Multiselect from 'vue-multiselect'
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
@@ -118,16 +94,20 @@ export default {
         panel: [],
         radios: [],
         idCandidats:[],
+        gradeFormDialog: false,
+        gradeResultDialog: false,
+
+        job_seeker_id: null,
         dataCandidate: null,
-    } },
+    }},
     watch: {
-        tahapanGetter(to, from){
-            this.refreshData();
+        idCandidats(to, from){
+            console.log('idCandidats', to);;
         }
     },
     setup() {
-        const { getListCandidateAPI, postChooseCandidate } = API()
-        return { getListCandidateAPI, postChooseCandidate };
+        const { getListCandidateAPI, postChooseCandidate, postLinkInterview, putAbstain } = API()
+        return { getListCandidateAPI, postChooseCandidate, postLinkInterview, putAbstain };
     },
     computed: {
 		...mapState('provider-selection', ['listCandidate']),
@@ -139,11 +119,42 @@ export default {
     async mounted(){
         await this.getListCandidate();
         this.dataCandidate = this.listCandidate;
+        console.log('this.dataCandidate', this.dataCandidate);
     },
     methods: {
 		...mapActions('provider-selection', ['getListCandidate']),
         ...mapMutations('provider-selection', ['setTahapan', 'setListCandidate']),
 
+        async continueStep() {
+            if(this.idCandidats.length){
+                await this.postChooseCandidate({
+                    status_step: 'tahap 5',
+                    job_seeker_id: this.idCandidats,
+                    job_post_id: this.tahapanGetter.jobSelected?.id
+    
+                }).then((result)=>{
+                    if(result){
+                        this.setTahapan({ tahap: 'Tahap 5', ...this.tahapanGetter });
+                        return this.next('Tahap 5');
+                    }
+                })
+            }else{
+                this.$notifier.showMessage({ content: 'Mohon pilih kandidat terlebih dahulu.', status: 'warning' });
+            }
+        },
+        async clickGrade(job_seeker_id, already_filled){
+            this.job_seeker_id = job_seeker_id;
+            if(already_filled){
+                this.gradeResultDialog = true;
+            }else{
+                this.gradeFormDialog = true;
+            }
+        },
+        async clickAbstain(job_seeker_id) {
+            await this.putAbstain(job_seeker_id, this.tahapanGetter.jobSelected?.id).then((result)=>{
+                this.refreshData();
+            })
+        },
         async refreshData() {
             await this.getListCandidateAPI({
                 selection_path: "selection",
@@ -156,33 +167,14 @@ export default {
                 }
             })
         },
-        async continueStep() {
-            if(this.idCandidats.length){
-                await this.postChooseCandidate({
-                    status_step: 'tahap 2',
-                    job_seeker_id: this.idCandidats,
-                    job_post_id: this.tahapanGetter.jobSelected?.id
-    
-                }).then((result)=>{
-                    if(result){
-                        this.setTahapan({ tahap: 'Tahap 2', ...this.tahapanGetter });
-                        return this.next('Tahap 2');
-                    }
-                })
-            }else{
-                this.$notifier.showMessage({ content: 'Mohon pilih kandidat terlebih dahulu.', status: 'warning' });
-            }
-        },
-        async clickDetail(job_seeker_id,  module) {
-            await this.setTahapan({
-                ...this.tahapanGetter,
-                detail: {
-                    job_seeker_id: job_seeker_id,
-                    module: module,
-                }
-            });
-            return this.$router.push("/talent-selection/detail")
-        },
+        debounceInput: debounce( async function (url, job_seeker_id) {
+            await this.postLinkInterview({
+                job_seeker_id: job_seeker_id,
+                url: url
+            }, this.tahapanGetter.jobSelected?.id).then((result)=>{
+                this.refreshData();
+            })
+        },2000),
         onChecked(value, job_seeker_id) {
             if (!this.idCandidats.includes(job_seeker_id)) {
                 this.idCandidats.push(job_seeker_id);
@@ -191,18 +183,35 @@ export default {
                 this.idCandidats.splice(index, 1);
             }
         },
-        unselect(){
-            this.radios = [];
-            this.idCandidats = [];
-            console.log('unselect this.idCandidats', this.idCandidats);
+
+        closeDialog(){
+            this.gradeFormDialog = false;
+            this.refreshData();
         },
-        activatePanel(index) {
-            this.panel = this.panel === index - 1 ? [] : index - 1;
+        closeDialogGradeResult(){
+            this.gradeResultDialog = false;
+            this.refreshData();
         },
-    },
+    }
 }
 </script>
 <style scoped>
+.selection4-text-input {
+    border-radius: 10px;
+    border: 1px solid #ae445a;
+    box-sizing: border-box;
+    width: 100%;
+    height: 35px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    font-size: 12px;
+}.selection4-text-input::placeholder {
+    font-style: italic;
+    text-align: center;
+}
 .table-btn {
     cursor: pointer;
     border-radius: 10px;

@@ -41,11 +41,10 @@ export default {
     mounted() {
         this.editorConfig.placeholder = this.placeholder;
         this.content = this.data.answer;
-
-        console.log('this.data', this.data);
+        // console.log('this.data', this.data);
     },
     methods: {
-        ...mapMutations('jobseeker-pretest', ['setQuestion']),
+        ...mapMutations('seeker-pretest', ['setQuestion']),
 
         debounceInput: debounce( async function (answer) {
             const body = new FormData();

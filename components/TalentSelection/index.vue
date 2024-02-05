@@ -1,8 +1,8 @@
 <template>
-    <div style="height: 660px; overflow-y: auto; overflow-x: hidden">
+    <div>
         <v-row class="" align="start" style=";">
             <v-col cols="6" class="">
-                <v-row class="card-ts mb-5" :key="n">
+                <v-row class="card-ts mb-5">
                     <v-col cols="4" class="pa-0">
                         <img class=" mt-3 mb-1" alt="" src="@/assets/svg/doc-tahap.svg" />
                     </v-col>
@@ -15,7 +15,7 @@
                         </v-col>
                     </v-col>
                 </v-row>
-                <v-row class="card-ts mb-5" :key="n">
+                <v-row class="card-ts mb-5">
                     <v-col cols="4" class="pa-0">
                         <img class=" mt-3 mb-1" alt="" src="@/assets/svg/checkmark-buble.svg" />
                     </v-col>
@@ -30,7 +30,7 @@
                 </v-row>
             </v-col>
             <v-col cols="6" class="">
-                <v-row class="card-ts mb-5" :key="n">
+                <v-row class="card-ts mb-5">
                     <v-col cols="4" class="pa-0">
                         <img class=" mt-3 mb-1" alt="" src="@/assets/svg/brainhead-big.svg" />
                     </v-col>
@@ -43,7 +43,7 @@
                         </v-col>
                     </v-col>
                 </v-row>
-                <v-row class="card-ts mb-5" :key="n">
+                <v-row class="card-ts mb-5">
                     <v-col cols="4" class="pa-0">
                         <img class=" mt-3 mb-1" alt="" src="@/assets/svg/doc-tahap.svg" />
                     </v-col>
@@ -56,7 +56,7 @@
                         </v-col>
                     </v-col>
                 </v-row>
-                <v-row class="card-ts mb-5" :key="n">
+                <v-row class="card-ts mb-5">
                     <v-col cols="4" class="pa-0">
                         <img class=" mt-3 mb-1" alt="" src="@/assets/svg/clock.svg" />
                     </v-col>
@@ -69,7 +69,7 @@
                         </v-col>
                     </v-col>
                 </v-row>
-                <v-row class="card-ts mb-5" :key="n">
+                <v-row class="card-ts mb-5">
                     <v-col cols="4" class="pa-0">
                         <img class=" mt-3 mb-1" alt="" src="@/assets/svg/person2.svg" />
                     </v-col>
@@ -82,7 +82,7 @@
                         </v-col>
                     </v-col>
                 </v-row>
-                <v-row class="card-ts mb-5" :key="n">
+                <v-row class="card-ts mb-5">
                     <v-col cols="4" class="pa-0">
                         <img class=" mt-3 mb-1" alt="" src="@/assets/svg/person-circle-check.svg" />
                     </v-col>
@@ -101,17 +101,15 @@
 </template>
 
 <script>
+
 export default {
     data () { return {
         pageActive: "index"
     } },
-    watch: {
-        $route(to, from){
-            // this.pageActive = to.name.split('-')[0];
-        }
+    watch: {},
+    async mounted(){
     },
-    mounted(){
-        // this.pageActive = this.$route.name.split('-')[0];
+    methods: {
     }
 }
 </script>

@@ -15,7 +15,7 @@
                 <div class="menu-child-drawer" />
                 <div :class="pageActive == 'pretest' ? 'dashboard1-drawer' : 'lp-center-drawer'" @click="$router.push('/pretest')">Pre-test</div>
                 <div :class="pageActive == 'job' ? 'dashboard1-drawer' : 'lp-center-drawer'" @click="$router.push('/job-vacancy')">Job Vacancy</div>
-                <div class="help-center-drawer" style="color: #a3a3a3;" @click="">Schedule</div>
+                <div :class="pageActive == 'schedule' ? 'dashboard1-drawer' : 'help-center-drawer'" @click="$router.push('/schedule')">Schedule</div>
             </div>
             <img class="menu-left-item-drawer" alt="" src="@/assets/svg/rectangle-4106.svg" />
             <img

@@ -17,6 +17,10 @@ export const API = () => {
         getQuestionAPI,
         postAnswerAPI,
         postEndTest,
+
+        getTimeSchedule,
+        getDateSchedule,
+        postPickSchedule
     } = jobSeekerAPI();
 
     const {
@@ -33,39 +37,87 @@ export const API = () => {
         getModules,
         postModule,
         deleteModule,
-        postActivateModule
+        postActivateModule,
+
+        getListJobOpening,
+        getListCandidateAPI,
+        getDetailAnswerAPI,
+        putInputScore,
+        postFinishScoring,
+        postChooseCandidate,
+        getDetailJobSeeker,
+        getGrade,
+        postGrade,
+        getSchedule,
+        postSchedule,
+        postBlastSchedule,
+        
+        getFormGrade,
+        getResultGrade,
+        postFormGrade,
+        postLinkInterview,
+        putAbstain,
+        postFinishSelection
     } = jobProviderAPI();
     
 
     return {
         // authAPI
-        getRegistration,
-        postRegistration,
+            getRegistration,
+            postRegistration,
+
+
 
         // jobSeekerAPI
-        getJobs,
-        postApplyJob,
+            getJobs,
+            postApplyJob,
 
-        getListPretest,
-        getPreview,
-        getQuestionAPI,
-        postAnswerAPI,
-        postEndTest,
+            getListPretest,
+            getPreview,
+            getQuestionAPI,
+            postAnswerAPI,
+            postEndTest,
+
+            getTimeSchedule,
+            getDateSchedule,
+            postPickSchedule,
+
+
 
         // jobProviderAPI
-        getJob,
-        postJob,
-        postPostingJob,
+            getJob,
+            postJob,
+            postPostingJob,
 
-        getPretest,
-        postPretest,
-        deletePretest,
-        postActivatePretest,
+            getPretest,
+            postPretest,
+            deletePretest,
+            postActivatePretest,
 
-        getModule,
-        getModules,
-        postModule,
-        deleteModule,
-        postActivateModule
+            getModule,
+            getModules,
+            postModule,
+            deleteModule,
+            postActivateModule,
+
+            getListJobOpening,
+            getListCandidateAPI,
+            getDetailAnswerAPI,
+            putInputScore,
+            postFinishScoring,
+            postChooseCandidate,
+            getDetailJobSeeker,
+            getGrade,
+            postGrade,
+            getSchedule,
+            postSchedule,
+            postBlastSchedule,
+        
+            getFormGrade,
+            getResultGrade,
+            postFormGrade,
+            postLinkInterview,
+            putAbstain,
+            postFinishSelection
     }
 }

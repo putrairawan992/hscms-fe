@@ -199,7 +199,135 @@
                     </v-col>
                     <v-col cols="12">
                         <v-row style="column-gap: 25px;">
-                            <v-col v-for="value, key in dataCandidate?.candidate_list" cols="6" class="component-1">
+                            <v-col v-if="finalForm" v-for="value, key in dataCandidate?.candidate_list" cols="6" class="component-1">
+                                <div class="container-frame">
+                                    <div class="line-separator">
+                                        <div class="lowongan-1">
+                                            <div class="flex-container">
+                                                <input
+                                                    class="checkbox-selected-blue"
+                                                    type="checkbox" :checked="true" readonly
+                                                />
+                                                <div class="up-arrow-button">
+                                                    <img
+                                                        class="frame-grid-icon"
+                                                        :src="value.photo"
+                                                        loading="eager"
+                                                        alt="photo"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="frame-button-frame-parent">
+                                                <div class="frame-button-frame">
+                                                    <div class="mei-2023">{{ value.created_at }}</div>
+                                                    <img
+                                                        @click="clickDetail(value.job_seeker_id)"
+                                                        :src="require('@/assets/svg/eyecirclefill.svg')"
+                                                        class="eyecirclefill-icon"
+                                                        loading="eager"
+                                                        alt="detail"
+                                                    />
+                                                </div>
+                                                <div class="link-job-opening-dropdown-menu">
+                                                    <h3 class="annisa-nur-hafiza">{{ value.name }}</h3>
+                                                    <div class="frame-user-profile-wrapper">
+                                                        <div class="frame-user-profile">
+                                                            <div class="diplomasarjana-s11">
+                                                                {{ value.degree }}
+                                                            </div>
+                                                            <div class="mei-2023">Rp. -</div>
+                                                            <div class="mei-2023">0 tahun</div>
+                                                            <div class="mei-2023">Skor: {{ value.average_total }}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <v-row class="above-container-frame pt-2" style="">
+                                    <v-col cols="6" class="masukan-gaji">
+                                        Masukkan Gaji
+                                    </v-col>
+                                    <v-col cols="6" class="masukan-gaji pa-0 pt-1 d-flex">
+                                        <div style="display: flex; align-items: center; margin-top: -6px; color: #AE445A">Rp</div>
+                                        <v-text-field
+                                            placeholder="Nominal Gaji" v-model="bodyCreate[key].salary"
+                                            plain class="small-plain-text-field pt-0" 
+                                        ></v-text-field>
+                                    </v-col>
+
+                                    <v-col cols="6" class="masukan-gaji">
+                                        Tanggal Masuk
+                                    </v-col>
+                                    <v-col cols="6" class="masukan-gaji pa-0 pt-1 d-flex">
+                                        <div class="ma-auto" style="margin-top: 6px !important;">
+                                            <img class="feather-icon-calendar-tahap5" alt="" src="@/assets/svg/feathericon--calendar.svg" />
+                                        </div>
+                                        <v-menu
+                                            ref="datePicker1"
+                                            v-model="datePicker1"
+                                            :close-on-content-click="false"
+                                            transition="scale-transition"
+                                            offset-y
+                                            max-width="290px"
+                                            min-width="auto"
+                                            >
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <div v-on="on" style="position: relative;">
+                                                        <v-text-field
+                                                        v-model="bodyCreate[key].start_date"
+                                                        v-bind="attrs" plain
+                                                        @blur="bodyCreate[key].start_date = parseDate(bodyCreate[key].start_date)" readonly
+                                                        class="small-plain-text-field pt-0"
+                                                        placeholder="Pilih Tanggal"
+                                                        />
+                                                    </div>
+                                                </template>
+                                                <v-date-picker
+                                                    @input="datePicker1 = false"
+                                                    plas v-model="bodyCreate[key].start_date" no-title
+                                                ></v-date-picker>
+                                            </v-menu>
+                                    </v-col>
+                                    
+                                    <v-col cols="6" class="masukan-gaji">
+                                        Tanggal Akhir
+                                    </v-col>
+                                    <v-col cols="6" class="masukan-gaji pa-0 pt-1 d-flex">
+                                        <div class="ma-auto" style="margin-top: 6px !important;">
+                                            <img class="feather-icon-calendar-tahap5" alt="" src="@/assets/svg/feathericon--calendar.svg" />
+                                        </div>
+                                        <v-menu
+                                            ref="datePicker2"
+                                            v-model="datePicker2"
+                                            :close-on-content-click="false"
+                                            transition="scale-transition"
+                                            offset-y
+                                            max-width="290px"
+                                            min-width="auto"
+                                            >
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <div v-on="on" style="position: relative;">
+                                                        <v-text-field
+                                                        v-model="bodyCreate[key].end_date"
+                                                        v-bind="attrs" plain
+                                                        @blur="bodyCreate[key].end_date = parseDate(bodyCreate[key].end_date)" readonly
+                                                        class="small-plain-text-field pt-0"
+                                                        placeholder="Pilih Tanggal"
+                                                        />
+                                                    </div>
+                                                </template>
+                                                <v-date-picker
+                                                    @input="datePicker2 = false"
+                                                    plas v-model="bodyCreate[key].end_date" no-title
+                                                ></v-date-picker>
+                                            </v-menu>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
+
+                            <v-col v-else v-for="value, key in dataCandidate?.candidate_list" cols="6" class="component-1">
                                 <div class="container-frame">
                                     <div class="line-separator">
                                         <div :class="isChecked(value.job_seeker_id) ? 'lowongan-1' : 'lowongan-2'">
@@ -220,7 +348,7 @@
                                             </div>
                                             <div class="frame-button-frame-parent">
                                                 <div class="frame-button-frame">
-                                                <div class="mei-2023">{{ value.created_at }}</div>
+                                                    <div class="mei-2023">{{ value.created_at }}</div>
                                                     <img
                                                         @click="clickDetail(value.job_seeker_id)"
                                                         :src="radios[key] ? require('@/assets/svg/eyecirclefill.svg') : require('@/assets/svg/eyecirclefillblack.svg')"
@@ -260,7 +388,7 @@
             </div>
             <div class="orange-btn" style="">
                 <div class="" @click="continueStep">
-                    <b class="button mx-4">Continue to “Tahap 3”</b>
+                    <b class="button mx-4">Save</b>
                 </div>
             </div>
         </div>
@@ -276,28 +404,28 @@ export default {
         Multiselect,
     },
     data () { return {
-        radio: false,
-        dataCandidate: null,
-
         panel: [],
         radios: [],
+        bodyCreate:[],
         idCandidats:[],
-        pageActive: "index",
+
+        end_date: null,
+        start_date: null,
+        dataCandidate: null,
+
+        radio: false,
+        finalForm: false,
+        datePicker1: false,
+        datePicker2: false,
     } },
     watch: {
-        panel(to, from){
-            console.log(to, from);
-        },
-        raradiodios(to, from){
-            console.log('radio', this.radio);
-        },
         tahapanGetter(to, from){
             this.refreshData();
         }
     },
     setup() {
-        const { getListCandidateAPI, postChooseCandidate } = API()
-        return { getListCandidateAPI, postChooseCandidate };
+        const { getListCandidateAPI, postChooseCandidate, postFinishSelection } = API()
+        return { getListCandidateAPI, postChooseCandidate, postFinishSelection };
     },
     computed: {
 		...mapState('provider-selection', ['listCandidate']),
@@ -305,14 +433,19 @@ export default {
     },
     props: { 
         next: { type: Function, default() { return {} } },
+        finish: { type: Function, default() { return {} } },
     },
-   async mounted(){
+    async mounted(){
         await this.getListCandidate();
-        this.dataCandidate = this.listCandidate;
-    },
+        this.dataCandidate = await this.listCandidate;
+        if(this.dataCandidate.candidate_list.length){
+            this.finalForm = this.dataCandidate.candidate_list[0].finaly_selection;
+            if(this.finalForm){ this.buildArray(); }
+        }
+},
     methods: {
 		...mapActions('provider-selection', ['getListCandidate']),
-        ...mapMutations('provider-selection', ['setListCandidate', 'setTahapan']),
+        ...mapMutations('provider-selection', ['setTahapan', 'setListCandidate']),
 
         async refreshData() {
             await this.getListCandidateAPI({
@@ -327,20 +460,31 @@ export default {
             })
         },
         async continueStep() {
-            if(this.idCandidats.length){
-                await this.postChooseCandidate({
-                    status_step: 'tahap 3',
-                    job_seeker_id: this.idCandidats,
-                    job_post_id: this.tahapanGetter.jobSelected?.id
-    
-                }).then((result)=>{
-                    if(result){
-                        this.setTahapan({ tahap: 'Tahap 3', ...this.tahapanGetter });
-                        return this.next('Tahap 3');
-                    }
-                })
+            if(this.finalForm){
+                if(this.validator()){
+                    await this.postFinishSelection({data: this.bodyCreate}, this.tahapanGetter.jobSelected?.id).then((result)=>{
+                        if(result){
+                            this.finish();
+                            this.$notifier.showMessage({ content: 'Success.', status: 'success' });
+                        };
+                    });
+                }
             }else{
-                this.$notifier.showMessage({ content: 'Mohon pilih kandidat terlebih dahulu.', status: 'warning' });
+                if(this.idCandidats.length){
+                    await this.postChooseCandidate({
+                        status_step: 'done',
+                        job_seeker_id: this.idCandidats,
+                        job_post_id: this.tahapanGetter.jobSelected?.id
+        
+                    }).then((result)=>{
+                        if(result){ 
+                            this.refreshData(); 
+                            this.$notifier.showMessage({ content: 'Success.', status: 'success' });
+                        };
+                    });
+                }else{
+                    this.$notifier.showMessage({ content: 'Mohon pilih kandidat terlebih dahulu.', status: 'warning' });
+                }
             }
         },
         async clickDetail(job_seeker_id) {
@@ -351,6 +495,29 @@ export default {
                 }
             });
             return this.$router.push("/talent-selection/detail")
+        },
+        validator() {
+            for (let index = 0; index < this.bodyCreate.length; index++) {
+                const element = this.bodyCreate[index];
+                if (element.salary == null || element.start_date == null || element.end_date == null) {
+                    this.$notifier.showMessage({ 
+                        content: 'Data belum terisi lengkap.',
+                        status: 'warning'
+                    });
+                    return false;
+                }         
+            }
+            return true;
+        },
+        buildArray(){
+            this.dataCandidate.candidate_list.forEach(element => {
+                this.bodyCreate.push({
+                    salary: null,
+                    end_date: null,
+                    start_date: null,
+                    job_seeker_id: element.job_seeker_id,
+                });
+            });
         },
         onChecked(value, job_seeker_id) {
             if (!this.idCandidats.includes(job_seeker_id)) {
@@ -367,10 +534,65 @@ export default {
                 return true;
             }
         },
+        parseDate (date) {
+            if (!date) return null
+            const [year, month, day] = date.split('-')
+            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+        },
     }
 }
 </script>
-<style>
+<style scoped>
+.selection-text-input-tahap5 {
+    border-radius: 10px;
+    border: none;
+    box-sizing: border-box;
+    width: 100%;
+    height: 41px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 5px !important;
+    color: #AE445A !important;
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}.selection-text-input-tahap5::placeholder {
+    color: #B6B6B6 !important;
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.feather-icon-calendar-tahap5 {
+    width: 15px;
+    height: 20px;
+}
+.masukan-gaji{
+    color: #404041;
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-align: left;
+    margin-bottom: -10px;
+}
+.above-container-frame {
+    width: 100%;
+    margin: auto;
+    margin-top: -7px;
+    border-radius: 10px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border: 1px solid #AE445A;
+    background-color: #fff;
+    padding-bottom: 15px;
+}
 .mei-2023 {
     font-family: Poppins;
     font-size: 8px;

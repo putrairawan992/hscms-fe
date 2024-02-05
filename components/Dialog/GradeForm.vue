@@ -1,40 +1,220 @@
 <template>
-    <v-dialog persistent v-model="show" width="688" rounded content-class="elevation-0">
+    <v-dialog persistent v-model="show" width="668" rounded content-class="elevation-0">
         <div style="position: relative; display: flex; flex-direction: column;">
-            
-            <button class="close-icon-open-file" @click="closeDialog">
-                <img alt="close" src="@/assets/svg/close.svg" />
-            </button>
-            <v-card class="pa-12" style="border-radius: 20px !important; width: 668px;"> 
-                <v-row align="center">
-                    <v-col cols="12" class="pa-0">
-                        <!-- <embed class="embeddedContent" src="https://images.unsplash.com/photo-1706023678015-c5fa48e09bcc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fHw%3D#zoom=60" /> -->
-                        <!-- <embed class="embeddedContent" width="585px" src="https://pdfobject.com/pdf/sample.pdf#zoom=60"/> -->
-                        <embed v-if="fileUrl" class="embeddedContent" width="585px" :src="fileUrl+'#zoom=60'"/>
+            <v-card class="pa-12" style="border-radius: 20px !important;"> 
+                <v-row>
+                    <v-col cols="12" class="text-left pt-0 pb-4">
+                        <div class="page-title">
+                            Grade
+                        </div>
                     </v-col>
                 </v-row>
+                <v-row class="mt-8" v-if="data" v-for="value, key in data?.grade_list">
+                    <v-col cols="12" class="text-left py-0">
+                        <div class="page-sub-title">
+                            {{ value.category_name }}
+                        </div>
+                    </v-col>
+                    <v-col cols="12" class="py-0" v-for="value1, key1 in value.grade">
+                        <v-row>
+                            <v-col>
+                                <v-text-field
+                                    :value="value1.grade_name"
+                                    placeholder="Insert your Text Here..."
+                                    plain class="plain-text-field" readonly
+                                ></v-text-field>
+                            </v-col>
+                            <v-col class="input-checkbox-container" style="max-width: 200px;">
+                                <v-select
+                                    :items="scores" item-text="label" item-value="point"
+                                    solo v-model="bodyGrade[key][key1].score"
+                                    placeholder="Pilih Nilai"
+                                    class="grade-text-field"
+                                ></v-select>
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                </v-row>
+                <v-row class="mt-8" v-if="data">
+                    <v-col cols="12" class="text-left py-0">
+                        <div class="page-sub-title">
+                            Qualitative Score
+                        </div>
+                    </v-col>
+                    <v-col cols="12" class="py-0">
+                        <v-row>
+                            <v-col>
+                                <v-text-field
+                                    value="Score"
+                                    placeholder="Insert your Text Here..."
+                                    plain class="plain-text-field" readonly
+                                ></v-text-field>
+                            </v-col>
+                            <v-col class="input-checkbox-container" style="max-width: 200px;">
+                                <v-select
+                                    :items="scores" item-text="label" item-value="point"
+                                    solo v-model="quantitative_score"
+                                    placeholder="Pilih Nilai"
+                                    class="grade-text-field"
+                                ></v-select>
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                </v-row>
+                <v-row class="mt-8">
+                    <!-- Notes -->
+                    <v-col cols="12" class="text-left py-0">
+                        <div class="page-sub-title">
+                            Notes
+                        </div>
+                    </v-col>
+                    <v-col cols="12" class="">
+                        <TextEditor v-model="notes" class="rich-editor" placeholder="Masukkan catatan"/>
+                    </v-col>
+
+                    <v-col cols="12">
+                        <div style="position: relative; display: flex; justify-content: end; column-gap: 10px;">
+                            <div class="orange-btn" style="">
+                                <div class="" @click="closeDialog">
+                                    <b class="button mx-4">Close</b>
+                                </div>
+                            </div>
+                            <div></div>
+                            <div class="orange-btn" style="">
+                                <div class="" @click="submit()">
+                                    <b class="button mx-4">Save</b>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="save-container pb-0">
+                            <div></div>
+                            <div class="frame-container" style="width: 101px; cursor: pointer;" @click="submit()">
+                                <div class="attach-mpr-parent">
+                                    <b class="button">Save</b>
+                                </div>
+                            </div>
+                        </div> -->
+                    </v-col>
+                </v-row>
+
             </v-card>
         </div>
     </v-dialog>
 </template>
 <script>
-    export default {
+import { API } from '@/api/index'
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
+export default {
     data () {
         return {
-            id_job_post: null,
-            tanggal_lahir: null,
-            datePicker1: false,
-            datePicker2: false,
+            data: null,
+            notes: null,
+            quantitative_score: null,
+
+            bodyGrade: [],
+            gradeList: [],
+            scores: [
+                { point: 100, label: 'Very Good (100 points)' },
+                { point: 75, label: 'Good (75 points)' },
+                { point: 50, label: 'Average (50 points)' },
+                { point: 25, label: 'Poor (25 points)' }
+            ]
+        }
+    },
+    watch: {
+        jobSeekerId(to, from){
+            this.getData();
+        },
+        quantitative_score(to, from){
+            console.log('quantitative_score', to);;
         }
     },
     props: {
-        show: { type: Boolean, default() { return false } },
-        fileUrl: { type: String, default() { return "" } },
         content: { type: String, default() { return "" } },
+        show: { type: Boolean, default() { return false } },
         onApprove: { type: Function, default() { return {} } },
         closeDialog: { type: Function, default() { return {} } },
+        jobSeekerId: { type: Number, default() { return null } },
+    },
+    setup() {
+        const { getFormGrade, postFormGrade } = API();
+        return { getFormGrade, postFormGrade };
+    },
+    computed: {
+        ...mapGetters('provider-selection', ['tahapanGetter']),
+    },
+    async mounted(){
+        await this.getData();
     },
     methods: {
+        async submit(){
+            let data = await this.getBodyScores();
+            if (data) {
+                await this.postFormGrade({
+                    data: data,
+                    notes: this.notes,
+                    quantitative_score: this.quantitative_score,
+
+                },this.jobSeekerId, this.tahapanGetter.jobSelected?.id).then((result)=>{
+                    if(result){
+                        this.closeDialog();
+                        this.gradeList = null;
+                        this.data = null;
+                    }
+                });
+            }
+        },
+        async getData(){
+            if (this.jobSeekerId) {
+                await this.getFormGrade(this.jobSeekerId, this.tahapanGetter.jobSelected?.id).then((result)=>{
+                    if(result){
+                        this.gradeList = result.grade_list;
+                        this.data = result;
+                        this.setBodyForm();
+                    }
+                });
+            }
+        },
+        async getBodyScores(){
+            let body = [];
+            let status = true;
+
+            for (let index = 0; index < this.bodyGrade.length; index++) {
+                const element = this.bodyGrade[index];
+                if(status){
+                    for (let index = 0; index < element.length; index++) {
+                        let element1 = element[index];
+                        if(element1.score == null){
+                            this.$notifier.showMessage({ content: 'Data nilai belum lengkap.', status: 'warning' });
+                            return status = false;
+                        }
+                        body.push(element1);
+                    }
+                }
+            }
+            if(this.quantitative_score == null){
+                this.$notifier.showMessage({ content: 'Data qualitative score belum terisi.', status: 'warning' });
+                return false;
+            }
+            if(this.notes == null){
+                this.$notifier.showMessage({ content: 'Data note belum terisi.', status: 'warning' });
+                return false;
+            }
+            return status ? body : false;
+        },
+        setBodyForm(){
+            this.gradeList.forEach((element, key) => {
+                let item = [];
+                for (let index = 0; index < element.grade.length; index++) {
+                    const element1 = element.grade[index];
+                    item.push({
+                        grade_selection_id: element1.id,
+                        score: null
+                    });
+                }
+                this.bodyGrade.push(item);
+            });
+        },
         parseDate (date) {
             if (!date) return null
             const [year, month, day] = date.split('-')
@@ -45,6 +225,27 @@
 </script>
 
 <style scoped>
+.save-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.page-title {
+    color: #AE445A;
+    font-family: Nunito;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+}
+.page-sub-title {
+    color: #AE445A;
+    font-family: Poppins;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
 .close-icon-open-file {
     display: flex;
     justify-content: end;

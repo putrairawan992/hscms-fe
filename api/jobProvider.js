@@ -5,7 +5,7 @@ import { jobProviderValidator } from '@/api/validator/jobProvider'
 export const jobProviderAPI = () => {
     const { $api, $loader, $notifier } = useContext();
     const { jobPostValidator } = jobProviderValidator();
-    const { getRequest ,postRequest, deleteRequest } = request();
+    const { getRequest ,postRequest, putRequest, deleteRequest } = request();
     
     const getJob = async (id_job) => {
         return await getRequest(id_job ? 'jobprovider/job/'+id_job : 'jobprovider/job', true);
@@ -46,6 +46,67 @@ export const jobProviderAPI = () => {
         return await postRequest('jobprovider/pickmoduldetail/'+id_job, body);
     }
 
+    const getListJobOpening = async (sortBy='asc', status='Active') => {
+        return await postRequest('jobprovider/listjob', {sort: sortBy, status: status});
+    }
+
+    // Talent Selection
+    const getListCandidateAPI = async (body) => {
+        return await postRequest('jobprovider/selection', body);
+    }
+    const postChooseCandidate = async (body) => {
+        return await postRequest(`jobprovider/selection/choicecandidate`, body);
+    }
+    const getGrade = async (job_post_id) => {
+        return await getRequest('jobprovider/grade/'+job_post_id);
+    }
+    const postGrade = async (body, job_post_id) => {
+        return await postRequest('jobprovider/grade/'+job_post_id, body);
+    }
+    // Tahap 1
+    const getDetailAnswerAPI = async (job_seeker_id, job_post_id, pretest_modul_detail_id) => {
+        return await getRequest(`jobprovider/detailanswer/`+job_seeker_id+'/'+job_post_id+'/'+pretest_modul_detail_id);
+    }
+    const putInputScore = async (body,pretest_modul_detail_id) => {
+        return await putRequest(`jobprovider/scoringanswer/`+pretest_modul_detail_id, body);
+    }
+    const postFinishScoring = async (body,pretest_modul_detail_id) => {
+        return await postRequest(`jobprovider/finishscoringanswer/`+pretest_modul_detail_id, body);
+    }
+    // Tahap 2
+    const getDetailJobSeeker = async (job_seeker_id) => {
+        return await getRequest(`jobprovider/selection/user_detail/`+job_seeker_id);
+    }
+    // Tahap 3
+    const getSchedule = async (job_post_id, month, year) => {
+        return await getRequest('jobprovider/selection/scheduling/'+job_post_id+'/'+month+'/'+year);
+    }
+    const postSchedule = async (body) => {
+        return await postRequest('jobprovider/selection/scheduling', body);
+    }
+    const postBlastSchedule = async (body, job_post_id) => {
+        return await postRequest('jobprovider/blastinschedule/'+job_post_id, body);
+    }
+    // Tahap 4
+    const getFormGrade = async (job_seeker_id, job_post_id) => {
+        return await getRequest('jobprovider/selection/grade/'+job_seeker_id+'/'+job_post_id);
+    }
+    const getResultGrade = async (job_seeker_id, job_post_id) => {
+        return await getRequest('jobprovider/selection/gradedetail/'+job_seeker_id+'/'+job_post_id);
+    }
+    const postFormGrade = async (body, job_seeker_id, job_post_id) => {
+        return await postRequest('jobprovider/selection/grade/'+job_seeker_id+'/'+job_post_id, body);
+    }
+    const postLinkInterview = async (body, job_post_id) => {
+        return await postRequest('jobprovider/selection/savelink/'+job_post_id, body);
+    }
+    const putAbstain = async (job_seeker_id, job_post_id) => {
+        return await putRequest('jobprovider/selection/abstain/'+job_seeker_id+'/'+job_post_id);
+    }
+    // Tahap 5
+    const postFinishSelection = async (body, job_post_id) => {
+        return await postRequest('jobprovider/selection/finish/'+job_post_id, body);
+    }
     return {
         getJob,
         postJob,
@@ -60,6 +121,26 @@ export const jobProviderAPI = () => {
         getModules,
         postModule,
         deleteModule,
-        postActivateModule
+        postActivateModule,
+
+        getListJobOpening,
+        getListCandidateAPI,
+        getDetailAnswerAPI,
+        putInputScore,
+        postFinishScoring,
+        postChooseCandidate,
+        getDetailJobSeeker,
+        getGrade,
+        postGrade,
+        getSchedule,
+        postSchedule,
+        postBlastSchedule,
+
+        getFormGrade,
+        getResultGrade,
+        postFormGrade,
+        postLinkInterview,
+        putAbstain,
+        postFinishSelection
     }
 }

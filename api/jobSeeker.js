@@ -30,6 +30,18 @@ export const jobSeekerAPI = () => {
         return await postRequest('jobseeker/answerfinish/'+job_id+'/'+module_id);
     }
 
+    // Schedule
+    const getTimeSchedule = async (job_post_id) => {
+        return await getRequest('jobseeker/scheduletime/'+job_post_id);
+    }
+    const getDateSchedule = async (month, year, job_post_id) => {
+        return await getRequest('jobseeker/schedule/'+month+'/'+year+'/'+job_post_id);
+    }
+    const postPickSchedule = async (body) => {
+        return await postRequest('jobseeker/schedule', body);
+    }
+
+
     return {
         getJobs,
         postApplyJob,
@@ -39,5 +51,10 @@ export const jobSeekerAPI = () => {
         getQuestionAPI,
         postAnswerAPI,
         postEndTest,
+
+        getTimeSchedule,
+        getDateSchedule,
+        postPickSchedule
+
     }
 }

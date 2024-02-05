@@ -171,13 +171,13 @@ export default {
     }),
     watch: {},
     computed: {
-		...mapState('jobseeker-pretest', ['preview']),
+		...mapState('seeker-pretest', ['preview']),
     },
     async mounted() {
         await this.getPreview();
     },
     methods: {
-		...mapActions('jobseeker-pretest', ['getPreview']),
+		...mapActions('seeker-pretest', ['getPreview']),
         onSelectFile (event) {
             const file = event.srcElement.files[0];
             this.file = file;

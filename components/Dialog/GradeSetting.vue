@@ -1,16 +1,66 @@
 <template>
-    <v-dialog persistent v-model="show" width="688" rounded content-class="elevation-0">
+    <v-dialog persistent v-model="show" width="668" rounded content-class="elevation-0">
         <div style="position: relative; display: flex; flex-direction: column;">
-            
-            <button class="close-icon-open-file" @click="closeDialog">
-                <img alt="close" src="@/assets/svg/close.svg" />
-            </button>
-            <v-card class="pa-12" style="border-radius: 20px !important; width: 668px;"> 
-                <v-row align="center">
-                    <v-col cols="12" class="pa-0">
-                        <!-- <embed class="embeddedContent" src="https://images.unsplash.com/photo-1706023678015-c5fa48e09bcc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fHw%3D#zoom=60" /> -->
-                        <!-- <embed class="embeddedContent" width="585px" src="https://pdfobject.com/pdf/sample.pdf#zoom=60"/> -->
-                        <embed v-if="fileUrl" class="embeddedContent" width="585px" :src="fileUrl+'#zoom=60'"/>
+            <v-card class="pa-12" style="border-radius: 20px !important;"> 
+                <v-row>
+                    <v-col cols="12" class="text-left pt-0 pb-4">
+                        <div class="page-title">
+                            Grade
+                        </div>
+                    </v-col>
+                </v-row>
+                <v-row v-for="value, key in gradeList" class="mb-5">
+                    <v-col cols="12" class="text-left py-0">
+                        <div class="page-sub-title">
+                            {{ value.category_name }}
+                        </div>
+                    </v-col>
+                    <v-col v-if="!setting" v-for="item, key1 in bodyCreate[key].grade_list" cols="12" class="py-0">
+                        <v-row>
+                            <v-col style="max-width: 50px;">
+                                <v-switch
+                                    :readonly="setting"
+                                    false-value="unactive" true-value="active"
+                                    v-model="bodyCreate[key].grade_list[key1].status"
+                                    hide-details inset color="#ae445a" class="pretest-switch"
+                                ></v-switch>
+                            </v-col>
+                            <v-col>
+                                <v-text-field
+                                    :readonly="gradeList[key]?.grade[key1]?.desc == 'default'|| setting"
+                                    v-model="bodyCreate[key].grade_list[key1].grade_name"
+                                    placeholder="Insert your Text Here..."
+                                    plain class="plain-text-field"
+                                ></v-text-field>
+                            </v-col>
+                            <v-col class="input-checkbox-container" style="max-width: 200px;">
+                                <v-select
+                                    solo disabled
+                                    placeholder="Pilih Nilai" class="grade-text-field"
+                                    :items="['Very Good (100 points)', 'Good (75 points)', 'Average (50 points)', 'Poor (25 points)']"
+                                ></v-select>
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="12" class="pb-0">
+                        <div style="position: relative; display: flex; justify-content: end; column-gap: 20px; margin-top: 21px;">
+                            <div class="orange-btn" @click="closeDialog()">
+                                <div class="">
+                                    <b class="button mx-4">
+                                        Close
+                                    </b>
+                                </div>
+                            </div>
+                            <div v-if="!setting" class="orange-btn" @click="submit()">
+                                <div class="">
+                                    <b class="button mx-4">
+                                        Save
+                                    </b>
+                                </div>
+                            </div>
+                        </div>
                     </v-col>
                 </v-row>
             </v-card>
@@ -18,23 +68,68 @@
     </v-dialog>
 </template>
 <script>
+    import { API } from '@/api/index'
+    import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
     export default {
     data () {
         return {
+            gradeList: [],
+            bodyCreate: [],
+            bodyDefault: [],
             id_job_post: null,
             tanggal_lahir: null,
+            
+            setting: false,
             datePicker1: false,
             datePicker2: false,
         }
     },
     props: {
         show: { type: Boolean, default() { return false } },
-        fileUrl: { type: String, default() { return "" } },
         content: { type: String, default() { return "" } },
         onApprove: { type: Function, default() { return {} } },
         closeDialog: { type: Function, default() { return {} } },
     },
+    setup() {
+        const { getGrade, postGrade } = API();
+        return { getGrade, postGrade };
+    },
+    computed: {
+        ...mapGetters('provider-selection', ['tahapanGetter']),
+    },
+    async mounted(){
+        await this.getGrade(this.tahapanGetter.jobSelected?.id).then((result)=>{
+            if(result){
+                this.gradeList = result.grade_list;
+                this.setting = result.setting_grade;
+                this.setBody();
+            }
+        });
+    },
     methods: {
+        async submit(){
+            if(!this.setting){
+                await this.postGrade({data: this.bodyCreate}, this.tahapanGetter.jobSelected?.id).then((result)=>{});
+            }
+            this.closeDialog();
+        },
+        setBody(){
+            this.gradeList.forEach((element, key) => {
+                let item = { category_id: element.id, grade_list: [] };
+                for (let index = 0; index < (this.setting ? element.grade.length : 10); index++) {
+                    if(index < element.grade.length){
+                        item.grade_list.push({
+                            status: element.grade[index].status, grade_name: element.grade[index].grade_name
+                        });
+                    }else{
+                        item.grade_list.push({
+                            status: null, grade_name: null
+                        });
+                    }
+                };
+                this.bodyCreate.push(item);
+            });
+        },
         parseDate (date) {
             if (!date) return null
             const [year, month, day] = date.split('-')
@@ -45,6 +140,27 @@
 </script>
 
 <style scoped>
+.save-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.page-title {
+    color: #AE445A;
+    font-family: Nunito;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+}
+.page-sub-title {
+    color: #AE445A;
+    font-family: Poppins;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
 .close-icon-open-file {
     display: flex;
     justify-content: end;

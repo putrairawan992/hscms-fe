@@ -277,7 +277,6 @@
                                 Rupiah
                             </v-tooltip>
                             </template>
-
                         </v-text-field>
                     </v-col>
                     <v-col cols="1" class="dash-container">

@@ -1,28 +1,54 @@
 <template>
-    
-    <TalentSelection-Tahap2-Detail />
+    <div id="tahap-1" v-if="tahap == 'Tahap 1'">
+        <TalentSelection-Tahap1-PilihanGanda v-if="detail?.module.modul_type == 'Modul Pilihan Ganda'"/>
+        <TalentSelection-Tahap1-Essay v-if="detail?.module.modul_type == 'Modul Essay'"/>
+        <TalentSelection-Tahap1-UploadDokumen 
+            v-if="
+                detail?.module.modul_type == 'Modul Upload Document' ||
+                detail?.module.modul_type == 'Modul Live Recording' ||
+                detail?.module.modul_type == 'Modul Gambar'
+            "
+        />
+    </div>
+    <div id="tahap-2" v-else-if="tahap == 'Tahap 2'">
+        <TalentSelection-Tahap2-Detail />
+    </div>
+    <div id="tahap-3" v-else-if="tahap == 'Tahap 3'">
+        <TalentSelection-Tahap2-Detail />
+    </div>
+    <div id="tahap-4" v-else-if="tahap == 'Tahap 4'"></div>
+    <div id="tahap-5" v-else-if="tahap == 'Tahap 5'">
+        <TalentSelection-Tahap2-Detail />
+    </div>
 </template>
 <script>
-import Multiselect from 'vue-multiselect'
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
     name: "jobProvider",
     layout: "jobPost",
-    components: { 
-        Multiselect,
-    },
+    components: {},
     data: () => ({
-        select1: null,
-        html: null,
-        showDialog: false,
-        showAlertApproval: false,
-
-        arrayJalur: ['Seleksi', 'Non-Seleksi'],
-        arrayJobOpening: ['Marketing Staff', 'UI/UX Designer', 'Graphic Designer'],
-        arrayTahapan: ['Tahap 1', 'Tahap 2', 'Tahap 3', 'Tahap 4'],
+        tahap: null,
+        detail: { job_seeker_id: null, module: null },
     }),
     watch: {
+        // tahapan
+    },
+    computed: {
+        ...mapState('provider-selection', ['tahapan']),
+        ...mapGetters('provider-selection', ['tahapanGetter']),
+    },
+    async mounted(){
+        this.detail = this.tahapan.detail == null ? this.tahapanGetter.detail : this.tahapan.detail;
+        this.tahap = this.tahapan.tahap == null ? this.tahapanGetter.tahap : this.tahapan.tahap;
+        if(this.detail == null){
+            return this.$router.push("/talent-selection")
+        }
+
     },
     methods: {
+        ...mapMutations('provider-selection', ['setTahapan']),
+        
         openDialog() {
             this.showDialog = true;
         },
