@@ -5,7 +5,7 @@
                 <div class="blokade-parent ma-8 pt-10">
                     <div class="open-job-dan-draft mb-14 d-flex" style="justify-content: space-between;">
                         <div>
-                            Talent Selection - Tahap 2
+                            Talent Selection
                         </div>
 
                         <div class="orange-btn" @click="" style="border-radius: 50%;">
@@ -170,7 +170,7 @@
                             <input class="register-text-input" placeholder="Masukkan No. Rekening Bank '*diwajibkan menggunakan rekening Bank Mandiri'" v-model="bank_account_number" :readonly="preview" />
                         </v-col>
                     </v-row>
-                    <v-row align="center">
+                    <!-- <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
                             <b>Melamar Posisi:</b>
                         </v-col>
@@ -183,7 +183,7 @@
                                 placeholder="Pilih Posisi yang Dilamar" :allow-empty="false"
                             ></multiselect>
                         </v-col>
-                    </v-row>
+                    </v-row> -->
                     <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
                             <b>Ekspektasi Gaji <i class="opsional">(*opsional)</i> :</b>

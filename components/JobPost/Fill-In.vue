@@ -550,6 +550,7 @@ export default {
 .attach-mpr-parent {
     width: 100%;
     display: flex;
+    cursor: pointer;
     flex-direction: row;
     align-items: center;
     justify-content: center;

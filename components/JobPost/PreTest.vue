@@ -241,6 +241,7 @@ export default {
     height: 12px;
     overflow: hidden;
     flex-shrink: 0;
+    cursor: pointer;
 }
 .frame-pretest-container {
     border-radius: 10px;

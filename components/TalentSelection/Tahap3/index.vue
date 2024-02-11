@@ -16,56 +16,58 @@
                         </div>
                     </v-col>
                 </v-row>
-                <v-row style="height: 757px; overflow: auto;">
-                    <v-col v-for="value, key in dataCandidate?.candidate_list" cols="12" class="component-1 pt-2">
-                        <div class="container-frame">
-                            <div class="line-separator">
-                                <div class="lowongan-1">
-                                    <div class="flex-container">
-                                        <input
-                                            class="checkbox-selected-blue"
-                                            :checked="true" readonly
-                                            type="checkbox"
-                                        />
-                                        <div class="up-arrow-button">
-                                            <img
-                                              class="frame-grid-icon"
-                                              :src="value.photo"
-                                              loading="eager"
-                                              alt="photo"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div class="frame-button-frame-parent">
-                                        <div class="frame-button-frame">
-                                          <div class="mei-2023">{{ value.created_at }}</div>
-                                            <img
-                                                @click="clickDetail(value.job_seeker_id)"
-                                                src="@/assets/svg/eyecirclefill.svg"
-                                                class="eyecirclefill-icon"
+                <div style="height: 757px; overflow: auto;padding-top: 25px;">
+                  <v-row>
+                      <v-col v-for="value, key in dataCandidate?.candidate_list" cols="12" class="component-1 pt-2">
+                          <div class="container-frame">
+                              <div class="line-separator">
+                                  <div class="lowongan-1">
+                                      <div class="flex-container">
+                                          <input
+                                              class="checkbox-selected-blue"
+                                              :checked="true" readonly
+                                              type="checkbox"
+                                          />
+                                          <div class="up-arrow-button">
+                                              <img
+                                                class="frame-grid-icon"
+                                                :src="value.photo"
                                                 loading="eager"
-                                                alt="detail"
-                                            />
-                                        </div>
-                                        <div class="link-job-opening-dropdown-menu">
-                                            <h3 class="annisa-nur-hafiza">{{ value.name }}</h3>
-                                            <div class="frame-user-profile-wrapper">
-                                                <div class="frame-user-profile">
-                                                    <div class="diplomasarjana-s11">
-                                                      {{ value.degree }}
-                                                    </div>
-                                                    <div class="mei-2023">Rp. -</div>
-                                                    <div class="mei-2023">0 tahun</div>
-                                                    <div class="mei-2023">Skor: {{ value.average_total }}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </v-col>
-                </v-row>
+                                                alt="photo"
+                                              />
+                                          </div>
+                                      </div>
+                                      <div class="frame-button-frame-parent">
+                                          <div class="frame-button-frame">
+                                            <div class="mei-2023">{{ value.created_at }}</div>
+                                              <img
+                                                  @click="clickDetail(value.job_seeker_id)"
+                                                  src="@/assets/svg/eyecirclefill.svg"
+                                                  class="eyecirclefill-icon"
+                                                  loading="eager"
+                                                  alt="detail"
+                                              />
+                                          </div>
+                                          <div class="link-job-opening-dropdown-menu">
+                                              <h3 class="annisa-nur-hafiza">{{ value.name }}</h3>
+                                              <div class="frame-user-profile-wrapper">
+                                                  <div class="frame-user-profile">
+                                                      <div class="diplomasarjana-s11">
+                                                        {{ value.degree }}
+                                                      </div>
+                                                      <div class="mei-2023">Rp. -</div>
+                                                      <div class="mei-2023">0 tahun</div>
+                                                      <div class="mei-2023">Skor: {{ value.average_total }}</div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </v-col>
+                  </v-row>
+                </div>
             </v-col>
             <v-col>
                 <div class="orange-btn" style="width: -webkit-fill-available; justify-content: center;" @click="openGradeDialog">

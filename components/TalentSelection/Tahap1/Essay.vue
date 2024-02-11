@@ -14,7 +14,7 @@
                         <div class="text-left text-soal-dan mb-4">
                             <b>Soal dan Jawaban</b>
                         </div>
-                        <v-row v-if="detailAnswer" align="start" style="">
+                        <v-row v-if="detailAnswer" align="start">
                             <v-col v-for="value, key in detailAnswer.detail" cols="12" class="detail-selection-card">
                                 <div class="history-1">
                                     <div class="frame-detail-text-question">

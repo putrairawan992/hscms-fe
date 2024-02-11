@@ -162,8 +162,7 @@ export default {
         ...mapGetters('provider-selection', ['tahapanGetter']),
     },
     async mounted(){
-        console.log('GradeResult',this.jobSeekerId);
-        this.getData();
+        await this.getData();
     },
     methods: {
         async getData(){

@@ -165,7 +165,7 @@
                                                         <template v-slot:activator="{ on }">
                                                             <v-checkbox class="input-checkbox" color="#ae445a" v-model="value.options[0].is_correction" @change="changeAnswer(key, 0)">
                                                                 <template v-slot:label>
-                                                                    <div class="checkbox-label">A.</div>
+                                                                    <div class="checkbox-label-pilgan">A.</div>
                                                                 </template>
                                                             </v-checkbox>
                                                         </template>
@@ -175,13 +175,13 @@
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" xs="6" md="6" lg="6" xl="6" xxl="6">
-                                            <v-text-field placeholder="Pilihan ganda 1" class="module-text-field" solo v-model="value.options[1].text">
+                                            <v-text-field placeholder="Pilihan ganda 2" class="module-text-field" solo v-model="value.options[1].text">
                                                 <template v-slot:prepend-inner>
                                                     <v-tooltip bottom >
                                                         <template v-slot:activator="{ on }">
                                                             <v-checkbox class="input-checkbox" color="#ae445a" v-model="value.options[1].is_correction" @change="changeAnswer(key, 1)">
                                                                 <template v-slot:label>
-                                                                    <div class="checkbox-label">B.</div>
+                                                                    <div class="checkbox-label-pilgan">B.</div>
                                                                 </template>
                                                             </v-checkbox>
                                                         </template>
@@ -191,13 +191,13 @@
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" xs="6" md="6" lg="6" xl="6" xxl="6">
-                                            <v-text-field placeholder="Pilihan ganda 1" class="module-text-field" solo v-model="value.options[2].text">
+                                            <v-text-field placeholder="Pilihan ganda 3" class="module-text-field" solo v-model="value.options[2].text">
                                                 <template v-slot:prepend-inner>
                                                     <v-tooltip bottom >
                                                         <template v-slot:activator="{ on }">
                                                             <v-checkbox class="input-checkbox" color="#ae445a" v-model="value.options[2].is_correction" @change="changeAnswer(key, 2)">
                                                                 <template v-slot:label>
-                                                                    <div class="checkbox-label">C.</div>
+                                                                    <div class="checkbox-label-pilgan">C.</div>
                                                                 </template>
                                                             </v-checkbox>
                                                         </template>
@@ -207,13 +207,13 @@
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" xs="6" md="6" lg="6" xl="6" xxl="6">
-                                            <v-text-field placeholder="Pilihan ganda 1" class="module-text-field" solo v-model="value.options[3].text">
+                                            <v-text-field placeholder="Pilihan ganda 4" class="module-text-field" solo v-model="value.options[3].text">
                                                 <template v-slot:prepend-inner>
                                                     <v-tooltip bottom >
                                                         <template v-slot:activator="{ on }">
                                                             <v-checkbox class="input-checkbox" color="#ae445a" v-model="value.options[3].is_correction" @change="changeAnswer(key, 3)">
                                                                 <template v-slot:label>
-                                                                    <div class="checkbox-label">D.</div>
+                                                                    <div class="checkbox-label-pilgan">D.</div>
                                                                 </template>
                                                             </v-checkbox>
                                                         </template>
@@ -507,9 +507,15 @@ export default {
 }
 </style>
 <style scoped>
+.checkbox-label-pilgan{
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 0px;
+}
 .answer-container {
     border: 1px solid #AE445A !important;
     border-top: none !important;
+    background: #fff !important;
 }
 .brainheadprofile-wrapper {
     border-radius: 5px;

@@ -10,12 +10,12 @@
                             </div>
                         </v-col>
                     </v-row>
-                    <div>
+                    <div style="height: 760px; overflow-y: auto; overflow-x: hidden">
                         <div class="text-left text-soal-dan mb-4">
                             <b>Soal dan Jawaban</b>
                         </div>
-                        <v-row v-if="detailAnswer" class="ma-auto" style="height: 760px; overflow-y: auto; overflow-x: hidden">
-                            <v-col v-for="value, key in detailAnswer.detail" cols="12" class="detail-selection-card mb-6">
+                        <v-row v-if="detailAnswer" class="ma-auto">
+                            <v-col v-for="value, key in detailAnswer.detail" cols="12" class="detail-selection-card mb-8">
                                 <div class="history-1">
                                     <div class="frame-detail-text-question">
                                         <ol class="w-100 pt-2"><li :value="key+1">

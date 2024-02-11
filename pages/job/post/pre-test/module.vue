@@ -49,10 +49,10 @@
                         <b>Kategori: {{categories.category_name}}</b>
                     </v-col>
                     <v-col cols="12" class="px-2 pa-0">
-                        <v-sheet v-if="categories.modul.length > 0" class="mx-auto" max-width="100%" elevation="0">
+                        <v-sheet v-if="categories.modul.length > 0" class="mx-auto bg-0" max-width="100%" elevation="0">
                             <v-slide-group
                                 v-model="model" class="" show-arrows
-                                selected-class="bg-primary slider-module my-slider"
+                                selected-class="slider-module my-slider"
                             >
                                 <template v-slot:next>
                                     <v-icon class="button-slider" color="white" medium>mdi-chevron-right</v-icon>
@@ -64,7 +64,7 @@
                                     <v-card
                                         color="grey-lighten-1"
                                         :class="['mx-3', selectedClass]"
-                                        height="192" width="222" elevation="0"
+                                        height="192" width="222" elevation="0" class="bg-0"
                                     >
                                         <div class="">
                                             <v-switch

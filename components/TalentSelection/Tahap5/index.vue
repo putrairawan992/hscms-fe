@@ -252,8 +252,10 @@
                                     <v-col cols="6" class="masukan-gaji pa-0 pt-1 d-flex">
                                         <div style="display: flex; align-items: center; margin-top: -6px; color: #AE445A">Rp</div>
                                         <v-text-field
-                                            placeholder="Nominal Gaji" v-model="bodyCreate[key].salary"
-                                            plain class="small-plain-text-field pt-0" 
+                                            :value="nominal[key]" @input="useConvertToMoneyView($event, key)"
+                                            :min="bodyCreate[key].salary" max="26" 
+                                            oninput="if(Number(this.value.length) > Number(this.max)) this.value = this.min;"
+                                            placeholder="Nominal Gaji" plain class="small-plain-text-field pt-0" 
                                         ></v-text-field>
                                     </v-col>
 
@@ -409,6 +411,7 @@ export default {
         bodyCreate:[],
         idCandidats:[],
 
+        nominal: [],
         end_date: null,
         start_date: null,
         dataCandidate: null,
@@ -421,7 +424,7 @@ export default {
     watch: {
         tahapanGetter(to, from){
             this.refreshData();
-        }
+        },
     },
     setup() {
         const { getListCandidateAPI, postChooseCandidate, postFinishSelection } = API()
@@ -538,6 +541,12 @@ export default {
             if (!date) return null
             const [year, month, day] = date.split('-')
             return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+        },
+        useConvertToMoneyView(value, key) {
+            if (!value) return value;
+            value = parseInt(value.replaceAll(',', ''), 10);
+            this.bodyCreate[key].salary = value;
+            return this.nominal[key] = Intl.NumberFormat('en-US').format(value);
         },
     }
 }

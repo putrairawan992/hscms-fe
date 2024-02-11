@@ -214,6 +214,7 @@ export default {
 }
 .job-post-nav-text {
     width: 100%;
+    cursor: pointer;
     text-align: center;
 }
 .job-post-nav-container {
@@ -225,7 +226,7 @@ export default {
     display: flex;
     align-items: center;
     font-family: Nunito;
-    background-color: #ffffff;
+    background-color: #ffffff00;
     border-radius: 30px 30px 0px 0px;
 }
 .job-post-nav-container.active {

@@ -5,7 +5,7 @@
         <div class="menu-button-remunerasi-drawer">
             <div class="menu-left-child-drawer" />
             <div class="menu-drawer">
-                <div :class="pageActive == 'dashboard' ? 'dashboard1-drawer' : 'help-center-drawer'" @click="$router.push('/dashboard')">Dashboard</div>
+                <div :class="pageActive == 'dashboard' || pageActive == 'index' ? 'dashboard1-drawer' : 'help-center-drawer'" @click="$router.push('/dashboard')">Dashboard</div>
                 <div class="help-center-drawer" style="color: #a3a3a3;" @click="">Help Center</div>
                 <div class="help-center-drawer" style="color: #a3a3a3;" @click="">Blast Notification</div>
                 <div class="menu-child-drawer" />
