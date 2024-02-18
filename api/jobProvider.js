@@ -40,7 +40,7 @@ export const jobProviderAPI = () => {
         return await postRequest('jobprovider/pretest/'+id_module, body);
     }
     const deleteModule = async (id_module) => {
-        return await deleteRequest('jobprovider/detailmodul/'+id_module);
+        return await putRequest('jobprovider/detailmodul/'+id_module);
     }
     const postActivateModule = async (body, id_job) => {
         return await postRequest('jobprovider/pickmoduldetail/'+id_job, body);
@@ -107,6 +107,22 @@ export const jobProviderAPI = () => {
     const postFinishSelection = async (body, job_post_id) => {
         return await postRequest('jobprovider/selection/finish/'+job_post_id, body);
     }
+
+
+    // Employee Data
+    const getEmployee = async (page, file, file_status, employee_status) => {
+        let param = '?';
+        if(file != null && file != 'Semua'){ param = param + 'file='+file+'&' };
+        if(file_status != null && file_status != 'Semua'){ param = param + 'file_status='+file_status+'&' };
+        if(employee_status != null && employee_status != 'Semua'){ param = param + 'employee_status='+employee_status };
+        return await getRequest('jobprovider/employee/' +page + param);
+    }
+    const getEmployeeDetail = async (employee_id) => {
+        return await getRequest('jobprovider/employeedetail/' +employee_id);
+    }
+
+
+
     return {
         getJob,
         postJob,
@@ -141,6 +157,9 @@ export const jobProviderAPI = () => {
         postFormGrade,
         postLinkInterview,
         putAbstain,
-        postFinishSelection
+        postFinishSelection,
+
+        getEmployee,
+        getEmployeeDetail,
     }
 }

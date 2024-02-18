@@ -64,7 +64,7 @@
                                     <v-card
                                         color="grey-lighten-1"
                                         :class="['mx-3', selectedClass]"
-                                        height="192" width="222" elevation="0" class="bg-0"
+                                        width="222" elevation="0" class="bg-0 mb-2"
                                     >
                                         <div class="">
                                             <v-switch
@@ -80,7 +80,7 @@
                                                 </div>
                                                 <div class="module-icon-parent">
                                                     <img class="module-icon" alt="" :src="getIcon(modules.logo)" />
-                                                    <b class="">{{ modules.title_test }}</b>
+                                                    <b style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 18ch;line-height: 16px;">{{ modules.title_test }}</b>
                                                 </div>
                                             </div>
                                         </div>
@@ -159,7 +159,6 @@ export default {
     methods: {
         async getData(){
             await this.getModules(this.id_pretest).then((result)=>{
-                console.log('getModules', result);
                 this.modul_name = result.modul_name;
                 this.modules = result.detail;
             })

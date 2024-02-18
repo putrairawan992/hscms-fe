@@ -63,7 +63,7 @@
                                     <div class="round-child" />
                                     <div class="bicheck2">
                                     <img class="vector-icon" alt="" src="@/assets/svg/rectangle-4137.svg" />
-                                    <b class="b2">3</b>
+                                    <b class="b2">2</b>
                                     </div>
                                 </div>
                                 <div class="sub1">

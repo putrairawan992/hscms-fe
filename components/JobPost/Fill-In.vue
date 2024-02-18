@@ -192,7 +192,7 @@
             </v-col>
             <v-col cols="12" class="pt-0">
                 <v-select
-                    multiple solo
+                    multiple solo rounded content-class="elevation-0"
                     v-model="education_id"
                     :items="masterData.master_education"
                     placeholder="Pilih tingkat pendidikan (bisa lebih dari satu)"

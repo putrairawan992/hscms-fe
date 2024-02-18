@@ -95,7 +95,7 @@
                                     @blur="start_post = parseDate(start_post)"
                                     outlined readonly
                                     class="preview-text-input"
-                                    placeholder="2024-11-06"
+                                    placeholder="Pilih Tanggal"
                                     />
                                     <img class="feather-icon-calendar-preview" alt="" src="@/assets/svg/feathericon--calendar.svg" />
                                 </div>
@@ -127,7 +127,7 @@
                                     @blur="closed_post = parseDate(closed_post)"
                                     outlined readonly
                                     class="preview-text-input"
-                                    placeholder="2024-11-06"
+                                    placeholder="Pilih Tanggal"
                                     />
                                     <img class="feather-icon-calendar-preview" alt="" src="@/assets/svg/feathericon--calendar.svg" />
                                 </div>

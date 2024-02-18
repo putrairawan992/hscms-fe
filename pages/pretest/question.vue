@@ -125,7 +125,7 @@
                 </div>
             </div>
         </v-card>
-        <AlertApproval content="Apakah Anda yaki ingin mengakhiri tes?" :onApprove="endTest" :closeDialog="closeAlert" :show="showAlertApproval"/>
+        <AlertApproval content="Apakah Anda yakin ingin mengakhiri tes?" :onApprove="endTest" :closeDialog="closeAlert" :show="showAlertApproval"/>
     </div>
 </template>
 <script>

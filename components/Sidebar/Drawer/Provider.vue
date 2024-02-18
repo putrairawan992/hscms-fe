@@ -12,8 +12,40 @@
                 <div class="help-center-drawer" style="color: #a3a3a3;" @click="">Talent Pool</div>
                 <div class="help-center-drawer" style="color: #a3a3a3;" @click="">Talent Hunt</div>
                 <div class="menu-child-drawer" />
-                <div :class="pageActive == 'job' ? 'dashboard1-drawer' : 'help-center-drawer'" @click="$router.push('/job/post')">Job</div>
-                <div :class="pageActive == 'opening' ? 'dashboard1-drawer' : 'help-center-drawer'" @click="$router.push('/job/opening')">Job Opening</div>
+                <v-menu
+                    transition="scale-transition"
+                    content-class="elevation-0"
+                    origin="center center"
+                    rounded="xl" offset-y
+                >
+                    <template v-slot:activator="{ attrs, on }">
+                        <div 
+                            v-bind="attrs" v-on="on" class="px-8"
+                            :class="pageActive == 'job' || pageActive == 'opening' ? 'dashboard1-drawer' : 'help-center-drawer'" 
+                        >
+                            Job
+                            <img v-if="pageActive == 'job' || pageActive == 'opening'" class="mt-2" src="@/assets/svg/chevrondown-red.svg" />
+                            <img v-else class="mt-2" src="@/assets/svg/chevrondown.svg" />
+                        </div>
+                    </template>
+
+                    <v-list class="sidebar-menu">
+                        <v-list-item
+                            link class="sidebar-item mx-2"
+                            @click="$router.push('/job/post')"
+                            :class="pageActive == 'job' ? 'active' : ''"
+                        >
+                            <div>New Job Post</div>
+                        </v-list-item>
+                        <v-list-item
+                            link class="sidebar-item mx-2"
+                            @click="$router.push('/job/opening')"
+                            :class="pageActive == 'opening' ? 'active' : ''"
+                        >
+                            <div>Job Opening</div>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
                 <div :class="pageActive == 'talent' ? 'dashboard1-drawer' : 'help-center-drawer'" @click="$router.push('/talent-selection')">Talent Selection</div>
                 <div class="menu-child-drawer" />
                 <div class="help-center-drawer" style="color: #a3a3a3;" @click="">Employee Data</div>

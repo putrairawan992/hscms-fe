@@ -2,7 +2,7 @@
     <div>
         <v-row class="" align="start" style=";">
             <v-col cols="6" class="">
-                <v-row class="card-ts mb-5">
+                <!-- <v-row class="card-ts mb-5">
                     <v-col cols="4" class="pa-0">
                         <img class=" mt-3 mb-1" alt="" src="@/assets/svg/doc-tahap.svg" />
                     </v-col>
@@ -27,9 +27,7 @@
                             <div class="">Tahap 2 merupakan proses verifikasi data kandidat atau karyawan yang sudah didaftarkan di tahap 1.</div>
                         </v-col>
                     </v-col>
-                </v-row>
-            </v-col>
-            <v-col cols="6" class="">
+                </v-row> -->
                 <v-row class="card-ts mb-5">
                     <v-col cols="4" class="pa-0">
                         <img class=" mt-3 mb-1" alt="" src="@/assets/svg/brainhead-big.svg" />
@@ -40,19 +38,6 @@
                         </v-col>
                         <v-col cols="12" class="text-left text-tahap-desc pa-0">
                             <div class="">Tahap 1 merupakan penyeleksian tes tulis bagi calon karyawan.</div>
-                        </v-col>
-                    </v-col>
-                </v-row>
-                <v-row class="card-ts mb-5">
-                    <v-col cols="4" class="pa-0">
-                        <img class=" mt-3 mb-1" alt="" src="@/assets/svg/doc-tahap.svg" />
-                    </v-col>
-                    <v-col cols="8" class="ma-auto pl-0">
-                        <v-col cols="12" class="text-left text-tahap pa-0">
-                            <b class="">Tahap 2</b>
-                        </v-col>
-                        <v-col cols="12" class="text-left text-tahap-desc pa-0">
-                            <div class="">Tahap 2 merupakan penyeleksian berkas administrasi bagi calon karyawan yang sudah mengirim berkas kelengkapan data serta menyelesaikan rangkaian tes berupa tes psikotest, wawancara mandiri dan tes kompetensi (opsional).</div>
                         </v-col>
                     </v-col>
                 </v-row>
@@ -71,19 +56,6 @@
                 </v-row>
                 <v-row class="card-ts mb-5">
                     <v-col cols="4" class="pa-0">
-                        <img class=" mt-3 mb-1" alt="" src="@/assets/svg/person2.svg" />
-                    </v-col>
-                    <v-col cols="8" class="ma-auto pl-0">
-                        <v-col cols="12" class="text-left text-tahap pa-0">
-                            <b class="">Tahap 4</b>
-                        </v-col>
-                        <v-col cols="12" class="text-left text-tahap-desc pa-0">
-                            <div class="">Tahap 4 merupakan proses wawancara dan penilaian bagi seluruh kandidat yang sudah lolos seleksi administrasi dari tahap 1.</div>
-                        </v-col>
-                    </v-col>
-                </v-row>
-                <v-row class="card-ts mb-5">
-                    <v-col cols="4" class="pa-0">
                         <img class=" mt-3 mb-1" alt="" src="@/assets/svg/person-circle-check.svg" />
                     </v-col>
                     <v-col cols="8" class="ma-auto pl-0">
@@ -92,6 +64,34 @@
                         </v-col>
                         <v-col cols="12" class="text-left text-tahap-desc pa-0">
                             <div class="">Tahap 5 merupakan penyeleksian akhir bagi calon karyawan yang memenuhi kualifikasi dari lowongan pekerjaan.</div>
+                        </v-col>
+                    </v-col>
+                </v-row>
+            </v-col>
+            <v-col cols="6" class="">
+                <v-row class="card-ts mb-5">
+                    <v-col cols="4" class="pa-0">
+                        <img class=" mt-3 mb-1" alt="" src="@/assets/svg/doc-tahap.svg" />
+                    </v-col>
+                    <v-col cols="8" class="ma-auto pl-0">
+                        <v-col cols="12" class="text-left text-tahap pa-0">
+                            <b class="">Tahap 2</b>
+                        </v-col>
+                        <v-col cols="12" class="text-left text-tahap-desc pa-0">
+                            <div class="">Tahap 2 merupakan penyeleksian berkas administrasi bagi calon karyawan yang sudah mengirim berkas kelengkapan data serta menyelesaikan rangkaian tes berupa tes psikotest, wawancara mandiri dan tes kompetensi (opsional).</div>
+                        </v-col>
+                    </v-col>
+                </v-row>
+                <v-row class="card-ts mb-5">
+                    <v-col cols="4" class="pa-0">
+                        <img class=" mt-3 mb-1" alt="" src="@/assets/svg/person2.svg" />
+                    </v-col>
+                    <v-col cols="8" class="ma-auto pl-0">
+                        <v-col cols="12" class="text-left text-tahap pa-0">
+                            <b class="">Tahap 4</b>
+                        </v-col>
+                        <v-col cols="12" class="text-left text-tahap-desc pa-0">
+                            <div class="">Tahap 4 merupakan proses wawancara dan penilaian bagi seluruh kandidat yang sudah lolos seleksi administrasi dari tahap 1.</div>
                         </v-col>
                     </v-col>
                 </v-row>

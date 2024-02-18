@@ -57,7 +57,10 @@ export const API = () => {
         postFormGrade,
         postLinkInterview,
         putAbstain,
-        postFinishSelection
+        postFinishSelection,
+
+        getEmployee,
+        getEmployeeDetail,
     } = jobProviderAPI();
     
 
@@ -118,6 +121,9 @@ export const API = () => {
             postFormGrade,
             postLinkInterview,
             putAbstain,
-            postFinishSelection
+            postFinishSelection,
+            
+            getEmployee,
+            getEmployeeDetail,
     }
 }

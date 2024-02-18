@@ -10,7 +10,7 @@
                     </div>
                     <div style="display: flex; justify-content: space-between; padding: 10px 90px 30px 70px;">
                         <button class="button-batal-wrapper" @click="closeDialog">
-                            <b class="tempat-tanggal-lahir">Batal</b>
+                            <b class="tempat-tanggal-lahir">Tidak</b>
                         </button> 
                         <button class="button-wrapper" @click="onApprove">
                             <b class="tempat-tanggal-lahir">Yakin</b>
