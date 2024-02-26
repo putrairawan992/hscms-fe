@@ -332,7 +332,7 @@ export default {
     justify-content: flex-start;
     padding: 10px;
     font-size: 12px;
-    /* color: #b6b6b6; */
+    background-color: #fff;
 }.header-select-input::placeholder {
     font-style: italic;
 }

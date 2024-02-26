@@ -195,10 +195,15 @@ export default {
             console.log('this.step', this.step);
             localStorage.setItem('step_job_post', this.step);
         },
-        prev(){
-            if(this.step > 1){
-                this.step = this.step - 1;
-                localStorage.setItem('step_job_post', this.step);
+        prev(step){
+            if (step) {
+                this.step = step;
+                localStorage.setItem('step_job_post', step);
+            } else {
+                if(this.step > 1){
+                    this.step = this.step - 1;
+                    localStorage.setItem('step_job_post', this.step);
+                }
             }
         },
     }

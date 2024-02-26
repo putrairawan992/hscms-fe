@@ -1,105 +1,67 @@
-<template>
+    <template>
     <div>
         <v-card class="card-register">
+            <v-row class="job-post-nav ma-0">
+                <v-col cols="3" class="job-post-nav-container active">
+                    <div class="job-post-nav-text">Create</div>
+                </v-col>
+                <v-col cols="3" class="job-post-nav-container">
+                    <div class="job-post-nav-text" @click="">Draft</div>
+                </v-col>
+                <v-col cols="3" class="job-post-nav-container">
+                    <div class="job-post-nav-text" @click="">Rejected</div>
+                </v-col>
+                <v-col cols="3" class="job-post-nav-container">
+                    <div class="job-post-nav-text" @click="">Approval</div>
+                </v-col>
+            </v-row>
             <div class="my-2" style="position: relative;">
-                <div class="blokade-parent ma-8 pt-1">
-                    <v-row class="mt-4">
-                        <v-col cols="12" class="text-left">
-                            <div class="page-title">
-                                Employee Data
-                            </div>
-                        </v-col>
-                        <v-col cols="12" class="text-left">
-                            <v-row>
-                                <v-col class="employee-data">
-                                    <b>
-                                        Total Karyawan: <span style="color: #AE445A;">{{ listEmployee.length }}</span> Orang
-                                    </b>
-                                </v-col>
-                                <v-col class="employee-data">
-                                    <div>
-                                        None: <span style="color: #AE445A;">0</span> Orang
-                                    </div>
-                                </v-col>
-                                <v-col class="employee-data">
-                                    <div>
-                                        Sent: <span style="color: #AE445A;">0</span> Orang
-                                    </div>
-                                </v-col>
-                                <v-col class="employee-data">
-                                    <div>
-                                        Employee Signed: <span style="color: #AE445A;">0</span> Orang
-                                    </div>
-                                </v-col>
-                                <v-col class="employee-data">
-                                    <div>
-                                        Full Signed: <span style="color: #AE445A;">0</span> Orang
-                                    </div>
-                                </v-col>
-                            </v-row>
-                        </v-col>
-                    </v-row>
-
+                <div class="blokade-parent ma-8 pt-1" style="height: 785px;">
                     <v-row align="center" class="mb-4">
                         <v-col style="max-width: 710px !important;">
                             <v-row>
                                 <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
                                     <v-row align="center">
                                         <v-col cols="12" class="label pb-1">
-                                            <b>Berkas</b>
+                                            <b>Bulan</b>
                                         </v-col>
                                         <v-col cols="12" class="pt-0 input-checkbox-container">
-                                            <multiselect
-                                                v-model="file" :allow-empty="false"
-                                                :options="['Semua','Offering Lateer', 'PKWT']"
-                                                placeholder="Pilih Berkas" class="header-select-input"
+                                            <v-text-field
+                                                value="Agustus"
+                                                class="search-text-field" solo 
                                             >
-                                            </multiselect>
+                                            </v-text-field>
                                         </v-col>
                                     </v-row>
                                 </v-col>
                                 <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
                                     <v-row align="center">
                                         <v-col cols="12" class="label pb-1">
-                                            <b>Status Berkas</b>
+                                            <b>Tahun</b>
                                         </v-col>
                                         <v-col cols="12" class="pt-0 input-checkbox-container">
-                                            <multiselect
-                                                v-model="file_status" :allow-empty="false"
-                                                placeholder="Status Berkas" class="header-select-input"
-                                                :options="['Semua', 'None', 'Sent', 'Employee Signed', 'Full Signed']"
+                                            <v-text-field
+                                                value="2024"
+                                                class="search-text-field" solo 
                                             >
-                                            </multiselect>
+                                            </v-text-field>
                                         </v-col>
                                     </v-row>
                                 </v-col>
-                                <!-- <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
+                                <v-col cols="6" class="">
                                     <v-row align="center">
                                         <v-col cols="12" class="label pb-1">
-                                            <b>Jalur</b>
+                                            <b>&nbsp;</b>
                                         </v-col>
-                                        <v-col cols="12" class="pt-0 input-checkbox-container">
-                                            <multiselect
-                                                :options="['arrayTahapan']"
-                                                placeholder="Pilih Jalur" :allow-empty="false"
-                                                class="header-select-input"
-                                                >
-                                            </multiselect>
-                                        </v-col>
-                                    </v-row>
-                                </v-col> -->
-                                <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
-                                    <v-row align="center">
-                                        <v-col cols="12" class="label pb-1">
-                                            <b>Status Karyawan</b>
-                                        </v-col>
-                                        <v-col cols="12" class="pt-0 input-checkbox-container">
-                                            <multiselect
-                                                v-model="employee_status" :allow-empty="false"
-                                                placeholder="Status Karyawan" class="header-select-input"
-                                                :options="['Semua', 'Kontrak', 'Freelance', 'Magang', 'Probation']"
-                                            >
-                                            </multiselect>
+                                        <v-col cols="12" class="input-checkbox-container" style="padding-top: 5px;">
+                                            <div class="total-karyawan-terpilih">
+                                                <b>
+                                                    Total Karyawan terpilih
+                                                    <span class="ml-3">
+                                                        0 &nbsp;&nbsp;/&nbsp;&nbsp; 50 Orang
+                                                    </span>
+                                                </b>
+                                            </div>
                                         </v-col>
                                     </v-row>
                                 </v-col>
@@ -112,118 +74,198 @@
                                 </v-col>
                                 <v-col cols="12" class="pt-0 input-checkbox-container">
                                     <div class="frame-container">
-                                        <div class="attach-mpr-parent" @click="">
-                                            <b class="button">Download All</b>
-                                            <img class="download-all-icon" alt="" src="@/assets/svg/download.svg" />
+                                        <div class="attach-mpr-parent" @click="dialogAttach = true">
+                                            <b class="button">Attach File</b>
                                         </div>
                                     </div>
                                 </v-col>
                             </v-row>
                         </v-col>
-                    </v-row>
 
-                    <div style="height: 580px; overflow-y: auto; overflow-x: hidden;">
-                        <v-row class="">
-                            <v-col v-for="item in listEmployee" cols="12" class="pb-0">
-                                <div class="history-1">
-                                    <div class="frame-parent-draft">
-                                        <div class="foto-perusaahaan-parent">
-                                            <img
-                                                class="foto-perusaahaan-icon"
-                                                alt=""
-                                                :src="item.photo"
-                                            />
-                                            <b class="">{{ item.employee_name }}</b>
-                                        </div>
-                                        <div>
-                                            <div class="employee-data-container">
-                                                <b> Offering Letter </b>
-                                                <div class="employee-data-item"> Employee Signed </div>
-                                                <div class="icon-container" @click="clickDetail(item.employee_id)">
-                                                    <img class="edit-icon" alt="" src="@/assets/svg/eye-circle-fill.svg" />
-                                                </div>
-                                                <div class="icon-container">
-                                                    <img class="edit-icon" alt="" src="@/assets/svg/download-red.svg" />
-                                                </div>
-                                                <div class="employee-data-item"> {{ item.selection_type }} </div>
-                                            </div>
-                                        </div>
-                                        <div class="edit-parent">
-                                            <div class="btn-employee-container" :class="item.employee_type">
-                                                <div class="attach-mpr-parent">
-                                                    <b class="button">{{ item.employee_type }}</b>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </v-col>
-                        </v-row>
-                    </div>
-
-                    <v-row>
                         <v-col cols="12">
+                            <div  class="remuneration-container container">
+                                <v-row class="my-0">
+                                    <v-col cols="10" class="">
+                                        <v-text-field
+                                            class="search-text-field-small"
+                                            placeholder="Ketikkan Nama" solo 
+                                            append-inner-icon="mdi-menu-left"
+                                            single-line
+                                            hide-details
+                                        >
+                                        </v-text-field>
+                                    </v-col>
+                                    <v-col cols="2">
+                                        <div class="orange-btn" style="">
+                                            <div class="" @click="dialog = true">
+                                                <b class="button mx-3">+ Add to List</b>
+                                            </div>
+                                        </div>
+                                    </v-col>
+                                </v-row>
+                                <div style="height: 322px; overflow: auto;">
+                                    <v-row class="">
+                                        <v-col v-for="n in 15" :key="n" cols="12" class="pb-0">
+                                            <div class="history-1">
+                                                <div class="frame-parent-draft">
+                                                    <div class="foto-perusaahaan-parent">
+                                                        <img
+                                                            class="foto-perusaahaan-icon"
+                                                            alt=""
+                                                            src="@/assets/svg/foto-perusaahaan.svg"
+                                                        />
+                                                        <b class="">Marketing Staff</b>
+                                                    </div>
 
-                            <v-pagination
-                                v-model="page"
-                                :length="paginate"
-                                prev-icon="mdi-menu-left"
-                                next-icon="mdi-menu-right" class="my-4"
-                                size="2" color="#ae445a" navigation-color="#ae445a"
-                            ></v-pagination>
+                                                    <div class="">
+                                                        <div style="display: flex;">
+                                                            <div>
+                                                                <div class="remun-table-title">Tipe Karyawan</div>
+                                                                <div class="remun-bordered-red left">
+                                                                    <div class="remun-table-text">Contract</div>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="remun-table-title">Take Home Pay</div>
+                                                                <div class="remun-bordered-red">
+                                                                    <div class="remun-table-text">7,000,00</div>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="remun-table-title">Tanggal Masuk</div>
+                                                                <div class="remun-bordered-red">
+                                                                    <div class="remun-table-text">4 Feb 2022</div>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="remun-table-title">Tanggal Akhir</div>
+                                                                <div class="remun-bordered-red">
+                                                                    <div class="remun-table-text">5 Feb 2022</div>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="remun-table-title">Jenis Request</div>
+                                                                <div class="remun-bordered-red right" style="padding: 3px 1px 3px 11px;">
+                                                                    <v-select
+                                                                    :items="['Salary']"
+                                                                    placeholder="..."
+                                                                    class="table-remun-select pa-0" hide-detail
+                                                                    ></v-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="remun-icon-parent">
+                                                        <img class="" alt="eye-circle-fill"
+                                                            src="@/assets/svg/eye-circle-fill.svg"
+                                                            @click="dialogDetail = true"
+                                                        />
+                                                        <img class="" alt="trash-red-small"
+                                                            src="@/assets/svg/trash-red-small.svg"
+                                                            @click=""
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </v-col>
+                                    </v-row>
+                                </div>
+                                <v-row>
+                                    <v-col cols="12" class="pt-8">
+                                        <div class="orange-btn" style="width: -webkit-fill-available; justify-content: center;">
+                                            <div class="" @click="">
+                                                <b class="button mx-3">Create Simulation</b>
+                                            </div>
+                                        </div>
+                                    </v-col>
+                                </v-row>
+                            </div>
+                        </v-col>
+                        <v-col cols="12" class="">
+                            <div class="history-1">
+                                <div class="frame-parent-draft">
+                                    <div class="foto-perusaahaan-parent" style="width: 250px;">
+                                        <img
+                                            alt="micosoft-excel"
+                                            class="micosoft-excel"
+                                            src="@/assets/svg/micosoft-excel.svg"
+                                        />
+                                        <b class="">Remunerasi November 2023</b>
+                                    </div>
+                                    <div class="">11 November 2023</div>
+                                    <div class="orange-btn" style="">
+                                            <div class="" @click="">
+                                                <b class="button mx-3">Download</b>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
                         </v-col>
                     </v-row>
                 </div>
             </div>
         </v-card>
+        <Dialog-Remuneration :show="dialog" :closeDialog="closeDialog"/>
+        <Dialog-RemunerationAttach :show="dialogAttach" :closeDialog="closeDialog"/>
+        <Dialog-RemunerationDetail :show="dialogDetail" :closeDialog="closeDialog"/>
     </div>
 </template>
 <script>
 
-import { API } from '@/api/index'
 import Multiselect from 'vue-multiselect'
+import TextEditor from "~/components/TextEditor";
 export default {
     layout: "jobProvider",
     components: { 
+        TextEditor,
         Multiselect,
     },
     data: () => ({
+        cv: null,
         file: null,
-        file_status: null,
-        employee_status: null,
+        datePicker1: false,
 
-        page: 1,
-        paginate: 1,
-        listEmployee: [],
+        dialog: false,
+        dialogAttach: false,
+        dialogDetail: true,
+
+        html: "",
+        nominal: "",
+        tanggal_lahir: "",
+        status_pernikahan: "",
+        listStatusPernikahan: ['Sudah Menikah', 'Belum Menikah']
     }),
     watch: {
-        file (to, from) {
-            this.getData();
+        nominal(newValue, oldValue) {
+            this.nominal = this.useConvertToMoneyView(newValue)
         },
-        file_status (to, from) {
-            this.getData();
-        },
-        employee_status (to, from) {
-            this.getData();
-        }
-    },
-    setup() {
-        const { getEmployee, getEmployeeDetail } = API()
-        return { getEmployee, getEmployeeDetail };
-    },
-    async mounted() {
-        this.getData();
     },
     methods: {
-        async getData(){
-            await this.getEmployee(this.page, this.file, this.file_status, this.employee_status).then((result)=>{if(result){
-                this.paginate = result.paginate.length || 1;
-                this.listEmployee = result.employee_list;
-            }})
+        closeDialog() {
+            this.dialog = false;
+            this.dialogAttach = false;
+            this.dialogDetail = false;
         },
-        async clickDetail(id){
-            await localStorage.setItem('employee_id', id);
-            this.$router.push('/employee-data/detail');
+        parseDate (date) {
+            if (!date) return null
+            const [year, month, day] = date.split('-')
+            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+        },
+        onSelectFile (event, param) {
+            const file = event.srcElement.files[0]
+
+        },
+        useConvertToMoneyView(value) {
+            if (!value) return value;
+            value = parseInt(value.replaceAll(',', ''), 10);
+            this.nominal_pengajuan = value;
+
+            if(value > 0 && value < 100000000){
+                this.alert = true;
+            }else { this.alert = false; }
+
+            return Intl.NumberFormat('en-US').format(value);
         },
     }
 
@@ -231,53 +273,48 @@ export default {
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped>
-.icon-container {
+.remun-bordered-red {
+    border-left: none;
+    padding: 3px 20px;
+    border: 1px solid #ae445a;
+    border-left: none;
+}
+.remun-bordered-red.right{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.remun-bordered-red.left{
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-left: 1px solid #ae445a;
+}
+.remun-table-text {
+    font-size: 10px;
+    font-weight: 300;
+}
+.remun-table-title {
+    font-size: 8px;
+    margin-bottom: 3px;
+    font-weight: bold;
+}
+
+.remuneration-container {
+    width: 100%;
+    min-height: 488px;
+    border-radius: 10px;
+    border: 3px solid #ae445a;
+}
+.total-karyawan-terpilih b {
+    color: #ae445a;
+}
+.total-karyawan-terpilih {
+    width: 100%;
+    height: 39px;
     display: flex;
-    cursor: pointer;
+    border-radius: 10px;
     align-items: center;
     justify-content: center;
-    height: -webkit-fill-available;
-    /* border-left: 1px solid #AE445A; */
-}
-.employee-data-item{
-    display: flex;
-    align-items: center;
-    height: -webkit-fill-available;
-    /* border-left: 1px solid #AE445A; */
-}
-.employee-data-container {
-    width: 372px;
-    border-radius: 5px;
-    border: 1px solid #AE445A;
-    display: flex;
-    justify-content: space-around;
-    height: 30px;
-    align-content: center;
-    align-items: center;
-}
-.employee-data {
-    padding: 5px 8px;
-    margin-top: 20px;
-    margin-left: 12px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border: 1px solid #AE445A;
-    max-width: -webkit-fit-content;
-}
-.download-all-icon {
-    width: 10px;
-    height: 10px;
-    overflow: hidden;
-    flex-shrink: 0;
-    margin-left: 5px;
-}
-.page-title {
-    color: #AE445A;
-    font-family: Nunito;
-    font-size: 26px;
-    font-style: normal;
-    font-weight: 900;
-    line-height: normal;
+    border: 1px solid #ae445a;
 }
 .header-select-input {
     border-radius: 10px;
@@ -295,12 +332,14 @@ export default {
 }.header-select-input::placeholder {
     font-style: italic;
 }
-.edit-parent {
+.remun-icon-parent {
+    gap: 10px;
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 15px;
+    justify-content: center;
+}
+.remun-icon-parent img {
+    cursor: pointer;
 }
 .foto-perusaahaan-icon {
     width: 50px;
@@ -362,7 +401,7 @@ export default {
     gap: 10px;
     font-size: 12px;
 }
-.input-checkbox-container {
+.input-checkbox-container{
     display: flex;
     column-gap: 20px;
     flex-direction: row;
@@ -380,12 +419,12 @@ export default {
     align-items: center;
     justify-content: center;
 }
-.btn-employee-container {
+.frame-container {
     border-radius: 10px;
+    background: linear-gradient(90deg, #f39f5a, #ae445a);
     box-shadow: 5px 0px 5px #b3b9c5;
-    background: #ae445a;
-    width: 97px;
-    height: 30px;
+    width: 135px;
+    height: 35px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -395,18 +434,6 @@ export default {
     font-size: 12px;
     color: #fff;
     line-height: 50px;
-}
-.Kontrak{
-    background: #ae445a;
-}
-.Freelance{
-    background: #8364BA;
-}
-.Magang{
-    background: #F39F5A;
-}
-.Probation{
-    background: #3AB471;
 }
 .gear-icon {
     width: 25px;
@@ -428,6 +455,7 @@ export default {
 }
 .job-post-nav-text {
     width: 100%;
+    cursor: pointer;
     text-align: center;
 }
 .job-post-nav-container {
@@ -439,7 +467,7 @@ export default {
     display: flex;
     align-items: center;
     font-family: Nunito;
-    background-color: #ffffff;
+    background-color: #ffffff00;
     border-radius: 30px 30px 0px 0px;
 }
 .job-post-nav-container.active {

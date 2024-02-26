@@ -74,7 +74,7 @@
                                             ></v-switch>
                                             <div class="card-module" :class="getGradient(modules.type)">
                                                 <div class="edit-module-parent">
-                                                    <img class="edit-icon" alt="edit" src="@/assets/svg/edit.svg" />
+                                                    <img class="edit-icon" alt="edit" src="@/assets/svg/edit.svg" @click="updateModule(modules.id)"/>
                                                     <img class="edit-icon" alt="delete" src="@/assets/svg/trash2.svg" @click="delModule(modules.id)"/>
                                                     <!-- <img class="edit-icon" alt="view" src="@/assets/svg/eyecirclefill.svg" /> -->
                                                 </div>
@@ -114,7 +114,6 @@ import rectangleSVG from "@/assets/svg/module-logo/white/123rectangle.svg";
 import paintbrushpointedSVG from "@/assets/svg/module-logo/white/paintbrushpointed.svg";
 
 export default {
-    name: "jobProvider",
     middleware: "jobProvider",
     components: { 
         Multiselect,
@@ -139,11 +138,7 @@ export default {
             'Modul Upload Document',
         ],
     }),
-    watch: {
-        modules (val, oldVal) {
-            console.log('val', val);
-        }
-    },
+    watch: {},
     setup() {
         const { getModules, postModule, deleteModule, postPretest, postActivateModule } = API()
         return { getModules, postModule, deleteModule, postPretest, postActivateModule };
@@ -153,8 +148,8 @@ export default {
         const storageIdPretest = localStorage.getItem('id_pretest');
         if(storageIdJobPost){ this.id_job_post = storageIdJobPost;}
         if(storageIdPretest){ this.id_pretest = storageIdPretest;}
+        localStorage.removeItem("id_module");
         this.getData();
-        console.log('this.id_pretest', this.id_pretest);
     },
     methods: {
         async getData(){
@@ -176,6 +171,10 @@ export default {
                 if(result){ this.$notifier.showMessage({ content: 'Success.', status: 'success' }); }
                 return this.getData();
             })
+        },
+        async updateModule(id_module){
+            localStorage.setItem('id_module', id_module);
+            this.$router.push('/job/post/pre-test/module-form')
         },
         async savePretest(){
             await this.postPretest({modul_name: this.modul_name}, this.id_pretest).then((result)=>{

@@ -114,7 +114,7 @@
                                 >
                             </multiselect>
                       </v-col>
-                      <v-col cols="12" class="input-checkbox-containe pt-0">
+                      <v-col cols="12" class="pt-0">
                         <div class="link-container">
                           <b style="color: #404041; margin-right: 10px;">Link Meeting: </b> {{ timeSchedule?.link }}
                         </div>
@@ -316,6 +316,7 @@ export default {
   min-width: 360px;
   border-radius: 10px;
   border: 1px solid #AE445A;
+  background: #fff;
   text-align: left;
 }
 .card-register {
@@ -349,7 +350,7 @@ export default {
     justify-content: flex-start;
     padding: 10px;
     font-size: 12px;
-    /* color: #b6b6b6; */
+    background-color: #fff;
 }.header-select-input::placeholder {
     font-style: italic;
 }

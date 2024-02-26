@@ -21,7 +21,7 @@
 
                 <div class="text-right">
                     <b class="jakarta-selatan-wfo">{{ data_job_location?.job_location_name }}</b>
-                    <div class="jam-lalu">{{ $moment(end_date).startOf('hour').fromNow() }}</div>
+                    <div class="jam-lalu">{{ $moment(created_at).startOf('hour').fromNow() }}</div>
                     <!-- <div class="jam-lalu">2 jam lalu</div> -->
                 </div>
             </v-col>
@@ -142,16 +142,16 @@
             </v-col>
         </v-row>
 
-        <v-row>
+        <v-row class="mb-4">
             <div class="save-container">
                 <div></div>
                 <div class="d-flex" style="column-gap: 20px;">
-                    <!-- <div class="button-wrapper">
+                    <div class="button-wrapper" @click="prev(1)">
                         <b class="tempat-tanggal-lahir">Edit</b>
                     </div> 
-                    <div class="button-wrapper">
+                    <div class="button-wrapper" @click="clickDelete()">
                         <b class="tempat-tanggal-lahir">Delete</b>
-                    </div>  -->
+                    </div> 
                     <div class="button-wrapper" @click="submit">
                         <b class="tempat-tanggal-lahir">Post</b>
                     </div> 
@@ -176,6 +176,7 @@ export default {
     data: () => ({
         cv: null,
         file: null,
+        created_at: null,
         id_job_post: null,
         datePicker1: false,
         datePicker2: false,
@@ -220,8 +221,8 @@ export default {
         },
     },
     setup() {
-        const { getJob, postPostingJob } = API()
-        return { getJob, postPostingJob };
+        const { getJob, deleteJob, postPostingJob } = API()
+        return { getJob, deleteJob, postPostingJob };
     },
     props: {
         next: { type: Function, default() { return {} } },
@@ -235,7 +236,6 @@ export default {
     methods: {
         async getData(){
             await this.getJob(this.id_job_post).then((result)=>{
-                console.log('getJob', result);
                 this.refreshForm(result.data);
                 this.masterData = result?.master_data;
             })
@@ -257,6 +257,7 @@ export default {
                 this.end_from_salary = data.end_from_salary;
                 this.description = data.description;
                 this.data_job_provider = data.data_job_provider;
+                this.created_at = data.createdAt;
                 data.data_education.forEach(element => {
                     this.educations.push(element.detail_education.education_name)
                 });
@@ -267,19 +268,23 @@ export default {
         },
 
         async submit(){
-            console.log({
-                start_post: this.start_post + " 00:00:00",
-                closed_post: this.closed_post + " 00:00:00",
-            });
             await this.postPostingJob({
                 start_post: this.start_post + " 00:00:00",
                 closed_post: this.closed_post + " 00:00:00",
             }, this.id_job_post).then( async (result) => {
-                console.log('RESULT', result);
                 if(result){
-                    // localStorage.removeItem("id_job_post");
                     this.$notifier.showMessage({ content: 'Success.', status: 'success' });
                     return this.next();
+                }
+            })
+        },
+        
+        async clickDelete(){
+            await this.deleteJob(this.id_job_post).then( async (result) => {
+                if(result){
+                    localStorage.removeItem("id_job_post");
+                    this.$notifier.showMessage({ content: 'Success.', status: 'success' });
+                    return this.prev(1);
                 }
             })
         },

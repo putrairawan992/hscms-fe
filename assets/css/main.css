@@ -1091,7 +1091,7 @@ input:-webkit-autofill:active{
 .search-text-field.v-text-field input {
     padding: 5px !important;
     font-size: 12px !important;
-    background-color: #00000000 !important;
+    background-color: #fff !important;
 }.search-text-field.v-text-field input::placeholder {
     font-style: italic !important;
 }
@@ -1099,7 +1099,7 @@ input:-webkit-autofill:active{
     box-shadow: none !important;
     border-radius: 10px !important;
     border: 1px solid #ae445a !important;
-    background-color: #00000000 !important;
+    background-color: #fff !important;
     box-sizing: border-box !important;
     width: 100% !important;
     min-height: 40px !important;
@@ -1111,6 +1111,33 @@ input:-webkit-autofill:active{
     font-size: 12px !important;
     margin-bottom: 0 !important;
     margin-top: 3px !important;
+}
+.search-text-field-small.theme--light.v-text-field > .v-input__control > .v-input__slot:before {
+    border: none !important;
+}
+.search-text-field-small.v-text-field input {
+    padding: 5px !important;
+    font-size: 12px !important;
+    background-color: #fff !important;
+}.search-text-field-small.v-text-field input::placeholder {
+    font-style: italic !important;
+}
+.search-text-field-small.v-text-field.v-text-field--solo:not(.v-text-field--solo-flat) > .v-input__control > .v-input__slot {
+    box-shadow: none !important;
+    border-radius: 10px !important;
+    border: 1px solid #ae445a !important;
+    background-color: #fff !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-height: 36px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: 0px 5px !important;
+    font-size: 12px !important;
+    margin-bottom: 0 !important;
+    margin-top: 0px !important;
 }
 .selection4-text-field.v-text-field.v-text-field--enclosed .v-text-field__details {
     display: none !important;
@@ -1201,8 +1228,56 @@ input:-webkit-autofill:active{
     margin-top: 3px !important;
     background-color: #ffffff00;
 }
-.grade-text-field.v-text-field.v-text-field--enclosed .v-text-field__details {
+
+.table-remun-select.v-text-field.v-text-field--enclosed .v-text-field__details {
     display: none !important;
+}
+.table-remun-select.theme--light.v-text-field > .v-input__control > .v-input__slot:before {
+    border: none !important;
+}
+.table-remun-select.v-text-field {
+    margin-top: 0px !important;
+}
+.table-remun-select.v-text-field input {
+    padding: 0px !important;
+    font-size: 10px !important;
+}
+.table-remun-select.v-text-field input::placeholder {
+    font-style: italic !important;
+}
+.table-remun-select.v-text-field.v-text-field--solo:not(.v-text-field--solo-flat) > .v-input__control > .v-input__slot {
+    box-shadow: none !important;
+    border-radius: 10px !important;
+    border: none !important;
+    box-sizing: border-box !important;
+    max-width: 50px !important;
+    height: 20px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: 0px 5px !important;
+    font-size: 10px !important;
+    margin-bottom: 0 !important;
+    margin-top: 0px !important;
+    background-color: #ffffff00;
+}
+.table-remun-select.v-text-field.v-text-field--enclosed .v-text-field__details {
+    display: none !important;
+}
+.table-remun-select.v-text-field .v-select__slot {
+    font-size: 10px !important;
+    max-width: 105px !important;
+    max-height: 15px !important;
+}
+.table-remun-select.v-text-field .v-input__slot {
+    margin-bottom: 0px !important;
+}
+.table-remun-select.v-text-field .v-input__icon.v-input__icon--append {
+    height: 6px !important;
+}
+.table-remun-select.v-text-field > .v-input__control > .v-input__slot:after{
+    display: none;
 }
 .plain-text-field.v-text-field.v-text-field--enclosed .v-text-field__details {
     display: none !important;
@@ -1324,6 +1399,46 @@ input:-webkit-autofill:active{
     font-size: 19px !important;
 }
 .job-text-field.v-text-field.v-text-field--enclosed .theme--light.v-icon {
+    color: #ae445a !important;
+}
+
+.remun-detail-text-field.v-text-field input {
+    padding: 10px !important;
+    padding-left: 0 !important;
+    font-size: 12px !important;
+}.remun-detail-text-field.v-text-field input::placeholder {
+    font-style: italic !important;
+}
+
+.remun-detail-text-field.v-text-field .v-input__control {
+    min-height: 33px !important;
+}
+.remun-detail-text-field.theme--light.v-text-field > .v-input__control > .v-input__slot:before {
+    border: none !important;
+}
+.remun-detail-text-field.v-text-field.v-text-field--solo:not(.v-text-field--solo-flat) > .v-input__control > .v-input__slot {
+    box-shadow: none !important;
+    border-radius: 10px !important;
+    border: 1px solid #ae445a !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-height: 33px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: 0px 10px !important;
+    font-size: 12px !important;
+    margin-bottom: 0 !important;
+    background: #00000000 !important;
+}
+.remun-detail-text-field.v-text-field.v-text-field--enclosed .v-text-field__details {
+    display: none !important;
+}
+.remun-detail-text-field.v-text-field.v-text-field--enclosed .v-icon.v-icon {
+    font-size: 19px !important;
+}
+.remun-detail-text-field.v-text-field.v-text-field--enclosed .theme--light.v-icon {
     color: #ae445a !important;
 }
 

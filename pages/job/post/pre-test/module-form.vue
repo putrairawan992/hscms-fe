@@ -260,8 +260,7 @@ import { API } from '@/api/index'
 import Multiselect from 'vue-multiselect'
 import TextEditor from "~/components/TextEditor";
 export default {
-    name: "register",
-    layout: "register",
+    middleware: "jobProvider",
     components: { 
         TextEditor,
         Multiselect,
@@ -269,6 +268,7 @@ export default {
     },
     data: () => ({
         module: "",
+        id_module: null,
         datePicker1: false,
         logo: "brainhead",
         gradient: "regular",
@@ -326,26 +326,41 @@ export default {
     }),
     watch: {},
     setup() {
-        const { getModule, postModule } = API()
-        return { getModule, postModule };
+        const { getModule, postModule, putModule } = API()
+        return { getModule, postModule, putModule };
     },
     mounted() {
         const storageModuleType = localStorage.getItem('module_type');
-        const storageIdJobPost = localStorage.getItem('id_job_post');
         const storageIdPretest = localStorage.getItem('id_pretest');
-        if(storageIdJobPost){ this.id_job_post = storageIdJobPost;}
-        if(storageIdPretest){ this.id_pretest = storageIdPretest;}
-        if(storageModuleType){ this.type = storageModuleType;}
+        const storageIdModule = localStorage.getItem('id_module');
+        if(storageIdPretest){ this.id_pretest = storageIdPretest;};
+        if(storageIdModule){ this.id_module = storageIdModule;};
+        if(storageModuleType){ this.type = storageModuleType;};
         this.getGradient();
         this.getData();
         
     },
     methods: {
         async getData(){
-            await this.getModule().then((result)=>{
+            await this.getModule(this.id_module).then((result)=>{
                 this.masterData = result?.master_data ? result.master_data : null;
-                // this.module = result?.data ? result.data : null;
+                if (result.data) {
+                    this.refreshData(result.data);
+                }
             })
+        },
+        refreshData(data){
+            this.logo = data.logo;
+            this.type = data.type;
+            this.title_test = data.title_test;
+            this.instructions = data.instructions;
+            this.duration = this.masterData.master_duration.find(item => item.value == data.duration);
+            this.category_id = this.masterData.master_category.find(item => item.id == data.category_id);
+            if(data.type == "Modul Pilihan Ganda"){
+                this.multiple_choice = data.multiple_choice;
+            }else{
+                this.question = data.question;
+            }
         },
         async submit(){
             var body = {
@@ -356,20 +371,29 @@ export default {
                 instructions: this.instructions,
                 duration: this.duration?.value ? this.duration.value : null,
                 category_id: this.category_id?.id ? this.category_id.id : null,
-            }; if(this.type == "Modul Pilihan Ganda"){
+            }; 
+            
+            if(this.type == "Modul Pilihan Ganda"){
                 body.multiple_choice = this.multiple_choice;
             }else{
                 body.question = this.question;
             }
 
-            console.log('submit',body);
-            await this.postModule(body, this.id_pretest).then( async (result) => {
-                console.log('result', result);
-                if(result){
-                    this.$notifier.showMessage({ content: 'Success.', status: 'success' });
-                    return this.$router.push('/job/post/pre-test/module')
-                }
-            })
+            if (this.id_module) {
+                await this.putModule(body, this.id_module).then( async (result) => {
+                    if(result){
+                        this.$notifier.showMessage({ content: 'Success.', status: 'success' });
+                        return this.$router.push('/job/post/pre-test/module')
+                    }
+                })
+            } else {
+                await this.postModule(body, this.id_pretest).then( async (result) => {
+                    if(result){
+                        this.$notifier.showMessage({ content: 'Success.', status: 'success' });
+                        return this.$router.push('/job/post/pre-test/module')
+                    }
+                })
+            }
             
         },
         addQuestion(){
@@ -404,7 +428,6 @@ export default {
             }
         },
         deleteQuestion(key){
-            console.log('deleteQuestion', key);
             if(this.type == 'Modul Pilihan Ganda'){
                 var array = this.multiple_choice;
                 array.splice(key, 1);

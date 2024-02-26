@@ -48,8 +48,8 @@
                 </v-menu>
                 <div :class="pageActive == 'talent' ? 'dashboard1' : 'help-center'" @click="$router.push('/talent-selection')">Talent Selection</div>
                 <div class="menu-child" />
-                <div class="help-center" :class="pageActive == 'employee' ? 'dashboard1' : 'help-center'" @click="$router.push('/employee-data')">Employee Data</div>
-                <div class="help-center" style="color: #a3a3a3;" @click="">Remuneration</div>
+                <div :class="pageActive == 'employee' ? 'dashboard1' : 'help-center'" @click="$router.push('/employee-data')">Employee Data</div>
+                <div :class="pageActive == 'remuneration' ? 'dashboard1' : 'help-center'" @click="$router.push('/remuneration')">Remuneration</div>
                 <div class="help-center" style="color: #a3a3a3;" @click="">Payslip</div>
                 <div class="help-center" style="color: #a3a3a3;" @click="">Request</div>
                 <div class="help-center" style="color: #a3a3a3;" @click="">Form</div>

@@ -26,6 +26,7 @@ export const API = () => {
     const {
         getJob,
         postJob,
+        deleteJob,
         postPostingJob,
 
         getPretest,
@@ -36,6 +37,7 @@ export const API = () => {
         getModule,
         getModules,
         postModule,
+        putModule,
         deleteModule,
         postActivateModule,
 
@@ -90,6 +92,7 @@ export const API = () => {
         // jobProviderAPI
             getJob,
             postJob,
+            deleteJob,
             postPostingJob,
 
             getPretest,
@@ -100,6 +103,7 @@ export const API = () => {
             getModule,
             getModules,
             postModule,
+            putModule,
             deleteModule,
             postActivateModule,
 

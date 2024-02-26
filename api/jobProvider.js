@@ -13,6 +13,9 @@ export const jobProviderAPI = () => {
     const postJob = async (body, id_job) => {
         return await jobPostValidator(body) && postRequest(id_job ? 'jobprovider/job/'+id_job : 'jobprovider/job', body);
     }
+    const deleteJob = async (id_job) => {
+        return await deleteRequest('jobprovider/job/'+id_job);
+    }
     const postPostingJob = async (body, id_job) => {
         return await postRequest('jobprovider/job/posting/'+id_job, body);
     }
@@ -36,8 +39,11 @@ export const jobProviderAPI = () => {
     const getModules = async (id_pretest) => {
         return await getRequest('jobprovider/detailmodul/'+id_pretest);
     }
-    const postModule = async (body, id_module) => {
-        return await postRequest('jobprovider/pretest/'+id_module, body);
+    const postModule = async (body, id_pretest) => {
+        return await postRequest('jobprovider/pretest/'+id_pretest, body);
+    }
+    const putModule = async (body, id_module) => {
+        return await putRequest('jobprovider/pretest/'+id_module, body);
     }
     const deleteModule = async (id_module) => {
         return await putRequest('jobprovider/detailmodul/'+id_module);
@@ -126,6 +132,7 @@ export const jobProviderAPI = () => {
     return {
         getJob,
         postJob,
+        deleteJob,
         postPostingJob,
 
         getPretest,
@@ -136,6 +143,7 @@ export const jobProviderAPI = () => {
         getModule,
         getModules,
         postModule,
+        putModule,
         deleteModule,
         postActivateModule,
 
