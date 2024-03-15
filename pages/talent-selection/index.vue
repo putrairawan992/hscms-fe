@@ -128,7 +128,6 @@ export default {
     async mounted(){
         await this.getJobOpening();
         this.arrayJobOpening = this.jobOpening;
-        console.log('this.tahapanGetter', this.tahapanGetter);
         if(this.tahapanGetter){
             this.tahap = this.tahapanGetter.tahap;
             this.tahapSelected = this.tahapanGetter.tahap;
@@ -145,8 +144,6 @@ export default {
         ...mapMutations('provider-selection', ['setTahapan']),
 
         async generate(){
-            console.log('generate', this.jobSelected, this.tahapSelected);
-
             if(this.jobSelected != null && this.tahapSelected != null){
                 this.tahap = this.tahapSelected;
                 this.showDashboard = false;
@@ -301,6 +298,10 @@ export default {
     padding: 6px;
     border-radius: 50%;
     border: 3px solid #fff;
+    align-self: stretch;
+    position: relative;
+    overflow: hidden;
+    object-fit: cover;
 }
 
 .dash-container {

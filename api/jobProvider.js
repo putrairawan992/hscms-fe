@@ -13,11 +13,18 @@ export const jobProviderAPI = () => {
     const postJob = async (body, id_job) => {
         return await jobPostValidator(body) && postRequest(id_job ? 'jobprovider/job/'+id_job : 'jobprovider/job', body);
     }
+    const putJob = async (body, id_job) => {
+        return await jobPostValidator(body) && putRequest('jobprovider/job/'+id_job, body);
+    }
     const deleteJob = async (id_job) => {
         return await deleteRequest('jobprovider/job/'+id_job);
     }
     const postPostingJob = async (body, id_job) => {
         return await postRequest('jobprovider/job/posting/'+id_job, body);
+    }
+
+    const geSharedJob = async (id_job) => {
+        return await getRequest('jobprovider/sharejob/'+id_job, true);
     }
 
     const getPretest = async (id_job) => {
@@ -52,8 +59,11 @@ export const jobProviderAPI = () => {
         return await postRequest('jobprovider/pickmoduldetail/'+id_job, body);
     }
 
-    const getListJobOpening = async (sortBy='asc', status='Active') => {
-        return await postRequest('jobprovider/listjob', {sort: sortBy, status: status});
+    const getListJobOpening = async (sortBy, status, id_job) => {
+        return await postRequest( id_job ? 'jobprovider/listjob/'+id_job : 'jobprovider/listjob/', {sort: sortBy, status: status});
+    }
+    const putUnactiveJobOpening = async (id_job) => {
+        return await putRequest('jobprovider/unactive_job/'+id_job,);
     }
 
     // Talent Selection
@@ -132,8 +142,10 @@ export const jobProviderAPI = () => {
     return {
         getJob,
         postJob,
+        putJob,
         deleteJob,
         postPostingJob,
+        geSharedJob,
 
         getPretest,
         postPretest,
@@ -148,6 +160,7 @@ export const jobProviderAPI = () => {
         postActivateModule,
 
         getListJobOpening,
+        putUnactiveJobOpening,
         getListCandidateAPI,
         getDetailAnswerAPI,
         putInputScore,

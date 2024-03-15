@@ -16,69 +16,96 @@
                                 </v-col>
                                 <v-col cols="12" class="pt-0 input-checkbox-container">
                                     <multiselect
-                                        v-model="select1"
-                                        :options="['haloo', 'test']"
+                                        v-model="sortBy"
+                                        :options="sortList"
                                         placeholder="Waktu" :allow-empty="false"
-                                        class="header-select-input"
+                                        class="header-select-input" label="label"
                                         >
-                                        <!-- class="register-text-input" label="job_level_name" -->
-                                        <!-- <template slot="singleLabel" slot-scope="{ option }">
-                                            <span style="color: #000;">{{ option.job_level_name }}</span>
-                                        </template> -->
                                     </multiselect>
                                 </v-col>
                             </v-row>
                         </v-col>
-                        <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
+                        <!-- <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
                             <v-row align="center">
                                 <v-col cols="12" class="label pb-1">
                                     <b>Status</b>
                                 </v-col>
                                 <v-col cols="12" class="pt-0 input-checkbox-container">
                                     <multiselect
-                                        v-model="select2"
-                                        :options="['haloo', 'test']"
+                                        v-model="status"
+                                        :options="statusList"
                                         placeholder="Semua" :allow-empty="false"
-                                        class="header-select-input"
+                                        class="header-select-input" label="label"
                                         >
-                                        <!-- class="register-text-input" label="job_level_name" -->
-                                        <!-- <template slot="singleLabel" slot-scope="{ option }">
-                                            <span style="color: #000;">{{ option.job_level_name }}</span>
-                                        </template> -->
                                     </multiselect>
                                 </v-col>
                             </v-row>
-                        </v-col>
+                        </v-col> -->
 
                     </v-row>
                     <div style="height: 660px; overflow-y: auto; overflow-x: hidden">
-                        <v-row class="" align="center" style=";">
-                            <v-col v-for="n in 28" :key="n" cols="6" class="ma-auto">
-                                <v-row class="card-opening" :class="n > 5 && 'terminate'">
+                        <v-row class="" align="center" style="">
+                            <v-col v-for="value, key in jobs" cols="6" class="">
+                                <v-row v-if="value.status_approve == 'Pending'" class="card-opening">
+                                    <v-col class="requested">
+                                        <v-row>
+                                            <v-col cols="4" class="">
+                                                <img class="job-opening-icon border-red mt-3 mb-1" alt="" src="@/assets/svg/foto-perusaahaan.svg" />
+                                            </v-col>
+                                            <v-col cols="8" class="">
+                                                <v-col cols="12" class="d-flex pa-0" style="justify-content: space-between;">
+                                                    <div class="mei-2023 py-2">{{ useConvertToDateTimeView(value.start_post) }}</div>
+                                                    <div class="schedule-container border-red mt-1">
+                                                        Requested
+                                                    </div>
+                                                </v-col>
+                                                <v-col cols="12" class="text-left pa-0">
+                                                    <b class="">{{ value.job_title }}</b>
+                                                </v-col>
+                                                <v-col cols="12" class="text-left pa-0">
+                                                    <div class="">{{ value.job_provider_name }}</div>
+                                                </v-col>
+                                                <v-col cols="12" class="text-left pa-0">
+                                                    <div class="-">IDR {{ useConvertToMoneyView(value.start_from_salary) }} - {{ useConvertToMoneyView(value.end_from_salary) }}</div>
+                                                </v-col>
+                                                <v-col cols="12" class="text-left pa-0">
+                                                    <div class="-">{{ value.number_of_candidates }} Orang</div>
+                                                </v-col>
+
+                                                <div class="card-opening-edit-parent">
+                                                    <img class="bishare-fill-icon ml-2" alt="" src="@/assets/svg/bisharefillred.svg" @click="copyTextToClipboard(value.id)"/>
+                                                </div>
+                                            </v-col>
+                                        </v-row>
+                                    </v-col>
+                                </v-row>
+
+                                <v-row v-else class="card-opening" :class="value.status_active != 'Active' && 'terminate'">
                                     <v-col cols="4">
                                         <img class="job-opening-icon mt-3 mb-1" alt="" src="@/assets/svg/foto-perusaahaan.svg" />
                                     </v-col>
                                     <v-col cols="8">
                                         <v-col cols="12" class="d-flex pa-0" style="justify-content: space-between;">
-                                            <div class="mei-2023 py-2">2 Mei 2023 | 09:00 WIB</div>
+                                            <div class="mei-2023 py-2">{{ useConvertToDateTimeView(value.start_post) }}</div>
+                                            <!-- <div class="mei-2023 py-2">2 Mei 2023 | 09:00 WIB</div> -->
                                             <div class="schedule-container mt-1">
-                                                <div class="marketing-staff">{{ n > 5 ? 'Non-Active' : 'Active' }}</div>
+                                                <div class="marketing-staff">{{ value.status_active != 'Active' ? 'Non-Active' : 'Active' }}</div>
                                             </div>
                                         </v-col>
                                         <v-col cols="12" class="text-left pa-0">
-                                            <b class="">Marketing Staff</b>
+                                            <b class="">{{ value.job_title }}</b>
                                         </v-col>
                                         <v-col cols="12" class="text-left pa-0">
-                                            <div class="">PT. Maju Mundur</div>
+                                            <div class="">{{ value.job_provider_name }}</div>
                                         </v-col>
                                         <v-col cols="12" class="text-left pa-0">
-                                            <div class="-">IDR 5.000.000 - 6.500.000</div>
+                                            <div class="-">IDR {{ useConvertToMoneyView(value.start_from_salary) }} - {{ useConvertToMoneyView(value.end_from_salary) }}</div>
                                         </v-col>
 
                                         <div class="card-opening-edit-parent">
-                                            <img class="edit-icon" alt="" src="@/assets/svg/edit.svg" @click="openDialog"/>
-                                            <img class="edit-icon ml-2" alt="" src="@/assets/svg/stop.svg" @click="showAlertApproval = true"/>
-                                            <img class="bishare-fill-icon ml-2" alt="" src="@/assets/svg/bisharefill.svg" @click="$alert.showAlert({ content: 'Email belum terisi.', show: true })"/>
+                                            <img v-if="value.status_active == 'Active'" class="edit-icon" alt="" src="@/assets/svg/edit.svg" @click="openDialog(value.id)"/>
+                                            <img v-if="value.status_active == 'Active'" class="edit-icon ml-2" alt="" src="@/assets/svg/stop.svg" @click="preUnactiveJob(value.id)"/>
+                                            <img class="bishare-fill-icon ml-2" alt="" src="@/assets/svg/bisharefill.svg" @click="copyTextToClipboard(value.id)"/>
                                         </div>
                                     </v-col>
                                 </v-row>
@@ -88,12 +115,13 @@
                 </div>
             </div>
         </v-card>
-        <Dialog-JobDetail :show="showDialog" :closeDialog="closeDialog"/>
-        <AlertApproval content="Lowongan akan dihentikan. Anda yakin ingin menghentikan?" :onApprove="closeAlertApproval" :closeDialog="closeAlertApproval" :show="showAlertApproval"/>
+        <Dialog-JobDetail :show="showDialog" :closeDialog="closeDialog" :unactiveJob="unactiveJob" :data="detailJob" :preUnactiveJob="preUnactiveJobDetailDialog"/>
+        <AlertApproval content="Lowongan akan dihentikan. Anda yakin ingin menghentikan?" :onApprove="unactiveJob" :closeDialog="closeAlertApproval" :show="showAlertApproval"/>
     </div>
 </template>
 <script>
-import Multiselect from 'vue-multiselect'
+import { API } from '@/api/index';
+import Multiselect from 'vue-multiselect';
 export default {
     name: "jobProvider",
     layout: "jobPost",
@@ -101,29 +129,183 @@ export default {
         Multiselect,
     },
     data: () => ({
+        status: "",
+        sortBy: "",
+
         select1: null,
         select2: null,
+        detailJob: null,
+        idUncativeJob: null,
+
         showDialog: false,
         showAlertApproval: false,
+
+        jobs: [],
+        sortList: [
+            {
+                label: 'Newest',
+                value: 'desc'
+            },
+            {
+                label: 'Oldest',
+                value: 'asc'
+            }
+        ],
+        statusList: [
+            {
+                label: 'Active',
+                value: 'Active'
+            },
+            {
+                label: 'Non-Active',
+                value: 'Unactive'
+            },
+            {
+                label: 'Requested',
+                value: null
+            }
+        ]
     }),
     watch: {
+        async sortBy(newValue, oldValue) {
+            this.showDialog = false;
+            await this.getData();
+        },
+        async status(newValue, oldValue) {
+            this.showDialog = false;
+            await this.getData();
+        },
+    },
+    setup() {
+        const { getListJobOpening, putUnactiveJobOpening } = API()
+        return { getListJobOpening, putUnactiveJobOpening };
+    },
+    async mounted(){
+        await this.getData();
     },
     methods: {
-        openDialog() {
-            this.showDialog = true;
+        async getData() {
+            await this.getListJobOpening(this.sortBy?.value, this.status?.value, null).then((result)=>{
+                if(result){
+                    this.jobs = result.data;
+                }
+            });
+        },
+        async openDialog(idJob) {
+            await this.getListJobOpening(this.sortBy?.value, this.status?.value, idJob).then((result)=>{
+                if(result){
+                    this.detailJob = result.data;
+                    this.showDialog = true;
+                }
+            });
+        },
+        async unactiveJob() {
+            this.showAlertApproval = false;
+            await this.putUnactiveJobOpening(this.idUncativeJob).then((result)=>{
+                if(result){
+                    this.showDialog = false;
+                    this.$alert.showAlert({ content: 'Data telah dihentikan', show: true });
+                    this.getData();
+                }
+            });
+            return this.idUncativeJob = null;
+        },
+
+        
+        async preUnactiveJob(idJob) {
+            this.showDialog = false;
+            this.showAlertApproval = true;
+            this.idUncativeJob = idJob;
+        },
+        async preUnactiveJobDetailDialog(idJob) {
+            this.idUncativeJob = idJob;
         },
         closeDialog() {
             this.showDialog = false;
+            this.getData();
         },
         closeAlertApproval() {
             this.showAlertApproval = false;
         },
+        useConvertToMoneyView(value) {
+            if (!value) return value;
+            value = parseInt(value.replaceAll(',', ''), 10);
+            return Intl.NumberFormat('en-US').format(value);
+        },
+        useConvertToDateTimeView(value) {
+            var tanggal = new Date(value);
+            var namaBulan = [
+                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            ];
+            var hari = tanggal.getUTCDate();
+            var bulan = namaBulan[tanggal.getUTCMonth()];
+            var tahun = tanggal.getUTCFullYear();
+
+            var jam = tanggal.getUTCHours();
+            var menit = tanggal.getUTCMinutes();
+
+            var hasilFormat = hari + " " + bulan + " " + tahun + " | " +
+            (jam < 10 ? "0" : "") + jam + ":" + (menit < 10 ? "0" : "") + menit + " WIB";
+
+            return hasilFormat;
+        },
+        copyTextToClipboard(idJob) {
+            var text = window.location.origin+'/job/share/'+idJob;
+            // Buat elemen textarea secara dinamis
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+
+            // Styling untuk membuat textarea tidak terlihat
+            textArea.style.position = "fixed";
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            textArea.style.width = "2em";
+            textArea.style.height = "2em";
+            textArea.style.padding = 0;
+            textArea.style.border = "none";
+            textArea.style.outline = "none";
+            textArea.style.boxShadow = "none";
+            textArea.style.background = "transparent";
+
+            // Tambahkan textarea ke DOM
+            document.body.appendChild(textArea);
+            textArea.select();
+
+            try {
+                // Salin teks ke clipboard
+                const successful = document.execCommand('copy');
+                if(successful){
+                    this.$alert.showAlert({ content: 'Embedded Link Anda Sudah Tersalin', show: true });
+                }
+            } catch (err) {
+                console.error('Oops, terjadi kesalahan!', err);
+            }
+
+            // Hapus textarea dari DOM
+            document.body.removeChild(textArea);
+        }
     }
 
 };
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped>
+.job-opening-icon {
+    width: 101px;
+    height: 101px;
+    padding: 6px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    align-self: stretch;
+    position: relative;
+    overflow: hidden;
+    object-fit: cover;
+}
+.job-opening-icon.border-red {
+    border: 3px solid #AE445A;
+}
+
 .card-opening {
     /* height: 144px; */
     color: #fff;
@@ -134,6 +316,12 @@ export default {
 }
 .card-opening.terminate {
     background: linear-gradient(90deg, #718199 0%, #B6B6B6 100%) !important;
+}
+.card-opening .requested {
+    color: #404041 !important;
+    background: #fff;
+    border-radius: 10px;
+    margin: 4px 3px;
 }
 .card-opening-edit-parent {
     position: absolute;
@@ -148,11 +336,15 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 10px;
+    padding: 9px;
     box-sizing: border-box;
     text-align: center;
-    font-size: 10px;
+    font-size: 8px;
     color: #404041;
+}
+.schedule-container.border-red {
+    background-color: #AE445A;
+    color: #FFF !important;
 }
 .card-opening.terminate .schedule-container {
     border-radius: 20px;
@@ -162,10 +354,10 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 10px;
+    padding: 9px;
     box-sizing: border-box;
     text-align: center;
-    font-size: 10px;
+    font-size: 8px;
     color: #fff;
 }
 .edit-icon {

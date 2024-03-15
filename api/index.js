@@ -26,8 +26,10 @@ export const API = () => {
     const {
         getJob,
         postJob,
+        putJob,
         deleteJob,
         postPostingJob,
+        geSharedJob,
 
         getPretest,
         postPretest,
@@ -42,6 +44,7 @@ export const API = () => {
         postActivateModule,
 
         getListJobOpening,
+        putUnactiveJobOpening,
         getListCandidateAPI,
         getDetailAnswerAPI,
         putInputScore,
@@ -92,8 +95,10 @@ export const API = () => {
         // jobProviderAPI
             getJob,
             postJob,
+            putJob,
             deleteJob,
             postPostingJob,
+            geSharedJob,
 
             getPretest,
             postPretest,
@@ -108,6 +113,7 @@ export const API = () => {
             postActivateModule,
 
             getListJobOpening,
+            putUnactiveJobOpening,
             getListCandidateAPI,
             getDetailAnswerAPI,
             putInputScore,

@@ -1,160 +1,30 @@
 <template>
-    <v-dialog v-model="show" width="931" rounded v-if="data !== null">
+    <div class="container my-8">
         <v-card class="pa-12" style="border-radius: 20px !important;"> 
-            <v-row v-if="data?.status_active == 'Active'">
-                <div class="detail-opening-container">
-                    <div></div>
-                    <div class="d-flex" style="column-gap: 20px;">
-                        <button class="detail-opening-button-wrapper" @click="formEdit = !formEdit">
-                            <b class="detail-opening-btn-text">{{ formEdit ? 'Cancel' : 'Edit' }}</b>
-                        </button> 
-                        <button class="detail-opening-button-wrapper" @click="openAlertApproval">
-                            <b class="detail-opening-btn-text px-4">Stop Job Periode</b>
-                        </button> 
-                    </div>
-                </div>
-            </v-row>
-
-            <v-row align="center">
-                <v-col cols="12" class="pb-0">
-                    <b class="isilah-13-kolom-container">
-                        <p>Job Opening - {{data?.job_title}}</p>
-                    </b>
-                </v-col>
-            </v-row>
-            <v-row v-if="!formEdit" align="start" class="mt-2">
-                <v-col cols="12" class="label">
-                    <b>Periode Pekerjaan</b>
-                </v-col>
-                <v-col cols="12" xs="6" md="6" lg="6" xl="6" xxl="6" class="">
+            <v-row align="center" class="pa-2" style="border: 1px solid #AE445A; border-radius: 10px;">
+                <v-col cols="12">
                     <v-row>
-                        <v-col class="pt-0">
-                            <v-menu
-                            ref="datePicker1"
-                            v-model="datePicker1"
-                            :close-on-content-click="false"
-                            transition="scale-transition"
-                            offset-y
-                            max-width="290px"
-                            min-width="auto"
-                            >
-                                <template v-slot:activator="{ on, attrs }">
-                                    <div v-on="on" style="position: relative;">
-                                        <input
-                                        v-model="start_date"
-                                        v-bind="attrs"
-                                        @blur="start_date = parseDate(start_date)"
-                                        outlined readonly
-                                        class="preview-text-input"
-                                        placeholder="2024-11-06"
-                                        />
-                                        <img class="feather-icon-calendar-preview" alt="" src="@/assets/svg/feathericon--calendar.svg" />
-                                    </div>
-                                </template>
-                                <v-date-picker
-                                    @input="datePicker1 = false" disabled
-                                    plas v-model="start_date" no-title
-                                ></v-date-picker>
-                            </v-menu>
+                        <v-col cols="12" xs="6" md="6" lg="6" xl="6" xxl="6" class="d-flex" style="align-items: left;">
+                            <div class="d-flex" style="align-items: center;">
+                                <img class="foto-perusaahaan-icon" src="@/assets/svg/foto-perusaahaan.svg" />
+                                <div class="d-flex text-left ml-4" style="flex-direction: column;">
+                                    <b class="marketing-staff">{{ data?.job_title }}</b>
+                                    <div class="pt-gema-insani">{{ data?.job_provider_name }}</div>
+                                    <div class="idr-6000000-">IDR {{ useConvertToMoneyView(data?.start_from_salary) }} - {{ useConvertToMoneyView(data?.end_from_salary) }}</div>
+                                </div>
+                            </div>
                         </v-col>
-                        <v-col cols="1" class="dash-container pt-0">
-                            <b class="dash">-</b>
-                        </v-col>
-                        <v-col class="pt-0">
-                            <v-menu
-                            ref="datePicker3"
-                            v-model="datePicker3"
-                            :close-on-content-click="false"
-                            transition="scale-transition"
-                            offset-y
-                            max-width="290px"
-                            min-width="auto"
-                            >
-                                <template v-slot:activator="{ on, attrs }">
-                                    <div v-on="on" style="position: relative;">
-                                        <input
-                                        v-model="end_date"
-                                        v-bind="attrs"
-                                        @blur="end_date = parseDate(end_date)"
-                                        outlined readonly
-                                        class="preview-text-input"
-                                        placeholder="2024-11-06"
-                                        />
-                                        <img class="feather-icon-calendar-preview" alt="" src="@/assets/svg/feathericon--calendar.svg" />
-                                    </div>
-                                </template>
-                                <v-date-picker
-                                    @input="datePicker3 = false" :disabled="true"
-                                    plas v-model="end_date" no-title
-                                ></v-date-picker>
-                            </v-menu>
+                        <v-col cols="12" xs="6" md="6" lg="6" xl="6" xxl="6" style="display: flex; justify-content: end; margin-top: 15px;">
+                            <div class="" style="text-align: right;">
+                                <b class="jakarta-selatan-wfo">{{ data?.data_job_location.job_location_name }} ({{ data?.workplace_type }})</b><br>
+                                <div class="">{{ waktuYangLalu("2024-01-30T09:54:06.000Z") }}</div>
+                            </div>
                         </v-col>
                     </v-row>
-                </v-col>
-            </v-row>
-            <v-row v-if="!formEdit" align="start" class="mt-2 mb-4">
-                <v-col cols="12" class="label">
-                    <b>Tanggal Posting</b>
-                </v-col>
-                <v-col cols="12" xs="6" md="6" lg="6" xl="6" xxl="6" class="">
-                    <v-row>
-                        <v-col class="pt-0" style="max-width: 203px !important;">
-                            <v-menu
-                            ref="datePicker1"
-                            v-model="datePicker1"
-                            :close-on-content-click="false"
-                            transition="scale-transition"
-                            offset-y
-                            max-width="290px"
-                            min-width="auto"
-                            >
-                                <template v-slot:activator="{ on, attrs }">
-                                    <div v-on="on" style="position: relative;">
-                                        <input
-                                        v-model="start_date"
-                                        v-bind="attrs"
-                                        @blur="start_date = parseDate(start_date)"
-                                        outlined readonly
-                                        class="preview-text-input"
-                                        placeholder="2024-11-06"
-                                        />
-                                        <img class="feather-icon-calendar-preview" alt="" src="@/assets/svg/feathericon--calendar.svg" />
-                                    </div>
-                                </template>
-                                <v-date-picker
-                                    @input="datePicker1 = false" disabled
-                                    plas v-model="start_date" no-title
-                                ></v-date-picker>
-                            </v-menu>
-                        </v-col>
-                    </v-row>
-                </v-col>
-            </v-row>
-
-            <v-row v-if="formEdit" align="center" class="pa-2" style="border: 1px solid #AE445A; border-radius: 10px;">
-                <v-col>
-                    <FormJobOpening :id_job_post="data?.id" :successEditJob="successEditJob"/>
-                </v-col>
-            </v-row>
-            <v-row v-else align="center" class="pa-2" style="border: 1px solid #AE445A; border-radius: 10px;">
-                <v-col cols="12" class="d-flex" style="justify-content: space-between;align-items: center;">
-                    <div class="d-flex" style="align-items: center;">
-                        <img class="foto-perusaahaan-icon" src="@/assets/svg/foto-perusaahaan.svg" />
-                        <div class="d-flex text-left ml-4" style="flex-direction: column;">
-                            <b class="marketing-staff">{{ data?.job_title }}</b>
-                            <div class="pt-gema-insani">{{ data?.job_provider_name }}</div>
-                            <div class="idr-6000000-">IDR {{ useConvertToMoneyView(data?.start_from_salary) }} - {{ useConvertToMoneyView(data?.end_from_salary) }}</div>
-                        </div>
-                    </div>
-
-                    <div class="text-right">
-                        <b class="jakarta-selatan-wfo">{{ data?.data_job_location?.job_location_name }} ({{ data.workplace_type }})</b><br>
-                        <div class="active">{{ data.status_active != 'Active' ? 'Non-Active' : 'Active' }}</div>
-                    </div>
                 </v-col>
                 <v-col cols="12" class="text-left">
                     <b class="">Jenis Pekerjaan</b>
-                    <div class="">{{ data.job_type }}</div>
+                    <div class="">{{ data?.job_type }}</div>
                 </v-col>
                 <v-col cols="12" class="text-left">
                     <b class="">Periode Pekerjaan</b>
@@ -162,7 +32,7 @@
                 </v-col>
                 <v-col cols="12" class="text-left">
                     <b class="">Tingkat Pekerjaan</b>
-                    <div class="">{{ data?.data_job_level?.job_level_name }}</div>
+                    <div class="">{{ data?.data_job_level.job_level_name }}</div>
                 </v-col>
                 <v-col cols="12" class="text-left">
                     <b class="">Jumlah Kandidat yang Dibutuhkan</b>
@@ -170,17 +40,17 @@
                 </v-col>
                 <v-col cols="12" class="text-left">
                     <b class="">Pengalaman</b>
-                    <div class="">{{ data?.data_experience?.experience_name }}</div>
+                    <div class="">{{ data?.data_experience.experience_name }}</div>
                 </v-col>
                 <v-col cols="12" class="text-left">
                     <b class="">Spesialisasi Pekerjaan</b>
-                    <div class="">{{ data?.data_job_specialist?.job_specialist_name }}</div>
+                    <div class="">{{ data?.data_job_specialist.job_specialist_name }}</div>
                 </v-col>
                 <v-col cols="12" class="text-left">
                     <b class="">Pendidikan</b>
                     <div class="">
                         <span v-for="value, key in data?.data_education">
-                            {{ value.detail_education?.education_name }}{{ (key+1) == data?.data_education.length ? '' : ', ' }}
+                            {{ value.detail_education.education_name }}{{ (key+1) == data?.data_education.length ? '' : ', ' }}
                         </span>
                     </div>
                 </v-col>
@@ -198,61 +68,47 @@
                 </v-col>
             </v-row>
         </v-card>
-        <AlertApproval content="Lowongan akan dihentikan. Anda yakin ingin menghentikan?" :onApprove="actionUnactiveJob" :closeDialog="closeAlertApproval" :show="showAlertApproval"/>
-    </v-dialog>
+    </div>
 </template>
 <script>
-    export default {
+import { API } from '@/api/index';
+export default {
+    auth: false,
+    layout: "empty",
     data () {
         return {
+            data: null,
             end_date: null,
             start_post: null,
             start_date: null,
             id_job_post: null,
             
-            formEdit: false,
             datePicker1: false,
             datePicker2: false,
             datePicker3: false,
             showAlertApproval: false,
         }
     },
-    props: {
-        data: { type: Object, default() { return {} } },
-        show: { type: Boolean, default() { return false } },
-        content: { type: String, default() { return "" } },
-        onApprove: { type: Function, default() { return {} } },
-        closeDialog: { type: Function, default() { return {} } },
-        unactiveJob: { type: Function, default() { return {} } },
-        preUnactiveJob: { type: Function, default() { return {} } },
-    },
-    watch: {
-        data(newValue, oldValue) {
-            this.end_date = this.data?.end_date ? new Date(this.data?.end_date).toISOString().substr(0, 10) : "";
-            this.start_date =  this.data?.start_date ? new Date(this.data?.start_date).toISOString().substr(0, 10) : "";
-            this.start_post =  this.data?.start_post ? new Date(this.data?.start_post).toISOString().substr(0, 10) : "";
-        },
+    setup() {
+        const { geSharedJob } = API()
+        return { geSharedJob };
     },
     async mounted(){
-        this.end_date = this.data?.end_date ? new Date(this.data?.end_date).toISOString().substr(0, 10) : "";
-        this.start_date =  this.data?.start_date ? new Date(this.data?.start_date).toISOString().substr(0, 10) : "";
-        this.start_post =  this.data?.start_post ? new Date(this.data?.start_post).toISOString().substr(0, 10) : "";
+        if(!this.$route.params.id) this.$router.push('/');
+        this.getData();
     },
     methods: {
-        successEditJob() {
-            this.closeDialog();
-            this.$alert.showAlert({ content: 'Data telah diperbarui', show: true });
-        },
-        actionUnactiveJob() {
-            this.showAlertApproval = false;
-            this.unactiveJob();
-        },
-        openAlertApproval() {
-            this.preUnactiveJob(this.data.id);
-            this.showAlertApproval = true;
-        },
-        closeAlertApproval() {
-            this.showAlertApproval = false;
+        async getData() {
+            await this.geSharedJob(this.$route.params.id).then((result)=>{
+                if(result){
+                    this.data = result.data;
+                    this.end_date = this.data?.end_date ? new Date(this.data?.end_date).toISOString().substr(0, 10) : "";
+                    this.start_date =  this.data?.start_date ? new Date(this.data?.start_date).toISOString().substr(0, 10) : "";
+                    this.start_post =  this.data?.start_post ? new Date(this.data?.start_post).toISOString().substr(0, 10) : "";
+                }else{
+                    this.$router.push('/');
+                }
+            });
         },
         parseDate (date) {
             if (!date) return null
@@ -291,6 +147,22 @@
             const diffYears = endDate.getFullYear() - startDate.getFullYear();
             return `${diffYears} Tahun`;
         },
+        waktuYangLalu(timestamp) {
+            const waktuTerkonversi = this.$moment(timestamp);
+            const waktuSekarang = this.$moment();
+
+            const selisih = waktuSekarang.diff(waktuTerkonversi, 'seconds');
+
+            if (selisih < 60) {
+                return 'beberapa detik yang lalu';
+            } else if (selisih < 3600) {
+                return waktuTerkonversi.fromNow();
+            } else if (selisih < 86400) {
+                return waktuTerkonversi.fromNow();
+            } else {
+                return waktuTerkonversi.fromNow();
+            }
+        }
     }
 }
 </script>
@@ -439,7 +311,6 @@
 }
 .card-register {
     border-radius: 40px;
-    background: linear-gradient(90deg, #F1F5FE 0%, #FFF 98.82%);
     box-shadow: 5px 0px 5px #b3b9c5, -5px 0px 5px #b3b9c5 !important;
 }.detail-opening-container {
     width: 100%;

@@ -228,7 +228,7 @@ export default {
 
         dialog: false,
         dialogAttach: false,
-        dialogDetail: true,
+        dialogDetail: false,
 
         html: "",
         nominal: "",
