@@ -1,38 +1,40 @@
-    <template>
+<template>
     <div>
         <v-card class="card-register">
             <v-row class="job-post-nav ma-0">
                 <v-col cols="3" class="job-post-nav-container">
-                    <div class="job-post-nav-text">Job Post</div>
+                    <div class="job-post-nav-text" @click="$router.push('/job/post')">Job Post</div>
                 </v-col>
                 <v-col cols="3" class="job-post-nav-container">
-                    <div class="job-post-nav-text" @click="">Draft (5)</div>
+                    <div class="job-post-nav-text" @click="$router.push('/job/draft')">Draft</div>
                 </v-col>
                 <v-col cols="3" class="job-post-nav-container">
-                    <div class="job-post-nav-text" @click="">Rejected</div>
+                    <div class="job-post-nav-text" @click="$router.push('/job/rejected')">Rejected</div>
                 </v-col>
                 <v-col cols="3" class="job-post-nav-container active">
-                    <div class="job-post-nav-text" @click="">Approval</div>
+                    <div class="job-post-nav-text" @click="$router.push('/job/approval')">Approval</div>
                 </v-col>
             </v-row>
             <div class="my-2" style="position: relative;">
                 <div class="blokade-parent ma-8 pt-1" style="height: 785px;">
                     <v-row class="" style="height: 770px; overflow: auto;">
-                        <v-col v-for="n in 15" :key="n" cols="12" class="">
+                        <v-col v-for="value, key in jobs" cols="12" class="">
                             <div class="history-1">
                                 <div class="frame-parent-draft">
                                     <div class="foto-perusaahaan-parent">
                                         <img
-                                            class="foto-perusaahaan-icon"
                                             alt=""
+                                            class="foto-perusaahaan-icon"
                                             src="@/assets/svg/foto-perusaahaan.svg"
                                         />
-                                        <b class="">Marketing Staff</b>
+                                        <b class="">{{ value.title_job }}</b>
                                     </div>
-                                    <div class="">PT. Gema Insani</div>
-                                    <div class="">IDR 5.000.000 - 6.500.000</div>
-                                    <div class="">27 Feb 2023</div>
-                                    <div class="text-here" :class="n % 2 == 0 && 'approved'">{{n % 2 == 0 ? 'Approved' : 'IN REVIEW'}}</div>
+                                    <div class="">{{ value.job_provider_name }}</div>
+                                    <div class="">{{ value.salary }}</div>
+                                    <div class="">{{ value.created_at }}</div>
+                                    <div class="text-here" :class="value.status == 'APPROVED' ? 'approved' : ''">
+                                        {{ value.status }}
+                                    </div>
                                 </div>
                             </div>
                         </v-col>
@@ -44,55 +46,25 @@
 </template>
 <script>
 
-import Multiselect from 'vue-multiselect'
-import TextEditor from "~/components/TextEditor";
+import { API } from '@/api/index'
 export default {
-    name: "register",
-    layout: "register",
-    components: { 
-        TextEditor,
-        Multiselect,
-    },
+    components: {},
     data: () => ({
-        cv: null,
-        file: null,
-        datePicker1: false,
-
-        html: "",
-        nominal: "",
-        tanggal_lahir: "",
-        status_pernikahan: "",
-        listStatusPernikahan: ['Sudah Menikah', 'Belum Menikah']
+        jobs: []
     }),
-    watch: {
-        nominal(newValue, oldValue) {
-            this.nominal = this.useConvertToMoneyView(newValue)
-        },
-        html(newValue, oldValue) {
-            console.log('html', newValue);
-        },
+    watch: {},
+    setup() {
+        const { geCategoryJob } = API()
+        return { geCategoryJob };
+    },
+    async mounted() {
+        this.getData();
     },
     methods: {
-        parseDate (date) {
-            if (!date) return null
-            const [year, month, day] = date.split('-')
-            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-        },
-        onSelectFile (event, param) {
-            console.log('param', param);
-            const file = event.srcElement.files[0]
-
-        },
-        useConvertToMoneyView(value) {
-            if (!value) return value;
-            value = parseInt(value.replaceAll(',', ''), 10);
-            this.nominal_pengajuan = value;
-
-            if(value > 0 && value < 100000000){
-                this.alert = true;
-            }else { this.alert = false; }
-
-            return Intl.NumberFormat('en-US').format(value);
+        async getData(){
+            await this.geCategoryJob('approve').then((result)=>{
+                this.jobs = result;
+            })
         },
     }
 
@@ -141,7 +113,7 @@ export default {
     padding: 10px 25px;
 }
 .foto-perusaahaan-parent {
-    width: 210px;
+    width: 242px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -231,6 +203,7 @@ export default {
 }
 .job-post-nav-text {
     width: 100%;
+    cursor: pointer;
     text-align: center;
 }
 .job-post-nav-container {
@@ -242,7 +215,7 @@ export default {
     display: flex;
     align-items: center;
     font-family: Nunito;
-    background-color: #ffffff;
+    background-color: #ffffff00;
     border-radius: 30px 30px 0px 0px;
 }
 .job-post-nav-container.active {

@@ -440,23 +440,6 @@ export default {
         },
 
         async submit(){
-            console.log({
-                job_title: this.job_title,
-                job_type: this.job_type,
-                start_date: this.start_date + " 00:00:00",
-                end_date: this.end_date + " 00:00:00",
-                job_level_id: this.job_level_id?.id,
-                number_of_candidates: this.number_of_candidates,
-                experience_id: this.experience_id?.id,
-                job_specialist_id: this.job_specialist_id?.id,
-                education_id: this.education_id,
-                job_location_id: this.job_location_id?.id,
-                workplace_type: this.workplace_type,
-                benefit_id: this.benefit_id,
-                start_from_salary: this.start_from_salary,
-                end_from_salary: this.end_from_salary,
-                description: this.description,
-            });
             await this.postJob({
                 job_title: this.job_title,
                 job_type: this.job_type,

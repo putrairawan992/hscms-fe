@@ -1,24 +1,24 @@
-    <template>
+<template>
     <div>
         <v-card class="card-register">
             <v-row class="job-post-nav ma-0">
                 <v-col cols="3" class="job-post-nav-container">
-                    <div class="job-post-nav-text">Job Post</div>
+                    <div class="job-post-nav-text" @click="$router.push('/job/post')">Job Post</div>
                 </v-col>
                 <v-col cols="3" class="job-post-nav-container active">
-                    <div class="job-post-nav-text" @click="">Draft (5)</div>
+                    <div class="job-post-nav-text" @click="$router.push('/job/draft')">Draft</div>
                 </v-col>
                 <v-col cols="3" class="job-post-nav-container">
-                    <div class="job-post-nav-text" @click="">Rejected</div>
+                    <div class="job-post-nav-text" @click="$router.push('/job/rejected')">Rejected</div>
                 </v-col>
                 <v-col cols="3" class="job-post-nav-container">
-                    <div class="job-post-nav-text" @click="">Approval</div>
+                    <div class="job-post-nav-text" @click="$router.push('/job/approval')">Approval</div>
                 </v-col>
             </v-row>
             <div class="my-2" style="position: relative;">
                 <div class="blokade-parent ma-8 pt-1" style="height: 785px;">
                     <v-row class="" style="height: 770px; overflow: auto;">
-                        <v-col v-for="n in 15" :key="n" cols="12" class="">
+                        <v-col v-for="value, key in jobs" cols="12" class="">
                             <div class="history-1">
                                 <div class="frame-parent-draft">
                                     <div class="foto-perusaahaan-parent">
@@ -27,17 +27,21 @@
                                             alt=""
                                             src="@/assets/svg/foto-perusaahaan.svg"
                                         />
-                                        <b class="">Marketing Staff</b>
+                                        <b class="">{{ value.title_job }}</b>
                                     </div>
-                                    <div class="">PT. Gema Insani</div>
-                                    <div class="">IDR 5.000.000 - 6.500.000</div>
+                                    <div class="">{{ value.job_provider_name }}</div>
+                                    <div class="">{{ value.salary }}</div>
                                     <div class="edit-parent">
-                                        <img class="edit-icon" alt="" src="@/assets/svg/edit-red.svg" />
+                                        <img 
+                                            alt="edit"
+                                            class="action-icon"
+                                            src="@/assets/svg/edit-red.svg" 
+                                            @click="editJob(value.job_post_id)"/>
                                         <img
-                                            class="trash-2-icon"
-                                            alt=""
+                                            alt="delete"
+                                            class="action-icon trash-2-icon"
                                             src="@/assets/svg/trash-red.svg"
-                                            @click="onTrash2IconClick"
+                                            @click=""
                                         />
                                     </div>
                                 </div>
@@ -51,55 +55,29 @@
 </template>
 <script>
 
-import Multiselect from 'vue-multiselect'
-import TextEditor from "~/components/TextEditor";
+import { API } from '@/api/index'
 export default {
-    name: "register",
-    layout: "register",
-    components: { 
-        TextEditor,
-        Multiselect,
-    },
+    components: {},
     data: () => ({
-        cv: null,
-        file: null,
-        datePicker1: false,
-
-        html: "",
-        nominal: "",
-        tanggal_lahir: "",
-        status_pernikahan: "",
-        listStatusPernikahan: ['Sudah Menikah', 'Belum Menikah']
+        jobs: []
     }),
-    watch: {
-        nominal(newValue, oldValue) {
-            this.nominal = this.useConvertToMoneyView(newValue)
-        },
-        html(newValue, oldValue) {
-            console.log('html', newValue);
-        },
+    watch: {},
+    setup() {
+        const { geCategoryJob } = API()
+        return { geCategoryJob };
+    },
+    async mounted() {
+        this.getData();
     },
     methods: {
-        parseDate (date) {
-            if (!date) return null
-            const [year, month, day] = date.split('-')
-            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+        async getData(){
+            await this.geCategoryJob('draft').then((result)=>{
+                this.jobs = result;
+            })
         },
-        onSelectFile (event, param) {
-            console.log('param', param);
-            const file = event.srcElement.files[0]
-
-        },
-        useConvertToMoneyView(value) {
-            if (!value) return value;
-            value = parseInt(value.replaceAll(',', ''), 10);
-            this.nominal_pengajuan = value;
-
-            if(value > 0 && value < 100000000){
-                this.alert = true;
-            }else { this.alert = false; }
-
-            return Intl.NumberFormat('en-US').format(value);
+        async editJob(id_job){
+            await localStorage.setItem('id_job_post', id_job);
+            return this.$router.push('/job/post');
         },
     }
 
@@ -228,6 +206,7 @@ export default {
 }
 .job-post-nav-text {
     width: 100%;
+    cursor: pointer;
     text-align: center;
 }
 .job-post-nav-container {
@@ -239,7 +218,7 @@ export default {
     display: flex;
     align-items: center;
     font-family: Nunito;
-    background-color: #ffffff;
+    background-color: #ffffff00;
     border-radius: 30px 30px 0px 0px;
 }
 .job-post-nav-container.active {

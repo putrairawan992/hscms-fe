@@ -19,6 +19,9 @@ input:-webkit-autofill:active{
     margin-right: auto;
     margin-left: auto;
 }
+.action-icon {
+    cursor: pointer;
+}
 
 .theme--light.v-application {
     background: linear-gradient(90deg, #CCD4E1 0%, #E9F2FF 27.41%) !important;

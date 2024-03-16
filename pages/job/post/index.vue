@@ -3,16 +3,16 @@
         <v-card class="card-register">
             <v-row class="job-post-nav ma-0">
                 <v-col cols="3" class="job-post-nav-container active">
-                    <div class="job-post-nav-text">Job Post</div>
+                    <div class="job-post-nav-text" @click="$router.push('/job/post')">Job Post</div>
                 </v-col>
                 <v-col cols="3" class="job-post-nav-container">
-                    <div class="job-post-nav-text" @click="">Draft (5)</div>
+                    <div class="job-post-nav-text" @click="$router.push('/job/draft')">Draft</div>
                 </v-col>
                 <v-col cols="3" class="job-post-nav-container">
-                    <div class="job-post-nav-text" @click="">Rejected</div>
+                    <div class="job-post-nav-text" @click="$router.push('/job/rejected')">Rejected</div>
                 </v-col>
                 <v-col cols="3" class="job-post-nav-container">
-                    <div class="job-post-nav-text" @click="">Approval</div>
+                    <div class="job-post-nav-text" @click="$router.push('/job/approval')">Approval</div>
                 </v-col>
             </v-row>
             <div class="my-2" style="position: relative;">

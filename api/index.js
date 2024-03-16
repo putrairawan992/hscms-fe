@@ -30,6 +30,7 @@ export const API = () => {
         deleteJob,
         postPostingJob,
         geSharedJob,
+        geCategoryJob,
 
         getPretest,
         postPretest,
@@ -99,6 +100,7 @@ export const API = () => {
             deleteJob,
             postPostingJob,
             geSharedJob,
+            geCategoryJob,
 
             getPretest,
             postPretest,

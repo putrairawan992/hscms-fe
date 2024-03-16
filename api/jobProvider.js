@@ -26,6 +26,9 @@ export const jobProviderAPI = () => {
     const geSharedJob = async (id_job) => {
         return await getRequest('jobprovider/sharejob/'+id_job, true);
     }
+    const geCategoryJob = async (category) => {
+        return await getRequest('jobprovider/category_job/'+category);
+    }
 
     const getPretest = async (id_job) => {
         return await getRequest('jobprovider/modul/'+id_job, true);
@@ -146,6 +149,7 @@ export const jobProviderAPI = () => {
         deleteJob,
         postPostingJob,
         geSharedJob,
+        geCategoryJob,
 
         getPretest,
         postPretest,
