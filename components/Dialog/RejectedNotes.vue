@@ -8,7 +8,7 @@
                         </b>
                         <div class="text-notes" v-html="content"></div>
                     </div>
-                    <div style="display: flex; justify-content: center; padding: 40px 90px 30px 120px;">
+                    <div style="display: flex; justify-content: center; padding: 40px 90px 30px 90px;">
                         <button class="button-wrapper" @click="closeDialog">
                             <b class="tempat-tanggal-lahir">Close</b>
                         </button> 

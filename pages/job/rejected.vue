@@ -47,7 +47,7 @@
                 </div>
             </div>
         </v-card>
-        <RejectedNotes :show="notesDialog" :content="notes" :closeDialog="closeDialog"/>
+        <Dialog-RejectedNotes :show="notesDialog" :content="notes" :closeDialog="closeDialog"/>
     </div>
 </template>
 <script>

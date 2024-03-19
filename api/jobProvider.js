@@ -139,6 +139,12 @@ export const jobProviderAPI = () => {
     const getEmployeeDetail = async (employee_id) => {
         return await getRequest('jobprovider/employeedetail/' +employee_id);
     }
+    const getEmployeeDataCSV = async () => {
+        return await getRequest('jobprovider/download/employee', true);
+    }
+    const getEmployeeDataZIP = async () => {
+        return await getRequest('jobprovider/compress/employee', true);
+    }
 
 
 
@@ -186,5 +192,7 @@ export const jobProviderAPI = () => {
 
         getEmployee,
         getEmployeeDetail,
+        getEmployeeDataCSV,
+        getEmployeeDataZIP
     }
 }

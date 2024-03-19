@@ -5,39 +5,57 @@
                 <div class="blokade-parent ma-8 pt-10">
                     <div class="open-job-dan-draft mb-14 d-flex" style="justify-content: space-between;">
                         <div>
-                            Talent Selection
+                            Detail Data
                         </div>
-
-                        <div class="orange-btn" @click="" style="border-radius: 50%;">
-                            <img class="feath" alt="" src="@/assets/svg/bi-share.svg" />
-                        </div> 
                     </div>
 
                     <v-row>
-                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                            
-                            <div class="pp-container">
-                                <img
-                                    class="pp-frame"
-                                    loading="eager" alt="photo"
-                                    :src="photo ? photo : '@/assets/img/img-error.png'"
-                                />
-                            </div>
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label pt-8">
+                            <v-row>
+                                <v-col cols="12">
+                                    <div class="pp-container">
+                                        <img
+                                            class="pp-frame"
+                                            loading="eager" alt="photo"
+                                            :src="photo ? photo : '@/assets/img/img-error.png'"
+                                        />
+                                    </div>
+                                </v-col>
+                                <v-col cols="12" class="pb-2">
+                                    <div class="d-flex justify-center mr-7">
+                                        <div class="frame-container" style="width: 160px;">
+                                            <div class="attach-mpr-parent" @click="">
+                                                <b class="button">Send Message</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </v-col>
+                                <v-col cols="12">
+                                    <div class="d-flex justify-center mr-7">
+                                        <div class="orange-btn d-flex" @click="" style="justify-content: center; border-radius: 50%; height: 38px;width: 38px;">
+                                            <img class="feath" height="17" width="17" alt="" src="@/assets/svg/download.svg" />
+                                        </div> 
+                                        <div class="orange-btn d-flex ml-4" @click="" style="justify-content: center; border-radius: 50%; height: 38px;width: 38px;">
+                                            <img class="feath" height="17" width="17" alt="" src="@/assets/svg/bi-share.svg" />
+                                        </div> 
+                                    </div>
+                                </v-col>
+                            </v-row>
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                             <v-row align="center">
-                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label pt-8">
                                     <b>Nama Lengkap:</b>
                                 </v-col>
-                                <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                                <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                                     <input class="register-text-input" placeholder="Masukkan Nama Lengkap" v-model="fullname" :readonly="preview"/>
                                 </v-col>
                             </v-row>
                             <v-row align="center">
-                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label pt-8">
                                     <b>Tempat Tanggal Lahir:</b>
                                 </v-col>
-                                <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                                <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                                     <v-row align="center">
                                         <v-col cols="6">
                                             <input class="register-text-input" placeholder="Masukkan Nama Kota" v-model="place_birth" :readonly="preview" />
@@ -74,53 +92,63 @@
                                 </v-col>
                             </v-row>
                             <v-row align="center">
-                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label pt-8">
                                     <b>Alamat E-Mail:</b>
                                 </v-col>
-                                <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                                <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                                     <input type="email" class="register-text-input" placeholder="Masukkan alamat E-Mail" v-model="email" :readonly="preview" />
                                 </v-col>
                             </v-row>
                             <v-row align="center">
-                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label pt-8">
                                     <b>Alamat URL LinkedIn:</b>
                                 </v-col>
-                                <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                                <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                                     <input class="register-text-input" placeholder="Masukkan alamat URL LinkedIn" v-model="linkedin" :readonly="preview" />
+                                </v-col>
+                            </v-row>
+                            <v-row align="center">
+                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label pt-8">
+                                    <b>Nomor Handphone:</b>
+                                </v-col>
+                                <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                                    <input class="register-text-input" placeholder="Masukkan Nomor Handphone" v-model="handphone" :readonly="preview" />
+                                </v-col>
+                            </v-row>
+                            <v-row align="center">
+                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label pt-8">
+                                    <b>Emergency Contact:</b>
+                                </v-col>
+                                <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                                    <v-row align="center">
+                                        <v-col cols="4">
+                                            <input class="register-text-input" placeholder="Masukkan Nama" v-model="emergency_name" :readonly="preview" />
+                                        </v-col>
+                                        <v-col cols="4">
+                                            <input class="register-text-input" placeholder="Masukkan Nama" v-model="emergency_number" :readonly="preview" />
+                                        </v-col>
+                                        <v-col cols="4">
+                                            <input class="register-text-input" placeholder="Masukkan No" v-model="emergency_status" :readonly="preview" />
+                                        </v-col>
+                                    </v-row>
                                 </v-col>
                             </v-row>
                         </v-col>
                     </v-row>
                     
                     <v-row align="center">
-                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                            <b>Nomor Handphone:</b>
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label pt-8">
+                            <b>Jenis Kelamin:</b>
                         </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <input class="register-text-input" placeholder="Masukkan Nomor Handphone" v-model="handphone" :readonly="preview" />
-                        </v-col>
-                    </v-row>
-                    <v-row align="center">
-                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                            <b>Alamat Domisili:</b>
-                        </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <input class="register-text-input" placeholder="Masukkan Alamat Domisili Saat Ini" v-model="residential_address" :readonly="preview" />
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Jenis Kelamin" v-model="residential_address" :readonly="preview" />
                         </v-col>
                     </v-row>
                     <v-row align="center">
-                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                            <b>Alamat Rumah (KTP):</b>
-                        </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <input class="register-text-input" placeholder="Masukkan Alamat Rumah Berdasarkan KTP" v-model="address_on_identity_card" :readonly="preview" />
-                        </v-col>
-                    </v-row>
-                    <v-row align="center">
-                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label pt-8">
                             <b>Status Pernikahan:</b>
                         </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                             <multiselect
                                 :disabled="preview"
                                 v-model="marital_status"
@@ -131,18 +159,42 @@
                         </v-col>
                     </v-row>
                     <v-row align="center">
-                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label pt-8">
+                            <b>Alamat Domisili:</b>
+                        </v-col>
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Alamat Domisili Saat Ini" v-model="residential_address" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label pt-8">
+                            <b>Alamat Rumah (KTP):</b>
+                        </v-col>
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Alamat Rumah Berdasarkan KTP" v-model="address_on_identity_card" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label pt-8">
                             <b>Nomor NIK:</b>
                         </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                             <input class="register-text-input" placeholder="Masukkan Nomor NIK" v-model="identity_number" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label pt-8">
+                            <b>Status PTKP:</b>
+                        </v-col>
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Status PTKP" v-model="ptkp_status" :readonly="preview" />
                         </v-col>
                     </v-row>
                     <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
                             <b>Nomor NPWP <i class="opsional">(*opsional)</i> :</b>
                         </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                             <input class="register-text-input" placeholder="Masukkan Nomor NPWP" v-model="npwp_number" :readonly="preview" />
                         </v-col>
                     </v-row>
@@ -150,7 +202,7 @@
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
                             <b>Nomor BPJSKES <i class="opsional">(*opsional)</i> :</b>
                         </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                             <input class="register-text-input" placeholder="Masukkan Nomor BPJSKES" v-model="bpjskes" :readonly="preview" />
                         </v-col>
                     </v-row>
@@ -158,38 +210,112 @@
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
                             <b>Nomor BPJSTK <i class="opsional">(*opsional)</i> :</b>
                         </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                             <input class="register-text-input" placeholder="Masukkan Nomor BPJSTK" v-model="bpjstik" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Nama Bank <i class="opsional">(*opsional)</i> :</b>
+                        </v-col>
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Nama Bank'" v-model="bank_name" :readonly="preview" />
                         </v-col>
                     </v-row>
                     <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
                             <b>No. Rek Bank <i class="opsional">(*opsional)</i> :</b>
                         </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <input class="register-text-input" placeholder="Masukkan No. Rekening Bank '*diwajibkan menggunakan rekening Bank Mandiri'" v-model="bank_account_number" :readonly="preview" />
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <v-row>
+                                <v-col cols="6">
+                                    <input class="register-text-input" placeholder="Masukkan No. Rekening Bank" v-model="bank_account_number" :readonly="preview" />
+                                </v-col>
+                                <v-col cols="6">
+                                    <input class="register-text-input" placeholder="Masukkan Atas Nama" v-model="bank_account_name" :readonly="preview" />
+                                </v-col>
+                            </v-row>
                         </v-col>
                     </v-row>
-                    <!-- <v-row align="center">
-                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                            <b>Melamar Posisi:</b>
-                        </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <multiselect
-                                :disabled="preview"
-                                v-model="work_position"
-                                :options="listStatusPernikahan"
-                                class="register-text-input"
-                                placeholder="Pilih Posisi yang Dilamar" :allow-empty="false"
-                            ></multiselect>
-                        </v-col>
-                    </v-row> -->
                     <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
-                            <b>Ekspektasi Gaji <i class="opsional">(*opsional)</i> :</b>
+                            <b>NIK Perusahaan:</b>
                         </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <input class="register-text-input" placeholder="Masukkan Nomor NPWP" v-model="salary_exspectation" :readonly="preview" />
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan NIK Perusahaan" v-model="company_registration_number" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Role:</b>
+                        </v-col>
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Role" v-model="job_specialist_name" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Level:</b>
+                        </v-col>
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Level" v-model="job_level_name" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Ruang Lingkup:</b>
+                        </v-col>
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <textarea class="register-text-input" style="height: -webkit-fit-content;" placeholder="Masukkan Ruang Lingkup"  rows="4" cols="50">{{ scope }}</textarea>
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Jenis Kontrak:</b>
+                        </v-col>
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Jenis Kontrak" v-model="employee_type" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Take Home Pay:</b>
+                        </v-col>
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Take Home Pay" v-model="salary" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Kontrak:</b>
+                        </v-col>
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <v-row>
+                                <v-col cols="6">
+                                    <div class="register-text-input d-flex" style="justify-content: space-between;">
+                                        <div>{{ useConvertToDateView(start_date) }}</div>
+                                        <div>-</div>
+                                        <div>{{ useConvertToDateView(end_date) }}</div>
+                                    </div>
+                                </v-col>
+                                <v-col cols="6">
+                                    <div class="register-text-input d-flex" style="justify-content: space-between;">
+                                        <div>{{ useConvertToYearCountView() }}</div>
+                                        <b style="color: #ae445a;">Sama dengan</b>
+                                        <div>{{ useConvertToMonthCountView() }}</div>
+                                    </div>
+                                </v-col>
+                            </v-row>
+                        </v-col>
+                    </v-row>
+
+                    <div v-if="score.length > 0" class="group-inner"/>
+                    <v-row v-if="score.length > 0" v-for="value in score" align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>{{ value.modul_category }}:</b>
+                        </v-col>
+                        <v-col class="pb-0" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Take Home Pay" :value="value.score" :readonly="preview" />
                         </v-col>
                     </v-row>
 
@@ -200,13 +326,13 @@
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                             <v-row>
-                                <v-col cols="12">
+                                <v-col class="pb-0" cols="12">
                                     <input class="register-text-input" placeholder="Masukkan Posisi Pekerjaan Sebelumnya" v-model="department[key]" :readonly="preview" />
                                 </v-col>
-                                <v-col cols="12">
+                                <v-col class="pb-0" cols="12">
                                     <input class="register-text-input" placeholder="Masukkan Nama Perusahaan" v-model="company_name[key]" :readonly="preview" />
                                 </v-col>
-                                <v-col cols="6">
+                                 <v-col class="pb-0" cols="6">
                                     <v-menu
                                     :ref="datePickerStartWorking[key]"
                                     v-model="datePickerStartWorking[key]" offset-y
@@ -234,7 +360,7 @@
                                         ></v-date-picker>
                                     </v-menu>
                                 </v-col>
-                                <v-col cols="6">
+                                <v-col class="pb-0" cols="6">
                                     <v-menu
                                     :ref="datePickerEndWorking[key]"
                                     v-model="datePickerEndWorking[key]"
@@ -286,13 +412,13 @@
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                             <v-row>
-                                <v-col cols="12">
+                                <v-col class="pb-0" cols="12">
                                     <input class="register-text-input" placeholder="Masukkan Nama Tempat Pendidikan" v-model="institute_name[key]" :readonly="preview" />
                                 </v-col>
-                                <v-col cols="12">
+                                <v-col class="pb-0" cols="12">
                                     <input class="register-text-input" placeholder="Masukkan Jurusan" v-model="education_program[key]" :readonly="preview" />
                                 </v-col>
-                                <v-col cols="6">
+                                <v-col class="pb-0" cols="6">
                                     <v-menu
                                     :ref="datePickerStartStudy[key]"
                                     v-model="datePickerStartStudy[key]"
@@ -321,7 +447,7 @@
                                         ></v-date-picker>
                                     </v-menu>
                                 </v-col>
-                                <v-col cols="6">
+                                <v-col class="pb-0" cols="6">
                                     <v-menu
                                     :ref="datePickerEndStudy[key]"
                                     v-model="datePickerEndStudy[key]"
@@ -366,10 +492,10 @@
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                             <v-row>
-                                <v-col cols="12">
+                                <v-col class="pb-0" cols="12">
                                     <input class="register-text-input" v-model="certificate_name[key]" placeholder="Masukkan Nama Sertifikat (Contoh: Toefl - ITP, IELTS, dll)" :readonly="preview" />
                                 </v-col>
-                                <v-col cols="12">
+                                <v-col class="pb-0" cols="12">
                                     <input class="register-text-input" v-model="organizer[key]" placeholder="Masukkan Nama Lembaga" :readonly="preview" />
                                 </v-col>
                                 <v-col cols="6">
@@ -385,14 +511,47 @@
                     <div class="group-inner" />
                     <v-row align="start">
                         <v-col cols="12" class="label mt-3" style="display: flex; flex-direction: column;">
+                            <b>Hasil Tes:</b>
+                        </v-col>
+                        <v-col cols="12">
+                            <v-row>
+                                <v-col v-for="value, key in score" cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
+                                    <div class="pas-foto" @click="clickDetail(value)">
+                                        <button class="plusplus cursor-pointer" @click="">
+                                            <img v-if="value.logo == '123rectangle'" class="pluscirclefill-icon" alt="icon" src="@/assets/svg/module-logo/white/123rectangle.svg" />
+                                            <img v-if="value.logo == 'acircle'" class="pluscirclefill-icon" alt="icon" src="@/assets/svg/module-logo/white/acircle.svg" />
+                                            <img v-if="value.logo == 'brainhead'" class="pluscirclefill-icon" alt="icon" src="@/assets/svg/module-logo/white/brainhead.svg" />
+                                            <img v-if="value.logo == 'code'" class="pluscirclefill-icon" alt="icon" src="@/assets/svg/module-logo/white/code.svg" />
+                                            <img v-if="value.logo == 'heart'" class="pluscirclefill-icon" alt="icon" src="@/assets/svg/module-logo/white/heart.svg" />
+                                            <img v-if="value.logo == 'magazine'" class="pluscirclefill-icon" alt="icon" src="@/assets/svg/module-logo/white/magazine.svg" />
+                                            <img v-if="value.logo == 'paintbrushpointed'" class="pluscirclefill-icon" alt="icon" src="@/assets/svg/module-logo/white/paintbrushpointed.svg" />
+                                            <img v-if="value.logo == 'penciltip'" class="pluscirclefill-icon" alt="icon" src="@/assets/svg/module-logo/white/penciltip.svg" />
+                                            <img v-if="value.logo == 'phototv'" class="pluscirclefill-icon" alt="icon" src="@/assets/svg/module-logo/white/phototv.svg" />
+                                            <img v-if="value.logo == 'video'" class="pluscirclefill-icon" alt="icon" src="@/assets/svg/module-logo/white/video.svg" />
+                                        </button>
+                                        <div class="foto">
+                                            <div class="pas-foto-4x6">{{ value.modul_category }}</div>
+                                        </div>
+                                    </div>
+                                </v-col>
+                            </v-row>
+                        </v-col>
+                    </v-row>
+
+                    <div class="group-inner" />
+                    <v-row align="start">
+                        <v-col cols="12" class="label mt-3" style="display: flex; flex-direction: column;">
                             <b>Berkas Lampiran:</b>
-                            <i class="ukuran-maksimal-berkas">Ukuran maksimal berkas 3MB</i>
                         </v-col>
                         <v-col cols="12">
                             <v-row>
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
-                                    <div class="pas-foto">
-                                        <button class="plus cursor-pointer" @click="openFile(curriculum_vitae)">
+                                    <div class="pas-foto" @click="openFile(curriculum_vitae)">
+                                        <div v-if="!curriculum_vitae" class="data-belum-terisi">Data belum terisi</div>
+                                        <button v-if="!curriculum_vitae" class="plus cursor-pointer">
+                                            <img class="pluscirclefill-icon" alt="image-not-found" src="@/assets/svg/info-circle.svg" />
+                                        </button>
+                                        <button v-else class="plus cursor-pointer">
                                             <img class="pluscirclefill-icon" alt="CV" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
@@ -401,8 +560,12 @@
                                     </div>
                                 </v-col>
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
-                                    <div class="pas-foto">
-                                        <button class="plus cursor-pointer" @click="openFile(photo)">
+                                    <div class="pas-foto" @click="openFile(photo)">
+                                        <div v-if="!photo" class="data-belum-terisi">Data belum terisi</div>
+                                        <button v-if="!photo" class="plus cursor-pointer">
+                                            <img class="pluscirclefill-icon" alt="image-not-found" src="@/assets/svg/info-circle.svg" />
+                                        </button>
+                                        <button v-else class="plus cursor-pointer">
                                             <img class="pluscirclefill-icon" alt="Pas Foto 4x6" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
@@ -411,8 +574,12 @@
                                     </div>
                                 </v-col>
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
-                                    <div class="pas-foto">
-                                        <button class="plus cursor-pointer" @click="openFile(ktp)">
+                                    <div class="pas-foto" @click="openFile(ktp)">
+                                        <div v-if="!ktp" class="data-belum-terisi">Data belum terisi</div>
+                                        <button v-if="!ktp" class="plus cursor-pointer">
+                                            <img class="pluscirclefill-icon" alt="image-not-found" src="@/assets/svg/info-circle.svg" />
+                                        </button>
+                                        <button v-else class="plus cursor-pointer">
                                             <img class="pluscirclefill-icon" alt="KTP" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
@@ -422,8 +589,12 @@
                                     </div>
                                 </v-col>
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
-                                    <div class="pas-foto">
-                                        <button class="plus cursor-pointer" @click="openFile(kk)">
+                                    <div class="pas-foto" @click="openFile(kk)">
+                                        <div v-if="!kk" class="data-belum-terisi">Data belum terisi</div>
+                                        <button v-if="!kk" class="plus cursor-pointer">
+                                            <img class="pluscirclefill-icon" alt="image-not-found" src="@/assets/svg/info-circle.svg" />
+                                        </button>
+                                        <button v-else class="plus cursor-pointer">
                                             <img class="pluscirclefill-icon" alt="Kartu Keluarga" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
@@ -433,8 +604,12 @@
                                     </div>
                                 </v-col>
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
-                                    <div class="pas-foto">
-                                        <button class="plus cursor-pointer" @click="openFile(npwp)">
+                                    <div class="pas-foto" @click="openFile(npwp)">
+                                        <div v-if="!npwp" class="data-belum-terisi">Data belum terisi</div>
+                                        <button v-if="!npwp" class="plus cursor-pointer">
+                                            <img class="pluscirclefill-icon" alt="image-not-found" src="@/assets/svg/info-circle.svg" />
+                                        </button>
+                                        <button v-else class="plus cursor-pointer">
                                             <img class="pluscirclefill-icon" alt="NPWP" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
@@ -445,7 +620,11 @@
                                 </v-col>
                                 <v-col cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
                                     <div class="pas-foto" @click="openFile(bpjs)">
-                                        <button class="plus cursor-pointer">
+                                        <div v-if="!bpjs" class="data-belum-terisi">Data belum terisi</div>
+                                        <button v-if="!bpjs" class="plus cursor-pointer">
+                                            <img class="pluscirclefill-icon" alt="image-not-found" src="@/assets/svg/info-circle.svg" />
+                                        </button>
+                                        <button v-else class="plus cursor-pointer">
                                             <img class="pluscirclefill-icon" alt="BPJSKES & TK" src="@/assets/svg/doc.svg" />
                                         </button>
                                         <div class="foto">
@@ -458,10 +637,38 @@
                         </v-col>
                     </v-row>
 
+                    <div v-for="value in document_tracking">
+                        <div class="group-inner" />
+                        <v-row align="start">
+                            <v-col cols="12" class="label mt-3" style="display: flex; flex-direction: column;">
+                                <b>Periode {{ value.period }}:</b>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-row>
+                                    <v-col v-for="value1 in value.files" cols="4" xs="2" md="2" lg="2" xl="2" xxl="2">
+                                        <div class="pas-foto" @click="openFile(value1.file)">
+                                            <div v-if="!curriculum_vitae" class="data-belum-terisi">Data belum terisi</div>
+                                            <button v-if="!curriculum_vitae" class="plus cursor-pointer">
+                                                <img class="pluscirclefill-icon" alt="image-not-found" src="@/assets/svg/info-circle.svg" />
+                                            </button>
+                                            <button v-else class="plus cursor-pointer">
+                                                <img class="pluscirclefill-icon" alt="CV" src="@/assets/svg/doc.svg" />
+                                            </button>
+                                            <div class="foto">
+                                                <div class="pas-foto-4x6">{{ value1.request_type }}</div>
+                                                <i class="optional">({{ value1.status }})</i>
+                                            </div>
+                                        </div>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
+                        </v-row>
+                    </div>
+
                     <v-row>
                         <div class="save-container">
                             <div></div>
-                            <div class="button-wrapper" @click="">
+                            <div class="button-wrapper" @click="$router.push('/employee-data')">
                                 <b class="tempat-tanggal-lahir">Close</b>
                             </div> 
                         </div>
@@ -475,6 +682,7 @@
 <script>
 import { API } from '@/api/index'
 import Multiselect from 'vue-multiselect'
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
     components: { Multiselect },
@@ -505,6 +713,8 @@ export default {
         bpjskes: null,
         bpjstik: null,
         bank_account_number: null,
+        bank_account_name: null,
+        bank_name: null,
         work_position: null,
         salary_exspectation: null,
         password: null,
@@ -535,18 +745,37 @@ export default {
         kk: null,   // optional
         npwp: null, // optional
         bpjs: null, // optional
+        
+        score: [],
+        document_tracking: [],
+        job_seeker_id: null,
+        emergency_name: null,
+        emergency_number: null,
+        emergency_status: null,
+        ptkp_status: null,
+        company_registration_number: null,
+        job_level_name: null,
+        employee_type: null,
+        start_date: null,
+        end_date: null,
+        job_specialist_name: null,
+        scope: null,
+        salary: null,
     }),
     watch: {},
     setup() {
         const { getEmployeeDetail } = API()
         return { getEmployeeDetail };
     },
-    computed: {},
+    computed: {
+        ...mapGetters('provider-selection', ['tahapanGetter']),
+    },
     async mounted() {
         const employee_id =  await localStorage.getItem('employee_id');
         await this.getData(employee_id);
     },
     methods: {
+        ...mapMutations('provider-selection', ['setTahapan']),
         async getData(employee_id){
             if(employee_id){
                 await this.getEmployeeDetail(employee_id).then((result)=>{
@@ -555,6 +784,18 @@ export default {
             }
         },
         refreshForm(data){
+            this.score = data.score;
+            this.document_tracking = data.document_tracking;
+            this.job_seeker_id = data.job_seeker_id;
+            this.ptkp_status = data.ptkp_status;
+            this.company_registration_number = data.company_registration_number;
+            this.job_level_name = data.job_level?.job_level_name;
+            this.employee_type = data.employee_type;
+            this.start_date = data.start_date;
+            this.end_date = data.end_date;
+            this.job_specialist_name = data.job_specialist?.job_specialist_name;
+            this.salary = data.salary;
+
             this.email = data.employee_data.email;
             this.fullname = data.employee_data.name;
             this.place_birth = data.employee_data.data_job_seeker[0].place_birth;
@@ -569,8 +810,14 @@ export default {
             this.bpjskes = data.employee_data.data_job_seeker[0].bpjskes;
             this.bpjstik = data.employee_data.data_job_seeker[0].bpjstik;
             this.bank_account_number = data.employee_data.data_job_seeker[0].bank_account_number;
+            this.bank_account_name = data.employee_data.data_job_seeker[0].bank_account_name;
+            this.bank_name = data.employee_data.data_job_seeker[0].bank_name;
             this.work_position = data.employee_data.data_job_seeker[0].work_position;
             this.salary_exspectation = data.employee_data.data_job_seeker[0].salary_exspectation;
+            this.emergency_name = data.employee_data.data_job_seeker[0].emergency_name;
+            this.emergency_number = data.employee_data.data_job_seeker[0].emergency_number;
+            this.emergency_status = data.employee_data.data_job_seeker[0].emergency_status;
+            this.scope = data.employee_data.data_job_seeker[0].scope;
             
             this.curriculum_vitae = data.employee_data.data_document[0].curriculum_vitae;
             this.photo = data.employee_data.data_document[0].photo;
@@ -603,6 +850,44 @@ export default {
             });
 
         },
+        async clickDetail(module) {
+            await this.setTahapan({
+                ...this.tahapanGetter,
+                detail: {
+                    job_seeker_id: this.job_seeker_id,
+                    module: module,
+                }
+            });
+            return this.$router.push("/employee-data/detail/test-results")
+        },
+
+        useConvertToDateView(value) {
+            var tanggal = new Date(value);
+            var namaBulan = [
+                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            ];
+            var hari = tanggal.getUTCDate();
+            var tahun = tanggal.getUTCFullYear();
+            var bulan = namaBulan[tanggal.getUTCMonth()];
+
+            var hasilFormat = hari + " " + bulan + " " + tahun;
+            return hasilFormat;
+        },
+        useConvertToMonthCountView() {
+            const startDate = new Date(this.start_date);
+            const endDate = new Date(this.end_date);
+
+            const diffMonths = (endDate.getFullYear() - startDate.getFullYear()) * 12 + endDate.getMonth() - startDate.getMonth();
+            return `${diffMonths} Bulan`;
+        },
+        useConvertToYearCountView() {
+            const startDate = new Date(this.start_date);
+            const endDate = new Date(this.end_date);
+
+            const diffYears = endDate.getFullYear() - startDate.getFullYear();
+            return `${diffYears} Tahun`;
+        },
         parseDate (date) {
             if (!date) return null
             const [year, month, day] = date.split('-')
@@ -628,6 +913,12 @@ export default {
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped>
+.data-belum-terisi {
+    color: #ae445a;
+    font-size: 8px;
+    margin-top: -15px;
+    position: absolute;
+}
 .pp-container {
     flex: 1;
     display: flex;
@@ -733,6 +1024,18 @@ export default {
     align-items: flex-start;
     justify-content: flex-start;
     padding: 13px 14px;
+    position: relative;
+}
+.plusplus {
+    border-radius: 10px;
+    border: 2px solid #ae445a;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 13px 14px;
+    background-color: #ae445a;
 }
 .pas-foto-4x6 {
     position: relative;

@@ -1,5 +1,5 @@
 <template>
-  <v-row class="mt-4">
+  <v-row class="mt-0">
     <v-col cols="12" xs="12" sm="12" md="6" align="center">
       <v-card class="card-dashboard" max-width="450">
         <div class="my-2" style="position: relative;">

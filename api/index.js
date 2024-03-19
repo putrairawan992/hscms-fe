@@ -67,6 +67,8 @@ export const API = () => {
 
         getEmployee,
         getEmployeeDetail,
+        getEmployeeDataCSV,
+        getEmployeeDataZIP
     } = jobProviderAPI();
     
 
@@ -137,5 +139,7 @@ export const API = () => {
             
             getEmployee,
             getEmployeeDetail,
+            getEmployeeDataCSV,
+            getEmployeeDataZIP
     }
 }

@@ -948,7 +948,8 @@ input:-webkit-autofill:active{
     border: 1px solid #ae445a !important;
 }
 .header-select-input .multiselect__select {
-    height: 37px !important;
+    height: 33px !important;
+    /* height: 37px !important; */
 }
 .header-select-input .multiselect__select:before {
     color: #fff !important;

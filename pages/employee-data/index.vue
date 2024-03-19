@@ -112,7 +112,7 @@
                                 </v-col>
                                 <v-col cols="12" class="pt-0 input-checkbox-container">
                                     <div class="frame-container">
-                                        <div class="attach-mpr-parent" @click="">
+                                        <div class="attach-mpr-parent" @click="openDialog">
                                             <b class="button">Download All</b>
                                             <img class="download-all-icon" alt="" src="@/assets/svg/download.svg" />
                                         </div>
@@ -137,8 +137,8 @@
                                         </div>
                                         <div>
                                             <div class="employee-data-container">
-                                                <b> Offering Letter </b>
-                                                <div class="employee-data-item"> Employee Signed </div>
+                                                <b style="min-width: 87px;"> {{ item.request_type }} </b>
+                                                <div style="min-width: 101px; justify-content:center;" class="employee-data-item">{{ item.tracking_document }}</div>
                                                 <div class="icon-container" @click="clickDetail(item.employee_id)">
                                                     <img class="edit-icon" alt="" src="@/assets/svg/eye-circle-fill.svg" />
                                                 </div>
@@ -176,6 +176,7 @@
                 </div>
             </div>
         </v-card>
+        <Dialog-ChoseDownload :show="dialog" :closeDialog="closeDialog"/>
     </div>
 </template>
 <script>
@@ -191,6 +192,7 @@ export default {
         file: null,
         file_status: null,
         employee_status: null,
+        dialog: false,
 
         page: 1,
         paginate: 1,
@@ -204,6 +206,9 @@ export default {
             this.getData();
         },
         employee_status (to, from) {
+            this.getData();
+        },
+        page (to, from) {
             this.getData();
         }
     },
@@ -224,6 +229,14 @@ export default {
         async clickDetail(id){
             await localStorage.setItem('employee_id', id);
             this.$router.push('/employee-data/detail');
+        },
+        openDialog(){
+            this.dialog = true;
+        },
+        closeDialog(alert){
+            if(alert) {
+                this.$alert.showAlert({ content: 'File telah di-download', show: true });
+            } this.dialog = false;
         },
     }
 
@@ -396,16 +409,16 @@ export default {
     color: #fff;
     line-height: 50px;
 }
-.Kontrak{
+.kontrak{
     background: #ae445a;
 }
-.Freelance{
+.freelance{
     background: #8364BA;
 }
-.Magang{
+.magang{
     background: #F39F5A;
 }
-.Probation{
+.probation{
     background: #3AB471;
 }
 .gear-icon {

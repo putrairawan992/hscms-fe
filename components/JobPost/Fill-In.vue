@@ -25,22 +25,22 @@
                         <b>Jenis Pekerjaan</b>
                     </v-col>
                     <v-col cols="12" class="pt-0 input-checkbox-container">
-                        <v-checkbox v-model="job_type" value="Kontrak" class="input-checkbox mt-0" color="#ae445a">
+                        <v-checkbox v-model="job_type" value="kontrak" class="input-checkbox mt-0" color="#ae445a">
                             <template v-slot:label>
                                 <div class="checkbox-label">Kontrak</div>
                             </template>
                         </v-checkbox>
-                        <v-checkbox v-model="job_type" value="Freelance" class="input-checkbox mt-0" color="#ae445a">
+                        <v-checkbox v-model="job_type" value="freelance" class="input-checkbox mt-0" color="#ae445a">
                             <template v-slot:label>
                                 <div class="checkbox-label">Freelance</div>
                             </template>
                         </v-checkbox>
-                        <v-checkbox v-model="job_type" value="Magang" class="input-checkbox mt-0" color="#ae445a">
+                        <v-checkbox v-model="job_type" value="magang" class="input-checkbox mt-0" color="#ae445a">
                             <template v-slot:label>
                                 <div class="checkbox-label">Magang</div>
                             </template>
                         </v-checkbox>
-                        <v-checkbox v-model="job_type" value="Probation" class="input-checkbox mt-0" color="#ae445a">
+                        <v-checkbox v-model="job_type" value="probation" class="input-checkbox mt-0" color="#ae445a">
                             <template v-slot:label>
                                 <div class="checkbox-label">Probation</div>
                             </template>
@@ -408,10 +408,8 @@ export default {
     methods: {
         async getData(){
             await this.getJob(this.id_job_post).then((result)=>{
-                console.log('result', result);
                 this.refreshForm(result.data);
                 this.masterData = result.master_data;
-                console.log('this.masterData', this.masterData);
             })
         },
         refreshForm(data){
