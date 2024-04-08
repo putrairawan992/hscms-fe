@@ -41,7 +41,7 @@
 
                                                     <div v-else class="jun-2023-wrapper text-right" style="width: 98px;">
                                                         <div v-if="value.in_review == true" class="text-list-todo"> <i>In Review</i> </div>
-                                                        <div v-else class="text-list-todo">Skor: {{ value.score }}</div>
+                                                        <div v-else class="text-list-todo">Skor: {{ Math.round(value.score) }}</div>
                                                     </div>
                                                     <!-- <div v-if="value.score != undefined" class="jun-2023-wrapper text-right" style="width: 98px;">
                                                         <div class="text-list-todo">Skor: {{ value.score }}</div>

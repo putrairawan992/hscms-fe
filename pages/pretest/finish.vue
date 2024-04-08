@@ -20,7 +20,7 @@
                                         <b class="hasil-tes">Hasil {{ finish?.category_name }}</b>
                                     </v-col>
                                     <v-col cols="12" style="height: 215px;">
-                                        <b class="nilai">{{ finish?.score }}</b>
+                                        <b class="nilai">{{ Math.round(finish?.score) }}</b>
                                     </v-col>
                                     <v-col cols="12">
                                         <img class="ma-auto" alt="" src="@/assets/svg/finish-pretest-1.svg" />

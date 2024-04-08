@@ -26,8 +26,7 @@
                         <v-row align="stretch" class="mb-4">
                             <v-col cols="12" class="">
                                 <div class="">
-                                    <Countdown v-if="question?.paginate" :date="new Date('2024-01-18 23:08:15')" :timeOut="timeOut"/>
-                                    <!-- <Countdown v-if="question?.paginate" :date="new Date(question?.paginate?.countdown?.end_time)"/> -->
+                                    <Countdown v-if="question?.paginate" :date="new Date(question?.countdown?.end_time)"/>
                                     <v-pagination
                                         :length="question?.paginate?.length"
                                         v-if="question?.paginate" v-model="page"
@@ -49,19 +48,19 @@
                                             </ol>
                                             <v-radio-group :value="value.answer" @change="submitAnswer(value, $event)" row class="radio-group-questions mt-0">
                                                 <v-radio
-                                                    :label="value.multiple_choise_question[0].text"
+                                                    :label="value?.multiple_choise_question ? value?.multiple_choise_question[0]?.text : ''"
                                                     class="pa-2 pt-1" value="a"
                                                 ></v-radio>
                                                 <v-radio
-                                                    :label="value.multiple_choise_question[1].text"
+                                                    :label="value?.multiple_choise_question ? value?.multiple_choise_question[1].text : ''"
                                                     class="pa-2 pt-1" value="b"
                                                 ></v-radio>
                                                 <v-radio
-                                                    :label="value.multiple_choise_question[2].text"
+                                                    :label="value?.multiple_choise_question ? value?.multiple_choise_question[2].text : ''"
                                                     class="pa-2 pt-1" value="c"
                                                 ></v-radio>
                                                 <v-radio
-                                                    :label="value.multiple_choise_question[3].text"
+                                                    :label="value?.multiple_choise_question ? value?.multiple_choise_question[3].text : ''"
                                                     class="pa-2 pt-1" value="d"
                                                 ></v-radio>
                                             </v-radio-group>
@@ -158,7 +157,7 @@ export default {
         return { getQuestionAPI, postAnswerAPI, postEndTest };
     },
     async mounted() {
-        await this.getQuestion(this.page);
+        await this.getQuestions(this.page);
         console.log('this.question', this.question);
     },
     methods: {
