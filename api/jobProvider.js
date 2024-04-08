@@ -140,13 +140,80 @@ export const jobProviderAPI = () => {
         return await getRequest('jobprovider/employeedetail/' +employee_id);
     }
     const getEmployeeDataCSV = async () => {
-        return await getRequest('jobprovider/download/employee', true);
+        return await getRequest('jobprovider/download/employee', true, 'arraybuffer');
     }
     const getEmployeeDataZIP = async () => {
-        return await getRequest('jobprovider/compress/employee', true);
+        return await getRequest('jobprovider/compress/employee', true, 'arraybuffer');
     }
 
 
+    // Remuneration
+    const getRemuneration = async (remuneration_id, employee_name) => {
+        let param = '?';
+        if(employee_name != null){ param = param + 'employee_name='+employee_name };
+
+        return await getRequest(
+            remuneration_id ? 
+            'jobprovider/remuneration/'+remuneration_id + param :
+            'jobprovider/remuneration/' + param 
+        );
+    }
+    const getRemunerationDetail = async (remuneration_detail_id) => {
+        return await getRequest('jobprovider/remuneration/detail/' + remuneration_detail_id);
+    }
+    const getRemunerationByStatus = async (status) => {
+        let param = '?';
+        if(status != null){ param = param + 'status='+status };
+        return await getRequest('jobprovider/remuneration_status/' + param);
+    }
+    const getListEmployee = async (remuneration_id, employee_name) => {
+        let param = '?';
+        if(employee_name != null){ param = param + 'employee_name='+employee_name + '&' };
+        if(remuneration_id != null){ param = param + 'batch_remuneration_id='+remuneration_id };
+        return await getRequest('jobprovider/remuneration/employee' + param);
+    }
+    const postPickEmployee = async (body, remuneration_id) => {
+        return await postRequest(
+            remuneration_id ? 
+                'jobprovider/remuneration/pick_employee/'+remuneration_id :
+                'jobprovider/remuneration/pick_employee'
+            , body);
+    }
+    const putDetailRemuneration = async (body, remuneration_detail_id) => {
+        return await putRequest('jobprovider/remuneration/employee/'+remuneration_detail_id, body);
+    }
+    const putRemunerationRequestType = async (body, remuneration_detail_id) => {
+        return await putRequest('jobprovider/remuneration/request_type/'+remuneration_detail_id, body);
+    }
+    const deleteListEmployee = async (employee_id) => {
+        return await deleteRequest('jobprovider/remuneration/employee/'+employee_id);
+    }
+    const getAttachment = async (remuneration_id) => {
+        console.log('remuneration_id', remuneration_id);
+        return await getRequest('jobprovider/remuneration/attachment/'+remuneration_id);
+    }
+    const postAttachment = async (body, attachment_id) => {
+        return await postRequest('jobprovider/remuneration/attachment/'+attachment_id, body);
+    }
+    const deleteAttachment = async (attachment_id) => {
+        return await deleteRequest('jobprovider/remuneration/attachment/'+attachment_id);
+    }
+    const postCreateSimulation = async (remuneration_id) => {
+        return await postRequest('jobprovider/simulation/'+remuneration_id);
+    }
+    const getDownloadSimulation = async (remuneration_id) => {
+        console.log('getDownloadSimulation remuneration_id', remuneration_id);
+        return await getRequest('jobprovider/downloadsimulation/'+remuneration_id, false, 'arraybuffer');
+    }
+    const postRequestApproval = async (remuneration_id) => {
+        return await postRequest('jobprovider/remuneration/request/'+remuneration_id);
+    }
+    const postRemunerationRecreate = async (remuneration_id) => {
+        return await postRequest('jobprovider/remuneration/recreate/'+remuneration_id);
+    }
+    const deleteRemuneration = async (remuneration_id) => {
+        return await deleteRequest('jobprovider/remuneration/'+remuneration_id);
+    }
 
     return {
         getJob,
@@ -193,6 +260,23 @@ export const jobProviderAPI = () => {
         getEmployee,
         getEmployeeDetail,
         getEmployeeDataCSV,
-        getEmployeeDataZIP
+        getEmployeeDataZIP,
+
+        getRemuneration,
+        getRemunerationDetail,
+        getListEmployee,
+        postPickEmployee,
+        deleteListEmployee,
+        getRemunerationByStatus,
+        putDetailRemuneration,
+        putRemunerationRequestType,
+        getAttachment,
+        postAttachment,
+        deleteAttachment,
+        postCreateSimulation,
+        getDownloadSimulation,
+        postRequestApproval,
+        postRemunerationRecreate,
+        deleteRemuneration
     }
 }

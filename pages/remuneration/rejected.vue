@@ -1,154 +1,181 @@
-<template>
-    <v-dialog persistent v-model="show" width="668" rounded content-class="elevation-0">
-        <div style="position: relative; display: flex; flex-direction: column;">
-            <v-card class="pa-12" style="border-radius: 20px !important;"> 
-                <v-row class="my-0">
-                    <v-col class="">
-                        <v-text-field
-                            class="search-text-field-small"
-                            placeholder="Ketikkan Nama" solo 
-                            append-inner-icon="mdi-menu-left"
-                            single-line @input="debounceSearch($event)"
-                            hide-details
-                        >
-                        </v-text-field>
-                    </v-col>
-                    <v-col style="display: flex; justify-content: end; max-width: -webkit-fit-content;">
-                        <div class="orange-btn">
-                            <div class="" @click="closeDialog">
-                                <b class="button mx-3">Select All</b>
+    <template>
+    <div>
+        <v-card class="card-register">
+            <v-row class="job-post-nav ma-0">
+                <v-col cols="3" class="job-post-nav-container">
+                    <div class="job-post-nav-text" @click="$router.push('/remuneration')">Create</div>
+                </v-col>
+                <v-col cols="3" class="job-post-nav-container">
+                    <div class="job-post-nav-text" @click="$router.push('/remuneration/draft')">Draft</div>
+                </v-col>
+                <v-col cols="3" class="job-post-nav-container active">
+                    <div class="job-post-nav-text" @click="$router.push('/remuneration/rejected')">Rejected</div>
+                </v-col>
+                <v-col cols="3" class="job-post-nav-container">
+                    <div class="job-post-nav-text" @click="$router.push('/remuneration/approval')">Approval</div>
+                </v-col>
+            </v-row>
+            <div class="my-2 pb-2" style="position: relative;">
+                <div class="blokade-parent ma-8 pt-1" style="height: 747px; overflow-y: auto; overflow-x: hidden;">
+                    <v-row class="">
+                        <v-col v-for="value, key in data" cols="12" class="pb-0">
+                            <div class="history-1">
+                                <div class="frame-parent-draft">
+                                    <div class="foto-perusaahaan-parent">
+                                        <img
+                                            alt="foto-perusaahaan-icon"
+                                            class="foto-perusaahaan-icon"
+                                            src="@/assets/svg/foto-perusaahaan.svg"
+                                        />
+                                        <b class="">{{ value.job_provider_name }}</b>
+                                    </div>
+                                    <div class="">{{ value.date }} WIB</div>
+                                    <div class="edit-parent">
+                                        <img @click="openNotesDialog(value.note)" class="action-icon" src="@/assets/svg/message.svg" />
+                                    </div>
+                                    <div class="edit-parent">
+                                        <div class="edit-btn-container" @click="recreate(value.batch_remuneration_id)">
+                                            <div class="attach-mpr-parent">
+                                                <b class="button">Re-create</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="orange-btn ml-4">
-                            <div class="" @click="submit">
-                                <b class="button mx-3">+ Add to List</b>
-                            </div>
-                        </div>
-                    </v-col>
-                </v-row>
-                <div style="height: 676px; overflow: auto;  overflow-x: hidden">
-                    <v-row class="mt-0">
-                        <v-col cols="6" class="pt-0">
-                            <div class="remunerasi-list-title">
-                                Existing
-                            </div>
-                            <v-checkbox 
-                                v-for="value, key in data?.existing"
-                                v-model="existing" :value="value.employee_id" hide-details
-                                class="input-checkbox mt-2" color="#ae445a"
-                            >
-                                <template v-slot:label>
-                                    <div class="checkbox-remunerasi-label">{{ value.employee_name }}</div>
-                                </template>
-                            </v-checkbox>
-                        </v-col>
-
-                        <v-col cols="6" class="pt-0">
-                            <div class="remunerasi-list-title">
-                                New Hiring
-                            </div>
-                            <v-checkbox 
-                                v-for="value, key in data?.new_hiring"
-                                v-model="new_hiring" :value="value.employee_id" hide-details
-                                class="input-checkbox mt-2" color="#ae445a"
-                            >
-                                <template v-slot:label>
-                                    <div class="checkbox-remunerasi-label">{{ value.employee_name }}</div>
-                                </template>
-                            </v-checkbox>
                         </v-col>
                     </v-row>
                 </div>
-            </v-card>
-        </div>
-    </v-dialog>
+            </div>
+        </v-card>
+        <Dialog-RejectedNotes :show="notesDialog" :content="notes" :closeDialog="closeDialog"/>
+    </div>
 </template>
 <script>
-    import debounce from 'debounce';
-    import { API } from '@/api/index'
-    import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
-    export default {
-    data () {
-        return {
-            data: null,
-            employee_name: null,
-            id_remuneration: null,
 
-            existing: [],
-            new_hiring: [],
-            existing: [],
-            new_hiring: [],
-        }
+import { API } from '@/api/index'
+import Multiselect from 'vue-multiselect'
+export default {
+    name: "register",
+    layout: "register",
+    components: { 
+        Multiselect,
     },
-    props: {
-        show: { type: Boolean, default() { return false } },
-        content: { type: String, default() { return "" } },
-        onApprove: { type: Function, default() { return {} } },
-        closeDialog: { type: Function, default() { return {} } },
-        // id_remuneration: { type: String, default() { return null} },
-    },
+    data: () => ({
+        data: [],
+        notes: "",
+        notesDialog: false,
+    }),
+    watch: {},
     setup() {
-        const { getListEmployee, postPickEmployee } = API();
-        return { getListEmployee, postPickEmployee };
+        const { getRemunerationByStatus, postRemunerationRecreate } = API()
+        return { getRemunerationByStatus, postRemunerationRecreate };
     },
-    computed: {
-        ...mapGetters('provider-selection', ['tahapanGetter']),
-    },
-    watch: {
-        show (to, from) {
-            if (this.show) {
-                this.getData();
-            }
-        },
-    },
-    async mounted(){
+    async mounted() {
         this.getData();
     },
     methods: {
-        async getData(employee_name){
-            const storageIdRemuneration = localStorage.getItem('id_remuneration');
-            if(storageIdRemuneration){ this.id_remuneration = storageIdRemuneration;}
-            await this.getListEmployee(this.id_remuneration, employee_name).then((result)=>{
-                if(result){
-                    this.data = result;
-                }
-            });
+        async getData(){
+            await this.getRemunerationByStatus('reject').then((result)=>{
+                this.data = result;
+            })
         },
-        async submit(){
-            let combinedArray = this.existing.concat(this.new_hiring);
-            await this.postPickEmployee({employee_id: combinedArray}, this.id_remuneration).then((result)=>{
+        async recreate(id){
+            await this.postRemunerationRecreate(id).then((result)=>{
                 localStorage.setItem('id_remuneration', result.data.batch_remuneration_id);
-                this.new_hiring = null;
-                this.existing = null;
-                console.log('postPickEmployee', result);
-                this.closeDialog();
-            });
+                return this.$router.push('/remuneration');
+            })
         },
-        debounceSearch: debounce( async function (event) {
-            await this.getData(event);
-        },1000),
-        
-        parseDate (date) {
-            if (!date) return null
-            const [year, month, day] = date.split('-')
-            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+        openNotesDialog(data){
+            this.notes = data;
+            this.notesDialog = true;
+        },
+        closeDialog(){
+            this.notesDialog = false;
+            this.notes = "";
         },
     }
-}
-</script>
 
+};
+</script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped>
-.remunerasi-list-title {
-    color: #404041;
-    font-size: 16px;
-    font-weight: bold;
-    font-family: Poppins;
+.edit-parent {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 15px;
 }
-.checkbox-remunerasi-label {
+.foto-perusaahaan-icon {
+    width: 50px;
+    height: 50px;
+    padding: 2px;
+    border-radius: 50%;
+    border: 3px solid #ae445a;
+}
+.history-1 {
+    width: 100%;
+    height: 71px;
+}
+.frame-parent-draft {
+    border-radius: 10px;
+    border: 1px solid #ae445a;
+    box-sizing: border-box;
+    width: 100%;
+    height: 71px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 25px;
+}
+.foto-perusaahaan-parent {
+    width: 210px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+}
+
+.dash-container {
+    max-width: 20px;
+    display: flex;
+    align-items: center;
+}
+.dash {
+    font-weight: 900;
+    color: #ae445a;
+    text-align: center;
+}
+.value9 {
+    width: 268px;
+    height: 75px;
+}
+.date2 {
+    border-radius: 4px;
+    border: 1px solid #ae445a;
+    box-sizing: border-box;
+    width: 120px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 4px 10px;
+    gap: 10px;
+    font-size: 12px;
+}
+.input-checkbox-container{
+    display: flex;
+    column-gap: 20px;
+    flex-direction: row;
+}
+.checkbox-label {
     font-size: 12px;
     font-weight: 400;
     line-height: 0px;
-    color: #404041;
+    margin-left: -5px;
 }
 .attach-mpr-parent {
     width: 100%;
@@ -157,11 +184,11 @@
     align-items: center;
     justify-content: center;
 }
-.frame-container {
+.edit-btn-container {
     border-radius: 10px;
     background: linear-gradient(90deg, #f39f5a, #ae445a);
     box-shadow: 5px 0px 5px #b3b9c5;
-    width: 135px;
+    width: 111px;
     height: 35px;
     display: flex;
     flex-direction: row;
@@ -172,6 +199,7 @@
     font-size: 12px;
     color: #fff;
     line-height: 50px;
+    cursor: pointer;
 }
 .gear-icon {
     width: 25px;
@@ -181,12 +209,10 @@
     margin-left: 5px;
 }
 .isilah-13-kolom-container {
-    color: #AE445A;
-    font-family: Nunito;
-    font-size: 26px;
-    font-style: normal;
-    font-weight: 900;
-    line-height: normal;
+    font-size: 18px;
+    color: #ae445a;
+    text-align: left;
+    line-height: 15px;
 }
 .job-post-nav {
     width: 100%;
@@ -195,6 +221,7 @@
 }
 .job-post-nav-text {
     width: 100%;
+    cursor: pointer;
     text-align: center;
 }
 .job-post-nav-container {
@@ -206,7 +233,7 @@
     display: flex;
     align-items: center;
     font-family: Nunito;
-    background-color: #ffffff;
+    background-color: #ffffff00;
     border-radius: 30px 30px 0px 0px;
 }
 .job-post-nav-container.active {
@@ -217,22 +244,22 @@
     border-radius: 40px;
     background: linear-gradient(90deg, #F1F5FE 0%, #FFF 98.82%);
     box-shadow: 5px 0px 5px #b3b9c5, -5px 0px 5px #b3b9c5 !important;
-}.detail-opening-container {
+}.save-container {
     width: 100%;
     display: flex;
-    margin: 0px 0px 20px 30px;
+    margin: 30px 30px 20px 30px;
     justify-content: space-between;
 }
 .label {
     font-size: 14px;
     text-align: left;
 }
-.preview-text-input {
-    border-radius: 4px;
+.register-text-input {
+    border-radius: 10px;
     border: 1px solid #ae445a;
     box-sizing: border-box;
     width: 100%;
-    height: 30px;
+    height: 47px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -240,19 +267,18 @@
     padding: 10px;
     font-size: 12px;
     /* color: #b6b6b6; */
-}.preview-text-input::placeholder {
+}.register-text-input::placeholder {
     font-style: italic;
 }
 
-.detail-opening-btn-text {
+.tempat-tanggal-lahir {
     position: relative;
-    font-size: 12px;
 }
 .calendar-input-container{
     position: relative;
 }
-.feather-icon-calendar-preview {
-    top: 18%;
+.feather-icon-calendar {
+    top: 25%;
     right: 7%;
     width: 20px;
     height: 20px;
@@ -360,11 +386,11 @@
         text-align: center;
     }
 }
-.detail-opening-button-wrapper {
+.button-wrapper {
     border-radius: 10px;
     background: linear-gradient(90deg, #f39f5a, #ae445a);
     box-shadow: 5px 0px 5px #b3b9c5;
-    min-width: 101px;
+    width: 101px;
     height: 33px;
     display: flex;
     flex-direction: row;

@@ -30,7 +30,6 @@
                                             </v-col>
                                             <v-col cols="4">
                                                 <div class="edit-parent">
-                                                    <!-- <img class="" alt="" src="@/assets/svg/eye-circle.svg" /> -->
                                                     <a :href="value.answer" target="_blank">
                                                         <img alt="preview" src="@/assets/svg/eye-circle.svg" />
                                                     </a>

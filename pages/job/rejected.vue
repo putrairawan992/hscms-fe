@@ -16,8 +16,8 @@
                 </v-col>
             </v-row>
             <div class="my-2" style="position: relative;">
-                <div class="blokade-parent ma-8 pt-1" style="height: 785px;">
-                    <v-row class="" style="height: 770px; overflow: auto;">
+                <div class="blokade-parent ma-8 pt-1" style="height: 775px; overflow-y: auto; overflow-x: hidden;">
+                    <v-row class="">
                         <v-col v-for="value, key in jobs" cols="12" class="">
                             <div class="history-1">
                                 <div class="frame-parent-draft">

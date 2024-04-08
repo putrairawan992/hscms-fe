@@ -1,5 +1,5 @@
 <template>
-    <v-dialog persistent v-model="show" width="668" rounded content-class="elevation-0">
+    <v-dialog v-model="dialogVisible" @input="onDialogClose" width="668" rounded content-class="elevation-0">
         <div style="position: relative; display: flex; flex-direction: column;">
             <v-card class="pa-12" style="border-radius: 20px !important;"> 
                 <v-row class="mb-1">
@@ -33,9 +33,9 @@
                                                 <template v-slot:activator="{ on, attrs }">
                                                     <div v-on="on" style="position: relative;">
                                                         <input
-                                                        v-model="tanggal_mulai"
+                                                        v-model="dataExisting.start_date"
                                                         v-bind="attrs"
-                                                        @blur="tanggal_mulai = parseDate(tanggal_mulai)"
+                                                        @blur="dataExisting.start_datert_date = parseDate(dataExisting.start_date)"
                                                         outlined readonly
                                                         class="remun-detail-text-input"
                                                         placeholder="2024-11-06"
@@ -44,8 +44,8 @@
                                                     </div>
                                                 </template>
                                                 <v-date-picker
-                                                    @input="datePicker1 = false"
-                                                    plas v-model="tanggal_mulai" no-title
+                                                    @input="datePicker1 = false" disabled
+                                                    plas v-model="dataExisting.start_date" no-title
                                                 ></v-date-picker>
                                             </v-menu>
                                     </v-col>
@@ -54,8 +54,8 @@
                                             Sesudah
                                         </div>
                                         <v-menu
-                                            ref="datePicker1"
-                                            v-model="datePicker1"
+                                            ref="datePicker2"
+                                            v-model="datePicker2"
                                             :close-on-content-click="false"
                                             transition="scale-transition"
                                             offset-y
@@ -65,9 +65,9 @@
                                                 <template v-slot:activator="{ on, attrs }">
                                                     <div v-on="on" style="position: relative;">
                                                         <input
-                                                        v-model="tanggal_mulai"
+                                                        v-model="dataNew.start_date"
                                                         v-bind="attrs"
-                                                        @blur="tanggal_mulai = parseDate(tanggal_mulai)"
+                                                        @blur="dataNew.start_date = parseDate(dataNew.start_date)"
                                                         outlined readonly
                                                         class="remun-detail-text-input"
                                                         placeholder="2024-11-06"
@@ -76,8 +76,8 @@
                                                     </div>
                                                 </template>
                                                 <v-date-picker
-                                                    @input="datePicker1 = false"
-                                                    plas v-model="tanggal_mulai" no-title
+                                                    @input="datePicker2 = false" :disabled="readonly"
+                                                    plas v-model="dataNew.start_date" no-title
                                                 ></v-date-picker>
                                             </v-menu>
                                     </v-col>
@@ -92,13 +92,21 @@
                                         <div class="remun-detail-label mb-1">
                                             Sebelum
                                         </div>
-                                        <input class="remun-detail-text-input" placeholder="..."/>
+                                        <v-select
+                                            class="remun-detail-text-field" item-text="job_specialist_name" item-value="id"
+                                            solo :items="masterData.job_specialist" v-model="dataExisting.job_specialist_id"
+                                            placeholder="Pilih" readonly
+                                        ></v-select>
                                     </v-col>
                                     <v-col cols="6" class="pt-2" style="padding-left: 6px !important;">
                                         <div class="remun-detail-label mb-1">
                                             Sesudah
                                         </div>
-                                        <input class="remun-detail-text-input" placeholder="..."/>
+                                        <v-select
+                                            class="remun-detail-text-field" item-text="job_specialist_name" item-value="id"
+                                            solo :items="masterData.job_specialist" v-model="dataNew.job_specialist_id"
+                                            placeholder="Pilih" :readonly="readonly"
+                                        ></v-select>
                                     </v-col>
                                 </v-row>
                             </v-col>
@@ -112,9 +120,9 @@
                                             Sebelum
                                         </div>
                                         <v-select
-                                            class="remun-detail-text-field"
-                                            solo :items="['masterData']"
-                                            placeholder="Pilih"
+                                            class="remun-detail-text-field" item-text="name" item-value="value"
+                                            solo :items="masterData.master_employee_type" v-model="dataExisting.employee_type"
+                                            placeholder="Pilih" readonly
                                         ></v-select>
                                     </v-col>
                                     <v-col cols="6" class="pt-2" style="padding-left: 6px !important;">
@@ -122,9 +130,9 @@
                                             Sesudah
                                         </div>
                                         <v-select
-                                            class="remun-detail-text-field"
-                                            solo :items="['masterData']"
-                                            placeholder="Pilih"
+                                            class="remun-detail-text-field" item-text="name" item-value="value"
+                                            solo :items="masterData.master_employee_type" v-model="dataNew.employee_type"
+                                            placeholder="Pilih" :readonly="readonly"
                                         ></v-select>
                                     </v-col>
                                 </v-row>
@@ -144,8 +152,8 @@
                                             Sebelum
                                         </div>
                                         <v-menu
-                                            ref="datePicker1"
-                                            v-model="datePicker1"
+                                            ref="datePicker3"
+                                            v-model="datePicker3"
                                             :close-on-content-click="false"
                                             transition="scale-transition"
                                             offset-y
@@ -155,9 +163,9 @@
                                                 <template v-slot:activator="{ on, attrs }">
                                                     <div v-on="on" style="position: relative;">
                                                         <input
-                                                        v-model="tanggal_mulai"
+                                                        v-model="dataExisting.end_date"
                                                         v-bind="attrs"
-                                                        @blur="tanggal_mulai = parseDate(tanggal_mulai)"
+                                                        @blur="dataExisting.end_date = parseDate(dataExisting.end_date)"
                                                         outlined readonly
                                                         class="remun-detail-text-input"
                                                         placeholder="2024-11-06"
@@ -166,8 +174,8 @@
                                                     </div>
                                                 </template>
                                                 <v-date-picker
-                                                    @input="datePicker1 = false"
-                                                    plas v-model="tanggal_mulai" no-title
+                                                    @input="datePicker3 = false" disabled
+                                                    plas v-model="dataExisting.end_date" no-title
                                                 ></v-date-picker>
                                             </v-menu>
                                     </v-col>
@@ -176,8 +184,8 @@
                                             Sesudah
                                         </div>
                                         <v-menu
-                                            ref="datePicker1"
-                                            v-model="datePicker1"
+                                            ref="datePicker4"
+                                            v-model="datePicker4"
                                             :close-on-content-click="false"
                                             transition="scale-transition"
                                             offset-y
@@ -187,9 +195,9 @@
                                                 <template v-slot:activator="{ on, attrs }">
                                                     <div v-on="on" style="position: relative;">
                                                         <input
-                                                        v-model="tanggal_mulai"
+                                                        v-model="dataNew.end_date"
                                                         v-bind="attrs"
-                                                        @blur="tanggal_mulai = parseDate(tanggal_mulai)"
+                                                        @blur="dataNew.end_date = parseDate(dataNew.end_date)"
                                                         outlined readonly
                                                         class="remun-detail-text-input"
                                                         placeholder="2024-11-06"
@@ -198,8 +206,8 @@
                                                     </div>
                                                 </template>
                                                 <v-date-picker
-                                                    @input="datePicker1 = false"
-                                                    plas v-model="tanggal_mulai" no-title
+                                                    @input="datePicker4 = false" :disabled="readonly"
+                                                    plas v-model="dataNew.end_date" no-title
                                                 ></v-date-picker>
                                             </v-menu>
                                     </v-col>
@@ -214,13 +222,21 @@
                                         <div class="remun-detail-label mb-1">
                                             Sebelum
                                         </div>
-                                        <input class="remun-detail-text-input" placeholder="..."/>
+                                        <v-select
+                                            class="remun-detail-text-field" item-text="job_level_name" item-value="id"
+                                            solo :items="masterData.job_level" v-model="dataExisting.job_level_id"
+                                            placeholder="Pilih" readonly
+                                        ></v-select>
                                     </v-col>
                                     <v-col cols="6" class="pt-2" style="padding-left: 6px !important;">
                                         <div class="remun-detail-label mb-1">
                                             Sesudah
                                         </div>
-                                        <input class="remun-detail-text-input" placeholder="..."/>
+                                        <v-select
+                                            class="remun-detail-text-field" item-text="job_level_name" item-value="id"
+                                            solo :items="masterData.job_level" v-model="dataNew.job_level_id"
+                                            placeholder="Pilih" :readonly="readonly"
+                                        ></v-select>
                                     </v-col>
                                 </v-row>
                             </v-col>
@@ -234,7 +250,7 @@
                                             Sebelum
                                         </div>
 
-                                        <v-text-field placeholder="0" class="remun-detail-text-field" solo @input="_=>nominal1=_" :value="nominal1" :min="nominal1" max="26" oninput="if(Number(this.value.length) > Number(this.max)) this.value = this.min;">
+                                        <v-text-field placeholder="0" class="remun-detail-text-field" solo @input="_=>nominal1=_" :value="nominal1" :min="nominal1" max="26" oninput="if(Number(this.value.length) > Number(this.max)) this.value = this.min;" readonly>
                                             <template v-slot:prepend-inner>
                                                 <v-tooltip bottom >
                                                     <template v-slot:activator="{ on }">
@@ -252,7 +268,7 @@
                                             Sesudah
                                         </div>
                                         
-                                        <v-text-field placeholder="0" class="remun-detail-text-field" solo @input="_=>nominal2=_" :value="nominal2" :min="nominal2" max="26" oninput="if(Number(this.value.length) > Number(this.max)) this.value = this.min;">
+                                        <v-text-field placeholder="0" class="remun-detail-text-field" solo @input="_=>nominal2=_" :value="nominal2" :min="nominal2" max="26" oninput="if(Number(this.value.length) > Number(this.max)) this.value = this.min;" :readonly="readonly">
                                             <template v-slot:prepend-inner>
                                                 <v-tooltip bottom >
                                                     <template v-slot:activator="{ on }">
@@ -279,30 +295,54 @@
                 </v-row>
                 <v-row class="mt-0" style="">
                     <v-col cols="6" class="pt-0 pr-4">
+                        <div class="remunerasi-list-title">
+                            Addition Payment
+                        </div>
                         <v-row>
-                            <v-col cols="12">
-                                <div class="remunerasi-list-title">
-                                    Addition Payment
-                                </div>
+                            <v-col cols="12" v-for="value, key in additionData">
                                 <v-row class="mt-0">
                                     <v-col cols="12" class="pt-2 pb-0" style="padding-right: 6px !important;">
                                         <div class="remun-detail-label mb-1">
                                             Keperluan Pembayaran
                                         </div>
-                                        <input class="remun-detail-text-input" placeholder="..."/>
+                                        <v-select
+                                            class="remun-payment-select pb-2" item-text="name" item-value="value"
+                                            solo :items="filteredAdditionItems" :value="additionData[key]?.title" :readonly="readonly"
+                                            placeholder="Pilih Tipe Penambahan Biaya" @change="additionDataChange($event, key, 'title')"
+                                        ></v-select>
+                                        <input class="remun-detail-text-input" placeholder="Notes (Deskripsi Pembayaran)" :readonly="readonly" :value="additionData[key]?.note" @change="additionDataChange($event, key, 'note')"/>
                                     </v-col>
                                     <v-col cols="12" class="pt-2 pb-0" style="padding-right: 6px !important;">
                                         <div class="remun-detail-label mb-1">
                                             Sebesar
                                         </div>
-                                        <input class="remun-detail-text-input" placeholder="..."/>
+                                        <v-text-field
+                                            hide-details
+                                            placeholder="0"
+                                            class="remun-detail-text-field" solo
+                                            @input="handleInput(key, $event, 'addiction')"
+                                            :value="additionNominal[key]"
+                                            :min="additionNominal[key]" :readonly="readonly"
+                                            max="26" oninput="if(Number(this.value.length) > Number(this.max)) this.value = this.min;"
+                                        >
+                                            <template v-slot:prepend-inner>
+                                            <v-tooltip bottom>
+                                                <template v-slot:activator="{ on }">
+                                                <p style="color: #000; margin-bottom: 0;" v-on="on">
+                                                    Rp.
+                                                </p>
+                                                </template>
+                                                Rupiah
+                                            </v-tooltip>
+                                            </template>
+                                        </v-text-field>
                                     </v-col>
                                 </v-row>
                             </v-col>
 
-                            <v-col cols="12">
-                                <div class="orange-btn" style="width: -webkit-fill-available;">
-                                    <div class="" @click="">
+                            <v-col cols="12" class="mt-3" v-if="!readonly">
+                                <div class="orange-btn" @click="addAdditionData()" style="width: -webkit-fill-available;">
+                                    <div class="ml-auto mr-auto">
                                         <b class="button mx-3">+ Add Addition Payment</b>
                                     </div>
                                 </div>
@@ -312,44 +352,64 @@
 
                     <v-col cols="6" class="pt-0 pl-4">
                         <v-row>
-                            <v-col cols="12">
-                                <div class="remunerasi-list-title">
-                                    Deduction Payment
-                                </div>
+                            <div class="remunerasi-list-title">
+                                Deduction Payment
+                            </div>
+                            <v-col cols="12" v-for="value, key in deductionData">
                                 <v-row class="mt-0">
                                     <v-col cols="12" class="pt-2 pb-0" style="padding-right: 6px !important;">
                                         <div class="remun-detail-label mb-1">
                                             Keperluan Pembayaran
                                         </div>
-                                        <input class="remun-detail-text-input" placeholder="..."/>
+                                        <v-select
+                                            class="remun-payment-select pb-2" item-text="name" item-value="value"
+                                            solo :items="filteredDeductionItems" :value="deductionData[key]?.title" :readonly="readonly"
+                                            placeholder="Pilih Tipe Pengurangan Biaya" @change="deductionDataChange($event, key, 'title')"
+                                        ></v-select>
+                                        <input class="remun-detail-text-input" placeholder="Notes (Deskripsi Pembayaran)" :readonly="readonly" :value="deductionData[key]?.note" @change="deductionDataChange($event, key, 'note')"/>
                                     </v-col>
                                     <v-col cols="12" class="pt-2 pb-0" style="padding-right: 6px !important;">
                                         <div class="remun-detail-label mb-1">
                                             Sebesar
                                         </div>
-                                        <v-text-field hide-details placeholder="0" class="remun-detail-text-field" solo @input="_=>nominal=_" :value="nominal" :min="nominal" max="26" oninput="if(Number(this.value.length) > Number(this.max)) this.value = this.min;">
+                                        <v-text-field
+                                            hide-details
+                                            placeholder="0"
+                                            class="remun-detail-text-field"
+                                            :value="deductionNominal[key]"
+                                            solo  @input="handleInput(key, $event, 'deduction')"
+                                            :min="deductionNominal[key]" :readonly="readonly"
+                                            max="26" oninput="if(Number(this.value.length) > Number(this.max)) this.value = this.min;"
+                                        >
                                             <template v-slot:prepend-inner>
-                                                <v-tooltip bottom >
-                                                    <template v-slot:activator="{ on }">
-                                                    <p style="color: #000; margin-bottom: 0;" v-on="on">
-                                                        Rp.
-                                                    </p>
-                                                    </template>
-                                                    Rupiah
-                                                </v-tooltip>
+                                            <v-tooltip bottom>
+                                                <template v-slot:activator="{ on }">
+                                                <p style="color: #000; margin-bottom: 0;" v-on="on">
+                                                    Rp.
+                                                </p>
+                                                </template>
+                                                Rupiah
+                                            </v-tooltip>
                                             </template>
                                         </v-text-field>
                                     </v-col>
                                 </v-row>
                             </v-col>
-                            <v-col cols="12">
-                                <div class="orange-btn" style="width: -webkit-fill-available;">
-                                    <div class="text-center" @click="">
+                            <v-col cols="12" class="mt-3" v-if="!readonly">
+                                <div class="orange-btn" @click="addDeductionData()" style="width: -webkit-fill-available;">
+                                    <div class="ml-auto mr-auto">
                                         <b class="button mx-3">+ Add Deduction Payment</b>
                                     </div>
                                 </div>
                             </v-col>
                         </v-row>
+                    </v-col>
+                    <v-col cols="12" class="mt-0" v-if="!readonly">
+                        <div class="orange-btn" @click="submit()" style="width: -webkit-fill-available;">
+                            <div class="ml-auto mr-auto">
+                                <b class="button mx-3">Save</b>
+                            </div>
+                        </div>
                     </v-col>
                 </v-row>
             </v-card>
@@ -362,15 +422,45 @@
     export default {
     data () {
         return {
-            gradeList: [],
+            masterData: [],
+            additionNominal: [],
+            deductionNominal: [],
+            masterAdditionCategory: [],
+            additionData:[
+                {
+                    title: null,
+                    note: null,
+                    amount: null,
+                }
+            ],
+            deductionData: [
+                {
+                    title: null,
+                    note: null,
+                    amount: null,
+                }
+            ],
+            dataExisting: {
+                remunerasi_detail_id: null,
+                employee_id: null,
+                start_date: null,
+                end_date: null,
+                job_specialist_id: null,
+                job_level_id: null,
+                employee_type: null,
+                salary: null,
+            },
+            dataNew: {
+                start_date: null,
+                end_date: null,
+                job_specialist_id: null,
+                job_level_id: null,
+                employee_type: null,
+                employee_id: null,
+            },
             bodyCreate: [],
-            bodyDefault: [],
+
             id_job_post: null,
-            tanggal_lahir: null,
-            tanggal_mulai: null,
-            money: null,
-            money1: null,
-            money2: null,
             
             nominal: "",
             nominal1: "",
@@ -378,63 +468,184 @@
             setting: false,
             datePicker1: false,
             datePicker2: false,
+            datePicker3: false,
+            datePicker4: false,
+
+            masterAdditionCategory: [
+                {
+                    "name": "Lembur",
+                    "value": "lembur"
+                },
+                {
+                    "name": "Bonus",
+                    "value": "bonus"
+                },
+                {
+                    "name": "Repel",
+                    "value": "repel"
+                },
+                {
+                    "name": "Tunjangan Hari Raya",
+                    "value": "tunjangan hari raya"
+                },
+                {
+                    "name": "Kopensasi Akhir Kontrak",
+                    "value": "kopensasi akhir kontrak"
+                },
+                {
+                    "name": "Lain - Lain",
+                    "value": "lain - lain"
+                }
+            ],
+            masterDeductionCategory: [
+                {
+                    "name": "Kliring",
+                    "value": "kliring"
+                },
+                {
+                    "name": "Potongan Absen",
+                    "value": "potongan absen"
+                },
+                {
+                    "name": "Lain - Lain",
+                    "value": "lain - lain"
+                },
+            ],
         }
     },
     props: {
         show: { type: Boolean, default() { return false } },
+        readonly: { type: Boolean, default() { return false } },
         content: { type: String, default() { return "" } },
         onApprove: { type: Function, default() { return {} } },
         closeDialog: { type: Function, default() { return {} } },
+        remunerationDetailId: { type: String, default() { return "" } },
     },
     setup() {
-        const { getGrade, postGrade } = API();
-        return { getGrade, postGrade };
+        const { getRemunerationDetail, putDetailRemuneration } = API();
+        return { getRemunerationDetail, putDetailRemuneration };
     },
     computed: {
         ...mapGetters('provider-selection', ['tahapanGetter']),
+        filteredAdditionItems() {
+            const titles = this.additionData.map(item => item.title);
+            return this.masterAdditionCategory.map(item => ({
+                name: item.name,
+                value: item.value,
+                disabled: titles.includes(item.value)
+            }));
+        },
+        filteredDeductionItems() {
+            const titles = this.deductionData.map(item => item.title);
+            return this.masterDeductionCategory.map(item => ({
+                name: item.name,
+                value: item.value,
+                disabled: titles.includes(item.value)
+            }));
+        },
+        dialogVisible: {
+            get() {
+                return this.show;
+            },
+            set(value) {
+                this.$emit('update:show', value);
+            }
+        }
     },
     watch: {
-        nominal(newValue, oldValue) {
-            this.nominal = this.useConvertToMoneyView(newValue, 'money');
+        async remunerationDetailId(newValue, oldValue) {
+            await this.getData();
         },
         nominal1(newValue, oldValue) {
-            this.nominal1 = this.useConvertToMoneyView(newValue, 'money1');
+            this.nominal1 = this.useConvertToMoneyView(newValue, 'thp_before');
         },
         nominal2(newValue, oldValue) {
-            this.nominal2 = this.useConvertToMoneyView(newValue, 'money2');
+            this.nominal2 = this.useConvertToMoneyView(newValue, 'thp_after');
         },
     },
     async mounted(){
-        // await this.getGrade(this.tahapanGetter.jobSelected?.id).then((result)=>{
-        //     if(result){
-        //         this.gradeList = result.grade_list;
-        //         this.setting = result.setting_grade;
-        //         this.setBody();
-        //     }
-        // });
+        await this.getData();
     },
     methods: {
-        async submit(){
-            if(!this.setting){
-                await this.postGrade({data: this.bodyCreate}, this.tahapanGetter.jobSelected?.id).then((result)=>{});
-            }
-            this.closeDialog();
-        },
-        setBody(){
-            this.gradeList.forEach((element, key) => {
-                let item = { category_id: element.id, grade_list: [] };
-                for (let index = 0; index < (this.setting ? element.grade.length : 10); index++) {
-                    if(index < element.grade.length){
-                        item.grade_list.push({
-                            status: element.grade[index].status, grade_name: element.grade[index].grade_name
-                        });
-                    }else{
-                        item.grade_list.push({
-                            status: null, grade_name: null
-                        });
+        async getData(){
+            console.log('this.remunerationDetailId', this.remunerationDetailId);
+            if(this.remunerationDetailId){
+                await this.getRemunerationDetail(this.remunerationDetailId).then((result)=>{
+                    if(result){
+                        this.dataNew = result.data_after;
+                        this.masterData = result.master_data;
+                        this.dataExisting = result.data_existing;
+                        this.nominal1 = result.data_existing.salary;
+                        this.nominal2 = result.data_after.salary;
+    
+                        if(result.data_existing.addition_data !== null){
+                            this.additionData = result.data_existing.addition_data;
+                            this.additionData.map((item, index) => {
+                                this.handleInput(index, item.amount, 'addiction')
+                            });
+                        }
+                        if(result.data_existing.deduction_data !== null){
+                            this.deductionData = result.data_existing.deduction_data;
+                            this.deductionData.map((item, index) => {
+                                this.handleInput(index, item.amount, 'deduction')
+                            });
+                        }
                     }
-                };
-                this.bodyCreate.push(item);
+                });
+            }
+        },
+        async submit(){
+            await this.putDetailRemuneration(
+            {
+                ...this.dataNew,
+                addition_payment: this.additionData,
+                deduction_payment: this.deductionData
+            }, this.remunerationDetailId ).then((result)=>{});
+
+            this.closeDialog();
+            this.getData();
+            this.nominal2 = null;
+            this.dataNew = {
+                start_date: null,
+                end_date: null,
+                job_specialist_id: null,
+                job_level_id: null,
+                employee_type: null,
+                employee_id: null,
+            };
+        },
+        additionDataChange(event, key, model){
+            switch (model) {
+                case 'title':
+                    this.additionData[key].title = event;
+                    break;
+                case 'note':
+                    this.additionData[key].note = event.target.value;
+                    break;
+            }
+        },
+        deductionDataChange(event, key, model){
+            switch (model) {
+                case 'title':
+                    this.deductionData[key].title = event;
+                    break;
+                case 'note':
+                    this.deductionData[key].note = event.target.value;
+                    break;
+            }
+        },
+        addAdditionData(){
+            this.additionData.push({
+                title: null,
+                note: null,
+                amount: null,
+            });
+        },
+        addDeductionData(){
+            this.deductionData.push({
+                title: null,
+                note: null,
+                amount: null,
             });
         },
         parseDate (date) {
@@ -442,22 +653,47 @@
             const [year, month, day] = date.split('-')
             return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
         },
-        useConvertToMoneyView(value, model) {
+        handleInput(index, event, model) {
+            const value = event;
+            switch (model) {
+                case 'addiction':
+                    this.$set(this.additionNominal, index, this.useConvertToMoney(value, index, model));
+                    break;
+                case 'deduction':
+                    this.$set(this.deductionNominal, index, this.useConvertToMoney(value, index, model));
+                    break;
+            }
+        },
+        useConvertToMoney(value, index, model) {
             if (!value) return value;
             value = parseInt(value.replaceAll(',', ''), 10);
             switch (model) {
-                case 'money1':
-                    this.money = value;
+                case 'addiction':
+                    this.additionData[index].amount = value;
                     break;
-                case 'money1':
-                    this.money1 = value;
-                    break;
-                case 'money2':
-                    this.money2 = value;
+                case 'deduction':
+                    this.deductionData[index].amount = value;
                     break;
             }
             return Intl.NumberFormat('en-US').format(value);
         },
+        useConvertToMoneyView(value, model, key) {
+            if (!value) return value;
+            value = parseInt(value.replaceAll(',', ''), 10);
+            switch (model) {
+                case 'thp_before':
+                    break;
+                case 'thp_after':
+                    this.dataNew.salary = value;
+                    break;
+            }
+            return Intl.NumberFormat('en-US').format(value);
+        },
+        onDialogClose(value) {
+            if (!value) {
+                this.closeDialog();
+            }
+        }
     }
 }
 </script>

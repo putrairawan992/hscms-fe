@@ -73,7 +73,7 @@ import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
     name: "jobPost",
-    middleware: "jobProvider",
+    middleware: "jobSeeker",
     components: { 
         TextEditor,
         Multiselect,

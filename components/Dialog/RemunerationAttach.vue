@@ -1,15 +1,25 @@
 <template>
-    <v-dialog v-model="show" width="370" rounded content-class="elevation-0">
+    <v-dialog v-model="dialogVisible" @input="closeDialog" width="370" rounded content-class="elevation-0">
         <div style="position: relative; display: flex; flex-direction: column;">
             <v-card class="pa-10" style="border-radius: 20px !important;"> 
-                <div class="container-dashed">
-                    <img class="" alt="attach-file" width="74" height="64" src="@/assets/svg/attach-file.svg" />
+                <div class="container-dashed" @click="selectFile()">
+                    <input class="d-none" type="file" ref="fileInput" @change="onSelectFile($event)">
+                    <img class="" alt="attach-file" width="74" height="64" src="@/assets/svg/attach-file.svg"/>
                     <p class="mt-4">
                         Browse Files to upload
                     </p>
                 </div>
 
-                <v-row class="mt-4">
+                <v-row v-if="files.length > 0" class="mt-4">
+                    <v-col v-for="value, index in files" cols="12">
+                        <div class="container-file">
+                            <p :alt="getFileName(value.files)" class="mb-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 20ch;">{{ getFileName(value.files) }}</p>
+                            <p class="my-2 mx-2">-</p>
+                            <img class="delete" alt="attach-file" width="14" height="14" src="@/assets/svg/trash-fill-black.svg" @click="deleteFile(value.id)" />
+                        </div>
+                    </v-col>
+                </v-row>
+                <v-row v-else class="mt-4">
                     <v-col cols="12">
                         <div class="container-file">
                             <p class="mb-0">No selected File</p>
@@ -28,15 +38,9 @@
     export default {
     data () {
         return {
-            gradeList: [],
-            bodyCreate: [],
-            bodyDefault: [],
-            id_job_post: null,
-            tanggal_lahir: null,
-            
-            setting: false,
-            datePicker1: false,
-            datePicker2: false,
+            files: [],
+            file: null,
+            id_remuneration: null,
         }
     },
     props: {
@@ -46,50 +50,55 @@
         closeDialog: { type: Function, default() { return {} } },
     },
     setup() {
-        const { getGrade, postGrade } = API();
-        return { getGrade, postGrade };
+        const { getAttachment, postAttachment, deleteAttachment } = API();
+        return { getAttachment, postAttachment, deleteAttachment };
     },
     computed: {
-        ...mapGetters('provider-selection', ['tahapanGetter']),
+        dialogVisible: {
+            get() {
+                return this.show;
+            },
+            set(value) {
+                this.$emit('update:show', value);
+            }
+        }
     },
     async mounted(){
-        // await this.getGrade(this.tahapanGetter.jobSelected?.id).then((result)=>{
-        //     if(result){
-        //         this.gradeList = result.grade_list;
-        //         this.setting = result.setting_grade;
-        //         this.setBody();
-        //     }
-        // });
+        const storageIdRemuneration = await localStorage.getItem('id_remuneration');
+        if(storageIdRemuneration){ this.id_remuneration = storageIdRemuneration;}
+        this.getData();
     },
     methods: {
-        async submit(){
-            if(!this.setting){
-                await this.postGrade({data: this.bodyCreate}, this.tahapanGetter.jobSelected?.id).then((result)=>{});
-            }
-            this.closeDialog();
-        },
-        setBody(){
-            this.gradeList.forEach((element, key) => {
-                let item = { category_id: element.id, grade_list: [] };
-                for (let index = 0; index < (this.setting ? element.grade.length : 10); index++) {
-                    if(index < element.grade.length){
-                        item.grade_list.push({
-                            status: element.grade[index].status, grade_name: element.grade[index].grade_name
-                        });
-                    }else{
-                        item.grade_list.push({
-                            status: null, grade_name: null
-                        });
+        async getData(){
+            if(this.id_remuneration){
+                await this.getAttachment(this.id_remuneration).then((result)=>{
+                    if(result){
+                        this.files = result;
                     }
-                };
-                this.bodyCreate.push(item);
+                });
+            }
+        },
+        selectFile(question){
+            this.$refs.fileInput.click();
+        },
+        async onSelectFile (event) {            
+            const body = new FormData();
+            body.append('file_attachment', event.srcElement.files[0]);
+
+            await this.postAttachment(body, this.id_remuneration).then((result)=>{
+                this.$alert.showAlert({ content: 'File telah berhasil di upload.', show: true });
+                this.getData();
+            })
+        },
+        async deleteFile(id) {
+            await this.deleteAttachment(id).then((result)=>{
+                this.getData();
             });
         },
-        parseDate (date) {
-            if (!date) return null
-            const [year, month, day] = date.split('-')
-            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-        },
+        getFileName(file){
+            let name = file.split('/');
+            return name[name.length - 1];
+        }
     }
 }
 </script>

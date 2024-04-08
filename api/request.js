@@ -3,11 +3,16 @@ import { useContext } from '@nuxtjs/composition-api'
 export const request = () => {
     const { $api, $loader, $notifier } = useContext();
 
-    const getRequest = async (endpoint, doubleData) => {
-        const result = await $api.get(endpoint).catch((err) => {
+    const getRequest = async (endpoint, doubleData, responseType) => {
+        if(responseType){ $loader.showLoading({ show: true }); };
+        const result = await $api.get(endpoint, {responseType: responseType ? responseType : 'json',}).catch((err) => {
             $notifier.showMessage({ content: err.response?.data?.message ? err.response.data.message : err, status: 'warning' });
             $loader.showLoading({ show: false });
         });
+
+        if(responseType){console.log('result', result);}
+        
+        $loader.showLoading({ show: false });
         if(doubleData){
             return result ? result : [];
         }else{

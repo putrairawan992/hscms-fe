@@ -66,8 +66,6 @@ export default {
                 var pom = document.createElement('a');
                 var bb = new Blob([result], {type: 'application/vnd.ms-excel'});
 
-                console.log('getEmployeeDataCSV', result);
-
                 pom.setAttribute('href', window.URL.createObjectURL(bb));
                 pom.setAttribute('download', filename);
 
@@ -84,35 +82,22 @@ export default {
         },
         async downloadZIP() {
             try {
-                const zipData = await this.getEmployeeDataZIP(); // Assuming this function returns the ZIP data
-                
-                // Assuming you have received zipData in the form of a Blob or ArrayBuffer
-
+                const result = await this.getEmployeeDataZIP();
                 const filename = "employee-data.zip";
-                
-                // Creating a Blob from the zipData
-                const zipBlob = new Blob([zipData], {type: 'application/zip'});
+                const blob = new Blob([result], { type: 'application/zip' });
+                const url = window.URL.createObjectURL(blob);
 
-                // Creating an anchor tag for downloading
                 const pom = document.createElement('a');
-                pom.setAttribute('href', window.URL.createObjectURL(zipBlob));
+                pom.href = url;
                 pom.setAttribute('download', filename);
 
-                // Creating a download URL
-                pom.dataset.downloadurl = ['application/zip', pom.download, pom.href].join(':');
-
-                // Making the anchor tag draggable
-                pom.draggable = true; 
-                
-                // Adding a class to the anchor tag
-                pom.classList.add('dragout');
-
-                // Triggering the click event to start download
+                document.body.appendChild(pom);
                 pom.click();
 
-                return this.closeDialog(true);
+                document.body.removeChild(pom);
+                window.URL.revokeObjectURL(url);
             } catch (error) {
-                console.error(error);
+                console.error('Error downloading ZIP file:', error);
             }
         }
         // async downloadZIP() {
@@ -121,7 +106,7 @@ export default {
         //         var pom = document.createElement('a');
         //         var bb = new Blob([result], {type: 'application/zip'});
 
-        //         console.log('getEmployeeDataCSV', result);
+        //         console.log('getEmployeeDataZIP', result);
 
         //         pom.setAttribute('href', window.URL.createObjectURL(bb));
         //         pom.setAttribute('download', filename);
@@ -136,6 +121,39 @@ export default {
         //         console.log(e)
         //     })
         // },
+        // async downloadZIP() {
+        //     try {
+        //         const zipData = await this.getEmployeeDataZIP(); // Assuming this function returns the ZIP data
+                
+        //         // Assuming you have received zipData in the form of a Blob or ArrayBuffer
+
+        //         const filename = "employee-data.zip";
+                
+        //         // Creating a Blob from the zipData
+        //         const zipBlob = new Blob([zipData], {type: 'application/zip'});
+
+        //         // Creating an anchor tag for downloading
+        //         const pom = document.createElement('a');
+        //         pom.setAttribute('href', window.URL.createObjectURL(zipBlob));
+        //         pom.setAttribute('download', filename);
+
+        //         // Creating a download URL
+        //         pom.dataset.downloadurl = ['application/zip', pom.download, pom.href].join(':');
+
+        //         // Making the anchor tag draggable
+        //         pom.draggable = true; 
+                
+        //         // Adding a class to the anchor tag
+        //         pom.classList.add('dragout');
+
+        //         // Triggering the click event to start download
+        //         pom.click();
+
+        //         return this.closeDialog(true);
+        //     } catch (error) {
+        //         console.error(error);
+        //     }
+        // }
     }
 }
 </script>

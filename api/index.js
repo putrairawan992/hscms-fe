@@ -68,7 +68,24 @@ export const API = () => {
         getEmployee,
         getEmployeeDetail,
         getEmployeeDataCSV,
-        getEmployeeDataZIP
+        getEmployeeDataZIP,
+
+        getRemuneration,
+        getRemunerationDetail,
+        getListEmployee,
+        postPickEmployee,
+        deleteListEmployee,
+        getRemunerationByStatus,
+        putDetailRemuneration,
+        putRemunerationRequestType,
+        getAttachment,
+        postAttachment,
+        deleteAttachment,
+        postCreateSimulation,
+        getDownloadSimulation,
+        postRequestApproval,
+        postRemunerationRecreate,
+        deleteRemuneration
     } = jobProviderAPI();
     
 
@@ -140,6 +157,23 @@ export const API = () => {
             getEmployee,
             getEmployeeDetail,
             getEmployeeDataCSV,
-            getEmployeeDataZIP
+            getEmployeeDataZIP,
+
+            getRemuneration,
+            getRemunerationDetail,
+            getListEmployee,
+            postPickEmployee,
+            deleteListEmployee,
+            getRemunerationByStatus,
+            putDetailRemuneration,
+            putRemunerationRequestType,
+            getAttachment,
+            postAttachment,
+            deleteAttachment,
+            postCreateSimulation,
+            getDownloadSimulation,
+            postRequestApproval,
+            postRemunerationRecreate,
+            deleteRemuneration
     }
 }

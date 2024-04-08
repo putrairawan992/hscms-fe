@@ -73,7 +73,7 @@
 import { mapState } from "vuex";
 export default {
     name: "FinishPreTest",
-    middleware: "jobProvider",
+    middleware: "jobSeeker",
     data: () => ({}),
     computed: {
 		...mapState('seeker-pretest', ['finish']),

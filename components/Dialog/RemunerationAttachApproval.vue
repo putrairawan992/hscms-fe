@@ -1,83 +1,51 @@
 <template>
-    <v-dialog persistent v-model="show" width="668" rounded content-class="elevation-0">
+    <v-dialog v-model="dialogVisible" @input="closeDialog" width="370" rounded content-class="elevation-0">
         <div style="position: relative; display: flex; flex-direction: column;">
-            <v-card class="pa-12" style="border-radius: 20px !important;"> 
-                <v-row class="my-0">
-                    <v-col class="">
-                        <v-text-field
-                            class="search-text-field-small"
-                            placeholder="Ketikkan Nama" solo 
-                            append-inner-icon="mdi-menu-left"
-                            single-line @input="debounceSearch($event)"
-                            hide-details
-                        >
-                        </v-text-field>
+            <v-card class="pa-10" style="border-radius: 20px !important;"> 
+                <div class="text-center attached-file-text">
+                    Attached Files
+                </div>
+                <!-- <div class="container-dashed" @click="selectFile()">
+                    <input class="d-none" type="file" ref="fileInput" @change="onSelectFile($event)"> -->
+                <!-- <div class="container-dashed" @click="">
+                    <input class="d-none" type="file" ref="fileInput" @change="">
+                    <img class="" alt="attach-file" width="74" height="64" src="@/assets/svg/attach-file.svg"/>
+                    <p class="mt-4">
+                        Browse Files to upload
+                    </p>
+                </div> -->
+
+                <v-row v-if="files.length > 0" class="mt-4">
+                    <v-col v-for="value, index in files" cols="12">
+                        <a class="container-file" target="_blank" :href="value.files" style="text-decoration: none;">
+                            <p :alt="getFileName(value.files)" class="mb-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 30ch;">{{ getFileName(value.files) }}</p>
+                            <p class="my-2 mx-2">-</p>
+                            <img class="delete" alt="attach-file" width="14" height="14" src="@/assets/svg/redirect.svg" />
+                        </a>
                     </v-col>
-                    <v-col style="display: flex; justify-content: end; max-width: -webkit-fit-content;">
-                        <div class="orange-btn">
-                            <div class="" @click="closeDialog">
-                                <b class="button mx-3">Select All</b>
-                            </div>
-                        </div>
-                        <div class="orange-btn ml-4">
-                            <div class="" @click="submit">
-                                <b class="button mx-3">+ Add to List</b>
-                            </div>
+                </v-row>
+                <v-row v-else class="mt-4">
+                    <v-col cols="12">
+                        <div class="container-file">
+                            <p class="mb-0">No selected File</p>
+                            <!-- <p class="my-2 mx-2">-</p> -->
+                            <!-- <img class="delete" alt="attach-file" width="14" height="14" src="@/assets/svg/trash-fill-black.svg" /> -->
                         </div>
                     </v-col>
                 </v-row>
-                <div style="height: 676px; overflow: auto;  overflow-x: hidden">
-                    <v-row class="mt-0">
-                        <v-col cols="6" class="pt-0">
-                            <div class="remunerasi-list-title">
-                                Existing
-                            </div>
-                            <v-checkbox 
-                                v-for="value, key in data?.existing"
-                                v-model="existing" :value="value.employee_id" hide-details
-                                class="input-checkbox mt-2" color="#ae445a"
-                            >
-                                <template v-slot:label>
-                                    <div class="checkbox-remunerasi-label">{{ value.employee_name }}</div>
-                                </template>
-                            </v-checkbox>
-                        </v-col>
-
-                        <v-col cols="6" class="pt-0">
-                            <div class="remunerasi-list-title">
-                                New Hiring
-                            </div>
-                            <v-checkbox 
-                                v-for="value, key in data?.new_hiring"
-                                v-model="new_hiring" :value="value.employee_id" hide-details
-                                class="input-checkbox mt-2" color="#ae445a"
-                            >
-                                <template v-slot:label>
-                                    <div class="checkbox-remunerasi-label">{{ value.employee_name }}</div>
-                                </template>
-                            </v-checkbox>
-                        </v-col>
-                    </v-row>
-                </div>
             </v-card>
         </div>
     </v-dialog>
 </template>
 <script>
-    import debounce from 'debounce';
     import { API } from '@/api/index'
     import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
     export default {
     data () {
         return {
-            data: null,
-            employee_name: null,
+            files: [],
+            file: null,
             id_remuneration: null,
-
-            existing: [],
-            new_hiring: [],
-            existing: [],
-            new_hiring: [],
         }
     },
     props: {
@@ -85,59 +53,98 @@
         content: { type: String, default() { return "" } },
         onApprove: { type: Function, default() { return {} } },
         closeDialog: { type: Function, default() { return {} } },
-        // id_remuneration: { type: String, default() { return null} },
     },
     setup() {
-        const { getListEmployee, postPickEmployee } = API();
-        return { getListEmployee, postPickEmployee };
+        const { getAttachment, postAttachment, deleteAttachment } = API();
+        return { getAttachment, postAttachment, deleteAttachment };
     },
     computed: {
-        ...mapGetters('provider-selection', ['tahapanGetter']),
-    },
-    watch: {
-        show (to, from) {
-            if (this.show) {
-                this.getData();
+        dialogVisible: {
+            get() {
+                return this.show;
+            },
+            set(value) {
+                this.$emit('update:show', value);
             }
-        },
+        }
     },
     async mounted(){
+        const storageIdRemuneration = await localStorage.getItem('id_remuneration_approval');
+        if(storageIdRemuneration){ this.id_remuneration = storageIdRemuneration;}
         this.getData();
     },
     methods: {
-        async getData(employee_name){
-            const storageIdRemuneration = localStorage.getItem('id_remuneration');
-            if(storageIdRemuneration){ this.id_remuneration = storageIdRemuneration;}
-            await this.getListEmployee(this.id_remuneration, employee_name).then((result)=>{
-                if(result){
-                    this.data = result;
-                }
+        async getData(){
+            if(this.id_remuneration){
+                await this.getAttachment(this.id_remuneration).then((result)=>{
+                    if(result){
+                        this.files = result;
+                    }
+                });
+            }
+        },
+        selectFile(question){
+            this.$refs.fileInput.click();
+        },
+        async onSelectFile (event) {            
+            const body = new FormData();
+            body.append('file_attachment', event.srcElement.files[0]);
+
+            await this.postAttachment(body, this.id_remuneration).then((result)=>{
+                this.$alert.showAlert({ content: 'File telah berhasil di upload.', show: true });
+                this.getData();
+            })
+        },
+        async deleteFile(id) {
+            await this.deleteAttachment(id).then((result)=>{
+                this.getData();
             });
         },
-        async submit(){
-            let combinedArray = this.existing.concat(this.new_hiring);
-            await this.postPickEmployee({employee_id: combinedArray}, this.id_remuneration).then((result)=>{
-                localStorage.setItem('id_remuneration', result.data.batch_remuneration_id);
-                this.new_hiring = null;
-                this.existing = null;
-                console.log('postPickEmployee', result);
-                this.closeDialog();
-            });
-        },
-        debounceSearch: debounce( async function (event) {
-            await this.getData(event);
-        },1000),
-        
-        parseDate (date) {
-            if (!date) return null
-            const [year, month, day] = date.split('-')
-            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-        },
+        getFileName(file){
+            let name = file.split('/');
+            return name[name.length - 1];
+        }
     }
 }
 </script>
 
 <style scoped>
+.container-file {
+    font-size: 12px;
+    color: #404041;
+    font-family: Poppins;
+    height: 33px;
+    display: flex;
+    border-radius: 10px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 5px 0px 5px #b3b9c5;
+    background: linear-gradient(90deg, #fad8bd, #eed2d6);
+}
+
+.container-file .delete {
+    cursor: pointer;
+}
+.container-dashed {
+    display: flex;
+    height: 200px;
+    cursor: pointer;
+    align-items: center;
+    border-radius: 10px;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px dashed #fff;
+    width: -webkit-fill-available;
+    background:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(90deg, #f39f5a, #ae445a) border-box; 
+}
+.container-dashed p {
+    font-size: 12px;
+    color: #404041;
+    font-family: Poppins;
+}
 .remunerasi-list-title {
     color: #404041;
     font-size: 16px;
@@ -180,13 +187,13 @@
     flex-shrink: 0;
     margin-left: 5px;
 }
-.isilah-13-kolom-container {
+.attached-file-text {
     color: #AE445A;
-    font-family: Nunito;
     font-size: 26px;
     font-style: normal;
     font-weight: 900;
     line-height: normal;
+    font-family: Poppins;
 }
 .job-post-nav {
     width: 100%;

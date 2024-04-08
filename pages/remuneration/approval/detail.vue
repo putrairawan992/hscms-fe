@@ -2,8 +2,8 @@
     <div>
         <v-card class="card-register">
             <v-row class="job-post-nav ma-0">
-                <v-col cols="3" class="job-post-nav-container active">
-                    <div class="job-post-nav-text">Create</div>
+                <v-col cols="3" class="job-post-nav-container">
+                    <div class="job-post-nav-text" @click="$router.push('/remuneration')">Create</div>
                 </v-col>
                 <v-col cols="3" class="job-post-nav-container">
                     <div class="job-post-nav-text" @click="$router.push('/remuneration/draft')">Draft</div>
@@ -11,12 +11,12 @@
                 <v-col cols="3" class="job-post-nav-container">
                     <div class="job-post-nav-text" @click="$router.push('/remuneration/rejected')">Rejected</div>
                 </v-col>
-                <v-col cols="3" class="job-post-nav-container">
+                <v-col cols="3" class="job-post-nav-container active">
                     <div class="job-post-nav-text" @click="$router.push('/remuneration/approval')">Approval</div>
                 </v-col>
             </v-row>
             <div class="my-2" style="position: relative;">
-                <div class="blokade-parent ma-8 pt-1" style="height: 800px;">
+                <div class="blokade-parent ma-8 pt-1" style="height: 785px;">
                     <v-row align="center" class="mb-4">
                         <v-col style="max-width: 710px !important;">
                             <v-row>
@@ -28,7 +28,7 @@
                                         <v-col cols="12" class="pt-1 text-left">
                                             <div class="total-karyawan-terpilih text-left px-2">
                                                 <b style="width: -webkit-fill-available;">
-                                                    {{ $moment().format('MMMM') }}
+                                                    {{ $moment(data?.created_at).format('MMMM') }}
                                                 </b>
                                             </div>
                                         </v-col>
@@ -42,10 +42,17 @@
                                         <v-col cols="12" class="pt-1 text-left">
                                             <div class="total-karyawan-terpilih text-left px-2">
                                                 <b style="width: -webkit-fill-available;">
-                                                    {{ $moment().format('YYYY') }}
+                                                    {{ $moment(data?.created_at).format('YYYY') }}
                                                 </b>
                                             </div>
                                         </v-col>
+                                        <!-- <v-col cols="12" class="pt-0 input-checkbox-container">
+                                            <v-text-field
+                                                value="2024" readonly
+                                                class="search-text-field" solo 
+                                            >
+                                            </v-text-field>
+                                        </v-col> -->
                                     </v-row>
                                 </v-col>
                                 <v-col cols="6" class="">
@@ -73,17 +80,20 @@
                                     &nbsp;
                                 </v-col>
                                 <v-col cols="12" class="pt-0 input-checkbox-container">
-                                    <div :class="data?.btn_attacment ? 'orange-btn' : 'grey-btn'" class="px-6 mt-1" @click="data?.btn_attacment ? attachFile() : false">
-                                        <b class="button">Attach File</b>
+                                    <div class="frame-container">
+                                        <div class="attach-mpr-parent d-flex" @click="dialogAttach = true">
+                                            <b class="button">Attached</b>
+                                            <img class="ml-2" alt="" src="@/assets/svg/eyecirclefill.svg" />
+                                        </div>
                                     </div>
                                 </v-col>
                             </v-row>
                         </v-col>
 
                         <v-col cols="12">
-                            <div  class="remuneration-container container">
+                            <div  class="remuneration-container container" style="min-height: 450px !important;">
                                 <v-row class="my-0">
-                                    <v-col cols="10" class="">
+                                    <v-col cols="12" class="">
                                         <v-text-field
                                             class="search-text-field-small"
                                             placeholder="Ketikkan Nama" solo 
@@ -92,13 +102,6 @@
                                             hide-details
                                         >
                                         </v-text-field>
-                                    </v-col>
-                                    <v-col cols="2">
-                                        <div class="orange-btn" style="">
-                                            <div class="" @click="dialog = true">
-                                                <b class="button mx-3">+ Add to List</b>
-                                            </div>
-                                        </div>
                                     </v-col>
                                 </v-row>
                                 <div style="height: 322px; overflow: auto;">
@@ -120,25 +123,25 @@
                                                             <div>
                                                                 <div class="remun-table-title">Tipe Karyawan</div>
                                                                 <div class="remun-bordered-red left">
-                                                                    <div class="remun-table-text" style="text-transform: capitalize;">{{ value.employee_type }}</div>
+                                                                    <div class="remun-table-text">{{ value.employee_type }}</div>
                                                                 </div>
                                                             </div>
                                                             <div>
                                                                 <div class="remun-table-title">Take Home Pay</div>
                                                                 <div class="remun-bordered-red">
-                                                                    <div class="remun-table-text">{{ useConvertToMoneyView(value.salary) }}</div>
+                                                                    <div class="remun-table-text">7,000,00</div>
                                                                 </div>
                                                             </div>
                                                             <div>
                                                                 <div class="remun-table-title">Tanggal Masuk</div>
                                                                 <div class="remun-bordered-red">
-                                                                    <div class="remun-table-text">{{ $moment(value.start_date).format('DD MMM YYYY') }}</div>
+                                                                    <div class="remun-table-text">4 Feb 2022</div>
                                                                 </div>
                                                             </div>
                                                             <div>
                                                                 <div class="remun-table-title">Tanggal Akhir</div>
                                                                 <div class="remun-bordered-red">
-                                                                    <div class="remun-table-text">{{ $moment(value.end_date).format('DD MMM YYYY') }}</div>
+                                                                    <div class="remun-table-text">5 Feb 2022</div>
                                                                 </div>
                                                             </div>
                                                             <div>
@@ -146,7 +149,7 @@
                                                                 <div class="remun-bordered-red right" style="padding: 3px 1px 3px 11px;">
                                                                     <v-select
                                                                     :items="['Salary','New Hiring','Duration','Contract','Resign']"
-                                                                    placeholder="Pilih" @change="changeRequestType($event, key, value.id)"
+                                                                    placeholder="Pilih" readonly
                                                                     class="table-remun-select pa-0" hide-detail :value="value.request_type"
                                                                     ></v-select>
                                                                 </div>
@@ -161,7 +164,7 @@
                                                         />
                                                         <img class="" alt="trash-red-small"
                                                             src="@/assets/svg/trash-red-small.svg"
-                                                            @click="deleteList(value.id)"
+                                                            @click=""
                                                         />
                                                     </div>
                                                 </div>
@@ -169,15 +172,15 @@
                                         </v-col>
                                     </v-row>
                                 </div>
-                                <v-row>
+                                <!-- <v-row>
                                     <v-col cols="12" class="pt-8">
-                                        <div class="orange-btn" @click="createSimulation()" style="width: -webkit-fill-available; justify-content: center;">
-                                            <div class="">
+                                        <div class="orange-btn" style="width: -webkit-fill-available; justify-content: center;">
+                                            <div class="" @click="">
                                                 <b class="button mx-3">Create Simulation</b>
                                             </div>
                                         </div>
                                     </v-col>
-                                </v-row>
+                                </v-row> -->
                             </div>
                         </v-col>
                         <v-col cols="12" class="">
@@ -189,47 +192,39 @@
                                             class="micosoft-excel"
                                             src="@/assets/svg/micosoft-excel.svg"
                                         />
-                                        <b class="">Remunerasi {{ $moment().format('MMMM YYYY') }}</b>
+                                        <b class="">Remunerasi {{ $moment(data?.created_at).format('MMMM YYYY') }}</b>
                                     </div>
-                                    <div class="">{{ $moment().format('DD MMMM YYYY') }}</div>
-                                    <div :class="data?.have_simulation ? 'orange-btn' : 'grey-btn'" @click="downloadCSV()">
-                                        <div class="">
-                                            <b class="button mx-3">Download</b>
+                                    <div class="">{{ $moment(data?.created_at).format('DD MMMM YYYY') }}</div>
+                                    <div class="orange-btn" style=""  @click="downloadCSV()">
+                                            <div class="">
+                                                <b class="button mx-3">Download</b>
+                                            </div>
                                         </div>
-                                    </div>
                                 </div>
                             </div>
                         </v-col>
-                        <v-col cols="12" class="text-left pb-2 pt-1">
+                        <v-col cols="12" class="text-left pb-2">
                             <b class="">Total Pengeluaran Budget: </b>
                         </v-col>
-                        <v-col cols="12" class="text-left d-flex pt-0" style="justify-content: space-between;">
-                            <div class="d-flex">
-                                <div class="total-karyawan-terpilih px-4" style="width: -webkit-fit-content !important;">
-                                    <b>
-                                        Total Bulan Ini:  Rp. 346,000,000,-
-                                    </b>
-                                </div>
-                                <div class="total-karyawan-terpilih px-4 ml-4" style="width: -webkit-fit-content !important;">
-                                    <b>
-                                        Sisa Kontrak:  Rp. 1,509,000,000,-
-                                    </b>
-                                </div>
+                        <v-col cols="12" class="text-left d-flex pt-0">
+                            <div class="total-karyawan-terpilih px-4" style="width: -webkit-fit-content !important;">
+                                <b>
+                                    Total Bulan Ini:  Rp. 346,000,000,-
+                                </b>
                             </div>
-                            <div :class="data?.btn_attacment ? 'orange-btn' : 'grey-btn'" @click="data?.btn_attacment ? showAlertApproval = true : false">
-                                <div class="">
-                                    <b class="button mx-3">Request Approval</b>
-                                </div>
+                            <div class="total-karyawan-terpilih px-4 ml-4" style="width: -webkit-fit-content !important;">
+                                <b>
+                                    Sisa Kontrak:  Rp. 1,509,000,000,-
+                                </b>
                             </div>
                         </v-col>
                     </v-row>
                 </div>
             </div>
         </v-card>
-        <Dialog-RemunerationAttach :show="dialogAttach" :closeDialog="closeDialog"/>
+        <Dialog-RemunerationAttachApproval :show="dialogAttach" :closeDialog="closeDialog"/>
         <Dialog-Remuneration :show="dialog" :id_remuneration="id_remuneration" :closeDialog="closeDialog"/>
-        <Dialog-RemunerationDetail :show="dialogDetail" :closeDialog="closeDialog" :remunerationDetailId="remuneration_detail_id"/>
-        <AlertApproval content="Anda akan mengajukan remunerasi. Apakah anda yakin?" :onApprove="requestApproval" :closeDialog="closeAlertApproval" :show="showAlertApproval"/>
+        <Dialog-RemunerationDetail :show="dialogDetail" :closeDialog="closeDialog" :remunerationDetailId="remuneration_detail_id" :readonly="true"/>
     </div>
 </template>
 <script>
@@ -254,15 +249,20 @@ export default {
         dialog: false,
         dialogAttach: false,
         dialogDetail: false,
-        showAlertApproval: false,
+
+        nominal: "",
     }),
-    watch: {},
+    watch: {
+        nominal(newValue, oldValue) {
+            this.nominal = this.useConvertToMoneyView(newValue)
+        },
+    },
     setup() {
-        const { getRemuneration, getListEmployee, deleteListEmployee, putRemunerationRequestType, postCreateSimulation, getDownloadSimulation, postRequestApproval } = API()
-        return { getRemuneration, getListEmployee, deleteListEmployee, putRemunerationRequestType, postCreateSimulation, getDownloadSimulation, postRequestApproval };
+        const { getRemuneration, getListEmployee, deleteListEmployee, getDownloadSimulation } = API()
+        return { getRemuneration, getListEmployee, deleteListEmployee, getDownloadSimulation };
     },
     async mounted() {
-        const storageIdRemuneration = localStorage.getItem('id_remuneration');
+        const storageIdRemuneration = localStorage.getItem('id_remuneration_approval');
         if(storageIdRemuneration){ this.id_remuneration = storageIdRemuneration;}
         this.getData();
     },
@@ -277,54 +277,19 @@ export default {
                 this.getData();
             });
         },
-        async changeRequestType(event, key, remuneration_detail_id){
-            this.data.employee_list[key].request_type = event;
-            await this.putRemunerationRequestType({
-                request_type: event
-            }, remuneration_detail_id).then((result)=>{
-                this.getData();
-            });
-        },
-        async createSimulation() {
-            await this.postCreateSimulation(this.id_remuneration).then((result)=>{
-                this.$alert.showAlert({ content: 'Berhasil membuat perhitungan remunerasi.', show: true });
-                this.getData();
-            });
-        },
-        async requestApproval() {
-            await this.postRequestApproval(this.id_remuneration).then((result)=>{
-                this.showAlertApproval = false;
-                this.$alert.showAlert({ content: 'Remunerasi telah diajukan.', show: true });
-                this.data = null;
-                localStorage.removeItem('id_remuneration');
-            });
-        },
         debounceSearch: debounce( async function (event) {
             await this.getData(event);
         },1000),
         
-        openDialogDetail(id){
+        async openDialogDetail(id){
             this.remuneration_detail_id = id;
             this.dialogDetail = true;
-        },
-        attachFile(){
-            if(this.data.btn_attacment){
-                this.dialogAttach = true;
-            }else{
-                this.$notifier.showMessage({ content: 'Data remunerasi belum tersedia.', status: 'warning' });
-            }
         },
         closeDialog() {
             this.dialog = false;
             this.dialogAttach = false;
             this.dialogDetail = false;
-
-            const storageIdRemuneration = localStorage.getItem('id_remuneration');
-            if(storageIdRemuneration){ this.id_remuneration = storageIdRemuneration;}
             this.getData();
-        },
-        closeAlertApproval() {
-            this.showAlertApproval = false;
         },
         parseDate (date) {
             if (!date) return null
@@ -333,10 +298,17 @@ export default {
         },
         onSelectFile (event, param) {
             const file = event.srcElement.files[0]
+
         },
         useConvertToMoneyView(value) {
             if (!value) return value;
             value = parseInt(value.replaceAll(',', ''), 10);
+            this.nominal_pengajuan = value;
+
+            if(value > 0 && value < 100000000){
+                this.alert = true;
+            }else { this.alert = false; }
+
             return Intl.NumberFormat('en-US').format(value);
         },
         async downloadCSV() {
