@@ -39,6 +39,7 @@ export const mutations = {
         localStorage.setItem('JOB_SEEKER_CATEGORY_ID', category_id);
 	},
     endPretest(state, finish_res) {
+		state.question = {};
 		state.job_id = null;
 		state.module_id = null;
 		state.category_id = null;
