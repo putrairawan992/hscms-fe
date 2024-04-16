@@ -65,39 +65,42 @@
                                   </div>
                                   <div v-for="value, key in calendar" class="week-group">
                                       <div v-for="value1, key1 in value">
-                                        <div v-if="value1.today">
-                                          <div class="week">
-                                              <div>
-                                                <div class="week-border-blue">
-                                                  <div class="date-square-blue" />
-                                                  <div class="week-text">{{ value1.day }}</div>
+
+                                        <div v-if="value1.schedule" class="week">
+                                          <div class="week-border-green">
+                                            <div class="date-square-green" />
+                                            <div class="week-text">{{ value1.day }}</div>
+                                          </div>
+                                          <div @click="pickDay(value1.schedule_id)" class="jadwal-wrapper" style="cursor: pointer;">
+                                              <div class="job">Pilih Hari</div>
+                                          </div>
+                                        </div>
+                                        
+                                        <div v-else>
+                                            <div v-if="value1.today">
+                                              <div class="week">
+                                                  <div>
+                                                    <div class="week-border-blue">
+                                                      <div class="date-square-blue" />
+                                                      <div class="week-text">{{ value1.day }}</div>
+                                                    </div>
+                                                  </div>
                                                 </div>
+                                            </div>
+                                            <div v-else>
+                                              <div v-if="key1 == 5 || key1 == 6" class="week-red" :class="value1.day == null ? 'week-blur' : ''">
+                                                  <div class="week-border-normal">
+                                                      <div class="date-square-red" />
+                                                      <div class="week-text">{{ value1.day }}</div>
+                                                  </div>
+                                              </div>
+                                              <div v-else class="week" :class="value1.day == null ? 'week-blur' : ''">
+                                                  <div class="week-border-normal">
+                                                    <div class="date-square-normal" />
+                                                    <div class="week-text">{{ value1.day }}</div>
+                                                  </div>
                                               </div>
                                             </div>
-                                        </div>
-                                        <div v-else>
-                                          <div v-if="key1 == 5 || key1 == 6" class="week-red" :class="value1.day == null ? 'week-blur' : ''">
-                                              <div class="week-border-normal">
-                                                  <div class="date-square-red" />
-                                                  <div class="week-text">{{ value1.day }}</div>
-                                              </div>
-                                          </div>
-                                          <div v-else class="week" :class="value1.day == null ? 'week-blur' : ''">
-                                              <div v-if="!value1.schedule" class="week-border-normal">
-                                                <div class="date-square-normal" />
-                                                <div class="week-text">{{ value1.day }}</div>
-                                              </div>
-
-                                              <div v-if="value1.schedule">
-                                                <div class="week-border-green">
-                                                  <div class="date-square-green" />
-                                                  <div class="week-text">{{ value1.day }}</div>
-                                                </div>
-                                                <div @click="pickDay(value1.schedule_id)" class="jadwal-wrapper" style="cursor: pointer;">
-                                                    <div class="job">Pilih Hari</div>
-                                                </div>
-                                              </div>
-                                          </div>
                                         </div>
                                       </div>
                                   </div>
@@ -262,6 +265,8 @@ export default {
           const chunk = days.slice(i, i + chunkSize);
           this.calendar.push(chunk);
         }
+
+        console.log('this.calendar', this.calendar);
       },
       getDay(date) {
         if(date){

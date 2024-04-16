@@ -25,7 +25,7 @@
                                 ></v-text-field>
                             </v-col>
                             <v-col class="input-checkbox-container" style="max-width: 200px;">
-                                <v-select
+                                <v-select v-if="bodyGrade.length"
                                     :items="scores" item-text="label" item-value="point"
                                     solo v-model="bodyGrade[key][key1].score"
                                     placeholder="Pilih Nilai"
@@ -75,7 +75,7 @@
                     <v-col cols="12">
                         <div style="position: relative; display: flex; justify-content: end; column-gap: 10px;">
                             <div class="orange-btn" style="">
-                                <div class="" @click="closeDialog">
+                                <div class="" @click="onCloseDialog">
                                     <b class="button mx-4">Close</b>
                                 </div>
                             </div>
@@ -122,6 +122,9 @@ export default {
         }
     },
     watch: {
+        show(to, from){
+            this.getData();
+        },
         jobSeekerId(to, from){
             this.getData();
         },
@@ -157,7 +160,7 @@ export default {
 
                 },this.jobSeekerId, this.tahapanGetter.jobSelected?.id).then((result)=>{
                     if(result){
-                        this.closeDialog();
+                        this.onCloseDialog(); 
                         this.gradeList = null;
                         this.data = null;
                     }
@@ -165,7 +168,7 @@ export default {
             }
         },
         async getData(){
-            if (this.jobSeekerId) {
+            if (this.jobSeekerId && this.show) {
                 await this.getFormGrade(this.jobSeekerId, this.tahapanGetter.jobSelected?.id).then((result)=>{
                     if(result){
                         this.gradeList = result.grade_list;
@@ -179,11 +182,13 @@ export default {
             let body = [];
             let status = true;
 
+            console.log('getBodyScores this.bodyGrade', this.bodyGrade);
             for (let index = 0; index < this.bodyGrade.length; index++) {
                 const element = this.bodyGrade[index];
                 if(status){
                     for (let index = 0; index < element.length; index++) {
                         let element1 = element[index];
+                        console.log('element1.score', element1.score);
                         if(element1.score == null){
                             this.$notifier.showMessage({ content: 'Data nilai belum lengkap.', status: 'warning' });
                             return status = false;
@@ -203,17 +208,26 @@ export default {
             return status ? body : false;
         },
         setBodyForm(){
-            this.gradeList.forEach((element, key) => {
-                let item = [];
-                for (let index = 0; index < element.grade.length; index++) {
-                    const element1 = element.grade[index];
-                    item.push({
-                        grade_selection_id: element1.id,
-                        score: null
-                    });
-                }
-                this.bodyGrade.push(item);
-            });
+            if(this.bodyGrade.length == 0){
+                this.gradeList.forEach((element, key) => {
+                    let item = [];
+                    for (let index = 0; index < element.grade.length; index++) {
+                        const element1 = element.grade[index];
+                        item.push({
+                            grade_selection_id: element1.id,
+                            score: null
+                        });
+                    }
+                    this.bodyGrade.push(item);
+                });
+            }
+
+            console.log('setBodyForm this.bodyGrade', this.bodyGrade);
+        },
+        onCloseDialog(){
+            this.bodyGrade = [];
+            this.quantitative_score = null;
+            this.closeDialog();
         },
         parseDate (date) {
             if (!date) return null

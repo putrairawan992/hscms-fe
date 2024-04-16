@@ -15,49 +15,49 @@
                                         <div class="checkbox-selected">
                                             <div class="frame-title">
                                                 <input
+                                                    type="checkbox" id="smk-checkbox"
                                                     class="checkbox-selected-red"
-                                                    :checked="true"
-                                                    type="checkbox"
+                                                    v-model="filters.smk"
                                                 />
                                             </div>
                                         </div>
-                                        <h3 class="smasmk">SMA/SMK</h3>
+                                        <label for="smk-checkbox" class="smasmk">SMA/SMK</label>
                                     </div>
                                     <div class="bodyblock">
                                         <div class="checkbox-selected">
                                             <div class="frame-title">
                                                 <input
+                                                    type="checkbox" id="s2-checkbox"
                                                     class="checkbox-selected-red"
-                                                    :checked="true"
-                                                    type="checkbox"
+                                                    v-model="filters.s2"
                                                 />
                                             </div>
                                         </div>
-                                        <h3 class="smasmk">Diploma/Sarjana S1</h3>
+                                        <label for="s2-checkbox" class="smasmk">Diploma/Sarjana S1</label>
+                                    </div>
+                                    <div class="bodyblock">
+                                        <div class="checkbox-selected">
+                                            <div class="frame-title">
+                                                <input 
+                                                    type="checkbox" id="s3-checkbox"
+                                                    class="checkbox-selected-red"
+                                                    v-model="filters.s3"
+                                                />
+                                            </div>
+                                        </div>
+                                        <label for="s3-checkbox" class="smasmk">Sarjana S2/S3</label>
                                     </div>
                                     <div class="bodyblock">
                                         <div class="checkbox-selected">
                                             <div class="frame-title">
                                                 <input
+                                                    type="checkbox" id="sertifikat-checkbox"
                                                     class="checkbox-selected-red"
-                                                    :checked="true"
-                                                    type="checkbox"
+                                                    v-model="filters.sertifikat"
                                                 />
                                             </div>
                                         </div>
-                                        <h3 class="smasmk">Sarjana S2/S3</h3>
-                                    </div>
-                                    <div class="bodyblock">
-                                        <div class="checkbox-selected">
-                                            <div class="frame-title">
-                                                <input
-                                                    class="checkbox-selected-red"
-                                                    :checked="true"
-                                                    type="checkbox"
-                                                />
-                                            </div>
-                                        </div>
-                                        <h3 class="smasmk">Sertifikat Keahlian</h3>
+                                        <label for="sertifikat-checkbox" class="smasmk">Sertifikat Keahlian</label>
                                     </div>
                                 </div>
                             </div>
@@ -68,49 +68,49 @@
                                         <div class="checkbox-selected">
                                             <div class="frame-title">
                                                 <input
+                                                    type="checkbox" id="nolSampaiDua"
                                                     class="checkbox-selected-red"
-                                                    :checked="true"
-                                                    type="checkbox"
+                                                    v-model="filters.nolSampaiDua"
                                                 />
                                             </div>
                                         </div>
-                                        <h3 class="smasmk">0 - 2 tahun</h3>
+                                        <label for="nolSampaiDua" class="smasmk">0 - 2 tahun</label>
                                     </div>
                                     <div class="bodyblock">
                                         <div class="checkbox-selected">
                                             <div class="frame-title">
                                                 <input
+                                                    type="checkbox" id="tigaSampaiEmpat"
                                                     class="checkbox-selected-red"
-                                                    :checked="true"
-                                                    type="checkbox"
+                                                    v-model="filters.tigaSampaiEmpat"
                                                 />
                                             </div>
                                         </div>
-                                        <h3 class="smasmk">3 - 4 tahun</h3>
+                                        <label for="tigaSampaiEmpat" class="smasmk">3 - 4 tahun</label>
                                     </div>
                                     <div class="bodyblock">
                                         <div class="checkbox-selected">
                                             <div class="frame-title">
                                                 <input
+                                                    type="checkbox" id="limaSampaiEnam"
                                                     class="checkbox-selected-red"
-                                                    :checked="true"
-                                                    type="checkbox"
+                                                    v-model="filters.limaSampaiEnam"
                                                 />
                                             </div>
                                         </div>
-                                        <h3 class="smasmk">5 - 6 tahun</h3>
+                                        <label for="limaSampaiEnam" class="smasmk">5 - 6 tahun</label>
                                     </div>
                                     <div class="bodyblock">
                                         <div class="checkbox-selected">
                                             <div class="frame-title">
                                                 <input
+                                                    type="checkbox" id="lebihDariEnam"
                                                     class="checkbox-selected-red"
-                                                    :checked="true"
-                                                    type="checkbox"
+                                                    v-model="filters.lebihDariEnam"
                                                 />
                                             </div>
                                         </div>
-                                        <h3 class="smasmk">Lebih dari 6 tahun</h3>
+                                        <label for="lebihDariEnam" class="smasmk">Lebih dari 6 tahun</label>
                                     </div>
                                 </div>
                             </div>
@@ -121,57 +121,57 @@
                                         <div class="checkbox-selected">
                                             <div class="frame-title">
                                                 <input
+                                                    type="checkbox" id="scoreEnamLima"
                                                     class="checkbox-selected-red"
-                                                    :checked="true"
-                                                    type="checkbox"
+                                                    v-model="filters.scoreEnamLima"
                                                 />
                                             </div>
                                         </div>
-                                        <h3 class="smasmk">0 - 65</h3>
+                                        <label for="scoreEnamLima" class="smasmk">0 - 65</label>
                                     </div>
                                     <div class="bodyblock">
                                         <div class="checkbox-selected">
                                             <div class="frame-title">
                                                 <input
+                                                    type="checkbox" id="scoreTujuhLima"
                                                     class="checkbox-selected-red"
-                                                    :checked="true"
-                                                    type="checkbox"
+                                                    v-model="filters.scoreTujuhLima"
                                                 />
                                             </div>
                                         </div>
-                                        <h3 class="smasmk">66 - 75</h3>
+                                        <label for="scoreTujuhLima" class="smasmk">66 - 75</label>
                                     </div>
                                     <div class="bodyblock">
                                         <div class="checkbox-selected">
                                             <div class="frame-title">
                                                 <input
+                                                    type="checkbox" id="scoreDelapanLima"
                                                     class="checkbox-selected-red"
-                                                    :checked="true"
-                                                    type="checkbox"
+                                                    v-model="filters.scoreDelapanLima"
                                                 />
                                             </div>
                                         </div>
-                                        <h3 class="smasmk">76 - 85</h3>
+                                        <label for="scoreDelapanLima" class="smasmk">76 - 85</label>
                                     </div>
                                     <div class="bodyblock">
                                         <div class="checkbox-selected">
                                             <div class="frame-title">
                                                 <input
+                                                    type="checkbox" id="scoreSeratus"
                                                     class="checkbox-selected-red"
-                                                    :checked="true"
-                                                    type="checkbox"
+                                                    v-model="filters.scoreSeratus"
                                                 />
                                             </div>
                                         </div>
-                                        <h3 class="smasmk">86 - 100</h3>
+                                        <label for="scoreSeratus" class="smasmk">86 - 100</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button class="button-wrapper">
+                    <!-- <button class="button-wrapper">
                         <b class="button2">Generate</b>
-                    </button>
+                    </button> -->
                 </div>
             </v-col>
             <v-col>
@@ -199,7 +199,7 @@
                     </v-col>
                     <v-col cols="12">
                         <v-row style="column-gap: 25px;">
-                            <v-col v-if="finalForm" v-for="value, key in dataCandidate?.candidate_list" cols="6" class="component-1">
+                            <v-col v-if="finalForm" v-for="value, key in filteredCandidates" cols="6" class="component-1">
                                 <div class="container-frame">
                                     <div class="line-separator">
                                         <div class="lowongan-1">
@@ -329,7 +329,7 @@
                                 </v-row>
                             </v-col>
 
-                            <v-col v-else v-for="value, key in dataCandidate?.candidate_list" cols="6" class="component-1">
+                            <v-col v-else v-for="value, key in filteredCandidates" cols="6" class="component-1">
                                 <div class="container-frame">
                                     <div class="line-separator">
                                         <div :class="isChecked(value.job_seeker_id) ? 'lowongan-1' : 'lowongan-2'">
@@ -410,6 +410,20 @@ export default {
         radios: [],
         bodyCreate:[],
         idCandidats:[],
+        filters: {
+            smk: true,
+            s2: true,
+            s3: true,
+            sertifikat: true,
+            nolSampaiDua: true,
+            tigaSampaiEmpat: true,
+            limaSampaiEnam: true,
+            lebihDariEnam: true,
+            scoreEnamLima: true,
+            scoreTujuhLima: true,
+            scoreDelapanLima: true,
+            scoreSeratus: true,
+        },
 
         nominal: [],
         end_date: null,
@@ -433,6 +447,44 @@ export default {
     computed: {
 		...mapState('provider-selection', ['listCandidate']),
         ...mapGetters('provider-selection', ['tahapanGetter']),
+
+        filteredCandidates() {
+            return this.dataCandidate?.candidate_list.filter(candidate => {
+                let passDegreeFilter = true;
+                let passExpFilter = true;
+                let passExpScore = true;
+
+                if ((this.filters.smk && candidate.education[0].degree == "SMK") ||
+                    (this.filters.s1 && candidate.education[0].degree == "s1") ||
+                    (this.filters.s2 && candidate.education[0].degree == "s2") ||
+                    (this.filters.s2 && candidate.education[0].degree == "s3") ||
+                    (this.filters.sertifikat && candidate.education[0].degree == "sertifikat")) {
+                    passDegreeFilter = true;
+                } else {
+                    passDegreeFilter = false;
+                }
+
+                if ((this.filters.nolSampaiDua && candidate.experience <= 2) ||
+                    (this.filters.tigaSampaiEmpat && candidate.experience >= 3 && candidate.experience <= 4) ||
+                    (this.filters.limaSampaiEnam && candidate.experience >= 5 && candidate.experience <= 6) ||
+                    (this.filters.lebihDariEnam && candidate.experience > 6)) {
+                    passExpFilter = true;
+                } else {
+                    passExpFilter = false;
+                }
+
+                if ((this.filters.scoreEnamLima && candidate.average_total <= 65) ||
+                    (this.filters.scoreTujuhLima && candidate.average_total >= 66 && candidate.average_total <= 75) ||
+                    (this.filters.scoreDelapanLima && candidate.average_total >= 76 && candidate.average_total <= 85) ||
+                    (this.filters.scoreSeratus && candidate.average_total > 86)) {
+                    passExpScore = true;
+                } else {
+                    passExpScore = false;
+                }
+
+                return passDegreeFilter && passExpFilter && passExpScore;
+            });
+        }
     },
     props: { 
         next: { type: Function, default() { return {} } },

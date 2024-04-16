@@ -124,7 +124,7 @@ export const jobProviderAPI = () => {
     }
     // Tahap 5
     const postFinishSelection = async (body, job_post_id) => {
-        return await postRequest('jobprovider/selection/finish/'+job_post_id, body);
+        return await postRequest('jobprovider/selection/finish/'+job_post_id, body, true);
     }
 
 

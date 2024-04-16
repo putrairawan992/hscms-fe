@@ -143,6 +143,9 @@ export default {
         }
     },
     watch: {
+        show(to, from){
+            this.getData();
+        },
         jobSeekerId(to, from){
             this.getData();
         },
@@ -166,7 +169,7 @@ export default {
     },
     methods: {
         async getData(){
-            if (this.jobSeekerId) {
+            if (this.jobSeekerId && this.show) {
                 await this.getResultGrade(this.jobSeekerId, this.tahapanGetter.jobSelected?.id).then((result)=>{
                     if(result){ this.data = result; };
                 });

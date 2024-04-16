@@ -121,38 +121,41 @@
                                   </div>
                                   <div v-for="value, key in calendar" class="week-group">
                                       <div v-for="value1, key1 in value">
-                                        <div v-if="value1.today">
+                                        <div v-if="value1.schedule">
                                           <div class="week">
-                                              <div>
-                                                <div class="week-border-blue">
-                                                  <div class="date-square-blue" />
-                                                  <div class="week-text">{{ value1.day }}</div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                        </div>
-                                        <div v-else>
-                                          <div v-if="key1 == 5 || key1 == 6" class="week-red" :class="value1.day == null ? 'week-blur' : ''">
-                                              <div class="week-border-normal">
-                                                  <div class="date-square-red" />
-                                                  <div class="week-text">{{ value1.day }}</div>
-                                              </div>
-                                          </div>
-                                          <div v-else class="week" :class="value1.day == null ? 'week-blur' : ''">
-                                              <div v-if="!value1.schedule" class="week-border-normal">
-                                                <div class="date-square-normal" />
-                                                <div class="week-text">{{ value1.day }}</div>
-                                              </div>
-
-                                              <div v-if="value1.schedule" style="cursor: pointer;">
-                                                <div class="week-border-green">
+                                              <div class="week-border-green">
                                                   <div class="date-square-green" />
                                                   <div class="week-text">{{ value1.day }}</div>
                                                 </div>
                                                 <div class="jadwal-wrapper">
                                                     <div class="job">Jadwal</div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div v-else>
+                                          <div v-if="value1.today">
+                                            <div class="week">
+                                                <div>
+                                                  <div class="week-border-blue">
+                                                    <div class="date-square-blue" />
+                                                    <div class="week-text">{{ value1.day }}</div>
+                                                  </div>
+                                                </div>
                                               </div>
+                                          </div>
+                                          <div v-else>
+                                            <div v-if="key1 == 5 || key1 == 6" class="week-red" :class="value1.day == null ? 'week-blur' : ''">
+                                                <div class="week-border-normal">
+                                                    <div class="date-square-red" />
+                                                    <div class="week-text">{{ value1.day }}</div>
+                                                </div>
+                                            </div>
+                                            <div v-else class="week" :class="value1.day == null ? 'week-blur' : ''">
+                                                <div class="week-border-normal">
+                                                  <div class="date-square-normal" />
+                                                  <div class="week-text">{{ value1.day }}</div>
+                                                </div>
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
@@ -184,16 +187,16 @@
                                     <v-row>
                                         <v-col cols="4" class="input-checkbox-container pb-0">
                                             <v-select
-                                                placeholder="Pilih Tanggal" solo :readonly="userList[key].date != null"
-                                                :items="formattedDateList" return-object v-model="userList[key].date"
-                                                class="selection-text-field" item-text="formattedDate" item-value="date"
+                                              :items="formattedDateList" return-object v-model="userList[key].date"
+                                              class="selection-text-field" item-text="formattedDate" item-value="date"
+                                              placeholder="Pilih Tanggal" solo :readonly="btn_save_schedule == 'disabled' ? true : false"
                                             ></v-select>
                                         </v-col>
                                         <v-col cols="3" class="input-checkbox-container px-0 pb-0">
                                             <v-select
                                                 placeholder="Pilih Jam" 
                                                 solo :items="hoursInDay" v-model="userList[key].time"
-                                                class="selection-text-field" :readonly="userList[key].time != null"
+                                                class="selection-text-field" :readonly="btn_save_schedule == 'disabled' ? true : false"
                                             ></v-select>
                                         </v-col>
                                         <v-col cols="5" class="input-checkbox-container pb-0">
@@ -225,7 +228,7 @@
                                     </v-col>
                                     <v-col cols="12" class="pt-1">
                                         <input
-                                            class="selection-text-input" v-model="link" :readonly="link ? true : false"
+                                            class="selection-text-input" v-model="link" :readonly="btn_save_schedule == 'disabled' ? true : false"
                                             placeholder="Masukkan Judul Nama Tes" :allow-empty="false"
                                         />
                                     </v-col>
@@ -261,7 +264,7 @@
                                                         </div>
                                                     </template>
                                                     <v-date-picker
-                                                        @input="datePicker1 = false" :disabled="start_date ? true : false"
+                                                        @input="datePicker1 = false" :disabled="btn_save_schedule == 'disabled' ? true : false"
                                                         plas v-model="start_date" no-title
                                                     ></v-date-picker>
                                                 </v-menu>
@@ -292,7 +295,7 @@
                                                         </div>
                                                     </template>
                                                     <v-date-picker
-                                                        @input="datePicker2 = false" :disabled="end_date ? true : false"
+                                                        @input="datePicker2 = false" :disabled="btn_save_schedule == 'disabled' ? true : false"
                                                         plas v-model="end_date" no-title
                                                     ></v-date-picker>
                                                 </v-menu>

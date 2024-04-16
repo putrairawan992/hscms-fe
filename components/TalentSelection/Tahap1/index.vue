@@ -34,8 +34,10 @@
                                     />
                                     <b class="list-item-name">{{ value.name }}</b>
                                 </div>
-                                <div style="cursor: pointer;" @click="activatePanel(key+1)"><i>Review Kandidat</i></div>
-                                <div class="">{{ value.created_at }}</div>
+                                <div style="width: 350px; display: flex; justify-content: space-between;">
+                                    <div style="cursor: pointer;" @click="activatePanel(key+1)"><i>Review Kandidat</i></div>
+                                    <div>{{ value.created_at }}</div>
+                                </div>
                             </div>
                         </div>
                         <v-expansion-panel class="expansion-ts" style="background-color: #fff;">

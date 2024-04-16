@@ -28,11 +28,15 @@ export const request = () => {
         $loader.showLoading({ show: false });
         return result ? result : false;
     }
-    const postRequest = async (endpoint, body) => {
+    const postRequest = async (endpoint, body, multipleError) => {
         $loader.showLoading({ show: true });
         const result = await $api.post(endpoint, body).catch((err) => {
             console.log('postRequest', err.response?.data);
-            $notifier.showMessage({ content: err.response?.data?.error_validate ? err.response.data.error_validate[0].validate : err.response.data.message, status: 'warning' });
+            if(multipleError){
+                $notifier.showMessage({ content: err.response?.data?.error_validate ? err.response.data.error_validate[0].validate : err.response.data.message[0].error, status: 'warning' });
+            }else{
+                $notifier.showMessage({ content: err.response?.data?.error_validate ? err.response.data.error_validate[0].validate : err.response.data.message, status: 'warning' });
+            }
             $loader.showLoading({ show: false });
         });
         $loader.showLoading({ show: false });
