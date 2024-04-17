@@ -1,5 +1,5 @@
 <template>
-    <v-dialog persistent v-model="show" width="668" rounded content-class="elevation-0">
+    <v-dialog v-model="dialogVisible" @input="closeDialog" width="668" rounded content-class="elevation-0">
         <div style="position: relative; display: flex; flex-direction: column;">
             <v-card class="pa-12" style="border-radius: 20px !important;"> 
                 <v-row class="my-0">
@@ -81,11 +81,10 @@
         }
     },
     props: {
-        show: { type: Boolean, default() { return false } },
         content: { type: String, default() { return "" } },
+        show: { type: Boolean, default() { return false } },
         onApprove: { type: Function, default() { return {} } },
         closeDialog: { type: Function, default() { return {} } },
-        // id_remuneration: { type: String, default() { return null} },
     },
     setup() {
         const { getListEmployee, postPickEmployee } = API();
@@ -93,6 +92,14 @@
     },
     computed: {
         ...mapGetters('provider-selection', ['tahapanGetter']),
+        dialogVisible: {
+            get() {
+                return this.show;
+            },
+            set(value) {
+                this.$emit('update:show', value);
+            }
+        }
     },
     watch: {
         show (to, from) {
@@ -115,14 +122,19 @@
             });
         },
         async submit(){
-            let combinedArray = this.existing.concat(this.new_hiring);
-            await this.postPickEmployee({employee_id: combinedArray}, this.id_remuneration).then((result)=>{
-                localStorage.setItem('id_remuneration', result.data.batch_remuneration_id);
-                this.new_hiring = null;
-                this.existing = null;
-                console.log('postPickEmployee', result);
-                this.closeDialog();
-            });
+            if(this.new_hiring !== null && this.existing !== null){
+                if(this.new_hiring.length > 0 || this.existing.length > 0 ){
+                    let combinedArray = this.existing.concat(this.new_hiring);
+                    await this.postPickEmployee({employee_id: combinedArray}, this.id_remuneration).then((result)=>{
+                        console.log('postPickEmployee', result);
+                        localStorage.setItem('id_remuneration', result.data.batch_remuneration_id);
+                        this.new_hiring = [];
+                        this.existing = [];
+                        this.closeDialog();
+                        location.reload(true);
+                    });
+                }
+            }
         },
         debounceSearch: debounce( async function (event) {
             await this.getData(event);

@@ -702,6 +702,7 @@
 .remun-detail-label {
     font-size: 12px;
     text-align: left;
+    font-family: Poppins;
 }
 .remun-detail-text-input {
     border-radius: 10px;
@@ -715,9 +716,11 @@
     justify-content: flex-start;
     padding: 10px;
     font-size: 12px;
+    font-family: Poppins;
     /* color: #b6b6b6; */
 }.remun-detail-text-input::placeholder {
     font-style: italic;
+    font-family: Poppins;
 }
 .calendar-input-container{
     position: relative;

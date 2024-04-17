@@ -95,7 +95,7 @@
                                     </v-col>
                                     <v-col cols="2">
                                         <div class="orange-btn" style="">
-                                            <div class="" @click="dialog = true">
+                                            <div class="" @click="openDialogEmployee()">
                                                 <b class="button mx-3">+ Add to List</b>
                                             </div>
                                         </div>
@@ -192,7 +192,7 @@
                                         <b class="">Remunerasi {{ $moment().format('MMMM YYYY') }}</b>
                                     </div>
                                     <div class="">{{ $moment().format('DD MMMM YYYY') }}</div>
-                                    <div :class="data?.have_simulation ? 'orange-btn' : 'grey-btn'" @click="downloadCSV()">
+                                    <div :class="data?.have_simulation ? 'orange-btn' : 'grey-btn'" @click="data?.have_simulation ? downloadCSV() : false">
                                         <div class="">
                                             <b class="button mx-3">Download</b>
                                         </div>
@@ -297,6 +297,17 @@ export default {
                 this.$alert.showAlert({ content: 'Remunerasi telah diajukan.', show: true });
                 this.data = null;
                 localStorage.removeItem('id_remuneration');
+            });
+        },
+        async openDialogEmployee() {
+            await this.getListEmployee(this.id_remuneration, '').then((result)=>{
+                if(result){
+                    if(result?.existing === null && result?.new_hiring === null){
+                        this.$notifier.showMessage({ content: 'Data karyawan tidak tersedia.', status: 'warning' });
+                    }else{
+                        return this.dialog = true;
+                    }
+                }
             });
         },
         debounceSearch: debounce( async function (event) {
