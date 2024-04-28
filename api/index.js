@@ -85,7 +85,13 @@ export const API = () => {
         getDownloadSimulation,
         postRequestApproval,
         postRemunerationRecreate,
-        deleteRemuneration
+        deleteRemuneration,
+
+        getListMessage,
+        getDetailMessage,
+        postReplyMessage,
+        postCreateMessage,
+        getListEmployeeInbox,
     } = jobProviderAPI();
     
 
@@ -174,6 +180,12 @@ export const API = () => {
             getDownloadSimulation,
             postRequestApproval,
             postRemunerationRecreate,
-            deleteRemuneration
+            deleteRemuneration,
+
+            getListMessage,
+            getDetailMessage,
+            postReplyMessage,
+            postCreateMessage,
+            getListEmployeeInbox,
     }
 }

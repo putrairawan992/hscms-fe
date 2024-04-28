@@ -202,7 +202,6 @@ export const jobProviderAPI = () => {
         return await postRequest('jobprovider/simulation/'+remuneration_id);
     }
     const getDownloadSimulation = async (remuneration_id) => {
-        console.log('getDownloadSimulation remuneration_id', remuneration_id);
         return await getRequest('jobprovider/downloadsimulation/'+remuneration_id, false, 'arraybuffer');
     }
     const postRequestApproval = async (remuneration_id) => {
@@ -213,6 +212,23 @@ export const jobProviderAPI = () => {
     }
     const deleteRemuneration = async (remuneration_id) => {
         return await deleteRequest('jobprovider/remuneration/'+remuneration_id);
+    }
+
+    // inbox
+    const getListEmployeeInbox = async () => {
+        return await getRequest('jobprovider/inbox/listemployee');
+    }
+    const getListMessage = async () => {
+        return await getRequest('jobprovider/inbox');
+    }
+    const getDetailMessage = async (message_id) => {
+        return await getRequest('jobprovider/detail_inbox/' + message_id);
+    }
+    const postCreateMessage = async (body) => {
+        return await postRequest('jobprovider/inboxcreate', body);
+    }
+    const postReplyMessage = async (body, message_id) => {
+        return await postRequest('jobprovider/inboxcreate' + message_id, body);
     }
 
     return {
@@ -277,6 +293,12 @@ export const jobProviderAPI = () => {
         getDownloadSimulation,
         postRequestApproval,
         postRemunerationRecreate,
-        deleteRemuneration
+        deleteRemuneration,
+
+        getListMessage,
+        getDetailMessage,
+        postReplyMessage,
+        postCreateMessage,
+        getListEmployeeInbox,
     }
 }

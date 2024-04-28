@@ -69,7 +69,13 @@
 <script>
 export default {
     data () { return {
-        pageActive: "dashboard"
+        pageActive: "dashboard",
+        items: [
+            { title: 'Click Me' },
+            { title: 'Click Me' },
+            { title: 'Click Me' },
+            { title: 'Click Me 2' },
+        ],
     } },
     watch: {
         $route(to, from){
