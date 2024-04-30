@@ -9,7 +9,7 @@
                                 <div class="page-title">
                                     Inbox
                                 </div>
-                                <div class="generate-btn ml-0" style="cursor: pointer;">
+                                <div v-if="$auth.user.role_user == 'jobprovider'" class="generate-btn ml-0" style="cursor: pointer;">
                                     <div class="attach-mpr-parent" @click="createDialog = true">
                                         <b class="button mx-4">Write New Message</b>
                                     </div>
@@ -57,16 +57,36 @@
                                             ></v-progress-circular>
 
                                             <div v-if="detailMessage.length > 0" v-for="value, index in detailMessage" style="">
-                                                <div class="d-flex page-sub-title mb-2" :style="value.sender_name == detailMessage[0].sender_name  ? 'justify-content: start;' : 'justify-content: end;'">
+                                                <div class="d-flex page-sub-title mb-2" :style="value.sender_name == detailMessage[0].sender_name  ? 'justify-content: end;' : 'justify-content: start;'">
                                                     {{ value.sender_name }}
                                                 </div>
-                                                <div v-if="value.opening_text" class="d-flex mb-2" v-html="value.opening_text"  :style="value.sender_name == detailMessage[0].sender_name ? 'justify-content: start;' : 'justify-content: end;'"/>
-                                                <div class="d-flex mb-2" v-html="value.main_text"  :style="value.sender_name == detailMessage[0].sender_name ? 'justify-content: start;' : 'justify-content: end;'"/>
-                                                <div v-if="value.closing_text" class="d-flex mb-2" v-html="value.closing_text"  :style="value.sender_name == detailMessage[0].sender_name ? 'justify-content: start;' : 'justify-content: end;'"/>
+                                                <div v-if="value.opening_text" class="d-flex mb-2" v-html="value.opening_text"  :style="value.sender_name == detailMessage[0].sender_name ? 'justify-content: end;' : 'justify-content: start;'"/>
+                                                <div class="d-flex mb-2" v-html="value.main_text"  :style="value.sender_name == detailMessage[0].sender_name ? 'justify-content: end;' : 'justify-content: start;'"/>
+                                                <div v-if="value.closing_text" class="d-flex mb-2" v-html="value.closing_text"  :style="value.sender_name == detailMessage[0].sender_name ? 'justify-content: end;' : 'justify-content: start;'"/>
+                                                <div v-if="value.file" class="d-flex mb-2 mt-6" :style="value.sender_name == detailMessage[0].sender_name ? 'justify-content: end;' : 'justify-content: start;'">
+                                                    <div class="history-1">
+                                                        <div class="frame-parent-draft">
+                                                            <div class="foto-perusaahaan-parent" style="width: 400px;">
+                                                                <img
+                                                                    width="30px"
+                                                                    alt="micosoft-excel"
+                                                                    class="micosoft-excel"
+                                                                    src="@/assets/svg/file.svg"
+                                                                />
+                                                                <b class="">{{ getFileName(value.file) }}</b>
+                                                            </div>
+                                                            <div :class="value.file ? 'orange-btn' : 'grey-btn'" @click="value.file ? false : false">
+                                                                <div class="">
+                                                                    <b class="button mx-3">Download</b>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <hr class="my-8">
                                             </div>
                                             <div class="d-flex" style="justify-content: end;" v-if="detailMessage.length > 0">
-                                                <div class="frame-container" style="width: 101px; cursor: pointer;" @click="reply()">
+                                                <div class="frame-container" style="width: 101px; cursor: pointer;" @click="reply(value.id)">
                                                     <div class="attach-mpr-parent">
                                                         <b class="button">Reply</b>
                                                     </div>
@@ -83,8 +103,8 @@
             </div>
         </v-card>
         
-        <Dialog-inboxForm :show="createDialog" :closeDialog="closeDialog"/>
-        <Dialog-InboxReply :show="replyDialog" :closeDialog="closeDialog"/>
+        <Dialog-inboxForm v-if="$auth.user.role_user == 'jobprovider'" :show="createDialog" :closeDialog="closeDialog"/>
+        <Dialog-InboxReply :show="replyDialog" :closeDialog="closeDialog" :message_id="message_id"/>
     </div>
 </template>
 
@@ -102,7 +122,7 @@ export default {
         messages: [],
         detailMessage: [],
 
-        idReply: null,
+        message_id: null,
         isLoading: false,
         replyDialog: false,
         createDialog: false,
@@ -130,17 +150,28 @@ export default {
             await this.getDetailMessage(message_id).then((result)=>{
                 if(result){
                     this.detailMessage = result;
-                    console.log('this.detailMessage', this.detailMessage);
                 }
             });
         },
-        reply(idReply) {
-            this.idReply = idReply;
+        reply(id) {
+            this.message_id = id;
             this.replyDialog = true;
         },
-        closeDialog() {
+        async closeDialog() {
             this.createDialog = false;
             this.replyDialog = false;
+
+            if(this.message_id){
+                await this.getDetailMessage(this.message_id).then((result)=>{
+                    if(result){
+                        this.detailMessage = result;
+                    }
+                });
+            }
+        },
+        getFileName(file){
+            let name = file.split('/');
+            return name[name.length - 1];
         }
     }
 
@@ -148,6 +179,30 @@ export default {
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped>
+.history-1 {
+    width: 100%;
+    height: 71px;
+}
+.frame-parent-draft {
+    border-radius: 10px;
+    border: 1px solid #ae445a;
+    box-sizing: border-box;
+    width: 100%;
+    height: 71px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 25px;
+}
+.foto-perusaahaan-parent {
+    width: 210px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+}
 .page-sub-title {
     color: #AE445A;
     font-family: Poppins;

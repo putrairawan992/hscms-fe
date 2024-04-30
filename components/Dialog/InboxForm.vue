@@ -33,7 +33,7 @@
                             Isi Pesan
                         </div>
                     </v-col>
-                    <v-col cols="12" class="pt-1">
+                    <v-col cols="12" class="pt-1" style="font-size: 12px;">
                         <TextEditor v-model="main_text" class="rich-editor" placeholder="Masukkan Isi Pesan"/>
                     </v-col>
                     <v-col cols="12" class="text-left py-0">

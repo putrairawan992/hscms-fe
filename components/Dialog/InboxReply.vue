@@ -2,15 +2,8 @@
     <v-dialog persistent v-model="show" width="650" rounded content-class="elevation-0">
         <div style="position: relative; display: flex; flex-direction: column;">
             <v-card class="pa-12" style="border-radius: 20px !important;"> 
-                <v-row>
-                    <v-col cols="12" class="text-left pt-0 pb-4">
-                        <div class="page-title">
-                            Write new message
-                        </div>
-                    </v-col>
-                </v-row>
-                <v-row class="mt-8">
-                    <v-col cols="12" class="text-left py-0">
+                <v-row class="mt-0">
+                    <!-- <v-col cols="12" class="text-left py-0">
                         <div class="page-sub-title">Kepada</div>
                     </v-col>
                     <v-col cols="12" class="pt-0 pb-4">
@@ -19,21 +12,21 @@
                             :options="listEmployee" v-model="recipent_id"
                             placeholder="Ketikan Nama" :allow-empty="false"
                         ></multiselect>
-                    </v-col>
-                    <v-col cols="12" class="text-left py-0">
+                    </v-col> -->
+                    <!-- <v-col cols="12" class="text-left py-0">
                         <div class="page-sub-title">
                             Judul
                         </div>
-                    </v-col>
-                    <v-col cols="12" class="pt-0">
+                    </v-col> -->
+                    <!-- <v-col cols="12" class="pt-0">
                         <v-text-field v-model="title" placeholder="Ketikan Judul" solo class="grade-text-field" ></v-text-field>
-                    </v-col>
+                    </v-col> -->
                     <v-col cols="12" class="text-left py-0">
                         <div class="page-sub-title">
                             Isi Pesan
                         </div>
                     </v-col>
-                    <v-col cols="12" class="pt-1">
+                    <v-col cols="12" class="pt-1" style="font-size: 12px;">
                         <TextEditor v-model="main_text" class="rich-editor" placeholder="Masukkan Isi Pesan"/>
                     </v-col>
                     <v-col cols="12" class="text-left py-0">
@@ -44,7 +37,7 @@
                     <v-col cols="12" class="pt-1">
                         <v-file-input v-model="file_message" clearable placeholder="Pilih File..." solo class="grade-text-field"></v-file-input>
                     </v-col>
-                    <v-col cols="12" class="text-left py-0">
+                    <!-- <v-col cols="12" class="text-left py-0">
                         <div class="page-sub-title">
                             Pilih Tanggal
                         </div>
@@ -76,7 +69,7 @@
                                 plas v-model="schedule" no-title
                             ></v-date-picker>
                         </v-menu>
-                    </v-col>
+                    </v-col> -->
 
                     <v-col cols="12" class="mt-4">
                         <div style="position: relative; display: flex; justify-content: end; column-gap: 10px;">
@@ -137,52 +130,55 @@ export default {
     },
     props: {
         content: { type: String, default() { return "" } },
+        message_id: { type: Number, default() { return null } },
         show: { type: Boolean, default() { return false } },
         onApprove: { type: Function, default() { return {} } },
         closeDialog: { type: Function, default() { return {} } },
     },
     setup() {
-        const { getListEmployeeInbox, postCreateMessage } = API();
-        return { getListEmployeeInbox, postCreateMessage };
+        const { getListEmployeeInbox, postReplyMessage } = API();
+        return { getListEmployeeInbox, postReplyMessage };
     },
     computed: {
         ...mapGetters('provider-selection', ['tahapanGetter']),
     },
     async mounted(){
-        await this.getData();
+        // await this.getData();
     },
     methods: {
         async getData(){
-            await this.getListEmployeeInbox().then((result)=>{
-                if(result){
-                    this.listEmployee = result;
-                    console.log('getListEmployeeInbox', this.listEmployee);
-                }
-            });
+            // await this.getListEmployeeInbox().then((result)=>{
+            //     if(result){
+            //         this.listEmployee = result;
+            //     }
+            // });
         },
         async submit(){
-            if(this.recipent_id == null){ this.$notifier.showMessage({ content: 'Data penerima belum terisi.', status: 'warning' }) }
-            if(this.title == null){ this.$notifier.showMessage({ content: 'Judul belum terisi.', status: 'warning' }) }
-            if(this.main_text == null){ this.$notifier.showMessage({ content: 'Isi pesan belum terisi.', status: 'warning' }) }
-            
-            const body = new FormData();
-            body.append('title', this.title);
-            body.append('schedule', this.schedule);
-            body.append('main_text', this.main_text);
-            body.append('file_message', this.file_message);
-            body.append('recipent_id', this.recipent_id.id);
-
-            await this.postCreateMessage(body).then((result)=>{
-                if(result){
-                    this.closeDialog();
-                    this.$alert.showAlert({ content: 'Pesan telah terkirim,', show: true });
-                    this.getData();
-                }
-            });
+            if(this.message_id){
+                // if(this.recipent_id == null){ this.$notifier.showMessage({ content: 'Data penerima belum terisi.', status: 'warning' }) }
+                // if(this.title == null){ this.$notifier.showMessage({ content: 'Judul belum terisi.', status: 'warning' }) }
+                if(this.main_text == null){ this.$notifier.showMessage({ content: 'Isi pesan belum terisi.', status: 'warning' }) }
+                
+                const body = new FormData();
+                // body.append('title', this.title);
+                // body.append('schedule', this.schedule);
+                body.append('main_text', this.main_text);
+                body.append('file_message', this.file_message);
+                // body.append('recipent_id', this.recipent_id.id);
+    
+                await this.postReplyMessage(body, this.message_id).then((result)=>{
+                    if(result){
+                        this.onCloseDialog();
+                        this.$alert.showAlert({ content: 'Pesan telah terkirim,', show: true });
+                    }
+                });
+            }else{
+                this.$notifier.showMessage({ content: 'Pesan tidak ditemukan.', status: 'warning' })
+            }
         },
         onCloseDialog(){
-            this.bodyGrade = [];
-            this.quantitative_score = null;
+            this.main_text = "";
+            this.file_message = null;
             this.closeDialog();
         },
         parseDate (date) {

@@ -3,7 +3,7 @@ import { useContext } from '@nuxtjs/composition-api'
 import { jobProviderValidator } from '@/api/validator/jobProvider'
 
 export const jobProviderAPI = () => {
-    const { $api, $loader, $notifier } = useContext();
+    const { $api, $auth, $notifier } = useContext();
     const { jobPostValidator } = jobProviderValidator();
     const { getRequest ,postRequest, putRequest, deleteRequest } = request();
     
@@ -219,16 +219,28 @@ export const jobProviderAPI = () => {
         return await getRequest('jobprovider/inbox/listemployee');
     }
     const getListMessage = async () => {
-        return await getRequest('jobprovider/inbox');
+        return await getRequest(
+            $auth.user.role_user == 'jobprovider' ?
+            'jobprovider/inbox' :
+            'jobseeker/inbox'
+        );
     }
     const getDetailMessage = async (message_id) => {
-        return await getRequest('jobprovider/detail_inbox/' + message_id);
+        return await getRequest(
+            $auth.user.role_user == 'jobprovider' ?
+            'jobprovider/detail_inbox/' + message_id :
+            'jobseeker/detail_inbox/' + message_id
+        );
     }
     const postCreateMessage = async (body) => {
         return await postRequest('jobprovider/inboxcreate', body);
     }
     const postReplyMessage = async (body, message_id) => {
-        return await postRequest('jobprovider/inboxcreate' + message_id, body);
+        return await postRequest(
+            $auth.user.role_user == 'jobprovider' ?
+            'jobprovider/inbox/' + message_id :
+            'jobseeker/inbox/' + message_id 
+        , body);
     }
 
     return {
