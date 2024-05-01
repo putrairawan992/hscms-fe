@@ -312,27 +312,23 @@ export default {
             return Intl.NumberFormat('en-US').format(value);
         },
         async downloadCSV() {
-            try{
-                await this.getDownloadSimulation(this.id_remuneration).then((result) => {
-                    var filename = "Remunerasi "+ this.$moment().format('MMMM YYYY');
-                    var pom = document.createElement('a');
-                    var bb = new Blob([result], {type: 'application/vnd.ms-excel'});
+            await this.getDownloadSimulation(this.id_remuneration).then((result) => {
+                var filename = "Remunerasi "+ this.$moment().format('MMMM YYYY')+".xlsx";
+                var pom = document.createElement('a');
+                var bb = new Blob([result], {type: 'application/vnd.ms-excel'});
 
-                    console.log('getEmployeeDataCSV', result);
+                pom.setAttribute('href', window.URL.createObjectURL(bb));
+                pom.setAttribute('download', filename);
 
-                    pom.setAttribute('href', window.URL.createObjectURL(bb));
-                    pom.setAttribute('download', filename);
+                pom.dataset.downloadurl = ['application/vnd.ms-excel,', pom.download, pom.href].join(':');
+                pom.draggable = true; 
+                pom.classList.add('dragout');
+                pom.click();
 
-                    pom.dataset.downloadurl = ['application/vnd.ms-excel,', pom.download, pom.href].join(':');
-                    pom.draggable = true; 
-                    pom.classList.add('dragout');
-                    pom.click();
-
-                    return this.closeDialog(true);
-                })
-            }catch(e) {
-                console.log('downloadCSV error',e)
-            }
+            })
+            .catch((e) => {
+                console.log(e)
+            })
         },
     }
 
