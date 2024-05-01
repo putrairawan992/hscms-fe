@@ -303,7 +303,6 @@ export default {
             console.log(to, from);
         },
         raradiodios(to, from){
-            console.log('radio', this.radio);
         },
         tahapanGetter(to, from){
             this.refreshData();
@@ -361,8 +360,6 @@ export default {
    async mounted(){
         await this.getListCandidate();
         this.dataCandidate = this.listCandidate;
-
-        console.log('this.dataCandidate', this.dataCandidate);
     },
     methods: {
 		...mapActions('provider-selection', ['getListCandidate']),

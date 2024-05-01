@@ -57,13 +57,13 @@
                                             ></v-progress-circular>
 
                                             <div v-if="detailMessage.length > 0" v-for="value, index in detailMessage" style="">
-                                                <div class="d-flex page-sub-title mb-2" :style="value.sender_name == detailMessage[0].sender_name  ? 'justify-content: end;' : 'justify-content: start;'">
+                                                <div class="d-flex page-sub-title mb-2" :style="value.user_type === 'other' ? 'justify-content: start;' : 'justify-content: end;'">
                                                     {{ value.sender_name }}
                                                 </div>
-                                                <div v-if="value.opening_text" class="d-flex mb-2" v-html="value.opening_text"  :style="value.sender_name == detailMessage[0].sender_name ? 'justify-content: end;' : 'justify-content: start;'"/>
-                                                <div class="d-flex mb-2" v-html="value.main_text"  :style="value.sender_name == detailMessage[0].sender_name ? 'justify-content: end;' : 'justify-content: start;'"/>
-                                                <div v-if="value.closing_text" class="d-flex mb-2" v-html="value.closing_text"  :style="value.sender_name == detailMessage[0].sender_name ? 'justify-content: end;' : 'justify-content: start;'"/>
-                                                <div v-if="value.file" class="d-flex mb-2 mt-6" :style="value.sender_name == detailMessage[0].sender_name ? 'justify-content: end;' : 'justify-content: start;'">
+                                                <div :style="value.user_type === 'other' ? 'justify-content: start;' : 'justify-content: end;'" v-if="value.opening_text" class="d-flex mb-2" v-html="value.opening_text" />
+                                                <div :style="value.user_type === 'other' ? 'justify-content: start;' : 'justify-content: end;'" class="d-flex mb-2" v-html="value.main_text" />
+                                                <div :style="value.user_type === 'other' ? 'justify-content: start;' : 'justify-content: end;'" v-if="value.closing_text" class="d-flex mb-2" v-html="value.closing_text" />
+                                                <div :style="value.user_type === 'other' ? 'justify-content: start;' : 'justify-content: end;'" v-if="value.file" class="d-flex mb-2 mt-6" >
                                                     <div class="history-1">
                                                         <div class="frame-parent-draft">
                                                             <div class="foto-perusaahaan-parent" style="width: 400px;">
@@ -75,7 +75,7 @@
                                                                 />
                                                                 <b class="">{{ getFileName(value.file) }}</b>
                                                             </div>
-                                                            <div :class="value.file ? 'orange-btn' : 'grey-btn'" @click="value.file ? false : false">
+                                                            <div :class="value.file ? 'orange-btn' : 'grey-btn'" @click="value.file ? downloadAttachment(value) : false">
                                                                 <div class="">
                                                                     <b class="button mx-3">Download</b>
                                                                 </div>
@@ -128,8 +128,8 @@ export default {
         createDialog: false,
     }),
     setup() {
-        const { getListMessage, getDetailMessage, postReplyMessage, postCreateMessage } = API();
-        return { getListMessage, getDetailMessage, postReplyMessage, postCreateMessage };
+        const { getListMessage, getDetailMessage, postReplyMessage, postCreateMessage, getMessageAttachment } = API();
+        return { getListMessage, getDetailMessage, postReplyMessage, postCreateMessage, getMessageAttachment };
     },
     async mounted(){
         await this.getData();
@@ -139,7 +139,6 @@ export default {
             await this.getListMessage().then((result)=>{
                 if(result){
                     this.messages = result;
-                    console.log('this.messages', this.messages);
                 }
             });
         },
@@ -168,6 +167,66 @@ export default {
                     }
                 });
             }
+        },
+        async downloadAttachment(data) {
+            await this.getMessageAttachment(data.detail_message_id).then((result)=>{
+                const filename = this.getFileName(data.file);
+                // Ekstrak ekstensi file
+                const fileExtension = filename.split('.').pop().toLowerCase();
+                // Tentukan tipe MIME berdasarkan ekstensi file
+                let mimeType;
+                switch (fileExtension) {
+                    case 'pdf':
+                        mimeType = 'application/pdf';
+                        break;
+                    case 'png':
+                        mimeType = 'image/png';
+                        break;
+                    case 'jpg':
+                    case 'jpeg':
+                        mimeType = 'image/jpeg';
+                        break;
+                    case 'gif':
+                        mimeType = 'image/gif';
+                        break;
+                    case 'txt':
+                        mimeType = 'text/plain';
+                        break;
+                    case 'html':
+                        mimeType = 'text/html';
+                        break;
+                    case 'json':
+                        mimeType = 'application/json';
+                        break;
+                    case 'doc':
+                    case 'docx':
+                        mimeType = 'application/msword';
+                        break;
+                    case 'xls':
+                    case 'xlsx':
+                        mimeType = 'application/vnd.ms-excel';
+                        break;
+                    case 'ppt':
+                    case 'pptx':
+                        mimeType = 'application/vnd.ms-powerpoint';
+                        break;
+                    // Tambahkan lebih banyak kasus untuk tipe file lain yang sering digunakan
+                    default:
+                        mimeType = 'application/octet-stream'; // MIME tipe default untuk tipe file yang tidak dikenali
+                        break;
+                }
+
+                const blob = new Blob([result], { type: mimeType });
+
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = filename;
+
+                link.dataset.downloadurl = [mimeType, link.download, link.href].join(':');
+                link.draggable = true;
+                link.classList.add('dragout');
+                link.click();
+            });
         },
         getFileName(file){
             let name = file.split('/');

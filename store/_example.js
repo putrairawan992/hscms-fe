@@ -24,7 +24,7 @@ export const actions = {
         //     console.log('getListPretest', result);
         // })
 
-        console.log('context', context);
+        // console.log('context', context);
 		// const slicedFruit = addFruit(fruit);
         // console.log('slicedFruit', slicedFruit);
         

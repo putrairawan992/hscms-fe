@@ -125,7 +125,6 @@ export default {
             this.getData();
         },
         quantitative_score(to, from){
-            console.log('quantitative_score', to);;
         }
     },
     props: {

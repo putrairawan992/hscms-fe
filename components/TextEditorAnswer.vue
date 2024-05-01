@@ -41,7 +41,6 @@ export default {
     mounted() {
         this.editorConfig.placeholder = this.placeholder;
         this.content = this.data.answer;
-        // console.log('this.data', this.data);
     },
     methods: {
         ...mapMutations('seeker-pretest', ['setQuestion']),
@@ -52,9 +51,7 @@ export default {
             body.append('pretest_question_id', this.data.pretest_question_id);
             body.append('answer', answer);
 
-            await this.postAnswerAPI(body, this.data.pretest_modul_detail_id).then((result)=>{
-                console.log('result', result);
-            })
+            await this.postAnswerAPI(body, this.data.pretest_modul_detail_id).then((result)=>{})
         }, 2000),
     }
 

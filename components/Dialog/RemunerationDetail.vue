@@ -568,7 +568,6 @@
     },
     methods: {
         async getData(){
-            console.log('this.remunerationDetailId', this.remunerationDetailId);
             if(this.remunerationDetailId){
                 await this.getRemunerationDetail(this.remunerationDetailId).then((result)=>{
                     if(result){

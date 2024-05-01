@@ -80,7 +80,6 @@ export default {
     },
     async mounted(){
         await this.getData();
-        console.log('this.detailAnswer', this.detailAnswer);
     },
     methods: {
         ...mapMutations('provider-selection', ['setDetailAnswer']),
@@ -107,7 +106,6 @@ export default {
                 job_seeker_id: this.tahapanGetter.detail?.job_seeker_id,
 
             }, this.tahapanGetter.detail?.module?.pretest_modul_detail_id).then((result)=>{
-                console.log('result', result);
                 this.$router.push('/talent-selection');
             })
         },

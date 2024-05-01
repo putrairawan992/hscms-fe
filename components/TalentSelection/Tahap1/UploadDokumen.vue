@@ -124,7 +124,6 @@ export default {
                 job_seeker_id: this.tahapanGetter.detail?.job_seeker_id,
 
             }, this.tahapanGetter.detail?.module?.pretest_modul_detail_id).then((result)=>{
-                console.log('result', result);
                 this.$router.push('/talent-selection');
             })
         },

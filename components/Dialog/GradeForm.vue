@@ -129,7 +129,6 @@ export default {
             this.getData();
         },
         quantitative_score(to, from){
-            console.log('quantitative_score', to);;
         }
     },
     props: {
@@ -182,13 +181,11 @@ export default {
             let body = [];
             let status = true;
 
-            console.log('getBodyScores this.bodyGrade', this.bodyGrade);
             for (let index = 0; index < this.bodyGrade.length; index++) {
                 const element = this.bodyGrade[index];
                 if(status){
                     for (let index = 0; index < element.length; index++) {
                         let element1 = element[index];
-                        console.log('element1.score', element1.score);
                         if(element1.score == null){
                             this.$notifier.showMessage({ content: 'Data nilai belum lengkap.', status: 'warning' });
                             return status = false;
@@ -221,8 +218,6 @@ export default {
                     this.bodyGrade.push(item);
                 });
             }
-
-            console.log('setBodyForm this.bodyGrade', this.bodyGrade);
         },
         onCloseDialog(){
             this.bodyGrade = [];

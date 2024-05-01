@@ -192,7 +192,6 @@ export default {
     methods: {
         next(){
             this.step = parseInt(this.step) + 1;
-            console.log('this.step', this.step);
             localStorage.setItem('step_job_post', this.step);
         },
         prev(step){

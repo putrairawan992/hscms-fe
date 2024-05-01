@@ -87,7 +87,6 @@ export default {
     }),
     mounted() {
         this.editorConfig.placeholder = this.placeholder;
-        console.log('placeholder', this.placeholder);
     },
 
   

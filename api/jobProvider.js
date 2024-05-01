@@ -192,7 +192,6 @@ export const jobProviderAPI = () => {
         return await deleteRequest('jobprovider/remuneration/employee/'+employee_id);
     }
     const getAttachment = async (remuneration_id) => {
-        console.log('remuneration_id', remuneration_id);
         return await getRequest('jobprovider/remuneration/attachment/'+remuneration_id);
     }
     const postAttachment = async (body, attachment_id) => {
@@ -233,6 +232,13 @@ export const jobProviderAPI = () => {
             $auth.user.role_user == 'jobprovider' ?
             'jobprovider/detail_inbox/' + message_id :
             'jobseeker/detail_inbox/' + message_id
+        );
+    }
+    const getMessageAttachment = async (detail_message_id) => {
+        return await getRequest(
+            $auth.user.role_user == 'jobprovider' ?
+            'jobprovider/inbox/download_file/' + detail_message_id :
+            'jobseeker/inbox/download_file/' + detail_message_id, true, 'arraybuffer'
         );
     }
     const postCreateMessage = async (body) => {
@@ -316,5 +322,6 @@ export const jobProviderAPI = () => {
         postReplyMessage,
         postCreateMessage,
         getListEmployeeInbox,
+        getMessageAttachment,
     }
 }

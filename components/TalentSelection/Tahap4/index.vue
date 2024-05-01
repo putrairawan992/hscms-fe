@@ -102,7 +102,6 @@ export default {
     }},
     watch: {
         idCandidats(to, from){
-            console.log('idCandidats', to);;
         }
     },
     setup() {
@@ -119,7 +118,6 @@ export default {
     async mounted(){
         await this.getListCandidate();
         this.dataCandidate = this.listCandidate;
-        console.log('this.dataCandidate', this.dataCandidate);
     },
     methods: {
 		...mapActions('provider-selection', ['getListCandidate']),

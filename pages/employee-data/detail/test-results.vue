@@ -29,7 +29,6 @@ export default {
         ...mapGetters('provider-selection', ['tahapanGetter']),
     },
     async mounted(){
-        console.log('is.tahapanGetter.detail', this.tahapanGetter.detail);
         this.detail = this.tahapan.detail == null ? this.tahapanGetter.detail : this.tahapan.detail;
         this.tahap = this.tahapan.tahap == null ? this.tahapanGetter.tahap : this.tahapan.tahap;
         if(this.detail == null){

@@ -132,7 +132,6 @@ export default {
             this.getData();
         },
         quantitative_score(to, from){
-            console.log('quantitative_score', to);;
         }
     },
     props: {
@@ -156,7 +155,6 @@ export default {
             await this.getListEmployeeInbox().then((result)=>{
                 if(result){
                     this.listEmployee = result;
-                    console.log('getListEmployeeInbox', this.listEmployee);
                 }
             });
         },

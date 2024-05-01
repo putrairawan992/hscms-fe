@@ -126,7 +126,6 @@
                 if(this.new_hiring.length > 0 || this.existing.length > 0 ){
                     let combinedArray = this.existing.concat(this.new_hiring);
                     await this.postPickEmployee({employee_id: combinedArray}, this.id_remuneration).then((result)=>{
-                        console.log('postPickEmployee', result);
                         localStorage.setItem('id_remuneration', result.data.batch_remuneration_id);
                         this.new_hiring = [];
                         this.existing = [];

@@ -158,7 +158,6 @@ export default {
     },
     async mounted() {
         await this.getQuestions(this.page);
-        console.log('this.question', this.question);
     },
     methods: {
 		...mapActions('seeker-pretest', ['getQuestion']),
@@ -173,8 +172,6 @@ export default {
             })
         },
         async submitAnswer(data, answer, file_answer){
-            console.log('data', data);
-            console.log('submitAnswer', file_answer);
             const body = new FormData();
             body.append('job_post_id', data.job_post_id);
             body.append('pretest_question_id', data.pretest_question_id);
@@ -182,22 +179,18 @@ export default {
             if(file_answer){ body.append('file_answer', file_answer); };
 
             await this.postAnswerAPI(body, data.pretest_modul_detail_id).then((result)=>{
-                console.log('data.pretest_modul_detail_id',data.pretest_modul_detail_id);
-                console.log('postAnswerAPI',result);
                 this.getQuestions();
             })
         },
         async endTest(){
             await this.postEndTest(this.job_id, this.module_id).then(async (result)=>{
                 if(result){
-                    console.log('postEndTest', result);
                     await this.endPretest(result.data);
                     return this.$router.push('/pretest/finish');
                 }
             })
         },
         timeOut(){
-            console.log('action end test');
         },
         closeAlert(){
             this.showAlertApproval = false;

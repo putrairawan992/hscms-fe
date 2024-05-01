@@ -959,7 +959,6 @@ export default {
             else e.preventDefault();
         },
         useConvertToMoneyView(value) {
-            console.log('useConvertToMoneyView', value);
             if (!value) return value;
             value = parseInt(value.replaceAll(',', ''), 10);
             this.salary_exspectation = value;

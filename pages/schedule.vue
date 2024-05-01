@@ -265,8 +265,6 @@ export default {
           const chunk = days.slice(i, i + chunkSize);
           this.calendar.push(chunk);
         }
-
-        console.log('this.calendar', this.calendar);
       },
       getDay(date) {
         if(date){

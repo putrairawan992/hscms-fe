@@ -579,11 +579,9 @@ export default {
     },
     methods: {
         async openFile(){
-            console.log('openFile');
             this.fileDialog = true;
         },
         async closeFile(){
-            console.log('openFile');
             this.fileDialog = false;
         },
         async getData(){

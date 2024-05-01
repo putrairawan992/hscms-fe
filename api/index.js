@@ -93,6 +93,7 @@ export const API = () => {
         postReplyMessage,
         postCreateMessage,
         getListEmployeeInbox,
+        getMessageAttachment,
     } = jobProviderAPI();
     
 
@@ -189,5 +190,6 @@ export const API = () => {
             postReplyMessage,
             postCreateMessage,
             getListEmployeeInbox,
+            getMessageAttachment,
     }
 }

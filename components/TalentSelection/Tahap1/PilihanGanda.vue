@@ -102,7 +102,6 @@ export default {
     async mounted(){
         await this.getData();
         this.data = this.detailAnswer;
-        console.log('this.data', this.data);
     },
     methods: {
         ...mapMutations('provider-selection', ['setDetailAnswer']),

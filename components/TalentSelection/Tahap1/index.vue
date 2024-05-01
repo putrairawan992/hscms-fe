@@ -196,7 +196,6 @@ export default {
         unselect(){
             this.radios = [];
             this.idCandidats = [];
-            console.log('unselect this.idCandidats', this.idCandidats);
         },
         activatePanel(index) {
             this.panel = this.panel === index - 1 ? [] : index - 1;

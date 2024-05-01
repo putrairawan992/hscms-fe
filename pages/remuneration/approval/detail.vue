@@ -209,12 +209,12 @@
                         <v-col cols="12" class="text-left d-flex pt-0">
                             <div class="total-karyawan-terpilih px-4" style="width: -webkit-fit-content !important;">
                                 <b>
-                                    Total Bulan Ini:  Rp. 346,000,000,-
+                                    Total Bulan Ini:  Rp. {{ data?.simulation?.this_mount ? useConvertToMoneyView(data?.simulation?.this_mount.toString())+',-' : '0,-' }}
                                 </b>
-                            </div>
-                            <div class="total-karyawan-terpilih px-4 ml-4" style="width: -webkit-fit-content !important;">
+                                </div>
+                                <div class="total-karyawan-terpilih px-4 ml-4" style="width: -webkit-fit-content !important;">
                                 <b>
-                                    Sisa Kontrak:  Rp. 1,509,000,000,-
+                                    Sisa Kontrak:  Rp. {{ data?.simulation?.this_contract ? useConvertToMoneyView(data?.simulation?.this_contract.toString())+',-' : '0,-' }}
                                 </b>
                             </div>
                         </v-col>
