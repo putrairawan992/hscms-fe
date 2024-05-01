@@ -481,8 +481,8 @@
                     "value": "bonus"
                 },
                 {
-                    "name": "Repel",
-                    "value": "repel"
+                    "name": "Rapel",
+                    "value": "rapel"
                 },
                 {
                     "name": "Tunjangan Hari Raya",
@@ -690,6 +690,20 @@
             return Intl.NumberFormat('en-US').format(value);
         },
         onDialogClose(value) {
+            this.additionData = [
+                {
+                    title: null,
+                    note: null,
+                    amount: null,
+                }
+            ];
+            this.deductionData = [
+                {
+                    title: null,
+                    note: null,
+                    amount: null,
+                }
+            ];
             if (!value) {
                 this.closeDialog();
             }

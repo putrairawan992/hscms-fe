@@ -139,6 +139,9 @@ export const jobProviderAPI = () => {
     const getEmployeeDetail = async (employee_id) => {
         return await getRequest('jobprovider/employeedetail/' +employee_id);
     }
+    const getEmployeeDataPDF = async (employee_id) => {
+        return await getRequest('jobprovider/pdf/employee/' +employee_id, true, 'arraybuffer');
+    }
     const getEmployeeDataCSV = async () => {
         return await getRequest('jobprovider/download/employee', true, 'arraybuffer');
     }
@@ -202,7 +205,7 @@ export const jobProviderAPI = () => {
         return await postRequest('jobprovider/simulation/'+remuneration_id);
     }
     const getDownloadSimulation = async (remuneration_id) => {
-        return await getRequest('jobprovider/downloadsimulation/'+remuneration_id, false, 'arraybuffer');
+        return await getRequest('jobprovider/downloadsimulation/'+remuneration_id, true, 'arraybuffer');
     }
     const postRequestApproval = async (remuneration_id) => {
         return await postRequest('jobprovider/remuneration/request/'+remuneration_id);
@@ -287,6 +290,7 @@ export const jobProviderAPI = () => {
 
         getEmployee,
         getEmployeeDetail,
+        getEmployeeDataPDF,
         getEmployeeDataCSV,
         getEmployeeDataZIP,
 

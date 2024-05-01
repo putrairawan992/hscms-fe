@@ -62,7 +62,7 @@ export default {
     methods: {
         async downloadCSV() {
             await this.getEmployeeDataCSV().then((result) => {
-                var filename = "employee-data.xlsx";
+                var filename = "Employee Data.xlsx";
                 var pom = document.createElement('a');
                 var bb = new Blob([result], {type: 'application/vnd.ms-excel'});
 

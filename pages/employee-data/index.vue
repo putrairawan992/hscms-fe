@@ -51,7 +51,7 @@
                                         <v-col cols="12" class="pt-0 input-checkbox-container">
                                             <multiselect
                                                 v-model="file" :allow-empty="false"
-                                                :options="['Semua','Offering Lateer', 'PKWT']"
+                                                :options="['Semua','Offering Letter', 'PKWT']"
                                                 placeholder="Pilih Berkas" class="header-select-input"
                                             >
                                             </multiselect>
@@ -143,7 +143,7 @@
                                                     <img class="edit-icon" alt="" src="@/assets/svg/eye-circle-fill.svg" />
                                                 </div>
                                                 <div class="icon-container">
-                                                    <img class="edit-icon" alt="" src="@/assets/svg/download-red.svg" />
+                                                    <img class="edit-icon" alt="download" @click="downloadPDF(item.employee_id)" src="@/assets/svg/download-red.svg" />
                                                 </div>
                                                 <div class="employee-data-item"> {{ item.selection_type }} </div>
                                             </div>
@@ -213,8 +213,8 @@ export default {
         }
     },
     setup() {
-        const { getEmployee, getEmployeeDetail } = API()
-        return { getEmployee, getEmployeeDetail };
+        const { getEmployee, getEmployeeDetail, getEmployeeDataPDF } = API()
+        return { getEmployee, getEmployeeDetail, getEmployeeDataPDF };
     },
     async mounted() {
         this.getData();
@@ -229,6 +229,20 @@ export default {
         async clickDetail(id){
             await localStorage.setItem('employee_id', id);
             this.$router.push('/employee-data/detail');
+        },
+        async downloadPDF(employee_id) {
+            const result = await this.getEmployeeDataPDF(employee_id); // Assuming getEmployeeDataPDF returns a Promise
+            const filename = "employee-data.pdf";
+            const blob = new Blob([result], {type: 'application/pdf'}); // Correcting type to PDF
+
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = filename;
+
+            link.dataset.downloadurl = ['application/pdf', link.download, link.href].join(':');
+            link.draggable = true; 
+            link.classList.add('dragout');
+            link.click();
         },
         openDialog(){
             this.dialog = true;

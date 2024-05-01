@@ -48,7 +48,7 @@
                             <img class="foto-user-icon-small" alt="" src="@/assets/svg/my-profile.svg" />
                             <div class="menu-container">
                               <div class="profile-name-text">My Profile</div>
-                              <div class="profile-desc">Account Settingom</div>
+                              <div class="profile-desc">Account Setting</div>
                             </div>
                           </div>
                           <div class="d-flex profile-menu-container mt-6" style="align-items:center" @click="$router.push('/inbox')">
