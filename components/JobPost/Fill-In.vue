@@ -196,7 +196,7 @@
                     v-model="education_id"
                     :items="masterData.master_education"
                     placeholder="Pilih tingkat pendidikan (bisa lebih dari satu)"
-                    class="job-text-field" item-value='id' item-text="education_name"
+                    class="job-multiselect" item-value='id' item-text="education_name"
                 ></v-select>
             </v-col>
         </v-row>
@@ -254,7 +254,7 @@
                     multiple solo
                     v-model="benefit_id"
                     :items="masterData.master_benefit"
-                    class="job-text-field" item-value='id' item-text="benefit_name"
+                    class="job-multiselect" item-value='id' item-text="benefit_name"
                     placeholder="Pilih keuntungan yang bisa didapatkan calon karyawan (bisa lebih dari satu)"
                 ></v-select>
             </v-col>

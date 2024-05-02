@@ -17,28 +17,30 @@
             </v-row>
             <div class="my-2" style="position: relative;">
                 <div class="blokade-parent ma-8 pt-1" style="height: 785px;">
-                    <v-row class="" style="height: 770px; overflow: auto;">
-                        <v-col v-for="value, key in jobs" cols="12" class="">
-                            <div class="history-1">
-                                <div class="frame-parent-draft">
-                                    <div class="foto-perusaahaan-parent">
-                                        <img
-                                            alt=""
-                                            class="foto-perusaahaan-icon"
-                                            src="@/assets/svg/foto-perusaahaan.svg"
-                                        />
-                                        <b class="">{{ value.title_job }}</b>
-                                    </div>
-                                    <div class="">{{ value.job_provider_name }}</div>
-                                    <div class="">{{ value.salary }}</div>
-                                    <div class="">{{ value.created_at }}</div>
-                                    <div class="text-here" :class="value.status == 'APPROVED' ? 'approved' : ''">
-                                        {{ value.status }}
+                    <div style="height: 770px; overflow: auto;">
+                        <v-row class="">
+                            <v-col v-for="value, key in jobs" cols="12" class="">
+                                <div class="history-1">
+                                    <div class="frame-parent-draft">
+                                        <div class="foto-perusaahaan-parent">
+                                            <img
+                                                alt=""
+                                                class="foto-perusaahaan-icon"
+                                                src="@/assets/svg/foto-perusaahaan.svg"
+                                            />
+                                            <b class="">{{ value.title_job }}</b>
+                                        </div>
+                                        <div class="">{{ value.job_provider_name }}</div>
+                                        <div class="">{{ value.salary }}</div>
+                                        <div class="">{{ value.created_at }}</div>
+                                        <div class="text-here" :class="value.status == 'APPROVED' ? 'approved' : ''">
+                                            {{ value.status }}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </v-col>
-                    </v-row>
+                            </v-col>
+                        </v-row>
+                    </div>
                 </div>
             </div>
         </v-card>

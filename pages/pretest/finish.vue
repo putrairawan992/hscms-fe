@@ -19,8 +19,15 @@
                                     <v-col cols="12">
                                         <b class="hasil-tes">Hasil {{ finish?.category_name }}</b>
                                     </v-col>
-                                    <v-col cols="12" style="height: 215px;">
+                                    <v-col cols="12" style="height: 175px;">
                                         <b class="nilai">{{ Math.round(finish?.score) }}</b>
+                                    </v-col>
+                                    <v-col cols="12">
+                                        <div class="publish-btn ma-auto" style="width: 101px;">
+                                            <div class="attach-mpr-parent" @click="$router.push('/pretest')">
+                                                <b class="button">Close</b>
+                                            </div>
+                                        </div>
                                     </v-col>
                                     <v-col cols="12">
                                         <img class="ma-auto" alt="" src="@/assets/svg/finish-pretest-1.svg" />
