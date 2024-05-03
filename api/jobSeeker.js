@@ -31,8 +31,8 @@ export const jobSeekerAPI = () => {
     }
 
     // Schedule
-    const getTimeSchedule = async (job_post_id) => {
-        return await getRequest('jobseeker/scheduletime/'+job_post_id);
+    const getTimeSchedule = async (job_post_id, date) => {
+        return await getRequest('jobseeker/scheduletime/'+job_post_id+'?date='+date);
     }
     const getDateSchedule = async (month, year, job_post_id) => {
         return await getRequest('jobseeker/schedule/'+month+'/'+year+'/'+job_post_id);

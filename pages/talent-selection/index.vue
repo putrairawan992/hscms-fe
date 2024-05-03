@@ -6,7 +6,7 @@
                     <v-row align="center" class="my-4">
                         <v-col cols="12" class="text-left">
                             <div class="page-title">
-                                Talent Selection
+                                Talent Selection - Selection
                             </div>
                         </v-col>
                         <!-- <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
@@ -71,7 +71,11 @@
                                 </v-col>
                             </v-row>
                         </v-col>
-
+                        <v-col cols="12" class="text-left pb-0">
+                            <div class="page-title" style="font-size: 16px;">
+                                Penjelasan Tahapan Seleksi Karyawan
+                            </div>
+                        </v-col>
                     </v-row>
                     <Congratulation 
                         v-if="showCongratulation"

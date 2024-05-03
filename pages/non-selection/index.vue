@@ -1,294 +1,280 @@
 <template>
-    <v-dialog persistent v-model="show" width="650" rounded content-class="elevation-0">
-        <div style="position: relative; display: flex; flex-direction: column;">
-            <v-card class="pa-12" style="border-radius: 20px !important;"> 
-                <v-row class="mt-0">
-                    <!-- <v-col cols="12" class="text-left py-0">
-                        <div class="page-sub-title">Kepada</div>
-                    </v-col>
-                    <v-col cols="12" class="pt-0 pb-4">
-                        <multiselect
-                            class="register-text-input" label="name"
-                            :options="listEmployee" v-model="recipent_id"
-                            placeholder="Ketikan Nama" :allow-empty="false"
-                        ></multiselect>
-                    </v-col> -->
-                    <!-- <v-col cols="12" class="text-left py-0">
-                        <div class="page-sub-title">
-                            Judul
-                        </div>
-                    </v-col> -->
-                    <!-- <v-col cols="12" class="pt-0">
-                        <v-text-field v-model="title" placeholder="Ketikan Judul" solo class="grade-text-field" ></v-text-field>
-                    </v-col> -->
-                    <v-col cols="12" class="text-left py-0">
-                        <div class="page-sub-title">
-                            Isi Pesan
-                        </div>
-                    </v-col>
-                    <v-col cols="12" class="pt-1" style="font-size: 12px;">
-                        <TextEditor v-model="main_text" class="rich-editor" placeholder="Masukkan Isi Pesan"/>
-                    </v-col>
-                    <v-col cols="12" class="text-left py-0">
-                        <div class="page-sub-title">
-                            Upload File
-                        </div>
-                    </v-col>
-                    <v-col cols="12" class="pt-1">
-                        <v-file-input v-model="file_message" clearable placeholder="Pilih File..." solo class="grade-text-field"></v-file-input>
-                    </v-col>
-                    <!-- <v-col cols="12" class="text-left py-0">
-                        <div class="page-sub-title">
-                            Pilih Tanggal
-                        </div>
-                    </v-col>
-                    <v-col cols="12" class="pt-1">
-                        <v-menu
-                        ref="datePicker1"
-                        v-model="datePicker1"
-                        :close-on-content-click="false"
-                        transition="scale-transition"
-                        offset-y
-                        min-width="auto"
-                        >
-                            <template v-slot:activator="{ on, attrs }">
-                                <div v-on="on" style="position: relative;">
-                                    <input
-                                    v-model="schedule"
-                                    v-bind="attrs"
-                                    @blur="schedule = parseDate(schedule)"
-                                    outlined readonly
-                                    class="register-text-input"
-                                    placeholder="2024-11-06"
-                                    />
-                                    <img class="feather-icon-calendar" alt="" src="@/assets/svg/feathericon--calendar.svg" />
-                                </div>
-                            </template>
-                            <v-date-picker
-                                @input="datePicker1 = false"
-                                plas v-model="schedule" no-title
-                            ></v-date-picker>
-                        </v-menu>
-                    </v-col> -->
-
-                    <v-col cols="12" class="mt-4">
-                        <div style="position: relative; display: flex; justify-content: end; column-gap: 10px;">
-                            <div class="orange-btn" style="">
-                                <div class="" @click="onCloseDialog">
-                                    <b class="button mx-4">Close</b>
-                                </div>
+    <div>
+        <v-card class="card-register">
+            <div class="my-2" style="position: relative;">
+                <div class="blokade-parent ma-8 pt-1" style="min-height: 850px;">
+                    <v-row align="center" class="my-4">
+                        <v-col cols="12" class="text-left">
+                            <div class="page-title">
+                                Talent Selection - Non-Selection
                             </div>
-                            <div></div>
-                            <div class="orange-btn" style="">
-                                <div class="" @click="submit()">
-                                    <b class="button mx-4">Send</b>
-                                </div>
+                        </v-col>
+                        <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
+                            <v-row align="center">
+                                <v-col cols="12" class="label pb-1">
+                                    <b>Tahapan</b>
+                                </v-col>
+                                <v-col cols="12" class="pt-0 input-checkbox-container">
+                                    <multiselect
+                                        v-model="tahapSelected"
+                                        :options="arrayTahapan"
+                                        placeholder="Pilih Tahapan" :allow-empty="false"
+                                        class="header-select-input"
+                                        >
+                                    </multiselect>
+                                </v-col>
+                            </v-row>
+                        </v-col>
+                        <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
+                            <v-row align="center">
+                                <v-col cols="12" class="label pb-1">
+                                    &nbsp;
+                                </v-col>
+                                <v-col cols="12" class="pt-0 input-checkbox-container">
+                                    <div class="generate-btn ml-0" style="cursor: pointer;">
+                                        <div class="attach-mpr-parent" @click="generate">
+                                            <b class="button mx-4">Generate</b>
+                                        </div>
+                                    </div>
+                                </v-col>
+                            </v-row>
+                        </v-col>
+                        <v-col cols="12" class="text-left pb-0">
+                            <div class="page-title" style="font-size: 16px;">
+                                Penjelasan Tahapan Seleksi Karyawan
                             </div>
+                        </v-col>
+                    </v-row>
+                    <Congratulation 
+                        v-if="showCongratulation"
+                        :closeDialogCongratulation="closeDialogCongratulation"
+                    />
+                    <div v-else>
+                        <NonSelection />
+                        <!-- <div v-if="showDashboard">
                         </div>
-                        <!-- <div class="save-container pb-0">
-                            <div></div>
-                            <div class="frame-container" style="width: 101px; cursor: pointer;" @click="submit()">
-                                <div class="attach-mpr-parent">
-                                    <b class="button">Save</b>
-                                </div>
-                            </div>
-                        </div> -->
-                    </v-col>
-                </v-row>
-
-            </v-card>
-        </div>
-    </v-dialog>
+                        <div v-else> -->
+                            <!-- <NonSelection-Tahap1  :next="next"/> -->
+                            <!-- <NonSelection-Tahap1 v-if="tahap == 'Tahap 1'" :next="next"/>
+                            <NonSelection-Tahap2  v-else-if="tahap == 'Tahap 2'" :next="next"/>
+                            <NonSelection-Tahap3  v-else-if="tahap == 'Tahap 3'" :next="next" :finish="finish"/> -->
+                        <!-- </div> -->
+                    </div>
+                </div>
+            </div>
+        </v-card>
+        <Dialog-JobDetail :show="showDialog" :closeDialog="closeDialog"/>
+        <AlertApproval content="Lowongan akan dihentikan. Anda yakin ingin menghentikan?" :onApprove="closeAlertApproval" :closeDialog="closeAlertApproval" :show="showAlertApproval"/>
+    </div>
 </template>
+
 <script>
-import { API } from '@/api/index'
 import Multiselect from 'vue-multiselect'
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
+    name: "jobProvider",
+    layout: "jobPost",
     components: { 
         Multiselect,
     },
-    data () {
-        return {
-            title: null,
-            schedule: null,
-            main_text: null,
-            recipent_id: null,
-            file_message: null,
+    data: () => ({
+        tahap: null,
+        jobSelected: null,
+        tahapSelected: null,
 
-            listEmployee: [],
-            datePicker1: false,
-        }
-    },
-    watch: {
-        show(to, from){
-            this.getData();
-        },
-        quantitative_score(to, from){
-        }
-    },
-    props: {
-        content: { type: String, default() { return "" } },
-        message_id: { type: Number, default() { return null } },
-        show: { type: Boolean, default() { return false } },
-        onApprove: { type: Function, default() { return {} } },
-        closeDialog: { type: Function, default() { return {} } },
-    },
-    setup() {
-        const { getListEmployeeInbox, postReplyMessage } = API();
-        return { getListEmployeeInbox, postReplyMessage };
-    },
+        showDialog: false,
+        showDashboard: false,
+        showAlertApproval: false,
+        showCongratulation: false,
+
+        arrayJalur: ['Seleksi', 'Non-Seleksi'],
+        arrayTahapan: ['Tahap 1', 'Tahap 2', 'Tahap 3'],
+        arrayJobOpening: [],
+    }),
+    watch: {},
     computed: {
+		...mapState('provider-selection', ['jobOpening']),
         ...mapGetters('provider-selection', ['tahapanGetter']),
     },
     async mounted(){
-        // await this.getData();
+        await this.getJobOpening();
+        this.arrayJobOpening = this.jobOpening;
+        if(this.tahapanGetter){
+            this.tahap = this.tahapanGetter.tahap;
+            this.tahapSelected = this.tahapanGetter.tahap;
+            this.jobSelected = this.tahapanGetter.jobSelected;
+            if(!this.tahap){
+                this.showDashboard = true;
+            }
+        }else{
+            this.showDashboard = true;
+        }
     },
     methods: {
-        async getData(){
-            // await this.getListEmployeeInbox().then((result)=>{
-            //     if(result){
-            //         this.listEmployee = result;
-            //     }
-            // });
-        },
-        async submit(){
-            if(this.message_id){
-                // if(this.recipent_id == null){ this.$notifier.showMessage({ content: 'Data penerima belum terisi.', status: 'warning' }) }
-                // if(this.title == null){ this.$notifier.showMessage({ content: 'Judul belum terisi.', status: 'warning' }) }
-                if(this.main_text == null){ this.$notifier.showMessage({ content: 'Isi pesan belum terisi.', status: 'warning' }) }
-                
-                const body = new FormData();
-                // body.append('title', this.title);
-                // body.append('schedule', this.schedule);
-                body.append('main_text', this.main_text);
-                body.append('file_message', this.file_message);
-                // body.append('recipent_id', this.recipent_id.id);
-    
-                await this.postReplyMessage(body, this.message_id).then((result)=>{
-                    if(result){
-                        this.onCloseDialog();
-                        this.$alert.showAlert({ content: 'Pesan telah terkirim.', show: true });
-                    }
-                });
-            }else{
-                this.$notifier.showMessage({ content: 'Pesan tidak ditemukan.', status: 'warning' })
+		...mapActions('provider-selection', ['getJobOpening', 'getListCandidate']),
+        ...mapMutations('provider-selection', ['setTahapan']),
+
+        async generate(){
+            if(this.jobSelected != null && this.tahapSelected != null){
+                this.tahap = this.tahapSelected;
+                this.showDashboard = false;
+                this.setTahapan({
+                    tahap: this.tahapSelected,
+                    jobSelected: {id: this.jobSelected.id, job_title: this.jobSelected.job_title},
+                })
             }
         },
-        onCloseDialog(){
-            this.main_text = "";
-            this.file_message = null;
-            this.closeDialog();
+        next(tahap){
+            this.tahap = tahap;
+            this.tahapSelected = tahap;
+            this.generate();
         },
-        parseDate (date) {
-            if (!date) return null
-            const [year, month, day] = date.split('-')
-            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+        finish(){
+            this.showCongratulation = true;
+        },
+        closeDialogCongratulation() {
+            this.showCongratulation = false;
+            this.showDashboard = true;
+            this.setTahapan({
+                tahap: null,
+                jobSelected: null,
+            });
+        },
+        openDialog() {
+            this.showDialog = true;
+        },
+        closeDialog() {
+            this.showDialog = false;
+        },
+        closeAlertApproval() {
+            this.showAlertApproval = false;
         },
     }
-}
+
+};
 </script>
-
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped>
-.register-text-input {
-    border-radius: 10px;
-    border: 1px solid #ae445a;
-    box-sizing: border-box;
-    width: 100%;
-    height: 47px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 10px;
-    font-size: 12px;
-    /* color: #b6b6b6; */
-}.register-text-input::placeholder {
-    font-style: italic;
-}
-
-.feather-icon-calendar {
-    top: 25%;
-    right: 7%;
-    width: 20px;
-    height: 20px;
-    position: absolute;
-}
-
-.save-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-.page-title {
-    color: #AE445A;
-    font-family: Nunito;
-    font-size: 26px;
-    font-style: normal;
-    font-weight: 900;
-    line-height: normal;
-}
-.page-sub-title {
-    color: #AE445A;
+.text-tahap {
+    color: #FFF;
     font-family: Poppins;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
 }
-.close-icon-open-file {
+.text-tahap-desc {
+    color: #FFF;
+    text-align: justify;
+    font-family: Poppins;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.generate-btn {
+    cursor: pointer;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #f39f5a, #ae445a);
+    box-shadow: 5px 0px 5px #b3b9c5;
+    height: 35px;
     display: flex;
-    justify-content: end;
-    margin-bottom: -26px;
-    margin-right: 5px;
-    z-index: 2;
-}
-.embeddedContent {
-    background-color: #d3d3d3;
-    width: 100%;
-    height: 75vh;
-    top: 0;
-    left: 0;
-}
-.active {
-    display: inline-flex;
-    height: 17px;
-    padding: 10px;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
-    border-radius: 20px;
-    background: #3AB471;
-    color: #404041;
-    text-align: center;
-    font-family: Poppins;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
-.non-active {
-    display: inline-flex;
-    height: 17px;
+    justify-content: space-between;
     padding: 10px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 20px;
-    background: #b8b8b8;
-    color: #404041;
-    text-align: center;
-    font-family: Poppins;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+    box-sizing: border-box;
+    font-size: 12px;
+    color: #fff;
+    line-height: 50px;
+    margin-left: 20px;
 }
-.foto-perusaahaan-icon {
+.card-ts {
+    height: 111px;
+    color: #fff;
+    margin: unset;
+    position: relative;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #F39F5A 0%, #AE445A 100%);
+}
+.card-ts.terminate {
+    background: linear-gradient(90deg, #718199 0%, #B6B6B6 100%) !important;
+}
+.card-ts-edit-parent {
+    position: absolute;
+    bottom: 10%;
+    right: 4%;
+}
+.schedule-container {
+    border-radius: 20px;
+    background-color: #fff;
+    height: 17px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 10px;
+    color: #404041;
+}
+.card-ts.terminate .schedule-container {
+    border-radius: 20px;
+    background-color: #718199;
+    height: 17px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 10px;
+    color: #fff;
+}
+.edit-icon {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.minuscircle-icon {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: none;
+}
+.bishare-fill-icon {
+    position: relative;
+    width: 12px;
+    height: 12px;
+}
+.mei-2023 {
+    /* position: absolute;
+    width: 29.3%;
+    top: 12.69%;
+    left: 41.4%; */
+    font-size: 10px;
+    text-align: center;
+    display: inline-block;
+}
+
+.job-opening-icon {
     width: 101px;
     height: 101px;
     padding: 6px;
     border-radius: 50%;
-    border: 3px solid #ae445a;
+    border: 3px solid #fff;
+    align-self: stretch;
+    position: relative;
+    overflow: hidden;
+    object-fit: cover;
 }
+
 .dash-container {
     max-width: 20px;
     display: flex;
@@ -359,12 +345,10 @@ export default {
     margin-left: 5px;
 }
 .isilah-13-kolom-container {
-    color: #AE445A;
-    font-family: Nunito;
-    font-size: 26px;
-    font-style: normal;
-    font-weight: 900;
-    line-height: normal;
+    font-size: 18px;
+    color: #ae445a;
+    text-align: left;
+    line-height: 15px;
 }
 .job-post-nav {
     width: 100%;
@@ -395,42 +379,40 @@ export default {
     border-radius: 40px;
     background: linear-gradient(90deg, #F1F5FE 0%, #FFF 98.82%);
     box-shadow: 5px 0px 5px #b3b9c5, -5px 0px 5px #b3b9c5 !important;
-}.detail-opening-container {
+}.save-container {
     width: 100%;
     display: flex;
-    margin: 0px 0px 20px 30px;
+    margin: 30px 30px 20px 30px;
     justify-content: space-between;
 }
 .label {
     font-size: 14px;
     text-align: left;
 }
-.preview-text-input {
-    border-radius: 4px;
+.header-select-input {
+    border-radius: 10px;
     border: 1px solid #ae445a;
     box-sizing: border-box;
     width: 100%;
-    height: 30px;
+    height: 27px !important;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
     padding: 10px;
     font-size: 12px;
-    /* color: #b6b6b6; */
-}.preview-text-input::placeholder {
+    background-color: #fff;
+}.header-select-input::placeholder {
     font-style: italic;
 }
-
-.detail-opening-btn-text {
+.tempat-tanggal-lahir {
     position: relative;
-    font-size: 12px;
 }
 .calendar-input-container{
     position: relative;
 }
-.feather-icon-calendar-preview {
-    top: 18%;
+.feather-icon-calendar {
+    top: 25%;
     right: 7%;
     width: 20px;
     height: 20px;
@@ -525,6 +507,14 @@ export default {
     overflow: hidden;
     /* max-height: 100%; */
 }
+.page-title {
+    color: #AE445A;
+    font-family: Nunito;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+}
 .open-job-dan-draft {
     font-size: 20px;
     font-weight: 900;
@@ -538,11 +528,11 @@ export default {
         text-align: center;
     }
 }
-.detail-opening-button-wrapper {
+.button-wrapper {
     border-radius: 10px;
     background: linear-gradient(90deg, #f39f5a, #ae445a);
     box-shadow: 5px 0px 5px #b3b9c5;
-    min-width: 101px;
+    width: 101px;
     height: 33px;
     display: flex;
     flex-direction: row;

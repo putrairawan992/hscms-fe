@@ -15,7 +15,7 @@
                             {{ value.category_name }}
                         </div>
                     </v-col>
-                    <v-col v-if="!setting" v-for="item, key1 in bodyCreate[key].grade_list" cols="12" class="py-0">
+                    <v-col v-for="item, key1 in bodyCreate[key].grade_list" cols="12" class="py-0">
                         <v-row>
                             <v-col style="max-width: 50px;">
                                 <v-switch
@@ -99,6 +99,7 @@
     },
     async mounted(){
         await this.getGrade(this.tahapanGetter.jobSelected?.id).then((result)=>{
+            console.log('getGrade', result);
             if(result){
                 this.gradeList = result.grade_list;
                 this.setting = result.setting_grade;

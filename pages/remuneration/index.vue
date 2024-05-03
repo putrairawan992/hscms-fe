@@ -58,7 +58,7 @@
                                                 <b>
                                                     Total Karyawan terpilih
                                                     <span class="ml-3">
-                                                        0 &nbsp;&nbsp;/&nbsp;&nbsp; 50 Orang
+                                                        {{ data?.employee_list !== null && data?.employee_list.length > 0 ? data?.employee_list.length : '0' }} &nbsp;&nbsp;/&nbsp;&nbsp; {{ data?.count_employee_active ? data.count_employee_active : '0' }} Orang
                                                     </span>
                                                 </b>
                                             </div>

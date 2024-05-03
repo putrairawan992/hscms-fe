@@ -173,7 +173,7 @@ export default {
             await this.postCreateMessage(body).then((result)=>{
                 if(result){
                     this.closeDialog();
-                    this.$alert.showAlert({ content: 'Pesan telah terkirim,', show: true });
+                    this.$alert.showAlert({ content: 'Pesan telah terkirim.', show: true });
                     this.getData();
                 }
             });

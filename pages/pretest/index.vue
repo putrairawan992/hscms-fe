@@ -29,7 +29,7 @@
                                                 </div>
                                                 <div class="frame-div text-left">
                                                     <div class="jun-2023-wrapper">
-                                                        <div class="text-list-todo">Deadline: 17 Jul 2023 09:00 WIB</div>
+                                                        <div class="text-list-todo">Deadline: {{ useConvertToDateTimeView(value.deadline) }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="frame-div">
@@ -105,7 +105,26 @@ export default {
             this.setCategoryID(data.id);
             this.setModuleID(data.modul.id);
             return this.$router.push('/pretest/preview');
-        }
+        },
+
+        useConvertToDateTimeView(value) {
+            var tanggal = new Date(value);
+            var namaBulan = [
+                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            ];
+            var hari = tanggal.getUTCDate();
+            var bulan = namaBulan[tanggal.getUTCMonth()];
+            var tahun = tanggal.getUTCFullYear();
+
+            var jam = tanggal.getUTCHours();
+            var menit = tanggal.getUTCMinutes();
+
+            var hasilFormat = hari + " " + bulan + " " + tahun + " | " +
+            (jam < 10 ? "0" : "") + jam + ":" + (menit < 10 ? "0" : "") + menit + " WIB";
+
+            return hasilFormat;
+        },
     }
 
 };

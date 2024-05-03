@@ -71,7 +71,7 @@
                                             <div class="date-square-green" />
                                             <div class="week-text">{{ value1.day }}</div>
                                           </div>
-                                          <div @click="pickDay(value1.schedule_id)" class="jadwal-wrapper" style="cursor: pointer;">
+                                          <div @click="pickDay(value1.schedule_id, value1.date.date)" class="jadwal-wrapper" style="cursor: pointer;">
                                               <div class="job">Pilih Hari</div>
                                           </div>
                                         </div>
@@ -206,17 +206,18 @@ export default {
       async pickSchedule(){
         if(this.timeScheduleSelected?.id){
           await this.postPickSchedule({ schedule_id: this.timeScheduleSelected?.id }).then((result)=>{if(result){
-            this.$notifier.showMessage({ content: 'Success.', status: 'success' });
+            this.$alert.showAlert({ content: 'Anda berhasil memilih tanggal interview.', show: true });
           }})
 
         }else{
           this.$notifier.showMessage({ content: 'Mohon pilih jam terlebih dahulu.', status: 'warning' })
         }
       },
-      async pickDay(schedule_id){
-          await this.getTimeSchedule(schedule_id).then((result)=>{if(result){
+      async pickDay(schedule_id, date){
+          await this.getTimeSchedule(schedule_id, date).then((result)=>{if(result){
             this.timeSchedule = result;
             this.timeSchedule.time = result.time.filter(item => item.is_used === "false");
+          this.$notifier.showMessage({ content: 'Silahkan memilih jam interview.', status: 'success' })
           }})
       },
       async getData(){

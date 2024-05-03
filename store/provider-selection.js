@@ -6,12 +6,17 @@ export const state = () => ({
     listCandidate: [],
     detailAnswer: null,
 	tahapan: {tahap: null, jobSelected: null, detail: null},
+	tahapanNonSeleksi: {tahap: null, jobSelected: null, detail: null},
 })
 
 export const mutations = {
 	setTahapan(state, data) {
 		state.tahapan = data;
         localStorage.setItem('JOB_PROVIDER_TAHAPAN_SELECTION', JSON.stringify(data));
+	},
+	setTahapanNonSeleksi(state, data) {
+		state.tahapanNonSeleksi = data;
+        localStorage.setItem('JOB_PROVIDER_TAHAPAN_NON_SELECTION', JSON.stringify(data));
 	},
 	setJobOpening(state, data) {
 		state.jobOpening = data;
@@ -66,6 +71,13 @@ export const getters = {
         let data = state.tahapan;
         if(data.tahap == null){
             data = JSON.parse(localStorage.getItem('JOB_PROVIDER_TAHAPAN_SELECTION'));
+        }
+		return data;
+	},
+	tahapanNonSeleksiGetter: (state) => {
+        let data = state.tahapan;
+        if(data.tahap == null){
+            data = JSON.parse(localStorage.getItem('JOB_PROVIDER_TAHAPAN_NON_SELECTION'));
         }
 		return data;
 	},
