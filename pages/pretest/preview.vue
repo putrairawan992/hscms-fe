@@ -60,8 +60,7 @@
                                     <div class="title-component-text text-left mb-8">
                                         Contoh Tampilan  Soal
                                     </div>
-                                    <!-- <Countdown :date="new Date('2024-06-13 00:00:00')"/> -->
-                                    <Countdown />
+                                    <Countdown :date="new Date('2002-01-01 00:00:00')"/>
                                     <v-pagination
                                         :length="5"
                                         v-model="page"

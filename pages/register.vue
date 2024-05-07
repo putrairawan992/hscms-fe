@@ -182,20 +182,37 @@
                     </v-row>
                     <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                            <b>Alamat Domisili:</b>
+                            <b>Emergency Contact:</b>
                         </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <input class="register-text-input" placeholder="Masukkan Alamat Domisili Saat Ini" v-model="residential_address" :readonly="preview" />
+                        <v-col class="" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <v-row align="center">
+                                <v-col cols="4">
+                                    <input class="register-text-input" placeholder="Nama Emergency Contact" v-model="emergency_name" :readonly="preview" />
+                                </v-col>
+                                <v-col cols="4">
+                                    <input class="register-text-input" placeholder="Hubungan Emergency Contact" v-model="emergency_status" :readonly="preview" />
+                                </v-col>
+                                <v-col cols="4">
+                                    <input class="register-text-input" placeholder="Nomor Emergency Contact" v-model="emergency_number" :readonly="preview" />
+                                </v-col>
+                            </v-row>
                         </v-col>
                     </v-row>
                     <v-row align="center">
-                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                            <b>Alamat Rumah (KTP):</b>
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label pt-8">
+                            <b>Jenis Kelamin:</b>
                         </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <input class="register-text-input" placeholder="Masukkan Alamat Rumah Berdasarkan KTP" v-model="address_on_identity_card" :readonly="preview" />
+                        <v-col class="" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <multiselect
+                                :disabled="preview"
+                                v-model="gender"
+                                :options="listJenisKelamin"
+                                class="register-text-input"
+                                placeholder="Pilih Jenis Kelamin" :allow-empty="false"
+                            ></multiselect>
                         </v-col>
                     </v-row>
+
                     <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
                             <b>Status Pernikahan:</b>
@@ -208,6 +225,22 @@
                                 class="register-text-input"
                                 placeholder="Pilih Status Pernikahan" :allow-empty="false"
                             ></multiselect>
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                            <b>Alamat Domisili:</b>
+                        </v-col>
+                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Alamat Domisili Saat Ini" v-model="residential_address" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                            <b>Alamat Rumah (KTP):</b>
+                        </v-col>
+                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Alamat Rumah Berdasarkan KTP" v-model="address_on_identity_card" :readonly="preview" />
                         </v-col>
                     </v-row>
                     <v-row align="center">
@@ -244,13 +277,29 @@
                     </v-row>
                     <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Nama Bank <i class="opsional">(*opsional)</i> :</b>
+                        </v-col>
+                        <v-col class="" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Nama Bank *dianjurkan menggunakan rekening Bank Mandiri'" v-model="bank_name" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
                             <b>No. Rek Bank <i class="opsional">(*opsional)</i> :</b>
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <input class="register-text-input" placeholder="Masukkan No. Rekening Bank '*diwajibkan menggunakan rekening Bank Mandiri'" v-model="bank_account_number" :readonly="preview" />
+                            <input class="register-text-input" placeholder="Masukkan No. Rekening Bank *dianjurkan menggunakan rekening Bank Mandiri" v-model="bank_account_number" :readonly="preview" />
                         </v-col>
                     </v-row>
-                    <!-- <v-row align="center">
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Nama. Rek Bank <i class="opsional">(*opsional)</i> :</b>
+                        </v-col>
+                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Nama Rekening Bank *dianjurkan menggunakan rekening Bank Mandiri" v-model="bank_account_name" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
                             <b>Melamar Posisi:</b>
                         </v-col>
@@ -258,15 +307,15 @@
                             <multiselect
                                 :disabled="preview"
                                 v-model="work_position"
-                                :options="listStatusPernikahan"
-                                class="register-text-input"
+                                :options="masterJobSpecialist"
+                                class="register-text-input" label="job_specialist_name"
                                 placeholder="Pilih Posisi yang Dilamar" :allow-empty="false"
                             ></multiselect>
                         </v-col>
-                    </v-row> -->
+                    </v-row>
                     <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
-                            <b>Ekspektasi Gaji <i class="opsional">(*opsional)</i> :</b>
+                            <b>Ekspektasi Gaji :</b>
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                             <v-text-field
@@ -450,7 +499,13 @@
                                     </v-menu>
                                 </v-col>
                                 <v-col cols="6">
-                                    <input class="register-text-input" placeholder="Masukkan Tingkat Pendidikan" v-model="degree[key]" :readonly="preview" />
+                                    <v-select
+                                        solo rounded content-class="elevation-0"
+                                        v-model="degree[key]"
+                                        :items="['SMA/SMK', 'Sertifikat Profesional', 'D3', 'D4', 'S1', 'S2', 'S3']"
+                                        placeholder="Pilih tingkat pendidikan"
+                                        class="job-multiselect"
+                                    ></v-select>
                                 </v-col>
                                 <v-col cols="6">
                                     <input class="register-text-input" placeholder="Masukkan IPK" v-model="ipk[key]" :readonly="preview" />
@@ -625,7 +680,9 @@ export default {
         datePickerStartStudy: [false],
         datePickerEndWorking: [false],
         datePickerStartWorking: [false],
+        listJenisKelamin: ['Laki - Laki', 'Perempuan'],
         listStatusPernikahan: ['Sudah Menikah', 'Belum Menikah'],
+        masterJobSpecialist: [],
 
         // body API
         fullname: null,
@@ -646,6 +703,15 @@ export default {
         salary_exspectation: null,
         password: null,
         confirm_password: null,
+
+        scope: '',
+        gender: null,
+        bank_name: null,
+        bank_account_name: null,
+        emergency_status: null,
+        emergency_number: null,
+        emergency_name: null,
+
         // ======= experience =========
         department: [],
         company_name: [],
@@ -679,10 +745,13 @@ export default {
         },
     },
     setup() {
-        const { getRegistration, postRegistration } = API()
-        return { getRegistration, postRegistration };
+        const { getRegistration, postRegistration, getRegistrationData } = API()
+        return { getRegistration, postRegistration, getRegistrationData };
     },
     async mounted() {
+        await this.getRegistrationData().then((result)=>{
+            this.masterJobSpecialist = result?.master_job_specialist ? result.master_job_specialist : [];
+        });
         const storageIdRegistration = localStorage.getItem('id_registration');
         if(storageIdRegistration){
             this.id_registration = storageIdRegistration;
@@ -693,55 +762,55 @@ export default {
         async getData(){
             await this.getRegistration(this.id_registration).then((result)=>{
                 result && this.refreshForm(result);
-            })
+            });
         },
         async submit(){
-            console.log({
-                fullname: this.fullname,
-                place_birth: this.place_birth,
-                date_birth: this.date_birth,
-                email: this.email,
-                linkedin: this.linkedin,
-                handphone: this.handphone,
-                residential_address: this.residential_address,
-                address_on_identity_card: this.address_on_identity_card,
-                marital_status: this.marital_status,
-                identity_number: this.identity_number,
-                npwp_number: this.npwp_number,
-                bpjskes: this.bpjskes,
-                bpjstik: this.bpjstik,
-                bank_account_number: this.bank_account_number,
-                work_position: this.work_position,
-                salary_exspectation: this.salary_exspectation,
-                password: this.password,
-                confirm_password: this.confirm_password,
-                // ======= experience =========
-                department: this.department,
-                company_name: this.company_name,
-                employment_contract: this.employment_contract,
-                start_working: this.start_working,
-                end_working: this.end_working,
-                location: this.location,
-                // ======= education ==========
-                institute_name: this.institute_name,
-                degree: this.degree,
-                education_program: this.education_program,
-                start_study: this.start_study,
-                end_study: this.end_study,
-                ipk: this.ipk,
-                // ======= certificate =========
-                certificate_name: this.certificate_name,
-                organizer: this.organizer,
-                scores: this.scores,
-                certificate_year: this.certificate_year,
-                // ======= document =========
-                curriculum_vitae: this.curriculum_vitae,
-                photo: this.photo,
-                ktp: this.ktp,  // optional
-                kk: this.kk,   // optional
-                npwp: this.npwp, // optional
-                bpjs: this.bpjs, // optional
-            });
+            // console.log({
+            //     fullname: this.fullname,
+            //     place_birth: this.place_birth,
+            //     date_birth: this.date_birth,
+            //     email: this.email,
+            //     linkedin: this.linkedin,
+            //     handphone: this.handphone,
+            //     residential_address: this.residential_address,
+            //     address_on_identity_card: this.address_on_identity_card,
+            //     marital_status: this.marital_status,
+            //     identity_number: this.identity_number,
+            //     npwp_number: this.npwp_number,
+            //     bpjskes: this.bpjskes,
+            //     bpjstik: this.bpjstik,
+            //     bank_account_number: this.bank_account_number,
+            //     work_position: this.work_position,
+            //     salary_exspectation: this.salary_exspectation,
+            //     password: this.password,
+            //     confirm_password: this.confirm_password,
+            //     // ======= experience =========
+            //     department: this.department,
+            //     company_name: this.company_name,
+            //     employment_contract: this.employment_contract,
+            //     start_working: this.start_working,
+            //     end_working: this.end_working,
+            //     location: this.location,
+            //     // ======= education ==========
+            //     institute_name: this.institute_name,
+            //     degree: this.degree,
+            //     education_program: this.education_program,
+            //     start_study: this.start_study,
+            //     end_study: this.end_study,
+            //     ipk: this.ipk,
+            //     // ======= certificate =========
+            //     certificate_name: this.certificate_name,
+            //     organizer: this.organizer,
+            //     scores: this.scores,
+            //     certificate_year: this.certificate_year,
+            //     // ======= document =========
+            //     curriculum_vitae: this.curriculum_vitae,
+            //     photo: this.photo,
+            //     ktp: this.ktp,  // optional
+            //     kk: this.kk,   // optional
+            //     npwp: this.npwp, // optional
+            //     bpjs: this.bpjs, // optional
+            // });
             const body = new FormData();
             body.append('fullname', this.fullname);
             body.append('place_birth', this.place_birth);
@@ -753,6 +822,15 @@ export default {
             body.append('address_on_identity_card', this.address_on_identity_card);
             body.append('marital_status', this.marital_status);
             body.append('identity_number', this.identity_number);
+
+            body.append('scope', this.scope);
+            body.append('gender', this.gender);
+            body.append('bank_name', this.bank_name);
+            body.append('bank_account_name', this.bank_account_name);
+            body.append('emergency_status', this.emergency_status);
+            body.append('emergency_number', this.emergency_number);
+            body.append('emergency_name', this.emergency_name);
+
             if (this.npwp_number != null) {
                 body.append('npwp_number', this.npwp_number);
             }
@@ -768,47 +846,41 @@ export default {
             if (this.salary_exspectation != null) {
                 body.append('salary_exspectation', this.salary_exspectation);
             }
-            body.append('work_position', this.work_position);
+            body.append('work_position', this.work_position?.job_specialist_name);
             body.append('password', this.password);
             body.append('confirm_password', this.confirm_password);
             // ======= experience =========
-            if (this.department.length > 0) {
-                body.append('department[]', this.department);
-                body.append('company_name[]', this.company_name);
-                body.append('employment_contract[]', this.employment_contract);
-                body.append('start_working[]', this.start_working);
-                body.append('end_working[]', this.end_working);
-                body.append('location[]', this.location);
+            if(this.department.length > 0){
+                body.append('department[]', this.department.length ? this.department : null);
+                body.append('company_name[]', this.company_name.length ? this.company_name : null);
+                body.append('employment_contract[]', this.employment_contract.length ? this.employment_contract : null);
+                body.append('start_working[]', this.start_working.length ? this.start_working : null);
+                body.append('end_working[]', this.end_working.length ? this.end_working : null);
+                body.append('location[]', this.location.length ? this.location : null);
             }
             // ======= education ==========
-            body.append('institute_name[]', this.institute_name);
-            body.append('degree[]', this.degree);
-            body.append('education_program[]', this.education_program);
-            body.append('start_study[]', this.start_study);
-            body.append('end_study[]', this.end_study);
-            body.append('ipk[]', this.ipk);
-            // ======= certificate =========
-            body.append('certificate_name[]', this.certificate_name);
-            body.append('organizer[]', this.organizer);
-            if (this.scores.length > 0) {
-                body.append('scores[]', this.scores);
+            if(this.institute_name.length > 0){
+                body.append('institute_name[]', this.institute_name.length ? this.institute_name : null);
+                body.append('degree[]', this.degree.length ? this.degree : null);
+                body.append('education_program[]', this.education_program.length ? this.education_program : null);
+                body.append('start_study[]', this.start_study.length ? this.start_study : null);
+                body.append('end_study[]', this.end_study.length ? this.end_study : null);
+                body.append('ipk[]', this.ipk.length ? this.ipk : null);
             }
-            body.append('certificate_year[]', this.certificate_year);
+            // ======= certificate =========
+            if(this.institute_name.length > 0){
+                body.append('certificate_name[]', this.certificate_name.length ? this.certificate_name : null);
+                body.append('organizer[]', this.organizer.length ? this.organizer : null);
+                body.append('scores[]', this.scores.length ? this.scores : null);
+                body.append('certificate_year[]', this.certificate_year.length ? this.certificate_year : null);
+            }
             // ======= document =========
             body.append('curriculum_vitae', this.curriculum_vitae);
             body.append('photo', this.photo);
-            if (this.ktp != null) {
-                body.append('ktp', this.ktp);   // optional
-            }
-            if (this.kk != null) {
-                body.append('kk', this.kk);     // optional
-            }
-            if (this.npwp != null) {
-                body.append('npwp', this.npwp); // optional
-            }
-            if (this.bpjs != null) {
-                body.append('bpjs', this.bpjs); // optional
-            }
+            body.append('ktp', this.ktp); // optional
+            body.append('kk', this.kk); // optional
+            body.append('npwp', this.npwp); // optional
+            body.append('bpjs', this.bpjs); // optional
 
             await this.postRegistration(body, this.id_registration).then( async (result) => {
                 if(result){
@@ -857,6 +929,14 @@ export default {
             this.bank_account_number = data.data_job_seeker[0].bank_account_number;
             this.work_position = data.data_job_seeker[0].work_position;
             this.salary_exspectation = data.data_job_seeker[0].salary_exspectation;
+
+            this.scope = data.data_job_seeker[0].scope;
+            this.gender = data.data_job_seeker[0].gender;
+            this.bank_name = data.data_job_seeker[0].bank_name;
+            this.bank_account_name = data.data_job_seeker[0].bank_account_name;
+            this.emergency_status = data.data_job_seeker[0].emergency_status;
+            this.emergency_number = data.data_job_seeker[0].emergency_number;
+            this.emergency_name = data.data_job_seeker[0].emergency_name;
             
             this.curriculum_vitae = data.data_document[0].curriculum_vitae;
             this.photo = data.data_document[0].photo;

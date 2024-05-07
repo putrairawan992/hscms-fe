@@ -7,6 +7,9 @@ export const authAPI = () => {
     const { getRequest ,postRequest } = request();
     const { $api, $loader, $notifier } = useContext();
     
+    const getRegistrationData = async () => {
+        return await getRequest('auth/registration_master');
+    }
     const getRegistration = async (id_registration) => {
         return await getRequest(id_registration ? 'auth/registration/'+id_registration : 'auth/registration');
     }
@@ -17,5 +20,6 @@ export const authAPI = () => {
     return {
         getRegistration,
         postRegistration,
+        getRegistrationData,
     }
 }

@@ -18,7 +18,7 @@
                                 </div>
                                 <ol class="w-100" v-if="data.detail.length">
                                     <li v-for="value, key in data.detail" class="mb-2">
-                                        <div class="text-left detail-text-question">
+                                        <div class="text-left detail-text-question" v-if="value.answer_user.length > 0 && value.choise_question.length > 0">
                                             <span style="text-transform: uppercase;">{{ value?.answer_user[0].alphabet }}</span>. 
                                             Jawaban yang {{value?.answer_user[0].alphabet == value?.choise_question[0].alphabet ? 'Benar' : 'Salah'}}
                                         </div>
@@ -31,7 +31,7 @@
                                 </div>
                                 <ol class="w-100" v-if="data.detail.length">
                                     <li v-for="value, key in data.detail" class="mb-2">
-                                        <div class="text-left detail-text-question">
+                                        <div class="text-left detail-text-question" v-if="value.answer_user.length > 0 && value.choise_question.length > 0">
                                             <span style="text-transform: uppercase;">{{ value?.choise_question[0].alphabet }}</span>. 
                                             Jawaban yang Benar
                                         </div>
@@ -102,6 +102,7 @@ export default {
     async mounted(){
         await this.getData();
         this.data = this.detailAnswer;
+        console.log('kesini', this.data);
     },
     methods: {
         ...mapMutations('provider-selection', ['setDetailAnswer']),

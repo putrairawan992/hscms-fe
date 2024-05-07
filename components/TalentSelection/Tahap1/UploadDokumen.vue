@@ -34,7 +34,7 @@
                                                     <a :href="value.answer" target="_blank">
                                                         <img alt="preview" src="@/assets/svg/eye-circle.svg" />
                                                     </a>
-                                                    <a :href="value.answer" target="_blank">
+                                                    <a @click="downloadFile(value)">
                                                         <img alt="download" src="@/assets/svg/arrow-down-to-line.svg" />
                                                     </a>
                                                 </div>
@@ -89,8 +89,8 @@ export default {
     }),
     watch: {},
     setup() {
-        const { getDetailAnswerAPI, putInputScore, postFinishScoring } = API()
-        return { getDetailAnswerAPI, putInputScore, postFinishScoring };
+        const { getDetailAnswerAPI, putInputScore, getFileAnswer, postFinishScoring } = API()
+        return { getDetailAnswerAPI, putInputScore, getFileAnswer, postFinishScoring };
     },
     computed: {
         ...mapState('provider-selection', ['detailAnswer']),
@@ -117,7 +117,7 @@ export default {
             }, question.pretest_modul_detail_id).then((result)=>{
                 this.getData();
             })
-        },2000),
+        },1000),
         async finishScoring() {
             await this.postFinishScoring({
                 job_post_id: this.tahapanGetter.jobSelected?.id,
@@ -127,6 +127,82 @@ export default {
                 this.$router.push('/talent-selection');
             })
         },
+        async downloadFile(data) {
+            try {
+                if(data.is_file){
+                    await this.getFileAnswer(data.apply_job_answer_id).then((result)=>{
+                        const filename = this.getFileName(data.answer);
+                        // Ekstrak ekstensi file
+                        const fileExtension = filename.split('.').pop().toLowerCase();
+                        // Tentukan tipe MIME berdasarkan ekstensi file
+                        let mimeType;
+                        switch (fileExtension) {
+                            case 'pdf':
+                                mimeType = 'application/pdf';
+                                break;
+                            case 'png':
+                                mimeType = 'image/png';
+                                break;
+                            case 'jpg':
+                                mimeType = 'image/jpg';
+                                break;
+                            case 'jpeg':
+                                mimeType = 'image/jpeg';
+                                break;
+                            case 'gif':
+                                mimeType = 'image/gif';
+                                break;
+                            case 'txt':
+                                mimeType = 'text/plain';
+                                break;
+                            case 'html':
+                                mimeType = 'text/html';
+                                break;
+                            case 'json':
+                                mimeType = 'application/json';
+                                break;
+                            case 'doc':
+                            case 'docx':
+                                mimeType = 'application/msword';
+                                break;
+                            case 'xls':
+                                mimeType = 'application/vnd.ms-excel';
+                                break;
+                            case 'xlsx':
+                                mimeType = 'application/vnd.ms-excel';
+                                break;
+                            case 'ppt':
+                                mimeType = 'application/vnd.ms-powerpoint';
+                                break;
+                            case 'pptx':
+                                mimeType = 'application/vnd.ms-powerpoint';
+                                break;
+                            // Tambahkan lebih banyak kasus untuk tipe file lain yang sering digunakan
+                            default:
+                                mimeType = 'application/octet-stream'; // MIME tipe default untuk tipe file yang tidak dikenali
+                                break;
+                        }
+
+                        const blob = new Blob([result], { type: mimeType });
+
+                        const link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = filename;
+
+                        link.dataset.downloadurl = [mimeType, link.download, link.href].join(':');
+                        link.draggable = true;
+                        link.classList.add('dragout');
+                        link.click();
+                    });
+
+                }else{
+                    return $notifier.showMessage({ content: 'File tidak tersedia.', status: 'warning' });
+                }
+            } catch (error) {
+                    return $notifier.showMessage({ content: 'File tidak tersedia.', status: 'warning' });
+            }            
+        },
+
         openDialog() {
             this.showDialog = true;
         },

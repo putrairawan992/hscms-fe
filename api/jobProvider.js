@@ -86,6 +86,9 @@ export const jobProviderAPI = () => {
     const getDetailAnswerAPI = async (job_seeker_id, job_post_id, pretest_modul_detail_id) => {
         return await getRequest(`jobprovider/detailanswer/`+job_seeker_id+'/'+job_post_id+'/'+pretest_modul_detail_id);
     }
+    const getFileAnswer = async (apply_job_answer_id) => {
+        return await getRequest(`jobprovider/selection/file_answer/`+apply_job_answer_id, true, 'arraybuffer');
+    }
     const putInputScore = async (body,pretest_modul_detail_id) => {
         return await putRequest(`jobprovider/scoringanswer/`+pretest_modul_detail_id, body);
     }
@@ -277,6 +280,7 @@ export const jobProviderAPI = () => {
         putUnactiveJobOpening,
         getListCandidateAPI,
         getDetailAnswerAPI,
+        getFileAnswer,
         putInputScore,
         postFinishScoring,
         postChooseCandidate,

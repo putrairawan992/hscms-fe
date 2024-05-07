@@ -6,6 +6,7 @@ export const API = () => {
     const {
         getRegistration,
         postRegistration,
+        getRegistrationData,
     } = authAPI();
 
     const {
@@ -48,6 +49,7 @@ export const API = () => {
         putUnactiveJobOpening,
         getListCandidateAPI,
         getDetailAnswerAPI,
+        getFileAnswer,
         putInputScore,
         postFinishScoring,
         postChooseCandidate,
@@ -101,6 +103,7 @@ export const API = () => {
         // authAPI
             getRegistration,
             postRegistration,
+            getRegistrationData,
 
 
 
@@ -145,6 +148,7 @@ export const API = () => {
             putUnactiveJobOpening,
             getListCandidateAPI,
             getDetailAnswerAPI,
+            getFileAnswer,
             putInputScore,
             postFinishScoring,
             postChooseCandidate,

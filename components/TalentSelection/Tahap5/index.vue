@@ -454,11 +454,16 @@ export default {
                 let passExpFilter = true;
                 let passExpScore = true;
 
-                if ((this.filters.smk && candidate.education[0].degree == "SMK") ||
-                    (this.filters.s1 && candidate.education[0].degree == "s1") ||
-                    (this.filters.s2 && candidate.education[0].degree == "s2") ||
-                    (this.filters.s2 && candidate.education[0].degree == "s3") ||
-                    (this.filters.sertifikat && candidate.education[0].degree == "sertifikat")) {
+                if ((this.filters.smk && candidate.education[0].degree == "SMA/SMK") ||
+
+                    (this.filters.s1 && candidate.education[0].degree == "S1") ||
+                    (this.filters.s1 && candidate.education[0].degree == "D3") ||
+                    (this.filters.s1 && candidate.education[0].degree == "D4") ||
+
+                    (this.filters.s2 && candidate.education[0].degree == "S2") ||
+                    (this.filters.s2 && candidate.education[0].degree == "S3") ||
+
+                    (this.filters.sertifikat && candidate.education[0].degree == "Sertifikat Profesional")) {
                     passDegreeFilter = true;
                 } else {
                     passDegreeFilter = false;
