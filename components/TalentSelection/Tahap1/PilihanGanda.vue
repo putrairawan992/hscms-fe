@@ -42,14 +42,14 @@
                             <v-col cols="6">
                                 <div class="text-center text-soal-dan mb-6 mt-2">
                                     <b>Total Jawaban Salah:</b>
-                                    <div class="text-center detail-text">
-                                        15/65 Jawaban
+                                    <div v-for="value, key in data.detail" class="text-center detail-text">
+                                        {{ value?.count_false ? value?.count_false : '0/0' }} Jawaban
                                     </div>
                                 </div>
                                 <div class="text-center text-soal-dan mb-6">
                                     <b>Total Jawaban Benar:</b>
-                                    <div class="text-center detail-text">
-                                        50/65 Jawaban
+                                    <div v-for="value, key in data.detail" class="text-center detail-text">
+                                        {{ value?.count_true ? value?.count_true : '0/0' }} Jawaban
                                     </div>
                                 </div>
                                 <div class="text-center text-soal-dan mb-6">
@@ -102,7 +102,6 @@ export default {
     async mounted(){
         await this.getData();
         this.data = this.detailAnswer;
-        console.log('kesini', this.data);
     },
     methods: {
         ...mapMutations('provider-selection', ['setDetailAnswer']),
