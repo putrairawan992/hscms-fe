@@ -94,7 +94,7 @@ export default {
         },
         debounceInput: debounce( async function (answer, question) {
             await this.putInputScore({
-                apply_job_answer: question.apply_job_answer,
+                apply_job_answer: question.apply_job_answer_id,
                 score: answer
             }, question.pretest_modul_detail_id).then((result)=>{
                 this.getData();
