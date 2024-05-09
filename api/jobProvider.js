@@ -89,7 +89,7 @@ export const jobProviderAPI = () => {
     const getFileAnswer = async (apply_job_answer_id) => {
         return await getRequest(`jobprovider/selection/file_answer/`+apply_job_answer_id, true, 'arraybuffer');
     }
-    const putInputScore = async (body,pretest_modul_detail_id) => {
+    const putInputScore = async (body, pretest_modul_detail_id) => {
         return await putRequest(`jobprovider/scoringanswer/`+pretest_modul_detail_id, body);
     }
     const postFinishScoring = async (body,pretest_modul_detail_id) => {

@@ -16,11 +16,11 @@
                                 <div class="text-left text-soal-dan mb-4">
                                     <b>Jawaban Peserta</b>
                                 </div>
-                                <ol class="w-100" v-if="data.detail.length">
-                                    <li v-for="value, key in data.detail" class="mb-2">
-                                        <div class="text-left detail-text-question" v-if="value.answer_user.length > 0 && value.choise_question.length > 0">
-                                            <span style="text-transform: uppercase;">{{ value?.answer_user[0].alphabet }}</span>. 
-                                            Jawaban yang {{value?.answer_user[0].alphabet == value?.choise_question[0].alphabet ? 'Benar' : 'Salah'}}
+                                <ol class="w-100" v-if="data.detail.length" v-for="value in data.detail">
+                                    <li v-for="item, key in value.answer_user" class="mb-2">
+                                        <div class="text-left detail-text-question"  v-if="value.answer_user.length > 0 && value.choise_question.length > 0">
+                                            <span style="text-transform: uppercase;">{{ item.alphabet }}</span>. 
+                                            Jawaban yang {{item.alphabet == value?.choise_question[key].alphabet ? 'Benar' : 'Salah'}}
                                         </div>
                                     </li>
                                 </ol> 
@@ -29,10 +29,10 @@
                                 <div class="text-left text-soal-dan mb-4">
                                     <b>Jawaban Soal</b>
                                 </div>
-                                <ol class="w-100" v-if="data.detail.length">
-                                    <li v-for="value, key in data.detail" class="mb-2">
-                                        <div class="text-left detail-text-question" v-if="value.answer_user.length > 0 && value.choise_question.length > 0">
-                                            <span style="text-transform: uppercase;">{{ value?.choise_question[0].alphabet }}</span>. 
+                                <ol class="w-100" v-if="data.detail.length" v-for="value in data.detail">
+                                    <li v-for="item, key in value.choise_question" class="mb-2">
+                                        <div class="text-left detail-text-question">
+                                            <span style="text-transform: uppercase;">{{ item.alphabet }}</span>. 
                                             Jawaban yang Benar
                                         </div>
                                     </li>
@@ -111,6 +111,7 @@ export default {
             let pretest_modul_detail_id = this.tahapanGetter.detail?.module?.pretest_modul_detail_id;
 
             await this.getDetailAnswerAPI(job_seeker_id, job_post_id, pretest_modul_detail_id).then((result)=>{
+                console.log('result', result);
                 if(result){ this.setDetailAnswer(result); }
             })
         },

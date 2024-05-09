@@ -76,7 +76,7 @@
                                     <tr><th colspan="4" style="border-top: 2px solid #AE445A;"></th></tr>
                                     <tr>
                                         <th colspan="3" class="mt-6">Average Score</th>
-                                        <th class="mt-6">0</th>
+                                        <th class="mt-6">{{ value?.average_total }}</th>
                                     </tr>
                                 </table>
                                 <!-- <div class="mt-2" style="display: flex; justify-content: end;">

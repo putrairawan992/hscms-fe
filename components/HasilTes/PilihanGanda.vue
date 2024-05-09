@@ -16,11 +16,11 @@
                                 <div class="text-left text-soal-dan mb-4">
                                     <b>Jawaban Peserta</b>
                                 </div>
-                                <ol class="w-100" v-if="data.detail.length">
-                                    <li v-for="value, key in data.detail" class="mb-2">
-                                        <div class="text-left detail-text-question">
-                                            <span style="text-transform: uppercase;">{{ value?.answer_user[0].alphabet }}</span>. 
-                                            Jawaban yang {{value?.answer_user[0].alphabet == value?.choise_question[0].alphabet ? 'Benar' : 'Salah'}}
+                                <ol class="w-100" v-if="data.detail.length" v-for="value in data.detail">
+                                    <li v-for="item, key in value.answer_user" class="mb-2">
+                                        <div class="text-left detail-text-question"  v-if="value.answer_user.length > 0 && value.choise_question.length > 0">
+                                            <span style="text-transform: uppercase;">{{ item.alphabet }}</span>. 
+                                            Jawaban yang {{item.alphabet == value?.choise_question[key].alphabet ? 'Benar' : 'Salah'}}
                                         </div>
                                     </li>
                                 </ol> 
@@ -29,10 +29,10 @@
                                 <div class="text-left text-soal-dan mb-4">
                                     <b>Jawaban Soal</b>
                                 </div>
-                                <ol class="w-100" v-if="data.detail.length">
-                                    <li v-for="value, key in data.detail" class="mb-2">
+                                <ol class="w-100" v-if="data.detail.length" v-for="value in data.detail">
+                                    <li v-for="item, key in value.choise_question" class="mb-2">
                                         <div class="text-left detail-text-question">
-                                            <span style="text-transform: uppercase;">{{ value?.choise_question[0].alphabet }}</span>. 
+                                            <span style="text-transform: uppercase;">{{ item.alphabet }}</span>. 
                                             Jawaban yang Benar
                                         </div>
                                     </li>
@@ -42,14 +42,14 @@
                             <v-col cols="6">
                                 <div class="text-center text-soal-dan mb-6 mt-2">
                                     <b>Total Jawaban Salah:</b>
-                                    <div class="text-center detail-text">
-                                        15/65 Jawaban
+                                    <div v-for="value, key in data.detail" class="text-center detail-text">
+                                        {{ value?.count_false ? value?.count_false : '0/0' }} Jawaban
                                     </div>
                                 </div>
                                 <div class="text-center text-soal-dan mb-6">
                                     <b>Total Jawaban Benar:</b>
-                                    <div class="text-center detail-text">
-                                        50/65 Jawaban
+                                    <div v-for="value, key in data.detail" class="text-center detail-text">
+                                        {{ value?.count_true ? value?.count_true : '0/0' }} Jawaban
                                     </div>
                                 </div>
                                 <div class="text-center text-soal-dan mb-6">

@@ -15,7 +15,7 @@
                             <b>Soal dan Jawaban</b>
                         </div>
                         <v-row v-if="detailAnswer" class="ma-auto">
-                            <v-col v-for="value, key in detailAnswer.detail" cols="12" class="detail-selection-card mb-8">
+                            <v-col v-for="value, key in detailAnswer.detail" cols="12" class="detail-selection-card mb-8" style="min-height: 200px;">
                                 <div class="history-1">
                                     <div class="frame-detail-text-question">
                                         <ol class="w-100 pt-2"><li :value="key+1">
@@ -112,7 +112,7 @@ export default {
         },
         debounceInput: debounce( async function (answer, question) {
             await this.putInputScore({
-                apply_job_answer: question.apply_job_answer,
+                apply_job_answer: question.apply_job_answer_id,
                 score: answer
             }, question.pretest_modul_detail_id).then((result)=>{
                 this.getData();
