@@ -691,18 +691,20 @@
         onDialogClose(value) {
             this.additionData = [
                 {
-                    title: null,
                     note: null,
+                    title: null,
                     amount: null,
                 }
             ];
             this.deductionData = [
                 {
-                    title: null,
                     note: null,
+                    title: null,
                     amount: null,
                 }
             ];
+            this.additionNominal = [];
+            this.deductionNominal = [];
             if (!value) {
                 this.closeDialog();
             }
