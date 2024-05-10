@@ -502,7 +502,7 @@
                                     <v-select
                                         solo rounded content-class="elevation-0"
                                         v-model="degree[key]"
-                                        :items="['SMA/SMK', 'Sertifikat Profesional', 'D3', 'D4', 'S1', 'S2', 'S3']"
+                                        :items="['SMA/SMK', 'Sertifikat Keahlian', 'D3', 'D4', 'S1', 'S2', 'S3']"
                                         placeholder="Pilih tingkat pendidikan"
                                         class="job-multiselect"
                                     ></v-select>

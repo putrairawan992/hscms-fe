@@ -29,7 +29,7 @@
                                                 <input
                                                     type="checkbox" id="s2-checkbox"
                                                     class="checkbox-selected-red"
-                                                    v-model="filters.s2"
+                                                    v-model="filters.s1"
                                                 />
                                             </div>
                                         </div>
@@ -41,7 +41,7 @@
                                                 <input 
                                                     type="checkbox" id="s3-checkbox"
                                                     class="checkbox-selected-red"
-                                                    v-model="filters.s3"
+                                                    v-model="filters.s2"
                                                 />
                                             </div>
                                         </div>
@@ -412,8 +412,8 @@ export default {
         idCandidats:[],
         filters: {
             smk: true,
+            s1: true,
             s2: true,
-            s3: true,
             sertifikat: true,
             nolSampaiDua: true,
             tigaSampaiEmpat: true,
@@ -463,7 +463,7 @@ export default {
                     (this.filters.s2 && candidate.education[0].degree == "S2") ||
                     (this.filters.s2 && candidate.education[0].degree == "S3") ||
 
-                    (this.filters.sertifikat && candidate.education[0].degree == "Sertifikat Profesional")) {
+                    (this.filters.sertifikat && candidate.education[0].degree == "Sertifikat Keahlian")) {
                     passDegreeFilter = true;
                 } else {
                     passDegreeFilter = false;

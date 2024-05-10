@@ -323,15 +323,12 @@ export default {
                 let passExpScore = true;
 
                 if ((this.filters.smk && candidate.education[0].degree == "SMA/SMK") ||
-
                     (this.filters.s1 && candidate.education[0].degree == "S1") ||
                     (this.filters.s1 && candidate.education[0].degree == "D3") ||
                     (this.filters.s1 && candidate.education[0].degree == "D4") ||
-
                     (this.filters.s2 && candidate.education[0].degree == "S2") ||
                     (this.filters.s2 && candidate.education[0].degree == "S3") ||
-
-                    (this.filters.sertifikat && candidate.education[0].degree == "Sertifikat Profesional")) {
+                    (this.filters.sertifikat && candidate.education[0].degree == "Sertifikat Keahlian")) {
                     passDegreeFilter = true;
                 } else {
                     passDegreeFilter = false;
@@ -349,7 +346,7 @@ export default {
                 if ((this.filters.scoreEnamLima && candidate.average_total <= 65) ||
                     (this.filters.scoreTujuhLima && candidate.average_total >= 66 && candidate.average_total <= 75) ||
                     (this.filters.scoreDelapanLima && candidate.average_total >= 76 && candidate.average_total <= 85) ||
-                    (this.filters.scoreSeratus && candidate.average_total > 86)) {
+                    (this.filters.scoreSeratus && candidate.average_total >= 86)) {
                     passExpScore = true;
                 } else {
                     passExpScore = false;
