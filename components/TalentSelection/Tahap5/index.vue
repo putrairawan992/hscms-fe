@@ -481,7 +481,7 @@ export default {
                 if ((this.filters.scoreEnamLima && candidate.average_total <= 65) ||
                     (this.filters.scoreTujuhLima && candidate.average_total >= 66 && candidate.average_total <= 75) ||
                     (this.filters.scoreDelapanLima && candidate.average_total >= 76 && candidate.average_total <= 85) ||
-                    (this.filters.scoreSeratus && candidate.average_total > 86)) {
+                    (this.filters.scoreSeratus && candidate.average_total >= 86)) {
                     passExpScore = true;
                 } else {
                     passExpScore = false;
