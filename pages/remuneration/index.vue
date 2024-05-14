@@ -110,7 +110,7 @@
                                                         <img
                                                             alt="employee-profile"
                                                             class="foto-perusaahaan-icon"
-                                                            :src="value.employee_photo"
+                                                            :src="value.employee_photo" @error="handleImgError"
                                                         />
                                                         <b class="">{{ value.employee_name }}</b>
                                                     </div>
@@ -238,6 +238,7 @@ import debounce from 'debounce';
 import { API } from '@/api/index'
 import Multiselect from 'vue-multiselect'
 import TextEditor from "~/components/TextEditor";
+import userRedImage from '~/assets/img/user-red.png';
 export default {
     layout: "jobProvider",
     components: { 
@@ -369,6 +370,9 @@ export default {
                 console.log(e)
             })
         },
+        handleImgError(event) {
+            event.target.src = userRedImage;
+        }
     }
 
 };

@@ -28,11 +28,17 @@
                                 <div class="foto-tahap1-parent">
                                     <v-checkbox class="input-checkbox" color="#ae445a" @change="onChecked($event, value.job_seeker_id)"></v-checkbox>
                                     <img
-                                        class="foto-tahap1-icon"
+                                        v-if="value.photo"
                                         :src="value.photo"
-                                        alt="photo"
+                                        class="foto-tahap1-icon" alt="photo"
                                     />
-                                    <b class="list-item-name">{{ value.name }}</b>
+                                    <img
+                                        v-else
+                                        src="@/assets/img/user-red.png"
+                                        class="foto-tahap1-icon"
+                                        alt="photo" width="20px"
+                                    />
+                                        <b class="list-item-name">{{ value.name }}</b>
                                 </div>
                                 <div style="width: 350px; display: flex; justify-content: space-between;">
                                     <div style="cursor: pointer;" @click="activatePanel(key+1)"><i>Review Kandidat</i></div>

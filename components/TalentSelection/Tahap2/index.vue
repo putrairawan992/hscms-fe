@@ -210,10 +210,17 @@
                                                     type="checkbox"
                                                 />
                                                 <div class="up-arrow-button">
-                                                    <img
+                                                    <img v-if="value.photo"
                                                         class="frame-grid-icon"
+                                                        @error="handleImgError($event, isChecked(value.job_seeker_id))"
                                                         :src="value.photo"
                                                         loading="eager"
+                                                        alt="photo"
+                                                    />
+                                                    <img v-else
+                                                        class="frame-grid-icon" :class="isChecked(value.job_seeker_id) ? 'user-white' : 'user-red'"
+                                                        :src="isChecked(value.job_seeker_id) ? '@/assets/img/user-red.png' : '@/assets/img/user-white.png'"
+                                                        loading="eager" @error="handleImgError($event, isChecked(value.job_seeker_id))"
                                                         alt="photo"
                                                     />
                                                 </div>
@@ -270,6 +277,8 @@
 <script>
 import { API } from '@/api/index'
 import Multiselect from 'vue-multiselect'
+import userRedImage from '~/assets/img/user-red.png';
+import userWhiteImage from '~/assets/img/user-white.png';
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
     components: { 
@@ -420,6 +429,9 @@ export default {
                 return true;
             }
         },
+        handleImgError(event, checked) {
+            event.target.src = checked ?  userWhiteImage : userRedImage;
+        }
     }
 }
 </script>

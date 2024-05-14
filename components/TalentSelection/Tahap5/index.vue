@@ -199,7 +199,7 @@
                     </v-col>
                     <v-col cols="12">
                         <v-row style="column-gap: 25px;">
-                            <v-col v-if="finalForm" v-for="value, key in filteredCandidates" cols="6" class="component-1">
+                            <v-col v-if="finalForm == true" v-for="value, key in filteredCandidates" cols="6" class="component-1">
                                 <div class="container-frame">
                                     <div class="line-separator">
                                         <div class="lowongan-1">
@@ -209,10 +209,17 @@
                                                     type="checkbox" :checked="true" readonly
                                                 />
                                                 <div class="up-arrow-button">
-                                                    <img
+                                                    <img v-if="value.photo"
                                                         class="frame-grid-icon"
+                                                        @error="handleImgError($event, true)"
                                                         :src="value.photo"
                                                         loading="eager"
+                                                        alt="photo"
+                                                    />
+                                                    <img v-else
+                                                        :src="isChecked(value.job_seeker_id) ? '@/assets/img/user-red.png' : '@/assets/img/user-white.png'"
+                                                        class="frame-grid-icon" :class="isChecked(value.job_seeker_id) ? 'user-white' : 'user-red'"
+                                                        loading="eager" @error="handleImgError($event, true)"
                                                         alt="photo"
                                                     />
                                                 </div>
@@ -329,7 +336,7 @@
                                 </v-row>
                             </v-col>
 
-                            <v-col v-else v-for="value, key in filteredCandidates" cols="6" class="component-1">
+                            <v-col v-if="finalForm == false" v-for="value, key in filteredCandidates" cols="6" class="component-1">
                                 <div class="container-frame">
                                     <div class="line-separator">
                                         <div :class="isChecked(value.job_seeker_id) ? 'lowongan-1' : 'lowongan-2'">
@@ -340,10 +347,17 @@
                                                     type="checkbox"
                                                 />
                                                 <div class="up-arrow-button">
-                                                    <img
+                                                    <img v-if="value.photo"
                                                         class="frame-grid-icon"
+                                                        @error="handleImgError($event, isChecked(value.job_seeker_id), key)"
                                                         :src="value.photo"
                                                         loading="eager"
+                                                        alt="photo"
+                                                    />
+                                                    <img v-else
+                                                        :src="isChecked(value.job_seeker_id) ? '@/assets/img/user-red.png' : '@/assets/img/user-white.png'"
+                                                        class="frame-grid-icon" :class="isChecked(value.job_seeker_id) ? 'user-white' : 'user-red'"
+                                                        loading="eager" @error="handleImgError($event, isChecked(value.job_seeker_id))"
                                                         alt="photo"
                                                     />
                                                 </div>
@@ -390,7 +404,7 @@
             </div>
             <div class="orange-btn" style="">
                 <div class="" @click="continueStep">
-                    <b class="button mx-4">Save</b>
+                    <b class="button mx-4">{{ finalForm ? 'Save' : 'Choose Candidate'}}</b>
                 </div>
             </div>
         </div>
@@ -400,6 +414,8 @@
 <script>
 import { API } from '@/api/index'
 import Multiselect from 'vue-multiselect'
+import userRedImage from '~/assets/img/user-red.png';
+import userWhiteImage from '~/assets/img/user-white.png';
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
     components: { 
@@ -609,6 +625,16 @@ export default {
             this.bodyCreate[key].salary = value;
             return this.nominal[key] = Intl.NumberFormat('en-US').format(value);
         },
+        handleImgError(event, checked, key) {
+            event.target.src = checked ?  userWhiteImage : userRedImage;
+            if (checked) {
+                event.target.classList.remove('user-red');
+                event.target.classList.add('user-white');
+            } else {
+                event.target.classList.remove('user-white');
+                event.target.classList.add('user-red');
+            }
+        }
     }
 }
 </script>

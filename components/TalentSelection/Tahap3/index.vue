@@ -30,7 +30,9 @@
                                           />
                                           <div class="up-arrow-button">
                                               <img
+                                                @error="handleImgError"
                                                 class="frame-grid-icon"
+                                                :class="value.photo == null ? 'user-white': ''"
                                                 :src="value.photo"
                                                 loading="eager"
                                                 alt="photo"
@@ -386,6 +388,7 @@
 <script>
 import { API } from '@/api/index'
 import Multiselect from 'vue-multiselect'
+import userWhiteImage from '~/assets/img/user-white.png';
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
     components: { 
@@ -701,6 +704,10 @@ export default {
         },
         async openGradeDialog(){ this.gradeDialog = true; },
         async closeGradeDialog(){ this.gradeDialog = false; },
+        handleImgError(event) {
+            event.target.src = userWhiteImage;
+            event.target.classList.add('user-white');
+        }
     },
 }
 </script>

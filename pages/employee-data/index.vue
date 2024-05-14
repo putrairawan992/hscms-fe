@@ -129,9 +129,8 @@
                                     <div class="frame-parent-draft">
                                         <div class="foto-perusaahaan-parent">
                                             <img
-                                                class="foto-perusaahaan-icon"
-                                                alt=""
-                                                :src="item.photo"
+                                                class="foto-perusaahaan-icon" alt="photo"
+                                                :src="item.photo" @error="handleImgError"
                                             />
                                             <b class="">{{ item.employee_name }}</b>
                                         </div>
@@ -183,6 +182,7 @@
 
 import { API } from '@/api/index'
 import Multiselect from 'vue-multiselect'
+import userRedImage from '~/assets/img/user-red.png';
 export default {
     layout: "jobProvider",
     components: { 
@@ -252,6 +252,9 @@ export default {
                 this.$alert.showAlert({ content: 'File telah di-download', show: true });
             } this.dialog = false;
         },
+        handleImgError(event) {
+            event.target.src = userRedImage;
+        }
     }
 
 };

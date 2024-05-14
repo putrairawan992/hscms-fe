@@ -5,105 +5,127 @@
                 <div class="blokade-parent ma-8 pt-10">
                     <div class="open-job-dan-draft mb-14 d-flex" style="justify-content: space-between;">
                         <div>
-                            Talent Selection
+                            Biodata
                         </div>
-
-                        <div class="orange-btn" @click="" style="border-radius: 50%;">
-                            <img class="feath" alt="" src="@/assets/svg/bi-share.svg" />
-                        </div> 
                     </div>
 
-                    <v-row>
+                    <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                            
-                            <div class="pp-container">
-                                <img v-if="photo"
-                                    class="pp-frame"
-                                    loading="eager" alt="photo"
-                                    :src="photo"
-                                    @error="handleImgError($event)"
-                                />
-                                <img  v-if="!photo"
-                                    class="pp-frame user-red-big"
-                                    loading="eager" alt="photo"
-                                    src="@/assets/img/user-red-big.png"
-                                />
-                            </div>
+                            <b>Nama Lengkap:</b>
+                        </v-col>
+                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Nama Lengkap" v-model="fullname" :readonly="preview"/>
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                            <b>Tempat Tanggal Lahir:</b>
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                             <v-row align="center">
-                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                                    <b>Nama Lengkap:</b>
+                                <v-col cols="6">
+                                    <input class="register-text-input" placeholder="Masukkan Nama Kota" v-model="place_birth" :readonly="preview" />
                                 </v-col>
-                                <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                                    <input class="register-text-input" placeholder="Masukkan Nama Lengkap" v-model="fullname" :readonly="preview"/>
-                                </v-col>
-                            </v-row>
-                            <v-row align="center">
-                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                                    <b>Tempat Tanggal Lahir:</b>
-                                </v-col>
-                                <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                                    <v-row align="center">
-                                        <v-col cols="6">
-                                            <input class="register-text-input" placeholder="Masukkan Nama Kota" v-model="place_birth" :readonly="preview" />
-                                        </v-col>
-                                        <v-col cols="6" class="calendar-input-container">
-                                            <v-menu
-                                            :ref="datePickerBirthDate"
-                                            v-model="datePickerBirthDate" offset-y
-                                            :close-on-content-click="false"
-                                            transition="scale-transition"
-                                            max-width="290px"
-                                            min-width="auto"
-                                            >
-                                                <template v-slot:activator="{ on, attrs }">
-                                                    <div v-on="!preview && on" style="position: relative;">
-                                                        <input
-                                                        v-bind="attrs"
-                                                        outlined readonly
-                                                        v-model="date_birth"
-                                                        @blur="date_birth = parseDate(date_birth)"
-                                                        placeholder="Masukkan Tanggal Lahir"
-                                                        class="register-text-input"
-                                                        />
-                                                        <img class="feather-icon-calendar" alt="" src="@/assets/svg/feathericon--calendar.svg" />
-                                                    </div>
-                                                </template>
-                                                <v-date-picker
-                                                    @input="datePickerBirthDate = false"
-                                                    plas v-model="date_birth" no-title
-                                                ></v-date-picker>
-                                            </v-menu>
-                                        </v-col>
-                                    </v-row>
-                                </v-col>
-                            </v-row>
-                            <v-row align="center">
-                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                                    <b>Alamat E-Mail:</b>
-                                </v-col>
-                                <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                                    <input type="email" class="register-text-input" placeholder="Masukkan alamat E-Mail" v-model="email" :readonly="preview" />
-                                </v-col>
-                            </v-row>
-                            <v-row align="center">
-                                <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                                    <b>Alamat URL LinkedIn:</b>
-                                </v-col>
-                                <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                                    <input class="register-text-input" placeholder="Masukkan alamat URL LinkedIn" v-model="linkedin" :readonly="preview" />
+                                <v-col cols="6" class="calendar-input-container">
+                                    <v-menu
+                                    :ref="datePickerBirthDate"
+                                    v-model="datePickerBirthDate" offset-y
+                                    :close-on-content-click="false"
+                                    transition="scale-transition"
+                                    max-width="290px"
+                                    min-width="auto"
+                                    >
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <div v-on="!preview && on" style="position: relative;">
+                                                <input
+                                                v-bind="attrs"
+                                                outlined readonly
+                                                v-model="date_birth"
+                                                @blur="date_birth = parseDate(date_birth)"
+                                                placeholder="Masukkan Tanggal Lahir"
+                                                class="register-text-input"
+                                                />
+                                                <img class="feather-icon-calendar" alt="" src="@/assets/svg/feathericon--calendar.svg" />
+                                            </div>
+                                        </template>
+                                        <v-date-picker
+                                            @input="datePickerBirthDate = false"
+                                            plas v-model="date_birth" no-title
+                                        ></v-date-picker>
+                                    </v-menu>
                                 </v-col>
                             </v-row>
                         </v-col>
                     </v-row>
-                    
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                            <b>Alamat E-Mail:</b>
+                        </v-col>
+                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input type="email" class="register-text-input" placeholder="Masukkan alamat E-Mail" v-model="email" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                            <b>Alamat URL LinkedIn:</b>
+                        </v-col>
+                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan alamat URL LinkedIn" v-model="linkedin" :readonly="preview" />
+                        </v-col>
+                    </v-row>
                     <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
                             <b>Nomor Handphone:</b>
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <input class="register-text-input" placeholder="Masukkan Nomor Handphone" v-model="handphone" :readonly="preview" />
+                            <input class="register-text-input" placeholder="Masukkan Nomor Handphone" v-model="handphone" v-on:keypress="isNumber($event)" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                            <b>Emergency Contact:</b>
+                        </v-col>
+                        <v-col class="" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <v-row align="center">
+                                <v-col cols="4">
+                                    <input class="register-text-input" placeholder="Nama Emergency Contact" v-model="emergency_name" :readonly="preview" />
+                                </v-col>
+                                <v-col cols="4">
+                                    <input class="register-text-input" placeholder="Hubungan Emergency Contact" v-model="emergency_status" :readonly="preview" />
+                                </v-col>
+                                <v-col cols="4">
+                                    <input class="register-text-input" placeholder="Nomor Emergency Contact" v-model="emergency_number" :readonly="preview" />
+                                </v-col>
+                            </v-row>
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label pt-8">
+                            <b>Jenis Kelamin:</b>
+                        </v-col>
+                        <v-col class="" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <multiselect
+                                :disabled="preview"
+                                v-model="gender"
+                                :options="listJenisKelamin"
+                                class="register-text-input"
+                                placeholder="Pilih Jenis Kelamin" :allow-empty="false"
+                            ></multiselect>
+                        </v-col>
+                    </v-row>
+
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                            <b>Status Pernikahan:</b>
+                        </v-col>
+                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <multiselect
+                                :disabled="preview"
+                                v-model="marital_status"
+                                :options="listStatusPernikahan"
+                                class="register-text-input"
+                                placeholder="Pilih Status Pernikahan" :allow-empty="false"
+                            ></multiselect>
                         </v-col>
                     </v-row>
                     <v-row align="center">
@@ -120,20 +142,6 @@
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                             <input class="register-text-input" placeholder="Masukkan Alamat Rumah Berdasarkan KTP" v-model="address_on_identity_card" :readonly="preview" />
-                        </v-col>
-                    </v-row>
-                    <v-row align="center">
-                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                            <b>Status Pernikahan:</b>
-                        </v-col>
-                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <multiselect
-                                :disabled="preview"
-                                v-model="marital_status"
-                                :options="listStatusPernikahan"
-                                class="register-text-input"
-                                placeholder="Pilih Status Pernikahan" :allow-empty="false"
-                            ></multiselect>
                         </v-col>
                     </v-row>
                     <v-row align="center">
@@ -170,13 +178,29 @@
                     </v-row>
                     <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Nama Bank <i class="opsional">(*opsional)</i> :</b>
+                        </v-col>
+                        <v-col class="" cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Nama Bank *dianjurkan menggunakan rekening Bank Mandiri'" v-model="bank_name" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
                             <b>No. Rek Bank <i class="opsional">(*opsional)</i> :</b>
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <input class="register-text-input" placeholder="Masukkan No. Rekening Bank '*diwajibkan menggunakan rekening Bank Mandiri'" v-model="bank_account_number" :readonly="preview" />
+                            <input class="register-text-input" placeholder="Masukkan No. Rekening Bank *dianjurkan menggunakan rekening Bank Mandiri" v-model="bank_account_number" :readonly="preview" />
                         </v-col>
                     </v-row>
-                    <!-- <v-row align="center">
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Nama. Rek Bank <i class="opsional">(*opsional)</i> :</b>
+                        </v-col>
+                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Nama Rekening Bank *dianjurkan menggunakan rekening Bank Mandiri" v-model="bank_account_name" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
                             <b>Melamar Posisi:</b>
                         </v-col>
@@ -184,18 +208,32 @@
                             <multiselect
                                 :disabled="preview"
                                 v-model="work_position"
-                                :options="listStatusPernikahan"
-                                class="register-text-input"
+                                :options="masterJobSpecialist"
+                                class="register-text-input" label="job_specialist_name"
                                 placeholder="Pilih Posisi yang Dilamar" :allow-empty="false"
                             ></multiselect>
                         </v-col>
-                    </v-row> -->
+                    </v-row>
                     <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
-                            <b>Ekspektasi Gaji <i class="opsional">(*opsional)</i> :</b>
+                            <b>Ekspektasi Gaji :</b>
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <input class="register-text-input" placeholder="Masukkan Nomor NPWP" v-model="salary_exspectation" :readonly="preview" />
+                            <v-text-field
+                                oninput="if(Number(this.value.length) > Number(this.max)) this.value = this.min;"
+                                @input="_=>nominal=_" :value="nominal" :min="nominal" max="26" v-on:keypress="isNumber($event)"
+                                placeholder="Masukkan ekspektasi Gaji yang diharapkan" class="register-text-field" solo>
+                                <template v-slot:prepend-inner>
+                                    <v-tooltip bottom >
+                                        <template v-slot:activator="{ on }">
+                                        <p style="color: #000; margin-bottom: 0;" v-on="on">
+                                            Rp.
+                                        </p>
+                                        </template>
+                                        Rupiah
+                                    </v-tooltip>
+                                </template>
+                            </v-text-field>
                         </v-col>
                     </v-row>
 
@@ -273,13 +311,7 @@
                                     <input class="register-text-input" placeholder="Masukkan Lokasi Pekerjaan" v-model="location[key]" :readonly="preview" />
                                 </v-col>
                                 <v-col cols="6">
-                                    <multiselect
-                                        :disabled="preview"
-                                        v-model="employment_contract[key]"
-                                        :options="listStatusPernikahan"
-                                        class="register-text-input"
-                                        placeholder="Pilih Jenis Pekerjaan" :allow-empty="false"
-                                    ></multiselect>
+                                    <input class="register-text-input" placeholder="Masukkan Jenis Pekerjaan" v-model="employment_contract[key]" :readonly="preview" />
                                 </v-col>
                             </v-row>
                         </v-col>
@@ -388,8 +420,8 @@
                         </v-col>
                     </v-row>
 
-                    <div class="group-inner" />
-                    <v-row align="start">
+                    <!-- <div class="group-inner" /> -->
+                    <!-- <v-row align="start">
                         <v-col cols="12" class="label mt-3" style="display: flex; flex-direction: column;">
                             <b>Berkas Lampiran:</b>
                             <i class="ukuran-maksimal-berkas">Ukuran maksimal berkas 3MB</i>
@@ -462,12 +494,15 @@
                                 </v-col>
                             </v-row>
                         </v-col>
-                    </v-row>
+                    </v-row> -->
 
                     <v-row>
-                        <div class="save-container">
+                        <div class="save-container" style="justify-content:end">
                             <div></div>
-                            <div class="button-wrapper" @click="$router.push('/talent-selection')">
+                            <div class="button-wrapper" @click="submit()">
+                                <b class="tempat-tanggal-lahir">Edit</b>
+                            </div> 
+                            <div class="button-wrapper ml-4" @click="$router.push('/talent-selection')">
                                 <b class="tempat-tanggal-lahir">Close</b>
                             </div> 
                         </div>
@@ -479,16 +514,18 @@
     </div>
 </template>
 <script>
+// import debounce from 'debounce';
 import { API } from '@/api/index'
 import Multiselect from 'vue-multiselect'
-import userRedImage from '~/assets/img/user-red-big.png';
-import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
+    name: "Contract",
+    middleware: "jobSeeker",
     components: { Multiselect },
     data: () => ({
-        preview: true,
+        nominal: "",
         fileUrl: null,
+        preview: false,
         fileDialog: false,
         id_registration: null,
         datePickerBirthDate: false,
@@ -496,7 +533,9 @@ export default {
         datePickerStartStudy: [false],
         datePickerEndWorking: [false],
         datePickerStartWorking: [false],
+        listJenisKelamin: ['Laki - Laki', 'Perempuan'],
         listStatusPernikahan: ['Sudah Menikah', 'Belum Menikah'],
+        masterJobSpecialist: [],
 
         // body API
         fullname: null,
@@ -517,6 +556,15 @@ export default {
         salary_exspectation: null,
         password: null,
         confirm_password: null,
+
+        scope: '',
+        gender: null,
+        bank_name: null,
+        bank_account_name: null,
+        emergency_status: null,
+        emergency_number: null,
+        emergency_name: null,
+
         // ======= experience =========
         department: [],
         company_name: [],
@@ -545,27 +593,173 @@ export default {
         bpjs: null, // optional
     }),
     watch: {
-        fileDialog(to, from){
-            // console.log(to, from);;
+        nominal(to, from) {
+            this.nominal = this.useConvertToMoneyView(to);
         },
     },
     setup() {
-        const { getDetailJobSeeker } = API()
-        return { getDetailJobSeeker };
-    },
-    computed: {
-        ...mapGetters('provider-selection', ['tahapanGetter']),
+        const { getRegistration, postRegistration, getRegistrationData } = API()
+        return { getRegistration, postRegistration, getRegistrationData };
     },
     async mounted() {
-        await this.getData();
+        await this.getRegistrationData().then((result)=>{
+            this.masterJobSpecialist = result?.master_job_specialist ? result.master_job_specialist : [];
+        });
+        this.getData();
     },
     methods: {
         async getData(){
-            if(this.tahapanGetter.detail?.job_seeker_id){
-                await this.getDetailJobSeeker(this.tahapanGetter.detail?.job_seeker_id).then((result)=>{
-                    result && this.refreshForm(result);
-                })
+            await this.getRegistration(this.$auth.user.user_id).then((result)=>{
+                result && this.refreshForm(result);
+            });
+        },
+        async submit(){
+            // console.log({
+            //     fullname: this.fullname,
+            //     place_birth: this.place_birth,
+            //     date_birth: this.date_birth,
+            //     email: this.email,
+            //     linkedin: this.linkedin,
+            //     handphone: this.handphone,
+            //     residential_address: this.residential_address,
+            //     address_on_identity_card: this.address_on_identity_card,
+            //     marital_status: this.marital_status,
+            //     identity_number: this.identity_number,
+            //     npwp_number: this.npwp_number,
+            //     bpjskes: this.bpjskes,
+            //     bpjstik: this.bpjstik,
+            //     bank_account_number: this.bank_account_number,
+            //     work_position: this.work_position,
+            //     salary_exspectation: this.salary_exspectation,
+            //     password: this.password,
+            //     confirm_password: this.confirm_password,
+            //     // ======= experience =========
+            //     department: this.department,
+            //     company_name: this.company_name,
+            //     employment_contract: this.employment_contract,
+            //     start_working: this.start_working,
+            //     end_working: this.end_working,
+            //     location: this.location,
+            //     // ======= education ==========
+            //     institute_name: this.institute_name,
+            //     degree: this.degree,
+            //     education_program: this.education_program,
+            //     start_study: this.start_study,
+            //     end_study: this.end_study,
+            //     ipk: this.ipk,
+            //     // ======= certificate =========
+            //     certificate_name: this.certificate_name,
+            //     organizer: this.organizer,
+            //     scores: this.scores,
+            //     certificate_year: this.certificate_year,
+            //     // ======= document =========
+            //     curriculum_vitae: this.curriculum_vitae,
+            //     photo: this.photo,
+            //     ktp: this.ktp,  // optional
+            //     kk: this.kk,   // optional
+            //     npwp: this.npwp, // optional
+            //     bpjs: this.bpjs, // optional
+            // });
+            const body = new FormData();
+            body.append('fullname', this.fullname);
+            body.append('place_birth', this.place_birth);
+            body.append('date_birth', this.date_birth);
+            body.append('email', this.email);
+            body.append('linkedin', this.linkedin);
+            body.append('handphone', this.handphone);
+            body.append('residential_address', this.residential_address);
+            body.append('address_on_identity_card', this.address_on_identity_card);
+            body.append('marital_status', this.marital_status);
+            body.append('identity_number', this.identity_number);
+
+            body.append('scope', this.scope);
+            body.append('gender', this.gender);
+            body.append('bank_name', this.bank_name);
+            body.append('bank_account_name', this.bank_account_name);
+            body.append('emergency_status', this.emergency_status);
+            body.append('emergency_number', this.emergency_number);
+            body.append('emergency_name', this.emergency_name);
+
+            if (this.npwp_number != null) {
+                body.append('npwp_number', this.npwp_number);
             }
+            if (this.bpjskes != null) {
+                body.append('bpjskes', this.bpjskes);
+            }
+            if (this.bpjstik != null) {
+                body.append('bpjstik', this.bpjstik);
+            }
+            if (this.bank_account_number != null) {
+                body.append('bank_account_number', this.bank_account_number);
+            }
+            if (this.salary_exspectation != null) {
+                body.append('salary_exspectation', this.salary_exspectation);
+            }
+            body.append('work_position', this.work_position?.job_specialist_name);
+            body.append('password', this.password);
+            body.append('confirm_password', this.confirm_password);
+            // ======= experience =========
+            if(this.department.length > 0){
+                body.append('department[]', this.department.length ? this.department : null);
+                body.append('company_name[]', this.company_name.length ? this.company_name : null);
+                body.append('employment_contract[]', this.employment_contract.length ? this.employment_contract : null);
+                body.append('start_working[]', this.start_working.length ? this.start_working : null);
+                body.append('end_working[]', this.end_working.length ? this.end_working : null);
+                body.append('location[]', this.location.length ? this.location : null);
+            }
+            // ======= education ==========
+            if(this.institute_name.length > 0){
+                body.append('institute_name[]', this.institute_name.length ? this.institute_name : null);
+                body.append('degree[]', this.degree.length ? this.degree : null);
+                body.append('education_program[]', this.education_program.length ? this.education_program : null);
+                body.append('start_study[]', this.start_study.length ? this.start_study : null);
+                body.append('end_study[]', this.end_study.length ? this.end_study : null);
+                body.append('ipk[]', this.ipk.length ? this.ipk : null);
+            }
+            // ======= certificate =========
+            if(this.institute_name.length > 0){
+                body.append('certificate_name[]', this.certificate_name.length ? this.certificate_name : null);
+                body.append('organizer[]', this.organizer.length ? this.organizer : null);
+                body.append('scores[]', this.scores.length ? this.scores : null);
+                body.append('certificate_year[]', this.certificate_year.length ? this.certificate_year : null);
+            }
+            // ======= document =========
+            body.append('curriculum_vitae', this.curriculum_vitae);
+            body.append('photo', this.photo);
+            body.append('ktp', this.ktp); // optional
+            body.append('kk', this.kk); // optional
+            body.append('npwp', this.npwp); // optional
+            body.append('bpjs', this.bpjs); // optional
+
+            await this.postRegistration(body, this.id_registration).then( async (result) => {
+                if(result){
+                    this.preview = true;
+                    this.id_registration = result.id_registration;
+                    localStorage.setItem('id_registration', result.id_registration);
+                    this.password && localStorage.setItem('password', this.password);
+                    return this.$notifier.showMessage({ content: 'Mohon koreksi data anda kembali.', status: 'success' });
+                }
+            })
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        },
+        async publish(){
+            let userPassword = localStorage.getItem('password');
+            this.$loader.showLoading({ show: true });
+            await this.$auth.loginWith('local', {
+            data: {
+                email: this.email,
+                password: userPassword
+            },
+            }).then((result) => {
+                this.$notifier.showMessage({ content: 'Anda berhasil Registrasi.', status: 'success' });
+                localStorage.removeItem('id_registration');
+                localStorage.removeItem('password');
+                this.$router.push('/')
+            }).catch((err) => {
+                this.$notifier.showMessage({ content: err.response ? err.response.data.message : err, status: 'warning' });
+                this.$loader.showLoading({ show: false });
+            });
         },
         refreshForm(data){
             this.email = data.email;
@@ -582,15 +776,23 @@ export default {
             this.bpjskes = data.data_job_seeker[0].bpjskes;
             this.bpjstik = data.data_job_seeker[0].bpjstik;
             this.bank_account_number = data.data_job_seeker[0].bank_account_number;
-            this.work_position = data.data_job_seeker[0].work_position;
+            this.work_position = {'job_specialist_name': data.data_job_seeker[0].work_position};
             this.salary_exspectation = data.data_job_seeker[0].salary_exspectation;
+
+            this.scope = data.data_job_seeker[0].scope;
+            this.gender = data.data_job_seeker[0].gender;
+            this.bank_name = data.data_job_seeker[0].bank_name;
+            this.bank_account_name = data.data_job_seeker[0].bank_account_name;
+            this.emergency_status = data.data_job_seeker[0].emergency_status;
+            this.emergency_number = data.data_job_seeker[0].emergency_number;
+            this.emergency_name = data.data_job_seeker[0].emergency_name;
             
-            this.curriculum_vitae = data.data_document?.[0]?.curriculum_vitae;
-            this.photo = data.data_document?.[0]?.photo;
-            this.ktp = data.data_document?.[0]?.ktp;
-            this.kk = data.data_document?.[0]?.kk;
-            this.npwp = data.data_document?.[0]?.npwp;
-            this.bpjs = data.data_document?.[0]?.bpjs;
+            this.curriculum_vitae = data.data_document[0].curriculum_vitae;
+            this.photo = data.data_document[0].photo;
+            this.ktp = data.data_document[0].ktp;
+            this.kk = data.data_document[0].kk;
+            this.npwp = data.data_document[0].npwp;
+            this.bpjs = data.data_document[0].bpjs;
 
             data.data_experience.forEach(element => {
                 this.department.push(element.department);
@@ -616,6 +818,61 @@ export default {
             });
 
         },
+        addForm(key){
+            if(!this.preview){
+                switch (key) {
+                    case 'experience':
+                        this.department.push(null);
+                        this.company_name.push(null);
+                        this.employment_contract.push(null);
+                        this.start_working.push(null);
+                        this.end_working.push(null);
+                        this.location.push(null);
+                        break;
+                    case 'education':
+                        this.institute_name.push(null);
+                        this.degree.push(null);
+                        this.education_program.push(null);
+                        this.start_study.push(null);
+                        this.end_study.push(null);
+                        this.ipk.push(null);
+                        break;
+                    case 'certificate':
+                        this.certificate_name.push(null);
+                        this.organizer.push(null);
+                        this.scores.push(null);
+                        this.certificate_year.push(null);
+                        break;
+    
+                    default: break;
+                }
+            }
+        },
+        onSelectFile (event, param) {
+            const file = event.srcElement.files[0];
+            switch (param) {
+                case 'curriculum_vitae':
+                    this.curriculum_vitae = file;
+                    break;
+                case 'photo':
+                    this.photo = file;
+                    break;
+                case 'ktp':
+                    this.ktp = file;
+                    break;
+                case 'kk':
+                    this.kk = file;
+                    break;
+                case 'npwp':
+                    this.npwp = file;
+                    break;
+                case 'bpjs':
+                    this.bpjs = file;
+                    break;
+                default:
+                    break;
+            }
+        },
         parseDate (date) {
             if (!date) return null
             const [year, month, day] = date.split('-')
@@ -629,44 +886,32 @@ export default {
             if(url){
                 this.fileUrl = url;
                 this.fileDialog = true;
+            }else{
+                this.$notifier.showMessage({ content: 'File tidak tersedia.', status: 'warning' });
             }
         },
         closeFile(){
             this.fileDialog = false;
             this.fileUrl = null;
         },
-        handleImgError(event, ) {
-            event.target.src = userRedImage;
-            event.target.classList.add('user-red-big');
-        }
+        isNumber(e) {
+            let char = String.fromCharCode(e.keyCode);
+            if (/^[0-9]+$/.test(char)) return true;
+            else e.preventDefault();
+        },
+        useConvertToMoneyView(value) {
+            if (!value) return value;
+            value = parseInt(value.replaceAll(',', ''), 10);
+            this.salary_exspectation = value;
+
+            return Intl.NumberFormat('en-US').format(value);
+        },
     }
 
 };
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped>
-.pp-container {
-    flex: 1;
-    display: flex;
-    align-self: stretch;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    height: 225px;
-}
-
-.pp-frame {
-    flex: 1;
-    width: 175px;
-    height: 225px;
-    align-self: stretch;
-    position: relative;
-    border-radius: 5px;
-    max-width: 100%;
-    overflow: hidden;
-    max-height: 100%;
-    object-fit: cover;
-}
 .card-register {
     border-radius: 40px;
     background: linear-gradient(90deg, #F1F5FE 0%, #FFF 98.82%);
@@ -811,6 +1056,7 @@ export default {
     }
 }
 .button-wrapper {
+    cursor: pointer;
     border-radius: 10px;
     background: linear-gradient(90deg, #f39f5a, #ae445a);
     box-shadow: 5px 0px 5px #b3b9c5;
@@ -823,7 +1069,6 @@ export default {
     padding: 10px;
     box-sizing: border-box;
     color: #fff;
-    cursor: pointer;
 }
 .milestones-item {
     width: 90%;

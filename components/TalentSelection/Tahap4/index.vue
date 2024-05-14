@@ -30,7 +30,7 @@
                                 <img
                                     class="foto-tahap1-icon"
                                     :src="value.photo"
-                                    alt="photo"
+                                    alt="photo" @error="handleImgError($event)"
                                 />
                                 <b class="list-item-name">{{ value.name }}</b>
                             </div>
@@ -85,6 +85,7 @@
 import debounce from 'debounce';
 import { API } from '@/api/index'
 import Multiselect from 'vue-multiselect'
+import userRedImage from '~/assets/img/user-red.png';
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
     components: { 
@@ -190,6 +191,9 @@ export default {
             this.gradeResultDialog = false;
             this.refreshData();
         },
+        handleImgError(event) {
+            event.target.src = userRedImage;
+        }
     }
 }
 </script>
