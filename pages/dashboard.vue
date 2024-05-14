@@ -11,6 +11,7 @@
     middleware: "jobProvider",
     name: "NewHiringDashboard",
     async mounted(){
+      this.$router.push('/employee-data');
         // await this.$auth.loginWith('local', {
         //     data: {
         //         email: 'mocharizktama@gmail.com',

@@ -4,7 +4,8 @@
             <div class="menu-button-remunerasi">
             <div class="menu-left-child" />
             <div class="menu">
-                <div :class="pageActive == 'dashboard' || pageActive == 'index' ? 'dashboard1' : 'help-center'" @click="$router.push('/dashboard')">Dashboard</div>
+                <!-- <div :class="pageActive == 'dashboard' || pageActive == 'index' ? 'dashboard1' : 'help-center'" @click="$router.push('/dashboard')">Dashboard</div> -->
+                <div class="help-center" style="color: #a3a3a3;" @click="">Dashboard</div>
                 <div class="help-center" style="color: #a3a3a3;" @click="">Help Center</div>
                 <div class="help-center" style="color: #a3a3a3;" @click="">Blast Notification</div>
                 <div class="menu-child" />

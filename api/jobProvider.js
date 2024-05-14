@@ -37,7 +37,7 @@ export const jobProviderAPI = () => {
         return await postRequest(id_pretest ? 'jobprovider/modul/'+id_pretest : 'jobprovider/modul/', body);
     }
     const deletePretest= async (id_pretest) => {
-        return await deleteRequest('jobprovider/modul/'+id_pretest);
+        return await putRequest('jobprovider/modul/'+id_pretest);
     }
     const postActivatePretest = async (body, id_job) => {
         return await postRequest('jobprovider/pickmodul/'+id_job, body);

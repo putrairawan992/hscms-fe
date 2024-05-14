@@ -413,6 +413,7 @@ export default {
   name: "NewHiringDashboard",
   data: () => ({ show: false }),
   async mounted() {
+      this.$router.push('/schedule');
       // this.$alert.showAlert({ content: 'Email belum terisi.', show: true })
   },
   methods: {},
