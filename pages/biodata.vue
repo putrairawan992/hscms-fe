@@ -152,6 +152,14 @@
                             <input class="register-text-input" placeholder="Masukkan Nomor NIK" v-model="identity_number" :readonly="preview" />
                         </v-col>
                     </v-row>
+                    <v-row align="center" v-if="employee_data">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
+                            <b>Status PTKP:</b>
+                        </v-col>
+                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Status PTKP" v-model="ptkp_status" :readonly="preview" />
+                        </v-col>
+                    </v-row>
                     <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
                             <b>Nomor NPWP <i class="opsional">(*opsional)</i> :</b>
@@ -200,23 +208,50 @@
                             <input class="register-text-input" placeholder="Masukkan Nama Rekening Bank *dianjurkan menggunakan rekening Bank Mandiri" v-model="bank_account_name" :readonly="preview" />
                         </v-col>
                     </v-row>
-                    <v-row align="center">
-                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                            <b>Melamar Posisi:</b>
+
+                    <v-row align="center" v-if="employee_data">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>NIK Perusahaan:</b>
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                            <multiselect
-                                :disabled="preview"
-                                v-model="work_position"
-                                :options="masterJobSpecialist"
-                                class="register-text-input" label="job_specialist_name"
-                                placeholder="Pilih Posisi yang Dilamar" :allow-empty="false"
-                            ></multiselect>
+                            <input class="register-text-input" placeholder="Masukkan NIK Perusahaan" v-model="company_registration_number" :readonly="preview" />
                         </v-col>
                     </v-row>
-                    <v-row align="center">
+                    <v-row align="center" v-if="employee_data">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
-                            <b>Ekspektasi Gaji :</b>
+                            <b>Role:</b>
+                        </v-col>
+                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Role" v-model="job_specialist_name" readonly />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center" v-if="employee_data">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Level:</b>
+                        </v-col>
+                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Level" v-model="job_level_name" readonly />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center" v-if="employee_data">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Ruang Lingkup:</b>
+                        </v-col>
+                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <textarea class="register-text-input" style="height: -webkit-fit-content;" placeholder="Masukkan Ruang Lingkup" v-model="scope" rows="4" cols="50">{{ scope }}</textarea>
+                        </v-col>
+                    </v-row>
+                    <v-row align="center" v-if="employee_data">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Jenis Kontrak:</b>
+                        </v-col>
+                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Jenis Kontrak" v-model="employee_type" readonly />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center" v-if="employee_data">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Take Home Pay:</b>
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                             <v-text-field
@@ -234,6 +269,39 @@
                                     </v-tooltip>
                                 </template>
                             </v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row align="center" v-if="employee_data">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Kontrak:</b>
+                        </v-col>
+                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <v-row>
+                                <v-col cols="6">
+                                    <div class="register-text-input d-flex" style="justify-content: space-between;">
+                                        <div>{{ useConvertToDateView(start_date) }}</div>
+                                        <div>-</div>
+                                        <div>{{ useConvertToDateView(end_date) }}</div>
+                                    </div>
+                                </v-col>
+                                <v-col cols="6">
+                                    <div class="register-text-input d-flex" style="justify-content: space-between;">
+                                        <div>{{ useConvertToYearCountView() }}</div>
+                                        <b style="color: #ae445a;">Sama dengan</b>
+                                        <div>{{ useConvertToMonthCountView() }}</div>
+                                    </div>
+                                </v-col>
+                            </v-row>
+                        </v-col>
+                    </v-row>
+
+                    <div v-if="score.length > 0" class="group-inner"/>
+                    <v-row v-if="score.length > 0" v-for="value in score" align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>{{ value.modul_category }}:</b>
+                        </v-col>
+                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Take Home Pay" :value="value.score" readonly />
                         </v-col>
                     </v-row>
 
@@ -388,7 +456,13 @@
                                     </v-menu>
                                 </v-col>
                                 <v-col cols="6">
-                                    <input class="register-text-input" placeholder="Masukkan Tingkat Pendidikan" v-model="degree[key]" :readonly="preview" />
+                                    <v-select
+                                        solo rounded content-class="elevation-0"
+                                        v-model="degree[key]"
+                                        :items="['SMA/SMK', 'Sertifikat Keahlian', 'D3', 'D4', 'S1', 'S2', 'S3']"
+                                        placeholder="Pilih tingkat pendidikan"
+                                        class="job-multiselect"
+                                    ></v-select>
                                 </v-col>
                                 <v-col cols="6">
                                     <input class="register-text-input" placeholder="Masukkan IPK" v-model="ipk[key]" :readonly="preview" />
@@ -500,11 +574,11 @@
                         <div class="save-container" style="justify-content:end">
                             <div></div>
                             <div class="button-wrapper" @click="submit()">
-                                <b class="tempat-tanggal-lahir">Edit</b>
+                                <b class="tempat-tanggal-lahir">Save</b>
                             </div> 
-                            <div class="button-wrapper ml-4" @click="$router.push('/talent-selection')">
+                            <!-- <div class="button-wrapper ml-4" @click="">
                                 <b class="tempat-tanggal-lahir">Close</b>
-                            </div> 
+                            </div>  -->
                         </div>
                     </v-row>
                 </div>
@@ -591,6 +665,24 @@ export default {
         kk: null,   // optional
         npwp: null, // optional
         bpjs: null, // optional
+
+
+        score: [],
+        document_tracking: [],
+        job_seeker_id: null,
+        emergency_name: null,
+        emergency_number: null,
+        emergency_status: null,
+        ptkp_status: null,
+        company_registration_number: null,
+        job_level_name: null,
+        employee_type: null,
+        start_date: null,
+        end_date: null,
+        job_specialist_name: null,
+        scope: null,
+        salary: null,
+        employee_data: false,
     }),
     watch: {
         nominal(to, from) {
@@ -598,8 +690,8 @@ export default {
         },
     },
     setup() {
-        const { getRegistration, postRegistration, getRegistrationData } = API()
-        return { getRegistration, postRegistration, getRegistrationData };
+        const { getBiodata, putBiodata, getRegistrationData } = API()
+        return { getBiodata, putBiodata, getRegistrationData };
     },
     async mounted() {
         await this.getRegistrationData().then((result)=>{
@@ -609,57 +701,11 @@ export default {
     },
     methods: {
         async getData(){
-            await this.getRegistration(this.$auth.user.user_id).then((result)=>{
+            await this.getBiodata().then((result)=>{
                 result && this.refreshForm(result);
             });
         },
         async submit(){
-            // console.log({
-            //     fullname: this.fullname,
-            //     place_birth: this.place_birth,
-            //     date_birth: this.date_birth,
-            //     email: this.email,
-            //     linkedin: this.linkedin,
-            //     handphone: this.handphone,
-            //     residential_address: this.residential_address,
-            //     address_on_identity_card: this.address_on_identity_card,
-            //     marital_status: this.marital_status,
-            //     identity_number: this.identity_number,
-            //     npwp_number: this.npwp_number,
-            //     bpjskes: this.bpjskes,
-            //     bpjstik: this.bpjstik,
-            //     bank_account_number: this.bank_account_number,
-            //     work_position: this.work_position,
-            //     salary_exspectation: this.salary_exspectation,
-            //     password: this.password,
-            //     confirm_password: this.confirm_password,
-            //     // ======= experience =========
-            //     department: this.department,
-            //     company_name: this.company_name,
-            //     employment_contract: this.employment_contract,
-            //     start_working: this.start_working,
-            //     end_working: this.end_working,
-            //     location: this.location,
-            //     // ======= education ==========
-            //     institute_name: this.institute_name,
-            //     degree: this.degree,
-            //     education_program: this.education_program,
-            //     start_study: this.start_study,
-            //     end_study: this.end_study,
-            //     ipk: this.ipk,
-            //     // ======= certificate =========
-            //     certificate_name: this.certificate_name,
-            //     organizer: this.organizer,
-            //     scores: this.scores,
-            //     certificate_year: this.certificate_year,
-            //     // ======= document =========
-            //     curriculum_vitae: this.curriculum_vitae,
-            //     photo: this.photo,
-            //     ktp: this.ktp,  // optional
-            //     kk: this.kk,   // optional
-            //     npwp: this.npwp, // optional
-            //     bpjs: this.bpjs, // optional
-            // });
             const body = new FormData();
             body.append('fullname', this.fullname);
             body.append('place_birth', this.place_birth);
@@ -680,6 +726,9 @@ export default {
             body.append('emergency_number', this.emergency_number);
             body.append('emergency_name', this.emergency_name);
 
+            body.append('ptkp_status', this.ptkp_status);
+            body.append('company_registration_number', this.company_registration_number);
+
             if (this.npwp_number != null) {
                 body.append('npwp_number', this.npwp_number);
             }
@@ -696,10 +745,9 @@ export default {
                 body.append('salary_exspectation', this.salary_exspectation);
             }
             body.append('work_position', this.work_position?.job_specialist_name);
-            body.append('password', this.password);
-            body.append('confirm_password', this.confirm_password);
             // ======= experience =========
             if(this.department.length > 0){
+                console.log('this.end_working', this.end_working);
                 body.append('department[]', this.department.length ? this.department : null);
                 body.append('company_name[]', this.company_name.length ? this.company_name : null);
                 body.append('employment_contract[]', this.employment_contract.length ? this.employment_contract : null);
@@ -731,35 +779,13 @@ export default {
             body.append('npwp', this.npwp); // optional
             body.append('bpjs', this.bpjs); // optional
 
-            await this.postRegistration(body, this.id_registration).then( async (result) => {
+            await this.putBiodata(body, this.id_registration).then( async (result) => {
                 if(result){
-                    this.preview = true;
-                    this.id_registration = result.id_registration;
-                    localStorage.setItem('id_registration', result.id_registration);
-                    this.password && localStorage.setItem('password', this.password);
-                    return this.$notifier.showMessage({ content: 'Mohon koreksi data anda kembali.', status: 'success' });
+                    return this.$notifier.showMessage({ content: 'Success.', status: 'success' });
                 }
             })
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        },
-        async publish(){
-            let userPassword = localStorage.getItem('password');
-            this.$loader.showLoading({ show: true });
-            await this.$auth.loginWith('local', {
-            data: {
-                email: this.email,
-                password: userPassword
-            },
-            }).then((result) => {
-                this.$notifier.showMessage({ content: 'Anda berhasil Registrasi.', status: 'success' });
-                localStorage.removeItem('id_registration');
-                localStorage.removeItem('password');
-                this.$router.push('/')
-            }).catch((err) => {
-                this.$notifier.showMessage({ content: err.response ? err.response.data.message : err, status: 'warning' });
-                this.$loader.showLoading({ show: false });
-            });
         },
         refreshForm(data){
             this.email = data.email;
@@ -793,6 +819,17 @@ export default {
             this.kk = data.data_document[0].kk;
             this.npwp = data.data_document[0].npwp;
             this.bpjs = data.data_document[0].bpjs;
+
+            this.score = data.employee_data?.score;
+            this.ptkp_status = data.employee_data?.ptkp_status;
+            this.company_registration_number = data.employee_data?.company_registration_number;
+            this.job_level_name = data.employee_data?.job_level_name;
+            this.employee_type = data.employee_data?.employee_type;
+            this.start_date = data.employee_data?.start_date;
+            this.end_date = data.employee_data?.end_date;
+            this.job_specialist_name = data.employee_data?.job_specialist_name;
+            this.nominal = data.employee_data?.salary;
+            this.employee_data = data.employee_data == null ? true : falsel
 
             data.data_experience.forEach(element => {
                 this.department.push(element.department);
@@ -905,6 +942,33 @@ export default {
             this.salary_exspectation = value;
 
             return Intl.NumberFormat('en-US').format(value);
+        },
+        useConvertToDateView(value) {
+            var tanggal = new Date(value);
+            var namaBulan = [
+                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            ];
+            var hari = tanggal.getUTCDate();
+            var tahun = tanggal.getUTCFullYear();
+            var bulan = namaBulan[tanggal.getUTCMonth()];
+
+            var hasilFormat = hari + " " + bulan + " " + tahun;
+            return hasilFormat;
+        },
+        useConvertToMonthCountView() {
+            const startDate = new Date(this.start_date);
+            const endDate = new Date(this.end_date);
+
+            const diffMonths = (endDate.getFullYear() - startDate.getFullYear()) * 12 + endDate.getMonth() - startDate.getMonth();
+            return `${diffMonths} Bulan`;
+        },
+        useConvertToYearCountView() {
+            const startDate = new Date(this.start_date);
+            const endDate = new Date(this.end_date);
+
+            const diffYears = endDate.getFullYear() - startDate.getFullYear();
+            return `${diffYears} Tahun`;
         },
     }
 

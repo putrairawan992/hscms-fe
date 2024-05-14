@@ -21,15 +21,15 @@
                                         <v-col cols="12" align="center"  md="4">
                                             <div class="cv-big">
                                                 <div class="wrapper-big">
-                                                    <img class="icon-big" alt="" src="../assets/img/1-2@2x.png" />
+                                                    <img class="icon-big" alt="CV" src="../assets/img/1-2@2x.png" />
                                                 </div>
                                                 <div class="cv-wrapper-big">
                                                     <b class="text-cv mt-2">CV</b>
                                                 </div>
                                                 <div class="cv-button-wrapper">
-                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg"/>
-                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg"/>
-                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg"/>
+                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.curriculum_vitae.path)"/>
+                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg" @click="deleteData(data?.curriculum_vitae)"/>
+                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.curriculum_vitae)"/>
                                                 </div>
                                             </div>
                                         </v-col>
@@ -42,9 +42,9 @@
                                                     <b class="text-cv mt-2">Pas Foto 4x6</b>
                                                 </div>
                                                 <div class="cv-button-wrapper">
-                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg"/>
-                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg"/>
-                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg"/>
+                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.photo.path)"/>
+                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg" @click="deleteData(data?.photo)"/>
+                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.photo)"/>
                                                 </div>
                                             </div>
                                         </v-col>
@@ -57,9 +57,9 @@
                                                     <b class="text-cv mt-2">KTP</b>
                                                 </div>
                                                 <div class="cv-button-wrapper">
-                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg"/>
-                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg"/>
-                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg"/>
+                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.ktp.path)"/>
+                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg" @click="deleteData(data?.ktp)"/>
+                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.ktp)"/>
                                                 </div>
                                             </div>
                                         </v-col>
@@ -72,9 +72,9 @@
                                                     <b class="text-cv mt-2">Kartu Keluarga</b>
                                                 </div>
                                                 <div class="cv-button-wrapper">
-                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg"/>
-                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg"/>
-                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg"/>
+                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.kk.path)"/>
+                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg" @click="deleteData(data?.kk)"/>
+                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.kk)"/>
                                                 </div>
                                             </div>
                                         </v-col>
@@ -87,9 +87,9 @@
                                                     <b class="text-cv mt-2">NPWP</b>
                                                 </div>
                                                 <div class="cv-button-wrapper">
-                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg"/>
-                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg"/>
-                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg"/>
+                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.npwp.path)"/>
+                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg" @click="deleteData(data?.npwp)"/>
+                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.npwp)"/>
                                                 </div>
                                             </div>
                                         </v-col>
@@ -102,9 +102,9 @@
                                                     <b class="text-cv mt-2">BPJSKES & TK</b>
                                                 </div>
                                                 <div class="cv-button-wrapper">
-                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg"/>
-                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg"/>
-                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg"/>
+                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.bpjs.path)"/>
+                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg" @click="deleteData(data?.bpjs)"/>
+                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.bpjs)"/>
                                                 </div>
                                             </div>
                                         </v-col>
@@ -118,6 +118,7 @@
         </v-card>
         <!-- <Dialog-FileAttachment /> -->
         <Dialog-OpenFile :show="fileDialog" :fileUrl="fileUrl" :closeDialog="closeFile"/>
+        <AlertApproval content="Data akan dihapus. Anda yakin ingin menghapus data?" :onApprove="actionDelete" :closeDialog="closeAlertApproval" :show="showAlertApproval"/>
     </div>
 </template>
 <script>
@@ -130,29 +131,124 @@ export default {
     middleware: "jobSeeker",
     components: {},
     data: () => ({
+        data: null,
         fileUrl: null,
+        deleteAttachment: null,
         fileDialog: false,
+        showAlertApproval: false,
     }),
     watch: {},
     computed: {},
     setup() {
-        const { getListPretest } = API()
-        return { getListPretest };
+        const { getFileAttachment, downloadFileAttachment, deleteFileAttachment, } = API()
+        return { getFileAttachment, downloadFileAttachment, deleteFileAttachment };
     },
     async mounted() {
-        // await this.getPretest();
+        await this.getData();
     },
     methods: {
+        async getData(){
+            await this.getFileAttachment().then((result)=>{
+                this.data = result;
+            });
+        },
+        deleteData(data){
+            if(!data.path){
+                return this.$notifier.showMessage({ content: 'File tidak tersedia.', status: 'warning' });
+            }
+            this.showAlertApproval = true;
+            this.deleteAttachment = data.type_attachment;
+        },
+        async actionDelete(){
+            this.showAlertApproval = false;
+            await this.deleteFileAttachment(this.deleteAttachment).then((result)=>{
+                this.$alert.showAlert({ content: 'Data telah dihapus.', show: true });
+            });
+        },
+
+        async downloadAttachment(data) {
+            if(!data.path){
+                return this.$notifier.showMessage({ content: 'File tidak tersedia.', status: 'warning' });
+            }
+            await this.downloadFileAttachment(data.type_attachment).then((result)=>{
+                const filename = this.getFileName(data.path);
+                // Ekstrak ekstensi file
+                const fileExtension = filename.split('.').pop().toLowerCase();
+                // Tentukan tipe MIME berdasarkan ekstensi file
+                let mimeType;
+                switch (fileExtension) {
+                    case 'pdf':
+                        mimeType = 'application/pdf';
+                        break;
+                    case 'png':
+                        mimeType = 'image/png';
+                        break;
+                    case 'jpg':
+                    case 'jpeg':
+                        mimeType = 'image/jpeg';
+                        break;
+                    case 'gif':
+                        mimeType = 'image/gif';
+                        break;
+                    case 'txt':
+                        mimeType = 'text/plain';
+                        break;
+                    case 'html':
+                        mimeType = 'text/html';
+                        break;
+                    case 'json':
+                        mimeType = 'application/json';
+                        break;
+                    case 'doc':
+                    case 'docx':
+                        mimeType = 'application/msword';
+                        break;
+                    case 'xls':
+                    case 'xlsx':
+                        mimeType = 'application/vnd.ms-excel';
+                        break;
+                    case 'ppt':
+                    case 'pptx':
+                        mimeType = 'application/vnd.ms-powerpoint';
+                        break;
+                    // Tambahkan lebih banyak kasus untuk tipe file lain yang sering digunakan
+                    default:
+                        mimeType = 'application/octet-stream'; // MIME tipe default untuk tipe file yang tidak dikenali
+                        break;
+                }
+
+                const blob = new Blob([result], { type: mimeType });
+
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = filename;
+
+                link.dataset.downloadurl = [mimeType, link.download, link.href].join(':');
+                link.draggable = true;
+                link.classList.add('dragout');
+                link.click();
+                this.$alert.showAlert({ content: 'File Telah Diunduh.', show: true });
+            });
+        },
+        getFileName(file){
+            let name = file.split('/');
+            return name[name.length - 1];
+        },
         
         openFile(url){
             if(url){
                 this.fileUrl = url;
                 this.fileDialog = true;
+            }else{
+                this.$notifier.showMessage({ content: 'File tidak tersedia.', status: 'warning' });
             }
         },
         closeFile(){
             this.fileDialog = false;
             this.fileUrl = null;
+        },
+        closeAlertApproval(){
+            this.showAlertApproval = false;
         },
 
 

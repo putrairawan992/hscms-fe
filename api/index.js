@@ -21,7 +21,13 @@ export const API = () => {
 
         getTimeSchedule,
         getDateSchedule,
-        postPickSchedule
+        postPickSchedule,
+        getBiodata,
+        putBiodata,
+
+        getFileAttachment,
+        deleteFileAttachment,
+        downloadFileAttachment,
     } = jobSeekerAPI();
 
     const {
@@ -120,6 +126,12 @@ export const API = () => {
             getTimeSchedule,
             getDateSchedule,
             postPickSchedule,
+            getBiodata,
+            putBiodata,
+            
+            getFileAttachment,
+            deleteFileAttachment,
+            downloadFileAttachment,
 
 
 

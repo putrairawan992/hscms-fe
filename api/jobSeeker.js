@@ -5,7 +5,7 @@ import { jobProviderValidator } from '@/api/validator/jobProvider'
 export const jobSeekerAPI = () => {
     const { $api, $loader, $notifier } = useContext();
     const { jobPostValidator } = jobProviderValidator();
-    const { getRequest ,postRequest, deleteRequest } = request();
+    const { getRequest ,postRequest, deleteRequest, putRequest } = request();
     
     const getJobs = async () => {
         return await getRequest('jobseeker/job');
@@ -41,6 +41,25 @@ export const jobSeekerAPI = () => {
         return await postRequest('jobseeker/schedule', body);
     }
 
+    // Biodata
+    const getBiodata = async () => {
+        return await getRequest(`jobseeker/biodata`);
+    }
+    const putBiodata = async (body) => {
+        return await putRequest(`jobseeker/biodata`, body);
+    }
+
+    // File Attachment
+    const getFileAttachment = async () => {
+        return await getRequest(`jobseeker/file_attachment`);
+    }
+    const deleteFileAttachment = async (type_attachment) => {
+        return await putRequest(`jobseeker/file_attachment/`+type_attachment);
+    }
+    const downloadFileAttachment= async (type_attachment) => {
+        return await getRequest(`jobseeker/file_attachment_download/`+type_attachment, true, 'arraybuffer');
+    }
+
 
     return {
         getJobs,
@@ -54,7 +73,13 @@ export const jobSeekerAPI = () => {
 
         getTimeSchedule,
         getDateSchedule,
-        postPickSchedule
+        postPickSchedule,
+        getBiodata,
+        putBiodata,
+
+        getFileAttachment,
+        deleteFileAttachment,
+        downloadFileAttachment,
 
     }
 }

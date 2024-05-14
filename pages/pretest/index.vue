@@ -33,9 +33,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="frame-div">
-                                                    <div v-if="value.in_review == undefined"  class="frame-container" style="width: 98px;">
-                                                        <div class="attach-mpr-parent" @click="startTest(value, pretest.job_post_id)">
-                                                            <b class="button">Start Test</b>
+                                                    <div v-if="value.in_review == undefined" :class="value.modul != null ? 'orange-btn' : 'grey-btn'" @click="startTest(value, pretest.job_post_id)">
+                                                        <div class="">
+                                                            <b class="button mx-3">Start Test</b>
                                                         </div>
                                                     </div>
 
