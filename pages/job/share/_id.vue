@@ -66,6 +66,16 @@
                     <b class="">Deskripsi Pekerjaan</b>
                     <div class="" v-html="data?.description"/>
                 </v-col>
+
+                <v-col cols="12" class="">
+                        <div class="save-container">
+                            <div class="frame-container ml-auto" style="width: 101px;" @click="applyJob">
+                                <div class="attach-mpr-parent">
+                                    <b class="button">Apply</b>
+                                </div>
+                            </div>
+                        </div>
+                    </v-col>
             </v-row>
         </v-card>
     </div>
@@ -110,6 +120,12 @@ export default {
                 }
             });
         },
+        async applyJob(){
+            localStorage.setItem('id_share_aplied_job', this.$route.params.id);
+            this.$router.push('/login');
+            return this.$notifier.showMessage({ content: 'Silahkah login menggunakan akun anda.', status: 'success' });
+        },
+
         parseDate (date) {
             if (!date) return null
             const [year, month, day] = date.split('-')

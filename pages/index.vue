@@ -408,15 +408,40 @@
   </v-row>
 </template>
 <script>
+import { API } from '@/api/index'
 export default {
   middleware: "jobSeeker",
   name: "NewHiringDashboard",
   data: () => ({ show: false }),
   async mounted() {
-      this.$router.push('/schedule');
-      // this.$alert.showAlert({ content: 'Email belum terisi.', show: true })
+      let id_share_aplied_job =  localStorage.getItem('id_share_aplied_job');
+      if(id_share_aplied_job){
+        this.applyJob(id_share_aplied_job);
+      }else{
+        this.$router.push('/schedule');
+      }
   },
-  methods: {},
+  setup() {
+      const { postApplyJob } = API();
+      return { postApplyJob };
+  },
+  methods: {
+    async applyJob(id_job){
+        await this.postApplyJob(id_job).then( async (result) => {
+            if(result){
+                if(result.message == 'job sudah pernah di apply'){
+                    this.$notifier.showMessage({ content: result.message, status: 'warning' });
+                }else{
+                    this.$notifier.showMessage({ content: 'Success.', status: 'success' });
+                }
+                return this.$router.push('/pretest')
+            }else {
+                return this.getData();
+            }
+        });
+        localStorage.removeItem("id_share_aplied_job");
+    },
+  },
   components: {}
 };
 </script>
