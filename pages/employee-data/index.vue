@@ -129,8 +129,14 @@
                                     <div class="frame-parent-draft">
                                         <div class="foto-perusaahaan-parent">
                                             <img
+                                                v-if="item.photo"
                                                 class="foto-perusaahaan-icon" alt="photo"
                                                 :src="item.photo" @error="handleImgError"
+                                            />
+                                            <img
+                                                v-else
+                                                class="foto-perusaahaan-icon" alt="photo"
+                                                src="@/assets/img/user-red.png" @error="handleImgError"
                                             />
                                             <b class="">{{ item.employee_name }}</b>
                                         </div>

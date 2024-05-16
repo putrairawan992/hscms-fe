@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-row class="" align="start" style=";">
+        <v-row class="" align="start" style="">
             <v-col cols="6" class="">
                 <v-row class="card-ts mb-5">
                     <v-col cols="4" class="pa-0">

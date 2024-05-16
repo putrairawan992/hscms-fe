@@ -26,7 +26,7 @@ export const API = () => {
         putBiodata,
 
         getFileAttachment,
-        deleteFileAttachment,
+        putReuploadAttachment,
         downloadFileAttachment,
     } = jobSeekerAPI();
 
@@ -130,7 +130,7 @@ export const API = () => {
             putBiodata,
             
             getFileAttachment,
-            deleteFileAttachment,
+            putReuploadAttachment,
             downloadFileAttachment,
 
 

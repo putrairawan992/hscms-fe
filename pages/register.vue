@@ -850,37 +850,36 @@ export default {
             body.append('password', this.password);
             body.append('confirm_password', this.confirm_password);
             // ======= experience =========
-            if(this.department.length > 0){
-                body.append('department[]', this.department.length ? this.department : null);
-                body.append('company_name[]', this.company_name.length ? this.company_name : null);
-                body.append('employment_contract[]', this.employment_contract.length ? this.employment_contract : null);
-                body.append('start_working[]', this.start_working.length ? this.start_working : null);
-                body.append('end_working[]', this.end_working.length ? this.end_working : null);
-                body.append('location[]', this.location.length ? this.location : null);
+            if (this.department.length > 0) {
+                for (let index = 0; index < this.department.length; index++) {
+                    body.append(`department[${index}]`, this.department.length > 0 ? this.department[index] : null);
+                    body.append(`company_name[${index}]`, this.company_name.length > 0 ? this.company_name[index] : null);
+                    body.append(`employment_contract[${index}]`, this.employment_contract.length > 0 ? this.employment_contract[index] : null);
+                    body.append(`start_working[${index}]`, this.start_working.length > 0 ? this.start_working[index] : null);
+                    body.append(`end_working[${index}]`, this.end_working.length > 0 ? this.end_working[index] : null);
+                    body.append(`location[${index}]`, this.location.length > 0 ? this.location[index] : null);
+                }
             }
             // ======= education ==========
-            if(this.institute_name.length > 0){
-                body.append('institute_name[]', this.institute_name.length ? this.institute_name : null);
-                body.append('degree[]', this.degree.length ? this.degree : null);
-                body.append('education_program[]', this.education_program.length ? this.education_program : null);
-                body.append('start_study[]', this.start_study.length ? this.start_study : null);
-                body.append('end_study[]', this.end_study.length ? this.end_study : null);
-                body.append('ipk[]', this.ipk.length ? this.ipk : null);
+            if (this.institute_name.length > 0) {
+                for (let index = 0; index < this.institute_name.length; index++) {
+                    body.append(`institute_name[${index}]`, this.institute_name.length > 0 ? this.institute_name[index] : null);
+                    body.append(`degree[${index}]`, this.degree.length > 0 ? this.degree[index] : null);
+                    body.append(`education_program[${index}]`, this.education_program.length > 0 ? this.education_program[index] : null);
+                    body.append(`start_study[${index}]`, this.start_study.length > 0 ? this.start_study[index] : null);
+                    body.append(`end_study[${index}]`, this.end_study.length > 0 ? this.end_study[index] : null);
+                    body.append(`ipk[${index}]`, this.ipk.length > 0 ? this.ipk[index] : null);
+                }
             }
             // ======= certificate =========
-            if(this.institute_name.length > 0){
-                body.append('certificate_name[]', this.certificate_name.length ? this.certificate_name : null);
-                body.append('organizer[]', this.organizer.length ? this.organizer : null);
-                body.append('scores[]', this.scores.length ? this.scores : null);
-                body.append('certificate_year[]', this.certificate_year.length ? this.certificate_year : null);
+            if (this.certificate_name.length > 0) {
+                for (let index = 0; index < this.certificate_name.length; index++) {
+                    body.append(`certificate_name[${index}]`, this.certificate_name.length > 0 ? this.certificate_name[index] : null);
+                    body.append(`organizer[${index}]`, this.organizer.length > 0 ? this.organizer[index] : null);
+                    body.append(`scores[${index}]`, this.scores.length > 0 ? this.scores[index] : null);
+                    body.append(`certificate_year[${index}]`, this.certificate_year.length > 0 ? this.certificate_year[index] : null);
+                }
             }
-            // ======= document =========
-            body.append('curriculum_vitae', this.curriculum_vitae);
-            body.append('photo', this.photo);
-            body.append('ktp', this.ktp); // optional
-            body.append('kk', this.kk); // optional
-            body.append('npwp', this.npwp); // optional
-            body.append('bpjs', this.bpjs); // optional
 
             await this.postRegistration(body, this.id_registration).then( async (result) => {
                 if(result){

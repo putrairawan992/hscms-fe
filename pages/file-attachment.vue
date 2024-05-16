@@ -28,7 +28,7 @@
                                                 </div>
                                                 <div class="cv-button-wrapper">
                                                     <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.curriculum_vitae.path)"/>
-                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg" @click="deleteData(data?.curriculum_vitae)"/>
+                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/upload.svg" @click="uploadFile(data?.curriculum_vitae.type_attachment)"/>
                                                     <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.curriculum_vitae)"/>
                                                 </div>
                                             </div>
@@ -43,7 +43,7 @@
                                                 </div>
                                                 <div class="cv-button-wrapper">
                                                     <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.photo.path)"/>
-                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg" @click="deleteData(data?.photo)"/>
+                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/upload.svg" @click="uploadFile(data?.photo.type_attachment)"/>
                                                     <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.photo)"/>
                                                 </div>
                                             </div>
@@ -58,7 +58,7 @@
                                                 </div>
                                                 <div class="cv-button-wrapper">
                                                     <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.ktp.path)"/>
-                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg" @click="deleteData(data?.ktp)"/>
+                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/upload.svg" @click="uploadFile(data?.ktp.type_attachment)"/>
                                                     <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.ktp)"/>
                                                 </div>
                                             </div>
@@ -73,7 +73,7 @@
                                                 </div>
                                                 <div class="cv-button-wrapper">
                                                     <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.kk.path)"/>
-                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg" @click="deleteData(data?.kk)"/>
+                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/upload.svg" @click="uploadFile(data?.kk.type_attachment)"/>
                                                     <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.kk)"/>
                                                 </div>
                                             </div>
@@ -88,7 +88,7 @@
                                                 </div>
                                                 <div class="cv-button-wrapper">
                                                     <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.npwp.path)"/>
-                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg" @click="deleteData(data?.npwp)"/>
+                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/upload.svg" @click="uploadFile(data?.npwp.type_attachment)"/>
                                                     <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.npwp)"/>
                                                 </div>
                                             </div>
@@ -103,7 +103,7 @@
                                                 </div>
                                                 <div class="cv-button-wrapper">
                                                     <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.bpjs.path)"/>
-                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/trash1.svg" @click="deleteData(data?.bpjs)"/>
+                                                    <img class="cv-button-icon" alt="" src="@/assets/svg/upload.svg" @click="uploadFile(data?.bpjs.type_attachment)"/>
                                                     <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.bpjs)"/>
                                                 </div>
                                             </div>
@@ -118,6 +118,7 @@
         </v-card>
         <!-- <Dialog-FileAttachment /> -->
         <Dialog-OpenFile :show="fileDialog" :fileUrl="fileUrl" :closeDialog="closeFile"/>
+        <Dialog-UploadAttachment :show="dialogAttach" :closeDialog="closeDialog" :typeAttachment="typeAttachment"/>
         <AlertApproval content="Data akan dihapus. Anda yakin ingin menghapus data?" :onApprove="actionDelete" :closeDialog="closeAlertApproval" :show="showAlertApproval"/>
     </div>
 </template>
@@ -133,15 +134,17 @@ export default {
     data: () => ({
         data: null,
         fileUrl: null,
-        deleteAttachment: null,
         fileDialog: false,
+        dialogAttach: false,
+        typeAttachment: null,
+        deleteAttachment: null,
         showAlertApproval: false,
     }),
     watch: {},
     computed: {},
     setup() {
-        const { getFileAttachment, downloadFileAttachment, deleteFileAttachment, } = API()
-        return { getFileAttachment, downloadFileAttachment, deleteFileAttachment };
+        const { getFileAttachment, downloadFileAttachment, putReuploadAttachment, } = API()
+        return { getFileAttachment, downloadFileAttachment, putReuploadAttachment };
     },
     async mounted() {
         await this.getData();
@@ -161,9 +164,14 @@ export default {
         },
         async actionDelete(){
             this.showAlertApproval = false;
-            await this.deleteFileAttachment(this.deleteAttachment).then((result)=>{
+            await this.putReuploadAttachment(this.deleteAttachment).then((result)=>{
                 this.$alert.showAlert({ content: 'Data telah dihapus.', show: true });
             });
+        },
+        
+        uploadFile(type_attachment){
+            this.typeAttachment = type_attachment;
+            this.dialogAttach = true;
         },
 
         async downloadAttachment(data) {
@@ -246,6 +254,11 @@ export default {
         closeFile(){
             this.fileDialog = false;
             this.fileUrl = null;
+        },
+        async closeDialog(){
+            this.dialogAttach = false;
+            this.typeAttachment = null;
+            return await this.getData();
         },
         closeAlertApproval(){
             this.showAlertApproval = false;

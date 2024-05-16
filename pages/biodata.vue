@@ -295,8 +295,8 @@
                         </v-col>
                     </v-row>
 
-                    <div v-if="score.length > 0" class="group-inner"/>
-                    <v-row v-if="score.length > 0" v-for="value in score" align="center">
+                    <div v-if="score?.length > 0" class="group-inner"/>
+                    <v-row v-if="score?.length > 0" v-for="value in score" align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
                             <b>{{ value.modul_category }}:</b>
                         </v-col>
@@ -306,6 +306,12 @@
                     </v-row>
 
                     <div class="group-inner" />
+                    <v-row>
+                        <v-col class="mb-6" style="position: relative; cursor: pointer;">
+                            <i class="opsional-dapat-dikosongkan"> *Opsional. Dapat dikosongkan jika belum memiliki pengalaman pekerjaan </i>
+                            <img class="pluscirclefill" alt="Tambah Pengalaman" src="@/assets/svg/pluscirclefill2.svg" @click="addForm('experience')"/>
+                        </v-col>
+                    </v-row>
                     <v-row align="start" v-for="(value, key) in department.length == 0 ? 1 : department" class="mb-4">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label mt-3">
                             <b>Pengalaman:</b>
@@ -386,6 +392,12 @@
                     </v-row>
 
                     <div class="group-inner" />
+                    <v-row>
+                        <v-col class="mb-6" style="position: relative; cursor: pointer;">
+                            <i class="opsional-dapat-dikosongkan"> &ensp; </i>
+                            <img class="pluscirclefill" alt="" src="@/assets/svg/pluscirclefill2.svg" @click="addForm('education')"/>
+                        </v-col>
+                    </v-row>
                     <v-row align="start" v-for="(value, key) in institute_name.length == 0 ? 1 : institute_name" class="mb-4">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label mt-3">
                             <b>Pendidikan:</b>
@@ -472,6 +484,12 @@
                     </v-row>
 
                     <div class="group-inner" />
+                    <v-row>
+                        <v-col class="mb-6" style="position: relative; cursor: pointer;">
+                            <i class="opsional-dapat-dikosongkan"> &ensp; </i>
+                            <img class="pluscirclefill" alt="" src="@/assets/svg/pluscirclefill2.svg" @click="addForm('certificate')"/>
+                        </v-col>
+                    </v-row>
                     <v-row align="start" v-for="(value, key) in certificate_name.length == 0 ? 1 : certificate_name" class="mb-4">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label mt-3">
                             <b>Sertifikat:</b>
@@ -704,6 +722,7 @@ export default {
             await this.getBiodata().then((result)=>{
                 result && this.refreshForm(result);
             });
+            console.log('employee_data', this.employee_data);
         },
         async submit(){
             const body = new FormData();
@@ -746,30 +765,35 @@ export default {
             }
             body.append('work_position', this.work_position?.job_specialist_name);
             // ======= experience =========
-            if(this.department.length > 0){
-                console.log('this.end_working', this.end_working);
-                body.append('department[]', this.department.length ? this.department : null);
-                body.append('company_name[]', this.company_name.length ? this.company_name : null);
-                body.append('employment_contract[]', this.employment_contract.length ? this.employment_contract : null);
-                body.append('start_working[]', this.start_working.length ? this.start_working : null);
-                body.append('end_working[]', this.end_working.length ? this.end_working : null);
-                body.append('location[]', this.location.length ? this.location : null);
+            if (this.department.length > 0) {
+                for (let index = 0; index < this.department.length; index++) {
+                    body.append(`department[${index}]`, this.department.length > 0 ? this.department[index] : null);
+                    body.append(`company_name[${index}]`, this.company_name.length > 0 ? this.company_name[index] : null);
+                    body.append(`employment_contract[${index}]`, this.employment_contract.length > 0 ? this.employment_contract[index] : null);
+                    body.append(`start_working[${index}]`, this.start_working.length > 0 ? this.start_working[index] : null);
+                    body.append(`end_working[${index}]`, this.end_working.length > 0 ? this.end_working[index] : null);
+                    body.append(`location[${index}]`, this.location.length > 0 ? this.location[index] : null);
+                }
             }
             // ======= education ==========
-            if(this.institute_name.length > 0){
-                body.append('institute_name[]', this.institute_name.length ? this.institute_name : null);
-                body.append('degree[]', this.degree.length ? this.degree : null);
-                body.append('education_program[]', this.education_program.length ? this.education_program : null);
-                body.append('start_study[]', this.start_study.length ? this.start_study : null);
-                body.append('end_study[]', this.end_study.length ? this.end_study : null);
-                body.append('ipk[]', this.ipk.length ? this.ipk : null);
+            if (this.institute_name.length > 0) {
+                for (let index = 0; index < this.institute_name.length; index++) {
+                    body.append(`institute_name[${index}]`, this.institute_name.length > 0 ? this.institute_name[index] : null);
+                    body.append(`degree[${index}]`, this.degree.length > 0 ? this.degree[index] : null);
+                    body.append(`education_program[${index}]`, this.education_program.length > 0 ? this.education_program[index] : null);
+                    body.append(`start_study[${index}]`, this.start_study.length > 0 ? this.start_study[index] : null);
+                    body.append(`end_study[${index}]`, this.end_study.length > 0 ? this.end_study[index] : null);
+                    body.append(`ipk[${index}]`, this.ipk.length > 0 ? this.ipk[index] : null);
+                }
             }
             // ======= certificate =========
-            if(this.institute_name.length > 0){
-                body.append('certificate_name[]', this.certificate_name.length ? this.certificate_name : null);
-                body.append('organizer[]', this.organizer.length ? this.organizer : null);
-                body.append('scores[]', this.scores.length ? this.scores : null);
-                body.append('certificate_year[]', this.certificate_year.length ? this.certificate_year : null);
+            if (this.certificate_name.length > 0) {
+                for (let index = 0; index < this.certificate_name.length; index++) {
+                    body.append(`certificate_name[${index}]`, this.certificate_name.length > 0 ? this.certificate_name[index] : null);
+                    body.append(`organizer[${index}]`, this.organizer.length > 0 ? this.organizer[index] : null);
+                    body.append(`scores[${index}]`, this.scores.length > 0 ? this.scores[index] : null);
+                    body.append(`certificate_year[${index}]`, this.certificate_year.length > 0 ? this.certificate_year[index] : null);
+                }
             }
             // ======= document =========
             body.append('curriculum_vitae', this.curriculum_vitae);
@@ -829,7 +853,7 @@ export default {
             this.end_date = data.employee_data?.end_date;
             this.job_specialist_name = data.employee_data?.job_specialist_name;
             this.nominal = data.employee_data?.salary;
-            this.employee_data = data.employee_data == null ? true : falsel
+            this.employee_data = data.employee_data == null ? false : true;
 
             data.data_experience.forEach(element => {
                 this.department.push(element.department);

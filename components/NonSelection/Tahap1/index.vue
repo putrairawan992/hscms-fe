@@ -1,95 +1,50 @@
 <template>
     <div>
-        <div class="mt-0 ml-0" style="display: flex; column-gap: 20px;">
-            <div cols="3" class="total-kandidat">
-                <div class="">
-                    Total Kandidat:
-                </div>
-                <div class="">
-                    {{ dataCandidate?.count ? dataCandidate?.count : 0 }} Orang
-                </div>
-            </div>
-            <div cols="3" class="total-kandidat">
-                <div class="">
-                    Total Kandidat Dipilih:
-                </div>
-                <div class="">
-                    {{ idCandidats.length }} Orang
-                </div>
-            </div>
-        </div>
+        <div style="height: 544px; overflow: hidden;  overflow-x: hidden">
+            <v-row class="mt-2" align="start" style="">
+                <v-col cols="12" md="6" class="">
+                    <button class="" :class="file == null ? 'drop-file-non-selection' : 'drop-file-non-selection-filled'" @click="selectFile()">
+                        <v-row v-if="file == null">
+                            <v-col cols="12" class="pt-5 pb-2">
+                                <img class="mt-3 mb-1" alt="" src="@/assets/svg/upload-orange.svg" />
+                            </v-col>
+                            <v-col cols="12" class="text-tahap-big pa-0" style="color: #AE445A;">
+                                <b class="">Upload Dokumen</b>
+                            </v-col>
+                            <v-col cols="12" class="text-center text-tahap-desc-big pt-1 pb-8" style="color: #404041;">
+                                <div class="">*Dokumen dengan format (CSV)</div>
+                            </v-col>
+                        </v-row>
+                        
+                        <!-- Filled -->
+                        <v-row v-else>
+                            <v-col cols="12" class="pt-8 pb-6">
+                                <img class="mt-3 mb-1" alt="" src="@/assets/svg/centang-putih.svg" />
+                            </v-col>
+                            <v-col cols="12" class="text-tahap-big pa-0">
+                                <b class="">Dokumen Sudah Di-Upload</b>
+                            </v-col>
+                            <v-col cols="12" class="text-center text-tahap-desc-big pt-1 pb-8">
+                                <div class="">*Dokumen dengan format (CSV)</div>
+                            </v-col>
+                        </v-row>
+                    </button>
+                    <input class="d-none" type="file" ref="fileInput" @change="onSelectFile($event)">
 
-        <div style="height: 581px; overflow: auto;  overflow-x: hidden">
-            <v-row class="mt-3" align="start">
-                <v-expansion-panels v-model="panel">
-                    <v-col v-for="value, key in dataCandidate?.candidate_list" :key="key" cols="12" class="pb-0">
-                        <div class="history-1">
-                            <div class="frame-parent-ts">
-                                <div class="foto-tahap1-parent">
-                                    <v-checkbox class="input-checkbox" color="#ae445a" @change="onChecked($event, value.job_seeker_id)"></v-checkbox>
-                                    <img
-                                        class="foto-tahap1-icon"
-                                        :src="value.photo"
-                                        alt="photo"
-                                    />
-                                    <b class="list-item-name">{{ value.name }}</b>
-                                </div>
-                                <div style="width: 350px; display: flex; justify-content: space-between;">
-                                    <div style="cursor: pointer;" @click="activatePanel(key+1)"><i>Review Kandidat</i></div>
-                                    <div>{{ value.created_at }}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <v-expansion-panel class="expansion-ts" style="background-color: #fff;">
-                            <v-expansion-panel-content>
-                                <table class="panel-table mt-2">
-                                    <tr>
-                                        <th>Module Name</th>
-                                        <th>Duration</th> 
-                                        <th>Detail</th>
-                                        <th>Score</th>
-                                    </tr>
-                                    <tr><th colspan="4" style="border-top: 2px solid #AE445A;"></th></tr>
-                                    <tr v-if="value.score.length" v-for="item in value.score" class="panel-table-item">
-                                        <td class="text-left">{{ item.title_test }}</td>
-                                        <td>00:00:00</td> 
-                                        <td class="">
-                                            <div class="table-btn" style="">
-                                                <div class="" @click="clickDetail(value.job_seeker_id, item)">
-                                                    <b class="button mx-4">Detail</b>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td style="max-width: 174px;">
-                                            <v-text-field
-                                                solo class="search-text-field" readonly
-                                                placeholder="Rata-Rata Nilai" :value="item.score"
-                                            ></v-text-field>
-                                        </td>
-                                    </tr>
-                                    <tr v-else class="panel-table-item">
-                                        <td>-</td> 
-                                        <td>-</td> 
-                                        <td>-</td> 
-                                        <td>-</td> 
-                                    </tr>
-                                    <tr><th colspan="4" style="border-top: 2px solid #AE445A;"></th></tr>
-                                    <tr>
-                                        <th colspan="3" class="mt-6">Average Score</th>
-                                        <th class="mt-6">0</th>
-                                    </tr>
-                                </table>
-                                <!-- <div class="mt-2" style="display: flex; justify-content: end;">
-                                    <div class="orange-btn" style="">
-                                        <div class="" @click="">
-                                            <b class="button mx-4">Save</b>
-                                        </div>
-                                    </div>
-                                </div> -->
-                            </v-expansion-panel-content>
-                        </v-expansion-panel>
-                    </v-col>
-                </v-expansion-panels>
+                </v-col>
+                <v-col cols="12" md="6" class="">
+                    <v-row class="card-ts-big mb-5">
+                        <v-col cols="12" class="pb-0">
+                            <img class="mt-3 mb-1" alt="" src="@/assets/svg/doc-tahap.svg" />
+                        </v-col>
+                        <v-col cols="12" class="text-tahap-big pa-0">
+                            <b class="">Template Dokumen</b>
+                        </v-col>
+                        <v-col cols="12" class="text-center text-tahap-desc-big pt-1 pb-8">
+                            <div class="">*Klik di sini untuk mengunduh</div>
+                        </v-col>
+                    </v-row>
+                </v-col>
             </v-row>
         </div>
         <div style="position: relative; display: flex; justify-content: end; column-gap: 20px; margin-top: 60px; padding-bottom: 30px;">
@@ -100,11 +55,17 @@
             </div> -->
             <div></div>
             <div class="orange-btn" style="">
-                <div class="" @click="continueStep">
-                    <b class="button mx-4">Continue to “Tahap 2”</b>
+                <div class="" @click="createDialog = true">
+                    <b class="button mx-4">Continue with Pre-Test</b>
+                </div>
+            </div>
+            <div class="orange-btn" style="">
+                <div class="" @click="">
+                    <b class="button mx-4">Continue without Pre-Test</b>
                 </div>
             </div>
         </div>
+        <Dialog-PretestNonSelection :show="createDialog" :closeDialog="closeDialog"/>
     </div>
 </template>
 
@@ -121,9 +82,11 @@ export default {
         radios: [],
         idCandidats:[],
         dataCandidate: null,
+        file: null,
+        createDialog: false
     } },
     watch: {
-        tahapanGetter(to, from){
+        tahapanNonSeleksiGetter(to, from){
             this.refreshData();
         }
     },
@@ -132,78 +95,66 @@ export default {
         return { getListCandidateAPI, postChooseCandidate };
     },
     computed: {
-		...mapState('provider-selection', ['listCandidate']),
-        ...mapGetters('provider-selection', ['tahapanGetter']),
+        ...mapGetters('provider-selection', ['tahapanNonSeleksiGetter']),
     },
     props: { 
         next: { type: Function, default() { return {} } },
     },
     async mounted(){
-        await this.getListCandidate();
-        this.dataCandidate = this.listCandidate;
+        // await this.getListCandidate();
     },
     methods: {
-		...mapActions('provider-selection', ['getListCandidate']),
-        ...mapMutations('provider-selection', ['setTahapan', 'setListCandidate']),
+        ...mapMutations('provider-selection', ['setTahapanNonSeleksi', 'setListCandidate']),
 
-        async refreshData() {
-            await this.getListCandidateAPI({
-                selection_path: "selection",
-                status_step: this.tahapanGetter.tahap,
-                job_post_id: this.tahapanGetter.jobSelected?.id
-            }).then((result)=>{
-                if(result){
-                    this.setListCandidate(result.data)
-                    this.dataCandidate = result.data;
-                }
-            })
-        },
         async continueStep() {
-            if(this.idCandidats.length){
-                await this.postChooseCandidate({
-                    status_step: 'tahap 2',
-                    job_seeker_id: this.idCandidats,
-                    job_post_id: this.tahapanGetter.jobSelected?.id
-    
-                }).then((result)=>{
-                    if(result){
-                        this.setTahapan({ tahap: 'Tahap 2', ...this.tahapanGetter });
-                        return this.next('Tahap 2');
-                    }
-                })
-            }else{
-                this.$notifier.showMessage({ content: 'Mohon pilih kandidat terlebih dahulu.', status: 'warning' });
-            }
+            this.setTahapanNonSeleksi({ tahap: 'Tahap 2' });
+            return this.next('Tahap 2');
         },
-        async clickDetail(job_seeker_id,  module) {
-            await this.setTahapan({
-                ...this.tahapanGetter,
-                detail: {
-                    job_seeker_id: job_seeker_id,
-                    module: module,
-                }
-            });
-            return this.$router.push("/talent-selection/detail")
+
+        selectFile(question){
+            this.$refs.fileInput.click();
         },
-        onChecked(value, job_seeker_id) {
-            if (!this.idCandidats.includes(job_seeker_id)) {
-                this.idCandidats.push(job_seeker_id);
-            } else {
-                let index = this.idCandidats.indexOf(job_seeker_id);
-                this.idCandidats.splice(index, 1);
-            }
+        onSelectFile (event) {
+            this.file = event.srcElement.files[0];
         },
-        unselect(){
-            this.radios = [];
-            this.idCandidats = [];
+        getFileName(file){
+            let name = file.split('/');
+            return name[name.length - 1];
         },
-        activatePanel(index) {
-            this.panel = this.panel === index - 1 ? [] : index - 1;
-        },
+        closeDialog(){
+            this.createDialog = false;
+        }
     },
 }
 </script>
 <style scoped>
+.drop-file-non-selection {
+    border-radius: 10px;
+    border: 3px dashed #ae445a;
+    box-sizing: border-box;
+    width: 100%;
+    height: 185px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 10px;
+    gap: 15px;
+}
+.drop-file-non-selection-filled {
+    border-radius: 10px;
+    background: linear-gradient(90deg, #3AB471, #3B78C2);
+    box-sizing: border-box;
+    width: 100%;
+    height: 185px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 10px;
+    gap: 15px;
+}
 .table-btn {
     cursor: pointer;
     border-radius: 10px;
@@ -283,6 +234,24 @@ export default {
     font-weight: 400;
     line-height: normal;
 }
+
+.text-tahap-big {
+    color: #FFF;
+    font-family: Poppins;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.text-tahap-desc-big {
+    color: #FFF;
+    text-align: justify;
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: normal;
+}
 .generate-btn {
     cursor: pointer;
     border-radius: 10px;
@@ -300,8 +269,8 @@ export default {
     line-height: 50px;
     margin-left: 20px;
 }
-.card-ts {
-    height: 111px;
+.card-ts-big {
+    height: 185px;
     color: #fff;
     margin: unset;
     position: relative;

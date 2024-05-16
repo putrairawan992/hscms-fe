@@ -53,8 +53,8 @@ export const jobSeekerAPI = () => {
     const getFileAttachment = async () => {
         return await getRequest(`jobseeker/file_attachment`);
     }
-    const deleteFileAttachment = async (type_attachment) => {
-        return await putRequest(`jobseeker/file_attachment/`+type_attachment);
+    const putReuploadAttachment = async (body, type_attachment) => {
+        return await putRequest(`jobseeker/file_attachment/`+type_attachment, body);
     }
     const downloadFileAttachment= async (type_attachment) => {
         return await getRequest(`jobseeker/file_attachment_download/`+type_attachment, true, 'arraybuffer');
@@ -78,7 +78,7 @@ export const jobSeekerAPI = () => {
         putBiodata,
 
         getFileAttachment,
-        deleteFileAttachment,
+        putReuploadAttachment,
         downloadFileAttachment,
 
     }

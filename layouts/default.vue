@@ -25,7 +25,19 @@
                   <v-menu transition="scale-transition" origin="left" rounded="xl" offset-y max-width="350px" max-height="441px">
                     <template v-slot:activator="{ attrs, on }">
                       <div class="user-profile" v-bind="attrs" v-on="on">
-                        <img class="foto-user-icon" alt="" src="@/assets/svg/foto-user.svg" />
+                        <!-- <img class="foto-user-icon" alt="" src="@/assets/svg/foto-user.svg" /> -->
+
+                        <img v-if="$auth.user.photo"
+                            class="foto-user-icon"
+                            loading="eager" alt="photo"
+                            :src="$auth.user.photo"
+                            @error="handleImgError($event)"
+                        />
+                        <img  v-if="!$auth.user.photo"
+                            class="foto-user-icon pt-2 pa-1"
+                            loading="eager" alt="photo"
+                            src="@/assets/img/user-red-big.png"
+                        />
                       </div>
                     </template>
 
@@ -36,11 +48,24 @@
                             User Profile
                           </div>
                           <div class="d-flex" style="align-items:center">
-                            <img class="foto-user-icon-big" alt="" src="@/assets/svg/foto-user.svg" />
+                            <!-- <img class="foto-user-icon-big" alt="" src="@/assets/svg/foto-user.svg" /> -->
+
+                            <img v-if="$auth.user.photo"
+                                class="foto-user-icon-big"
+                                loading="eager" alt="photo"
+                                :src="$auth.user.photo"
+                                @error="handleImgError($event)"
+                            />
+                            <img  v-if="!$auth.user.photo"
+                                class="foto-user-icon-big pt-2 pa-1"
+                                loading="eager" alt="photo"
+                                src="@/assets/img/user-red-big.png"
+                            />
+
                             <div class="profile-name-container">
-                              <div class="profile-name-text">Budi Budiman</div>
-                              <div class="profile-text">Admin - Digital Start Up 1</div>
-                              <div class="profile-text">budibudiman@gmail.com</div>
+                              <div class="profile-name-text">{{ $auth.user.fullname }}</div>
+                              <div class="profile-text">{{ $auth.user.work_position || '-' }}</div>
+                              <div class="profile-text">{{ $auth.user.email || '-' }}</div>
                             </div>
                           </div>
                           <hr class="hr-profile mt-5 mb-8"/>
@@ -83,9 +108,10 @@
 </template>
 
 <script>
-import Alert from '~/components/Alert.vue'
-import Loading from '~/components/Loading.vue'
-import Snackbar from '~/components/Snackbar.vue'
+import Alert from '~/components/Alert.vue';
+import Loading from '~/components/Loading.vue';
+import Snackbar from '~/components/Snackbar.vue';
+import userRedImage from '~/assets/img/user-red.png';
 export default {
   name: 'DefaultLayout',
   data () {
@@ -107,7 +133,10 @@ export default {
     }
   },
   components: { Snackbar, Loading, Alert },
-  mounted() {},
+  mounted() {
+
+    console.log('auth.user', this.$auth.user);
+  },
   methods: {
     closeDrawer(){
       this.drawer = false;
@@ -116,7 +145,10 @@ export default {
         this.$auth.logout();
         localStorage.clear();
         this.$router.push('/login');
-      }
+    },
+    handleImgError(event) {
+      event.target.src = userRedImage;
+    }
   }
 }
 </script>
@@ -132,6 +164,7 @@ export default {
   position: relative;
   width: 80px;
   height: 80px;
+  border: 6px solid #ae445a;
   border-radius: 50%;
 }
 .profile-name-container {

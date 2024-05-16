@@ -47,7 +47,7 @@ export default {
     padding: 30px 20px 20px 20px;
     background-color: #fff;
     margin: auto;
-    margin-top: 10px;
+    margin-top: 20px;
     position: relative;
 }
 .alert-icon {

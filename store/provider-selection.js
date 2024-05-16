@@ -5,8 +5,8 @@ export const state = () => ({
     jobOpening: [],
     listCandidate: [],
     detailAnswer: null,
+	tahapanNonSeleksi: {tahap: null, detail: null},
 	tahapan: {tahap: null, jobSelected: null, detail: null},
-	tahapanNonSeleksi: {tahap: null, jobSelected: null, detail: null},
 })
 
 export const mutations = {
