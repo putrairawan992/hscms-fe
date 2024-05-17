@@ -14,7 +14,7 @@
             <div class="up-button-talent">
               <div class="up-button-wrapper">
                 <div class="up-button">
-                  <div class="ellipse-parent" @click="drawer = !drawer">
+                  <div class="ellipse-parent" @click="$router.push('/notification')">
                     <div class="frame-child" />
                     <img
                       alt=""
@@ -69,7 +69,7 @@
                             </div>
                           </div>
                           <hr class="hr-profile mt-5 mb-8"/>
-                          <div class="d-flex profile-menu-container" style="align-items:center">
+                          <div class="d-flex profile-menu-container" style="align-items:center" @click="$router.push('/profile')">
                             <img class="foto-user-icon-small" alt="" src="@/assets/svg/my-profile.svg" />
                             <div class="menu-container">
                               <div class="profile-name-text">My Profile</div>
@@ -133,10 +133,7 @@ export default {
     }
   },
   components: { Snackbar, Loading, Alert },
-  mounted() {
-
-    console.log('auth.user', this.$auth.user);
-  },
+  mounted() {},
   methods: {
     closeDrawer(){
       this.drawer = false;
@@ -164,6 +161,7 @@ export default {
   position: relative;
   width: 80px;
   height: 80px;
+  object-fit: cover;
   border: 6px solid #ae445a;
   border-radius: 50%;
 }

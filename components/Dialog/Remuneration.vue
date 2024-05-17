@@ -15,7 +15,7 @@
                     </v-col>
                     <v-col style="display: flex; justify-content: end; max-width: -webkit-fit-content;">
                         <div class="orange-btn">
-                            <div class="" @click="closeDialog">
+                            <div class="" @click="selectAll">
                                 <b class="button mx-3">Select All</b>
                             </div>
                         </div>
@@ -139,6 +139,11 @@
             await this.getData(event);
         },1000),
         
+        selectAll() {
+            this.existing = this.data.existing.map(employee => employee.employee_id);
+            this.new_hiring = this.data.new_hiring.map(employee => employee.employee_id);
+        },
+
         parseDate (date) {
             if (!date) return null
             const [year, month, day] = date.split('-')

@@ -99,7 +99,6 @@
     },
     async mounted(){
         await this.getGrade(this.tahapanGetter.jobSelected?.id).then((result)=>{
-            console.log('getGrade', result);
             if(result){
                 this.gradeList = result.grade_list;
                 this.setting = result.setting_grade;
@@ -212,6 +211,7 @@
     width: 101px;
     height: 101px;
     padding: 6px;
+    object-fit: cover;
     border-radius: 50%;
     border: 3px solid #ae445a;
 }

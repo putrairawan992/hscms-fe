@@ -289,6 +289,7 @@ export default {
     width: 101px;
     height: 101px;
     padding: 6px;
+    object-fit: cover;
     border-radius: 50%;
     border: 3px solid #ae445a;
 }

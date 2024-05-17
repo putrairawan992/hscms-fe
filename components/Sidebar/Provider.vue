@@ -6,7 +6,8 @@
             <div class="menu">
                 <!-- <div :class="pageActive == 'dashboard' || pageActive == 'index' ? 'dashboard1' : 'help-center'" @click="$router.push('/dashboard')">Dashboard</div> -->
                 <div class="help-center" style="color: #a3a3a3;" @click="">Dashboard</div>
-                <div class="help-center" style="color: #a3a3a3;" @click="">Help Center</div>
+                <div :class="pageActive == 'help' ? 'dashboard1' : 'help-center'" @click="$router.push('/help-center')">Help Center</div>
+                <!-- <div :class="pageActive == 'blast' ? 'dashboard1' : 'help-center'" @click="$router.push('/blast-notification')">Blast Notification</div> -->
                 <div class="help-center" style="color: #a3a3a3;" @click="">Blast Notification</div>
                 <div class="menu-child" />
                 <div class="help-center" style="color: #a3a3a3;" @click="">Talent Pool</div>

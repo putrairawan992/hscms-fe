@@ -7,6 +7,36 @@ export const jobProviderAPI = () => {
     const { jobPostValidator } = jobProviderValidator();
     const { getRequest ,postRequest, putRequest, deleteRequest } = request();
     
+    const getProfile = async () => {
+        return await getRequest(
+            $auth.user.role_user == 'jobprovider' ?
+            'jobprovider/profile' :
+            'jobseeker/profile' 
+        );
+    }
+    const putUpdateProfile = async (body) => {
+        console.log('body',body);
+        return await putRequest(
+            $auth.user.role_user == 'jobprovider' ?
+            'jobprovider/profile' :
+            'jobseeker/profile' , body
+        );
+    }
+    const getHelpCenter = async () => {
+        return await getRequest(
+            $auth.user.role_user == 'jobprovider' ?
+            'jobprovider/help_center' :
+            'jobseeker/help_center' 
+        );
+    }
+    const getListNotification = async () => {
+        return await getRequest(
+            $auth.user.role_user == 'jobprovider' ?
+            'jobprovider/notification' :
+            'jobseeker/notification' 
+        );
+    }
+
     const getJob = async (id_job) => {
         return await getRequest(id_job ? 'jobprovider/job/'+id_job : 'jobprovider/job', true);
     }
@@ -255,7 +285,45 @@ export const jobProviderAPI = () => {
         , body);
     }
 
+    // Non Selection
+    const getDownloadTemplate = async () => {
+        return await getRequest('jobprovider/nonselection/template_download', true, 'arraybuffer');
+    }
+    const postUploadTemplate = async (body) => {
+        return await postRequest('jobprovider/nonselection/template_upload', body);
+    }
+    const postCreateQuestion = async (body, job_post_id) => {
+        return await postRequest('jobprovider/nonselection/create_question/'+job_post_id, body);
+    }
+    const getListEmployeeNS = async (step) => {
+        let param = '?';
+        if(step != null){ param = param + 'status_step='+step };
+        return await getRequest('jobprovider/nonselection/employee_list' + param);
+    }
+    const postReminder = async (body) => {
+        console.log('postReminder', body);
+        return await postRequest('jobprovider/nonselection/reminder', body);
+    }
+    const deleteListEmployeeNS = async (body) => {
+        console.log('deleteListEmployeeNS', body);
+        return await deleteRequest('jobprovider/nonselection/employee_list', {
+            "employee_id":["bwIGimRMiPCpfjd2qhmDq"]
+        });
+    }
+    const postContinueNS = async (body) => {
+        return await postRequest('jobprovider/nonselection/nextstep', body);
+    }
+    const postFinishNS = async (body) => {
+        return await postRequest('jobprovider/nonselection/finishstep', body);
+    }
+
+
     return {
+        getProfile,
+        putUpdateProfile,
+        getHelpCenter,
+        getListNotification,
+
         getJob,
         postJob,
         putJob,
@@ -327,5 +395,14 @@ export const jobProviderAPI = () => {
         postCreateMessage,
         getListEmployeeInbox,
         getMessageAttachment,
+
+        getDownloadTemplate,
+        postUploadTemplate,
+        postCreateQuestion,
+        getListEmployeeNS,
+        postReminder,
+        deleteListEmployeeNS,
+        postContinueNS,
+        postFinishNS
     }
 }

@@ -118,51 +118,54 @@ export default {
         }
     },
     watch: {
-        show(to, from){
-            this.getData();
-        },
-        quantitative_score(to, from){
-        }
+        show(to, from){},
+        quantitative_score(to, from){}
     },
     props: {
         content: { type: String, default() { return "" } },
+        jobPostId: { type: String, default() { return null } },
         show: { type: Boolean, default() { return false } },
         onApprove: { type: Function, default() { return {} } },
         closeDialog: { type: Function, default() { return {} } },
+        uploadDocument: { type: Function, default() { return {} } },
+        continueStepWithPretest: { type: Function, default() { return {} } },
     },
     setup() {
-        const { getListEmployeeInbox, postCreateMessage } = API();
-        return { getListEmployeeInbox, postCreateMessage };
+        const { postCreateQuestion } = API();
+        return { postCreateQuestion };
     },
     computed: {
         ...mapGetters('provider-selection', ['tahapanGetter']),
     },
-    async mounted(){
-        await this.getData();
-    },
+    async mounted(){},
     methods: {
-        async getData(){
-
-        },
         async submit(){
-            if(this.recipent_id == null){ this.$notifier.showMessage({ content: 'Data penerima belum terisi.', status: 'warning' }) }
-            if(this.title == null){ this.$notifier.showMessage({ content: 'Judul belum terisi.', status: 'warning' }) }
-            if(this.main_text == null){ this.$notifier.showMessage({ content: 'Isi pesan belum terisi.', status: 'warning' }) }
-            
-            const body = new FormData();
-            body.append('title', this.title);
-            body.append('schedule', this.schedule);
-            body.append('main_text', this.main_text);
-            body.append('file_message', this.file_message);
-            body.append('recipent_id', this.recipent_id.id);
+            if(this.title == null){ return this.$notifier.showMessage({ content: 'Judul belum terisi.', status: 'warning' }) };
+            if(this.main_text == null){ return this.$notifier.showMessage({ content: 'Isi pesan belum terisi.', status: 'warning' }) };
 
-            await this.postCreateMessage(body).then((result)=>{
-                if(result){
-                    this.closeDialog();
-                    this.$alert.showAlert({ content: 'Pesan telah terkirim.', show: true });
-                    this.getData();
+            await this.uploadDocument().then(async ()=> {
+                console.log('jobPostId', this.jobPostId);
+
+                if(this.jobPostId){
+                    const body = new FormData();
+                    body.append('title_test', this.title);
+                    body.append('question', this.main_text);
+                    if (this.schedule) {
+                        body.append('schedule', this.schedule);
+                    }
+                    if (this.file_message) {
+                        body.append('file_message', this.file_message);
+                    }
+                    await this.postCreateQuestion(body, this.jobPostId).then((result)=>{
+                        if(result){
+                            this.closeDialog();
+                            this.continueStepWithPretest();
+                        }
+                    });
+                }else{
+                    return this.$notifier.showMessage({ content: 'Gagal upload dokumen.', status: 'warning' });
                 }
-            });
+            });            
         },
         onCloseDialog(){
             this.bodyGrade = [];
@@ -275,6 +278,7 @@ export default {
     width: 101px;
     height: 101px;
     padding: 6px;
+    object-fit: cover;
     border-radius: 50%;
     border: 3px solid #ae445a;
 }

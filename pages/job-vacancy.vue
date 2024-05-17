@@ -66,7 +66,7 @@
 
                     </v-row>
                     <div style="height: 660px; overflow-y: auto; overflow-x: hidden">
-                        <v-row class="" align="center" style=";">
+                        <v-row class="" align="center" style="">
                             <v-col v-for="job in jobs" cols="6" class="">
                                 <v-row class="card-vacancy">
                                     <v-col cols="12" class="pa-2" style="background-color: white; border-radius: 8px;">

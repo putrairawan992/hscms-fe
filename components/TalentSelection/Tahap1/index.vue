@@ -26,7 +26,9 @@
                         <div class="history-1">
                             <div class="frame-parent-ts">
                                 <div class="foto-tahap1-parent">
-                                    <v-checkbox class="input-checkbox" color="#ae445a" @change="onChecked($event, value.job_seeker_id)"></v-checkbox>
+                                    <!-- <v-checkbox class="input-checkbox" color="#ae445a" @change="onChecked($event, value.job_seeker_id)"></v-checkbox> -->
+                                    <v-checkbox class="input-checkbox" :value="isSelected(value.job_seeker_id)" @change="onChecked($event, value.job_seeker_id)" color="#ae445a"></v-checkbox>
+
                                     <img
                                         v-if="value.photo"
                                         :src="value.photo"
@@ -99,11 +101,11 @@
             </v-row>
         </div>
         <div style="position: relative; display: flex; justify-content: end; column-gap: 20px; margin-top: 60px; padding-bottom: 30px;">
-            <!-- <div class="orange-btn" style="">
-                <div class="" @click="unselect">
+            <div class="orange-btn" style="">
+                <div class="" @click="unselectAll">
                     <b class="button mx-4">Unselect All</b>
                 </div>
-            </div> -->
+            </div>
             <div></div>
             <div class="orange-btn" style="">
                 <div class="" @click="continueStep">
@@ -199,8 +201,10 @@ export default {
                 this.idCandidats.splice(index, 1);
             }
         },
-        unselect(){
-            this.radios = [];
+        isSelected(job_seeker_id) {
+            return this.idCandidats.includes(job_seeker_id);
+        },
+        unselectAll(){
             this.idCandidats = [];
         },
         activatePanel(index) {

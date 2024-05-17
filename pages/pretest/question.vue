@@ -84,7 +84,7 @@
                                     </div>
 
                                     <!-- Wawancara mandiri -->
-                                    <div class="mt-6" v-else>
+                                    <div class="mt-6">
                                         <div class="pretest-preview-title text-left" v-if="question?.instructions">Instruksi soal</div>
                                         <div class="pretest-preview-text text-left" v-html="question?.instructions"></div>
 
@@ -168,6 +168,7 @@ export default {
                 this.setQuestion({});
             }
             await this.getQuestionAPI(this.job_id, this.module_id, this.page).then((result)=>{
+                console.log('result', result);
                 this.setQuestion(result);
             })
         },

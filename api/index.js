@@ -31,6 +31,11 @@ export const API = () => {
     } = jobSeekerAPI();
 
     const {
+        getProfile,
+        putUpdateProfile,
+        getHelpCenter,
+        getListNotification,
+
         getJob,
         postJob,
         putJob,
@@ -102,6 +107,15 @@ export const API = () => {
         postCreateMessage,
         getListEmployeeInbox,
         getMessageAttachment,
+
+        getDownloadTemplate,
+        postUploadTemplate,
+        postCreateQuestion,
+        getListEmployeeNS,
+        postReminder,
+        deleteListEmployeeNS,
+        postContinueNS,
+        postFinishNS
     } = jobProviderAPI();
     
 
@@ -114,8 +128,11 @@ export const API = () => {
 
 
         // jobSeekerAPI
+            getProfile,
+            putUpdateProfile,
             getJobs,
             postApplyJob,
+            getListNotification,
 
             getListPretest,
             getPreview,
@@ -136,6 +153,8 @@ export const API = () => {
 
 
         // jobProviderAPI
+            getHelpCenter,
+
             getJob,
             postJob,
             putJob,
@@ -207,5 +226,14 @@ export const API = () => {
             postCreateMessage,
             getListEmployeeInbox,
             getMessageAttachment,
+
+            getDownloadTemplate,
+            postUploadTemplate,
+            postCreateQuestion,
+            getListEmployeeNS,
+            postReminder,
+            deleteListEmployeeNS,
+            postContinueNS,
+            postFinishNS
     }
 }

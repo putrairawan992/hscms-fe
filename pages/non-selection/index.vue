@@ -9,14 +9,14 @@
                                 Talent Selection - Non-Selection
                             </div>
                         </v-col>
-                        <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
+                        <v-col v-if="!showCongratulation" cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
                             <v-row align="center">
                                 <v-col cols="12" class="label pb-1">
                                     <b>Tahapan</b>
                                 </v-col>
                                 <v-col cols="12" class="pt-0 input-checkbox-container">
                                     <multiselect
-                                        v-model="tahapSelected"
+                                        v-model="tahapNonSeleksiSelected"
                                         :options="arrayTahapan"
                                         placeholder="Pilih Tahapan" :allow-empty="false"
                                         class="header-select-input"
@@ -25,7 +25,7 @@
                                 </v-col>
                             </v-row>
                         </v-col>
-                        <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
+                        <v-col v-if="!showCongratulation" cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
                             <v-row align="center">
                                 <v-col cols="12" class="label pb-1">
                                     &nbsp;
@@ -39,18 +39,18 @@
                                 </v-col>
                             </v-row>
                         </v-col>
-                        <v-col v-if="showDashboard" cols="12" class="text-left pb-0">
-                            <div class="page-title" style="font-size: 16px;">
-                                Penjelasan Tahapan Seleksi Karyawan
-                            </div>
-                        </v-col>
                     </v-row>
-                    <Congratulation 
+                    <CongratulationNS 
                         v-if="showCongratulation"
                         :closeDialogCongratulation="closeDialogCongratulation"
                     />
                     <div v-else>
                         <div v-if="showDashboard">
+                            <v-col v-if="showDashboard" cols="12" class="text-left pl-0 pb-3">
+                                <div class="page-title" style="font-size: 16px;">
+                                    Penjelasan Tahapan Seleksi Karyawan
+                                </div>
+                            </v-col>
                             <NonSelection />
                         </div>
                         <div v-else>
@@ -79,7 +79,7 @@ export default {
     data: () => ({
         tahap: null,
         jobSelected: null,
-        tahapSelected: null,
+        tahapNonSeleksiSelected: null,
 
         showDialog: false,
         showDashboard: false,
@@ -87,14 +87,20 @@ export default {
         showCongratulation: false,
         arrayTahapan: ['Tahap 1', 'Tahap 2', 'Tahap 3'],
     }),
-    watch: {},
+    watch: {
+        tahapNonSeleksiSelected(to, from){
+        }
+        // tahapanNonSeleksiGetter(to, from){
+        //     this.refreshData();
+        // }
+    },
     computed: {
         ...mapGetters('provider-selection', ['tahapanNonSeleksiGetter']),
     },
     async mounted(){
         if(this.tahapanNonSeleksiGetter){
             this.tahap = this.tahapanNonSeleksiGetter.tahap;
-            this.tahapSelected = this.tahapanNonSeleksiGetter.tahap;
+            this.tahapNonSeleksiSelected = this.tahapanNonSeleksiGetter.tahap;
             if(!this.tahap){
                 this.showDashboard = true;
             }
@@ -106,20 +112,21 @@ export default {
         ...mapMutations('provider-selection', ['setTahapanNonSeleksi']),
 
         async generate(){
-            if(this.tahapSelected != null){
-                this.tahap = this.tahapSelected.tahap;
+            if(this.tahapNonSeleksiSelected != null){
+                this.tahap = this.tahapNonSeleksiSelected;
                 this.showDashboard = false;
                 this.setTahapanNonSeleksi({
-                    tahap: this.tahapSelected,
+                    tahap: this.tahapNonSeleksiSelected,
                 })
             }
         },
         next(tahap){
+            this.tahapNonSeleksiSelected = tahap;
             this.tahap = tahap;
-            this.tahapSelected = tahap;
             this.generate();
         },
         finish(){
+            this.setTahapanNonSeleksi({ tahap: null });
             this.showCongratulation = true;
         },
         closeDialogCongratulation() {

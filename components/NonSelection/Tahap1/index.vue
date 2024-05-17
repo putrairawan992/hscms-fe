@@ -33,7 +33,7 @@
 
                 </v-col>
                 <v-col cols="12" md="6" class="">
-                    <v-row class="card-ts-big mb-5">
+                    <v-row class="card-ts-big mb-5" style="cursor: pointer;" @click="downloadTemplate()">
                         <v-col cols="12" class="pb-0">
                             <img class="mt-3 mb-1" alt="" src="@/assets/svg/doc-tahap.svg" />
                         </v-col>
@@ -54,18 +54,18 @@
                 </div>
             </div> -->
             <div></div>
-            <div class="orange-btn" style="">
-                <div class="" @click="createDialog = true">
+            <div :class="file ? 'orange-btn' : 'grey-btn'" style="">
+                <div class="" @click="file ? createDialog = true : createDialog = false">
                     <b class="button mx-4">Continue with Pre-Test</b>
                 </div>
             </div>
             <div class="orange-btn" style="">
-                <div class="" @click="">
+                <div class="" @click="continueStep">
                     <b class="button mx-4">Continue without Pre-Test</b>
                 </div>
             </div>
         </div>
-        <Dialog-PretestNonSelection :show="createDialog" :closeDialog="closeDialog"/>
+        <Dialog-PretestNonSelection :show="createDialog" :closeDialog="closeDialog" :uploadDocument="uploadDocument" :continueStepWithPretest="continueStepWithPretest" :jobPostId="jobPostId"/>
     </div>
 </template>
 
@@ -83,16 +83,17 @@ export default {
         idCandidats:[],
         dataCandidate: null,
         file: null,
+        jobPostId: null,
         createDialog: false
     } },
     watch: {
-        tahapanNonSeleksiGetter(to, from){
-            this.refreshData();
-        }
+        // tahapanNonSeleksiGetter(to, from){
+        //     this.refreshData();
+        // }
     },
     setup() {
-        const { getListCandidateAPI, postChooseCandidate } = API()
-        return { getListCandidateAPI, postChooseCandidate };
+        const { getDownloadTemplate, postUploadTemplate } = API()
+        return { getDownloadTemplate, postUploadTemplate };
     },
     computed: {
         ...mapGetters('provider-selection', ['tahapanNonSeleksiGetter']),
@@ -100,15 +101,49 @@ export default {
     props: { 
         next: { type: Function, default() { return {} } },
     },
-    async mounted(){
-        // await this.getListCandidate();
-    },
+    async mounted(){},
     methods: {
         ...mapMutations('provider-selection', ['setTahapanNonSeleksi', 'setListCandidate']),
+        async downloadTemplate() {
+            await this.getDownloadTemplate().then((result)=>{
+                const filename = 'template_non_selection_'+this.$moment().format('YYYYMMDD')+'.xlsx';
+                let mimeType = 'application/vnd.ms-excel';
+                const blob = new Blob([result], { type: mimeType });
 
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = filename;
+
+                link.dataset.downloadurl = [mimeType, link.download, link.href].join(':');
+                link.draggable = true;
+                link.classList.add('dragout');
+                link.click();
+            });
+        },
         async continueStep() {
+            const body = new FormData();
+            body.append('file_non_selection', this.file);
+            await this.postUploadTemplate(body).then((result)=>{
+                if(result){
+                    this.setTahapanNonSeleksi({ tahap: 'Tahap 2' });
+                    this.$notifier.showMessage({ content: 'Berhasil ke tahap 2.', status: 'success' });
+                    return this.next('Tahap 2');
+                }
+            });
+
+        },
+        async continueStepWithPretest() {
             this.setTahapanNonSeleksi({ tahap: 'Tahap 2' });
             return this.next('Tahap 2');
+        },
+        async uploadDocument() {
+            const body = new FormData();
+            body.append('file_non_selection', this.file);
+            await this.postUploadTemplate(body).then((result)=>{
+                if(result){
+                    this.jobPostId = result.data.job_post_id;
+                }
+            });
         },
 
         selectFile(question){

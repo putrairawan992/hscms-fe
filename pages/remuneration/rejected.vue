@@ -110,6 +110,7 @@ export default {
     width: 50px;
     height: 50px;
     padding: 2px;
+    object-fit: cover;
     border-radius: 50%;
     border: 3px solid #ae445a;
 }

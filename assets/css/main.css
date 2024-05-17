@@ -717,6 +717,7 @@ input:-webkit-autofill:active{
     width: 42px;
     height: 42px;
     border-radius: 50%;
+
     border: 3px solid #ae445a;
     box-shadow: 4px 1px 5px #b3b9c5;
 }

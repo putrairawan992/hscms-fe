@@ -261,7 +261,7 @@
         </v-row>
         <div style="position: relative; display: flex; justify-content: end; column-gap: 20px; margin-top: 60px; padding-bottom: 30px;">
             <div class="orange-btn" style="">
-                <div class="" @click="">
+                <div class="" @click="unselectAll">
                     <b class="button mx-4">Unselect All</b>
                 </div>
             </div>
@@ -308,11 +308,8 @@ export default {
         pageActive: "index",
     } },
     watch: {
-        panel(to, from){
-            console.log(to, from);
-        },
-        raradiodios(to, from){
-        },
+        panel(to, from){},
+        raradiodios(to, from){},
         tahapanGetter(to, from){
             this.refreshData();
         }
@@ -428,6 +425,10 @@ export default {
             } else {
                 return true;
             }
+        },
+        unselectAll(){
+            this.idCandidats = [];
+            this.radios = this.radios.map(() => false);
         },
         handleImgError(event, checked) {
             event.target.src = checked ?  userWhiteImage : userRedImage;

@@ -1,144 +1,36 @@
 <template>
   <div>
       <v-row>
-          <!-- <v-col cols="12" md="6">
-              <v-row class="">
-                  <v-col v-for="item in listEmployee" cols="12" class="pb-0">
-                      <div class="history-1">
-                          <div class="frame-parent-draft">
-                              <div class="foto-perusaahaan-parent">
-                                  <img
-                                      v-if="item.photo"
-                                      class="foto-perusaahaan-icon" alt="photo"
-                                      :src="item.photo" @error="handleImgError"
-                                  />
-                                  <img
-                                      v-else
-                                      class="foto-perusaahaan-icon" alt="photo"
-                                      src="@/assets/img/user-red.png" @error="handleImgError"
-                                  />
-                                  <b class="">{{ item.employee_name }}</b>
-                              </div>
-                              <div class="edit-parent">
-                                  <div class="btn-employee-container" :class="item.employee_type">
-                                      <div class="attach-mpr-parent">
-                                          <b class="button">{{ item.employee_type }}</b>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </v-col>
-              </v-row>
-          </v-col> -->
-          <v-col cols="12" md="6">
-              <v-col class="employee-data-big">
-                  <b>
-                      Total Karyawan Data Belum Lengkap: <span style="color: #AE445A;">12</span> Orang
-                  </b>
-              </v-col>
-              <div style="height: 581px; overflow: auto;  overflow-x: hidden">
-                  <v-row class="">
-                      <v-col v-for="item in 12" cols="12" class="pb-0">
-                          <div class="history-1">
-                              <div class="frame-parent-draft">
-
-                              <v-checkbox class="input-checkbox" color="#ae445a"  @change="onChecked($event, value.job_seeker_id)">
-                              </v-checkbox>
-                                  <div class="foto-perusaahaan-parent">
-                                      <img
-                                          class="foto-perusaahaan-icon" alt="photo"
-                                          src="https://api-hcms-scala.ominddev.id/public/upload/17152603923831714659802758372655998_275787478561277_3447104814965087037_n.jpg" @error="handleImgError"
-                                      />
-                                      <b class="">Pevita Pearch</b>
-                                      <!-- <img
-                                          v-if="item.photo"
-                                          class="foto-perusaahaan-icon" alt="photo"
-                                          src="https://api-hcms-scala.ominddev.id/public/upload/17152603923831714659802758372655998_275787478561277_3447104814965087037_n.jpg" @error="handleImgError"
-                                      />
-                                      <img
-                                          v-else
-                                          class="foto-perusaahaan-icon" alt="photo"
-                                          src="@/assets/img/user-red.png" @error="handleImgError"
-                                      /> -->
-                                      <!-- <b class="">{{ item.employee_name }}</b> -->
-                                  </div>
-                                  <div class="edit-parent">
-                                      <div class="btn-employee-container freelance">
-                                          <div class="attach-mpr-parent">
-                                              <b class="button">selection</b>
-                                          </div>
-                                      </div>
-                                      <!-- <div class="btn-employee-container" :class="item.employee_type">
-                                          <div class="attach-mpr-parent">
-                                              <b class="button">{{ item.employee_type }}</b>
-                                          </div>
-                                      </div> -->
-                                      <img class="ma-auto" alt="" src="@/assets/img/checkbox-false.png" />
-                                  </div>
-                              </div>
-                          </div>
-                      </v-col>
-                  </v-row>
-              </div>
-              <div style="position: relative; display: flex; justify-content: end; column-gap: 20px; margin-top: 30px; padding-bottom: 30px;">
-                  <div class="orange-btn" style="">
-                      <div class="" @click="">
-                          <b class="button mx-4">Select All</b>
-                      </div>
-                  </div>
-                  <div class="orange-btn" style="">
-                      <div class="" @click="">
-                          <b class="button mx-4">Delete</b>
-                      </div>
-                  </div>
-                  <div class="orange-btn" style="">
-                      <div class="" @click="">
-                          <b class="button mx-4">Remind</b>
-                      </div>
-                  </div>
-              </div>
-          </v-col>
-          <v-col cols="12" md="6">
+          <v-col cols="12">
               <v-col class="employee-data-big border-green">
                   <b>
-                      Total Karyawan Data Lengkap: <span style="color: #AE445A;">12</span> Orang
+                      Total Karyawan Data Lengkap: <span style="color: #AE445A;">&nbsp;{{ complete ? complete.length : '0' }}&nbsp;</span> Orang
                   </b>
               </v-col>
               <div style="height: 581px; overflow: auto;  overflow-x: hidden">
                   <v-row class="">
-                      <v-col v-for="item in 12" cols="12" class="pb-0">
+                      <v-col v-for="item in complete" cols="12" class="pb-0">
                           <div class="history-1">
                               <div class="frame-parent-draft border-green">
                                   <div class="foto-perusaahaan-parent">
                                       <img
+                                          v-if="item.employee_photo"
                                           class="foto-perusaahaan-icon" alt="photo"
-                                          src="https://api-hcms-scala.ominddev.id/public/upload/17152603923831714659802758372655998_275787478561277_3447104814965087037_n.jpg" @error="handleImgError"
-                                      />
-                                      <b class="">Pevita Pearch</b>
-                                      <!-- <img
-                                          v-if="item.photo"
-                                          class="foto-perusaahaan-icon" alt="photo"
-                                          src="https://api-hcms-scala.ominddev.id/public/upload/17152603923831714659802758372655998_275787478561277_3447104814965087037_n.jpg" @error="handleImgError"
+                                          :src="item.employee_photo" @error="handleImgError"
                                       />
                                       <img
                                           v-else
                                           class="foto-perusaahaan-icon" alt="photo"
                                           src="@/assets/img/user-red.png" @error="handleImgError"
-                                      /> -->
-                                      <!-- <b class="">{{ item.employee_name }}</b> -->
+                                      />
+                                      <b class="">{{ item.employee_name }}</b>
                                   </div>
                                   <div class="edit-parent">
-                                      <div class="btn-employee-container freelance">
+                                      <div class="btn-employee-container mr-4" :class="item.employee_type">
                                           <div class="attach-mpr-parent">
-                                              <b class="button">selection</b>
+                                              <b class="button">{{ item.employee_type ? item.employee_type : 'Empty' }}</b>
                                           </div>
                                       </div>
-                                      <!-- <div class="btn-employee-container" :class="item.employee_type">
-                                          <div class="attach-mpr-parent">
-                                              <b class="button">{{ item.employee_type }}</b>
-                                          </div>
-                                      </div> -->
                                       <img class="ma-auto" alt="" src="@/assets/svg/checkbox-true.svg" />
                                   </div>
                               </div>
@@ -148,12 +40,6 @@
               </div>
 
               <div style="position: relative; display: flex; justify-content: end; column-gap: 20px; margin-top: 30px; padding-bottom: 30px;">
-                  <!-- <div class="orange-btn" style="">
-                      <div class="" @click="unselect">
-                          <b class="button mx-4">Unselect All</b>
-                      </div>
-                  </div> -->
-                  <div></div>
                   <div class="orange-btn" style="">
                       <div class="" @click="continueStep">
                           <b class="button mx-4">Continue</b>
@@ -168,6 +54,7 @@
 <script>
 import { API } from '@/api/index'
 import Multiselect from 'vue-multiselect'
+import userRedImage from '~/assets/img/user-red.png';
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   components: { 
@@ -178,7 +65,7 @@ export default {
       radios: [],
       idCandidats:[],
       dataCandidate: null,
-      listEmployee: [],
+      complete: null,
   } },
   watch: {
       tahapanNonSeleksiGetter(to, from){
@@ -186,32 +73,58 @@ export default {
       }
   },
   setup() {
-      const { getEmployee } = API()
-      return { getEmployee };
+      const { getListEmployeeNS, postFinishNS } = API()
+      return { getListEmployeeNS, postFinishNS };
   },
   computed: {
       ...mapGetters('provider-selection', ['tahapanNonSeleksiGetter']),
   },
   props: { 
       next: { type: Function, default() { return {} } },
+      finish: { type: Function, default() { return {} } },
   },
   async mounted(){
-      // await this.getListCandidate();
       this.getData();
   },
   methods: {
       ...mapMutations('provider-selection', ['setTahapanNonSeleksi', 'setListCandidate']),
 
       async getData(){
-          await this.getEmployee(1, null, null, null).then((result)=>{if(result){
-              this.listEmployee = result.employee_list;
+          await this.getListEmployeeNS('tahap 3').then((result)=>{if(result){
+            this.complete = result;
+            console.log('result', result);
           }})
       },
-
-      async continueStep() {
-          this.setTahapanNonSeleksi({ tahap: 'Tahap 2' });
-          return this.next('Tahap 2');
+      async continueStep(){
+          if(this.complete.length){
+              await this.postFinishNS({
+                  employee_id: this.complete.map(employee => employee.employee_id)
+              }).then((result)=>{if(result){
+                  this.$notifier.showMessage({ content: 'Sukses.', status: 'success' });
+                  return this.finish();
+              }})
+          }else{
+              this.$notifier.showMessage({ content: 'Belum ada kandidat terpilih.', status: 'warning' });
+          }
       },
+
+      onChecked(value, employee_id) {
+          if (!this.idCandidats.includes(employee_id)) {
+              this.idCandidats.push(employee_id);
+          } else {
+              let index = this.idCandidats.indexOf(employee_id);
+              this.idCandidats.splice(index, 1);
+          }
+      },
+      isSelected(id) {
+          return this.idCandidats.includes(id);
+      },
+      selectAll(){
+          this.idCandidats = this.uncomplete.map(employee => employee.employee_id);
+      },
+      handleImgError(event) {
+          event.target.src = userRedImage;
+      }
   },
 }
 </script>
@@ -296,6 +209,7 @@ export default {
   width: 50px;
   height: 50px;
   padding: 2px;
+  object-fit: cover;
   border-radius: 50%;
   border: 3px solid #ae445a;
 }

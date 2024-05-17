@@ -1,104 +1,223 @@
-<template>
-    <v-dialog persistent v-model="show" width="688" rounded content-class="elevation-0">
-        <div style="position: relative; display: flex; flex-direction: column;">
-            
-            <button class="close-icon-open-file" @click="closeDialog">
-                <img alt="close" src="@/assets/svg/close.svg" />
-            </button>
-            <v-card class="pa-12" style="border-radius: 20px !important; width: 668px;"> 
-                <v-row align="center">
-                    <v-col cols="12" class="pa-0">
-                        <!-- <embed class="embeddedContent" src="https://images.unsplash.com/photo-1706023678015-c5fa48e09bcc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fHw%3D#zoom=60" /> -->
-                        <!-- <embed class="embeddedContent" width="585px" src="https://pdfobject.com/pdf/sample.pdf#zoom=60"/> -->
-                        <embed v-if="fileUrl" class="embeddedContent" width="585px" :src="fileUrl+'#zoom=60'"/>
-                    </v-col>
-                </v-row>
-            </v-card>
-        </div>
-    </v-dialog>
+    <template>
+    <div>
+        <v-card class="card-register">
+            <div class="my-2" style="position: relative;">
+                <div class="blokade-parent ma-8 pt-1" style="height: 850px;">
+                    <v-row align="center" class="my-4">
+                        <v-col cols="12" class="text-left">
+                            <div class="open-job-dan-draft">
+                                Notification
+                                <!-- Notification (3) -->
+                            </div>
+                        </v-col>
+                        <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
+                            <v-row align="center">
+                                <v-col cols="12" class="label pb-1">
+                                    <b>Tahun</b>
+                                </v-col>
+                                <v-col cols="12" class="pt-0 input-checkbox-container">
+                                    <multiselect
+                                        v-model="select1"
+                                        :options="['haloo', 'test']"
+                                        placeholder="Pilih Tahun" :allow-empty="false"
+                                        class="header-select-input"
+                                        >
+                                        <!-- class="register-text-input" label="job_level_name" -->
+                                        <!-- <template slot="singleLabel" slot-scope="{ option }">
+                                            <span style="color: #000;">{{ option.job_level_name }}</span>
+                                        </template> -->
+                                    </multiselect>
+                                </v-col>
+                            </v-row>
+                        </v-col>
+                        <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
+                            <v-row align="center">
+                                <v-col cols="12" class="label pb-1">
+                                    <b>Bulan</b>
+                                </v-col>
+                                <v-col cols="12" class="pt-0 input-checkbox-container">
+                                    <multiselect
+                                        v-model="select2"
+                                        :options="['haloo', 'test']"
+                                        placeholder="Pilih Bulan" :allow-empty="false"
+                                        class="header-select-input"
+                                        >
+                                        <!-- class="register-text-input" label="job_level_name" -->
+                                        <!-- <template slot="singleLabel" slot-scope="{ option }">
+                                            <span style="color: #000;">{{ option.job_level_name }}</span>
+                                        </template> -->
+                                    </multiselect>
+                                </v-col>
+                            </v-row>
+                        </v-col>
+
+                    </v-row>
+                    <div style="height: 660px; overflow-y: auto; overflow-x: hidden">
+                        <v-row v-for="item in notifications" class="" align="left" style="text-align: left;">
+                            <v-col cols="12" class="pb-0">
+                                <div class="notif-date">27 Jun 2023 | 13:30</div>
+                            </v-col>
+                            <!-- <v-col cols="12" class="">
+                                <div class="notif-text" v-html="item.content"/>
+                            </v-col> -->
+                            <v-col cols="12" class="">
+                                <!-- <div class="notif-text unread">{{ item.content }}</div> -->
+                                <div class="notif-text">{{ item.title }}</div>
+                            </v-col>
+                            <div class="notif-hr" />
+                        </v-row>
+                    </div>
+                </div>
+            </div>
+        </v-card>
+        
+    </div>
 </template>
 <script>
-    export default {
-    data () {
-        return {
-            id_job_post: null,
-            tanggal_lahir: null,
-            datePicker1: false,
-            datePicker2: false,
-        }
+import { API } from '@/api/index'
+import Multiselect from 'vue-multiselect'
+export default {
+    name: "jobProvider",
+    layout: "jobPost",
+    components: { 
+        Multiselect,
     },
-    props: {
-        show: { type: Boolean, default() { return false } },
-        fileUrl: { type: String, default() { return "" } },
-        content: { type: String, default() { return "" } },
-        onApprove: { type: Function, default() { return {} } },
-        closeDialog: { type: Function, default() { return {} } },
+    data: () => ({
+        notifications: []
+    }),
+    watch: {
+    },
+    setup() {
+        const { getListNotification } = API()
+        return { getListNotification };
+    },
+    async mounted() {
+        this.getData();
     },
     methods: {
-        parseDate (date) {
-            if (!date) return null
-            const [year, month, day] = date.split('-')
-            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+        async getData(){
+            await this.getListNotification().then((result)=>{if(result){
+                this.notifications = result;
+            }})
         },
     }
-}
-</script>
 
+};
+</script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped>
-.close-icon-open-file {
-    display: flex;
-    justify-content: end;
-    margin-bottom: -26px;
-    margin-right: 5px;
-    z-index: 2;
-}
-.embeddedContent {
-    background-color: #d3d3d3;
+.notif-hr{
+    background: #C2C2C2;
+    margin-bottom: 5px;
+    height: 1px;
     width: 100%;
-    height: 75vh;
-    top: 0;
-    left: 0;
 }
-.active {
-    display: inline-flex;
-    height: 17px;
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 20px;
-    background: #3AB471;
-    color: #404041;
-    text-align: center;
+.notif-date {
     font-family: Poppins;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
-.non-active {
-    display: inline-flex;
-    height: 17px;
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 20px;
-    background: #b8b8b8;
+    font-size: 12px;
     color: #404041;
-    text-align: center;
-    font-family: Poppins;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
 }
-.foto-perusaahaan-icon {
+.notif-text {
+    font-family: Poppins;
+    font-size: 12px;
+    color: #404041;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.notif-text.unread {
+    font-family: Poppins;
+    font-size: 12px;
+    color: #AE445A;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.card-vacancy {
+    /* height: 144px; */
+    padding: 3px;
+    color: #404041;
+    margin: unset;
+    position: relative;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #F39F5A 0%, #AE445A 100%);
+}
+.card-vacancy.terminate {
+    background: linear-gradient(90deg, #718199 0%, #B6B6B6 100%) !important;
+}
+.card-vacancy-edit-parent {
+    position: absolute;
+    bottom: 10%;
+    right: 4%;
+}
+.vacancy-status-container {
+    border-radius: 20px;
+    background-color: #AE445A;
+    height: 17px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 10px;
+    color: #fff;
+    cursor: pointer;
+}
+.card-vacancy.terminate .vacancy-status-container {
+    border-radius: 20px;
+    background-color: #718199;
+    height: 17px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 10px;
+    color: #fff;
+}
+.edit-icon {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.minuscircle-icon {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: none;
+}
+.bishare-fill-icon {
+    position: relative;
+    width: 12px;
+    height: 12px;
+}
+.mei-2023 {
+    /* position: absolute;
+    width: 29.3%;
+    top: 12.69%;
+    left: 41.4%; */
+    font-size: 10px;
+    text-align: center;
+    display: inline-block;
+}
+
+.job-vacancy-icon {
     width: 101px;
     height: 101px;
     padding: 6px;
-    object-fit: cover;
     border-radius: 50%;
-    border: 3px solid #ae445a;
+    border: 3px solid #AE445A;
 }
+
 .dash-container {
     max-width: 20px;
     display: flex;
@@ -169,12 +288,10 @@
     margin-left: 5px;
 }
 .isilah-13-kolom-container {
-    color: #AE445A;
-    font-family: Nunito;
-    font-size: 26px;
-    font-style: normal;
-    font-weight: 900;
-    line-height: normal;
+    font-size: 18px;
+    color: #ae445a;
+    text-align: left;
+    line-height: 15px;
 }
 .job-post-nav {
     width: 100%;
@@ -205,42 +322,40 @@
     border-radius: 40px;
     background: linear-gradient(90deg, #F1F5FE 0%, #FFF 98.82%);
     box-shadow: 5px 0px 5px #b3b9c5, -5px 0px 5px #b3b9c5 !important;
-}.detail-opening-container {
+}.save-container {
     width: 100%;
     display: flex;
-    margin: 0px 0px 20px 30px;
+    margin: 30px 30px 20px 30px;
     justify-content: space-between;
 }
 .label {
     font-size: 14px;
     text-align: left;
 }
-.preview-text-input {
-    border-radius: 4px;
+.header-select-input {
+    border-radius: 10px;
     border: 1px solid #ae445a;
     box-sizing: border-box;
     width: 100%;
-    height: 30px;
+    height: 27px !important;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
     padding: 10px;
     font-size: 12px;
-    /* color: #b6b6b6; */
-}.preview-text-input::placeholder {
+    background-color: #fff;
+}.header-select-input::placeholder {
     font-style: italic;
 }
-
-.detail-opening-btn-text {
+.tempat-tanggal-lahir {
     position: relative;
-    font-size: 12px;
 }
 .calendar-input-container{
     position: relative;
 }
-.feather-icon-calendar-preview {
-    top: 18%;
+.feather-icon-calendar {
+    top: 25%;
     right: 7%;
     width: 20px;
     height: 20px;
@@ -348,11 +463,11 @@
         text-align: center;
     }
 }
-.detail-opening-button-wrapper {
+.button-wrapper {
     border-radius: 10px;
     background: linear-gradient(90deg, #f39f5a, #ae445a);
     box-shadow: 5px 0px 5px #b3b9c5;
-    min-width: 101px;
+    width: 101px;
     height: 33px;
     display: flex;
     flex-direction: row;

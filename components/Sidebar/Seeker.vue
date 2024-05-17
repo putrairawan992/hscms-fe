@@ -6,7 +6,7 @@
             <div class="menu">
                 <!-- <div :class="pageActive == 'index' ? 'dashboard1' : 'help-center'" @click="$router.push('/')">Dashboard</div> -->
                 <div class="help-center" style="color: #a3a3a3;" @click="">Dashboard</div>
-                <div class="help-center" style="color: #a3a3a3;" @click="">Help Center</div>
+                <div :class="pageActive == 'help' ? 'dashboard1' : 'help-center'" @click="$router.push('/help-center')">Help Center</div>
                 <div class="menu-child" />
                 <div :class="pageActive == 'biodata' ? 'dashboard1' : 'help-center'" @click="$router.push('/biodata')">Biodata</div>
                 <div :class="pageActive == 'file' ? 'dashboard1' : 'help-center'" @click="$router.push('/file-attachment')">File Attachment</div>
