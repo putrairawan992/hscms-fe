@@ -7,6 +7,13 @@ export const jobProviderAPI = () => {
     const { jobPostValidator } = jobProviderValidator();
     const { getRequest ,postRequest, putRequest, deleteRequest } = request();
     
+    const getDashboard = async () => {
+        return await getRequest(
+            $auth.user.role_user == 'jobprovider' ?
+            'jobprovider/dashboard' :
+            'jobseeker/dashboard' 
+        );
+    }
     const getProfile = async () => {
         return await getRequest(
             $auth.user.role_user == 'jobprovider' ?
@@ -305,10 +312,7 @@ export const jobProviderAPI = () => {
         return await postRequest('jobprovider/nonselection/reminder', body);
     }
     const deleteListEmployeeNS = async (body) => {
-        console.log('deleteListEmployeeNS', body);
-        return await deleteRequest('jobprovider/nonselection/employee_list', {
-            "employee_id":["bwIGimRMiPCpfjd2qhmDq"]
-        });
+        return await postRequest('jobprovider/nonselection/employee_list_delete', body);
     }
     const postContinueNS = async (body) => {
         return await postRequest('jobprovider/nonselection/nextstep', body);
@@ -319,6 +323,7 @@ export const jobProviderAPI = () => {
 
 
     return {
+        getDashboard,
         getProfile,
         putUpdateProfile,
         getHelpCenter,

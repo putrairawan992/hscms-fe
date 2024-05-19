@@ -4,15 +4,12 @@
             <div class="menu-button-remunerasi">
             <div class="menu-left-child" />
             <div class="menu">
-                <!-- <div :class="pageActive == 'index' ? 'dashboard1' : 'help-center'" @click="$router.push('/')">Dashboard</div> -->
-                <div class="help-center" style="color: #a3a3a3;" @click="">Dashboard</div>
+                <div :class="pageActive == 'index' ? 'dashboard1' : 'help-center'" @click="$router.push('/')">Dashboard</div>
                 <div :class="pageActive == 'help' ? 'dashboard1' : 'help-center'" @click="$router.push('/help-center')">Help Center</div>
                 <div class="menu-child" />
                 <div :class="pageActive == 'biodata' ? 'dashboard1' : 'help-center'" @click="$router.push('/biodata')">Biodata</div>
                 <div :class="pageActive == 'file' ? 'dashboard1' : 'help-center'" @click="$router.push('/file-attachment')">File Attachment</div>
                 <!-- <div :class="pageActive == 'contract' ? 'dashboard1' : 'help-center'" @click="$router.push('/contract')">Contract</div> -->
-                <!-- <div class="help-center" style="color: #a3a3a3;" @click="">Biodata</div> -->
-                <!-- <div class="help-center" style="color: #a3a3a3;" @click="">File Attachment</div> -->
                 <div class="help-center" style="color: #a3a3a3;" @click="">Contract</div>
                 <div class="help-center" style="color: #a3a3a3;" @click="">Payslip</div>
                 <div class="menu-child" />

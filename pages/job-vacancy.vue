@@ -9,7 +9,7 @@
                                 Lowongan Pekerjaan
                             </div>
                         </v-col>
-                        <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
+                        <!-- <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
                             <v-row align="center">
                                 <v-col cols="12" class="label pb-1">
                                     <b>Tahun</b>
@@ -21,10 +21,6 @@
                                         placeholder="Pilih Tahun" :allow-empty="false"
                                         class="header-select-input"
                                         >
-                                        <!-- class="register-text-input" label="job_level_name" -->
-                                        <!-- <template slot="singleLabel" slot-scope="{ option }">
-                                            <span style="color: #000;">{{ option.job_level_name }}</span>
-                                        </template> -->
                                     </multiselect>
                                 </v-col>
                             </v-row>
@@ -41,10 +37,6 @@
                                         placeholder="Pilih Bulan" :allow-empty="false"
                                         class="header-select-input"
                                         >
-                                        <!-- class="register-text-input" label="job_level_name" -->
-                                        <!-- <template slot="singleLabel" slot-scope="{ option }">
-                                            <span style="color: #000;">{{ option.job_level_name }}</span>
-                                        </template> -->
                                     </multiselect>
                                 </v-col>
                             </v-row>
@@ -62,7 +54,7 @@
                                     </v-text-field>
                                 </v-col>
                             </v-row>
-                        </v-col>
+                        </v-col> -->
 
                     </v-row>
                     <div style="height: 660px; overflow-y: auto; overflow-x: hidden">

@@ -31,6 +31,7 @@ export const API = () => {
     } = jobSeekerAPI();
 
     const {
+        getDashboard,
         getProfile,
         putUpdateProfile,
         getHelpCenter,
@@ -153,6 +154,7 @@ export const API = () => {
 
 
         // jobProviderAPI
+            getDashboard,
             getHelpCenter,
 
             getJob,

@@ -125,8 +125,6 @@
 <script>
 
 import { API } from '@/api/index'
-import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
-
 export default {
     name: "Contract",
     middleware: "jobSeeker",
