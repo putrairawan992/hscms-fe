@@ -206,7 +206,7 @@
                                             <div class="flex-container">
                                                 <input
                                                     class="checkbox-selected-blue"
-                                                    type="checkbox" :checked="true" readonly
+                                                    type="checkbox" v-model="value.checkbox"
                                                 />
                                                 <div class="up-arrow-button">
                                                     <img v-if="value.photo"
@@ -274,8 +274,8 @@
                                             <img class="feather-icon-calendar-tahap5" alt="" src="@/assets/svg/feathericon--calendar.svg" />
                                         </div>
                                         <v-menu
-                                            ref="datePicker1"
-                                            v-model="datePicker1"
+                                            :ref="datePicker1[key]"
+                                            v-model="datePicker1[key]"
                                             :close-on-content-click="false"
                                             transition="scale-transition"
                                             offset-y
@@ -294,7 +294,7 @@
                                                     </div>
                                                 </template>
                                                 <v-date-picker
-                                                    @input="datePicker1 = false"
+                                                    @input="datePicker1[key] = false"
                                                     plas v-model="bodyCreate[key].start_date" no-title
                                                 ></v-date-picker>
                                             </v-menu>
@@ -308,8 +308,8 @@
                                             <img class="feather-icon-calendar-tahap5" alt="" src="@/assets/svg/feathericon--calendar.svg" />
                                         </div>
                                         <v-menu
-                                            ref="datePicker2"
-                                            v-model="datePicker2"
+                                            :ref="datePicker2[key]"
+                                            v-model="datePicker2[key]"
                                             :close-on-content-click="false"
                                             transition="scale-transition"
                                             offset-y
@@ -328,7 +328,7 @@
                                                     </div>
                                                 </template>
                                                 <v-date-picker
-                                                    @input="datePicker2 = false"
+                                                    @input="datePicker2[key] = false"
                                                     plas v-model="bodyCreate[key].end_date" no-title
                                                 ></v-date-picker>
                                             </v-menu>
@@ -448,8 +448,8 @@ export default {
 
         radio: false,
         finalForm: false,
-        datePicker1: false,
-        datePicker2: false,
+        datePicker1: [false],
+        datePicker2: [false],
     } },
     watch: {
         tahapanGetter(to, from){
@@ -541,12 +541,18 @@ export default {
         },
         async continueStep() {
             if(this.finalForm){
-                if(this.validator()){
-                    await this.postFinishSelection({data: this.bodyCreate}, this.tahapanGetter.jobSelected?.id).then((result)=>{
+                let candidates = this.validator();
+                if(candidates.length > 0){
+                    await this.postFinishSelection({data: candidates}, this.tahapanGetter.jobSelected?.id).then((result)=>{
                         if(result){
                             this.finish();
                             this.$notifier.showMessage({ content: 'Success.', status: 'success' });
                         };
+                    });
+                }else if(candidates.length == 0){
+                    this.$notifier.showMessage({ 
+                        content: `Belum ada kandidat terpilih.`,
+                        status: 'warning'
                     });
                 }
             }else{
@@ -577,20 +583,25 @@ export default {
             return this.$router.push("/talent-selection/detail")
         },
         validator() {
+            let selectedItems = [];
             for (let index = 0; index < this.bodyCreate.length; index++) {
-                const element = this.bodyCreate[index];
-                if (element.salary == null || element.start_date == null || element.end_date == null) {
-                    this.$notifier.showMessage({ 
-                        content: 'Data belum terisi lengkap.',
-                        status: 'warning'
-                    });
-                    return false;
-                }         
+                if (this.dataCandidate.candidate_list[index].checkbox == true) {
+                    const element = this.bodyCreate[index];
+                    if (element.salary == null || element.start_date == null || element.end_date == null) {
+                        this.$notifier.showMessage({ 
+                            content: `Data belum terisi lengkap.`,
+                            status: 'warning'
+                        });
+                        return false;
+                    }
+                    selectedItems.push(element);
+                }
             }
-            return true;
+            return selectedItems;
         },
         buildArray(){
-            this.dataCandidate.candidate_list.forEach(element => {
+            this.dataCandidate.candidate_list.forEach((element, key) => {
+                this.dataCandidate.candidate_list[key].checkbox = false;
                 this.bodyCreate.push({
                     salary: null,
                     end_date: null,

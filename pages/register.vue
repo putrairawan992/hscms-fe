@@ -301,7 +301,7 @@
                     </v-row>
                     <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label">
-                            <b>Melamar Posisi:</b>
+                            <b>Bidang Spesialisasi:</b>
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
                             <multiselect
@@ -309,7 +309,7 @@
                                 v-model="work_position"
                                 :options="masterJobSpecialist"
                                 class="register-text-input" label="job_specialist_name"
-                                placeholder="Pilih Posisi yang Dilamar" :allow-empty="false"
+                                placeholder="Pilih Bidang Spesialisasi" :allow-empty="false"
                             ></multiselect>
                         </v-col>
                     </v-row>

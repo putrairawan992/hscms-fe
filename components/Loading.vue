@@ -6,7 +6,7 @@
         width="500" id="loading-dialog-oyy"
         >
         <!-- <v-card class="loading-modal-card"> -->
-            <div class="text-center">
+            <div class="text-center" style="overflow: hidden;">
                 <v-progress-circular
                 indeterminate
                 color="#f68453"

@@ -133,8 +133,7 @@
     }
   }
   .frame-icon {
-    /* position: absolute; */
-    height: 110%;
+    height: 150%;
     overflow: hidden;
   }
   .flying-the-giants-new-white {
