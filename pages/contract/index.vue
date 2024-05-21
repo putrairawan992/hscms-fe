@@ -172,16 +172,18 @@ export default {
                 this.dataContracts = result;
             }})
         },
-        async downloadFile(){
-            if (this.idContracts.length == 0) {
+        async downloadFile() {
+            if (this.idContracts.length === 0) {
                 return this.$notifier.showMessage({ content: 'Harap pilih data kontrak.', status: 'warning' });
             }
 
             try {
+                // result is arrayBuffer
                 const result = await this.downloadFileContract({
                     document_id: this.idContracts
                 });
-                const filename = "employee-data.zip";
+
+                const filename = "contracts.zip";
                 const blob = new Blob([result], { type: 'application/zip' });
                 const url = window.URL.createObjectURL(blob);
 
@@ -196,6 +198,7 @@ export default {
                 window.URL.revokeObjectURL(url);
             } catch (error) {
                 console.error('Error downloading ZIP file:', error);
+                this.$notifier.showMessage({ content: 'Terjadi kesalahan saat mengunduh file.', status: 'error' });
             }
         },
 
