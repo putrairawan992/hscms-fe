@@ -36,11 +36,22 @@ export const jobProviderAPI = () => {
             'jobseeker/help_center' 
         );
     }
-    const getListNotification = async () => {
+    const getListNotification = async (tahun, bulan) => {
+        let param = '?';
+        if(tahun != null){ param = param + 'year='+tahun+'&' };
+        if(bulan != null){ param = param + 'month='+bulan };
+
         return await getRequest(
             $auth.user.role_user == 'jobprovider' ?
-            'jobprovider/notification' :
-            'jobseeker/notification' 
+            'jobprovider/notification' + param :
+            'jobseeker/notification'  + param
+        );
+    }
+    const putReadNotification = async (notification_id) => {
+        return await putRequest(
+            $auth.user.role_user == 'jobprovider' ?
+            'jobprovider/notification/'+notification_id :
+            'jobseeker/notification/'+notification_id
         );
     }
 
@@ -328,6 +339,7 @@ export const jobProviderAPI = () => {
         putUpdateProfile,
         getHelpCenter,
         getListNotification,
+        putReadNotification,
 
         getJob,
         postJob,

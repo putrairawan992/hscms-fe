@@ -3,7 +3,7 @@
         <v-card class="card-register">
             <div class="my-2" style="position: relative;">
                 <div class="blokade-parent ma-8 pt-1" style="height: 850px;">
-                    <v-row align="center" class="my-4">
+                    <v-row class="my-4">
                         <v-col cols="12" class="text-left">
                             <div class="open-job-dan-draft">
                                 Notification
@@ -11,41 +11,33 @@
                             </div>
                         </v-col>
                         <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
-                            <v-row align="center">
+                            <v-row>
                                 <v-col cols="12" class="label pb-1">
                                     <b>Tahun</b>
                                 </v-col>
                                 <v-col cols="12" class="pt-0 input-checkbox-container">
                                     <multiselect
-                                        v-model="select1"
-                                        :options="['haloo', 'test']"
+                                        v-model="tahunSelected"
+                                        :options="arrayTahun"
                                         placeholder="Pilih Tahun" :allow-empty="false"
                                         class="header-select-input"
                                         >
-                                        <!-- class="register-text-input" label="job_level_name" -->
-                                        <!-- <template slot="singleLabel" slot-scope="{ option }">
-                                            <span style="color: #000;">{{ option.job_level_name }}</span>
-                                        </template> -->
                                     </multiselect>
                                 </v-col>
                             </v-row>
                         </v-col>
                         <v-col cols="6" xs="3" md="3" lg="3" xl="3" xxl="3" class="">
-                            <v-row align="center">
+                            <v-row>
                                 <v-col cols="12" class="label pb-1">
                                     <b>Bulan</b>
                                 </v-col>
                                 <v-col cols="12" class="pt-0 input-checkbox-container">
                                     <multiselect
-                                        v-model="select2"
-                                        :options="['haloo', 'test']"
+                                        v-model="bulanSelected"
+                                        :options="arrayBulan"
                                         placeholder="Pilih Bulan" :allow-empty="false"
-                                        class="header-select-input"
+                                        class="header-select-input" label="nama"
                                         >
-                                        <!-- class="register-text-input" label="job_level_name" -->
-                                        <!-- <template slot="singleLabel" slot-scope="{ option }">
-                                            <span style="color: #000;">{{ option.job_level_name }}</span>
-                                        </template> -->
                                     </multiselect>
                                 </v-col>
                             </v-row>
@@ -53,16 +45,26 @@
 
                     </v-row>
                     <div style="height: 660px; overflow-y: auto; overflow-x: hidden">
-                        <v-row v-for="item in notifications" class="" align="left" style="text-align: left;">
+                        <v-row v-for="item, key in notifications" class="" @click="activatePanel(key+1, item)" style="text-align: left; cursor: pointer;" >
                             <v-col cols="12" class="pb-0">
-                                <div class="notif-date">27 Jun 2023 | 13:30</div>
+                                <div class="notif-date">{{ item.created_at }}</div>
                             </v-col>
-                            <!-- <v-col cols="12" class="">
-                                <div class="notif-text" v-html="item.content"/>
-                            </v-col> -->
                             <v-col cols="12" class="">
-                                <!-- <div class="notif-text unread">{{ item.content }}</div> -->
-                                <div class="notif-text">{{ item.title }}</div>
+                                <v-expansion-panels v-model="panel" style="justify-content: start !important;">
+                                    <div class="notif-text" :class="item.is_read ? '' : 'unread'">{{ item.title }}</div>
+                                    <v-expansion-panel class="expansion-notif" style="background-color: #fff;">
+                                        <v-expansion-panel-content style="">
+                                            <div class="mt-4"></div>
+                                            <v-progress-circular
+                                                indeterminate
+                                                :size="20" :width="3"
+                                                color="#f68453" class="mb-8"
+                                                v-if="message == null"
+                                            ></v-progress-circular>
+                                            <div class="notif-text" v-html="message" />
+                                        </v-expansion-panel-content>
+                                    </v-expansion-panel>
+                                </v-expansion-panels>
                             </v-col>
                             <div class="notif-hr" />
                         </v-row>
@@ -83,22 +85,64 @@ export default {
         Multiselect,
     },
     data: () => ({
-        notifications: []
+        message: null,
+        bulanSelected: null,
+        tahunSelected: null,
+
+        panel: [],
+        arrayTahun: [],
+        notifications: [],
+        arrayBulan: [
+            { nama: "Januari", angka: 1 },
+            { nama: "Februari", angka: 2 },
+            { nama: "Maret", angka: 3 },
+            { nama: "April", angka: 4 },
+            { nama: "Mei", angka: 5 },
+            { nama: "Juni", angka: 6 },
+            { nama: "Juli", angka: 7 },
+            { nama: "Agustus", angka: 8 },
+            { nama: "September", angka: 9 },
+            { nama: "Oktober", angka: 10 },
+            { nama: "November", angka: 11 },
+            { nama: "Desember", angka: 12 }
+        ],
     }),
     watch: {
+        bulanSelected(to, from){
+            this.getData();
+        },
+        tahunSelected(to, from){
+            this.getData();
+        },
     },
     setup() {
-        const { getListNotification } = API()
-        return { getListNotification };
+        const { getListNotification, putReadNotification } = API()
+        return { getListNotification, putReadNotification };
     },
     async mounted() {
+        this.tahunSelected = this.$moment().year();
+        this.bulanSelected = {
+            nama: this.$moment().format('MMMM'),
+            angka: this.$moment().month() + 1
+        };
+        this.arrayTahun = [
+            this.$moment().subtract(1, 'year').year(),
+            this.$moment().year(),
+            this.$moment().add(1, 'year').year()
+        ];
+
         this.getData();
     },
     methods: {
         async getData(){
-            await this.getListNotification().then((result)=>{if(result){
+            await this.getListNotification(this.tahunSelected, this.bulanSelected.angka).then((result)=>{if(result){
                 this.notifications = result;
             }})
+        },
+        async activatePanel(index, data) {
+            this.panel = this.panel === index - 1 ? [] : index - 1;
+            this.message = data.content;
+            await this.putReadNotification(data.id);
         },
     }
 

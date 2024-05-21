@@ -36,6 +36,7 @@ export const API = () => {
         putUpdateProfile,
         getHelpCenter,
         getListNotification,
+        putReadNotification,
 
         getJob,
         postJob,
@@ -134,6 +135,7 @@ export const API = () => {
             getJobs,
             postApplyJob,
             getListNotification,
+            putReadNotification,
 
             getListPretest,
             getPreview,

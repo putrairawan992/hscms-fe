@@ -7,8 +7,12 @@ export const jobSeekerAPI = () => {
     const { jobPostValidator } = jobProviderValidator();
     const { getRequest ,postRequest, deleteRequest, putRequest } = request();
     
-    const getJobs = async () => {
-        return await getRequest('jobseeker/job');
+    const getJobs = async (tahun, bulan, search) => {
+        let param = '?';
+        if(tahun != null){ param = param + 'year='+tahun+'&' };
+        if(bulan != null){ param = param + 'month='+bulan+'&' };
+        if(search != null){ param = param + 'keys='+search };
+        return await getRequest('jobseeker/job' + param);
     }
     const postApplyJob = async (job_id) => {
         return await postRequest('jobseeker/apply/'+job_id);
