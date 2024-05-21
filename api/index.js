@@ -28,6 +28,9 @@ export const API = () => {
         getFileAttachment,
         putReuploadAttachment,
         downloadFileAttachment,
+
+        getContract,
+        downloadFileContract
     } = jobSeekerAPI();
 
     const {
@@ -152,6 +155,9 @@ export const API = () => {
             getFileAttachment,
             putReuploadAttachment,
             downloadFileAttachment,
+
+            getContract,
+            downloadFileContract,
 
 
 

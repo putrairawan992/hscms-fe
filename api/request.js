@@ -28,10 +28,9 @@ export const request = () => {
         $loader.showLoading({ show: false });
         return result ? result : false;
     }
-    const postRequest = async (endpoint, body, multipleError) => {
+    const postRequest = async (endpoint, body, multipleError, responseType) => {
         $loader.showLoading({ show: true });
-        const result = await $api.post(endpoint, body).catch((err) => {
-            console.log('postRequest', err.response?.data);
+        const result = await $api.post(endpoint, body, {responseType: responseType ? responseType : 'json',}).catch((err) => {
             if(multipleError){
                 $notifier.showMessage({ content: err.response?.data?.error_validate ? err.response.data.error_validate[0].validate : err.response.data.message[0].error, status: 'warning' });
             }else{

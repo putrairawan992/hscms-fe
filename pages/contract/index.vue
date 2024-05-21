@@ -17,74 +17,32 @@
                             <div class="list-container" :style="'height: 745px;'" style="overflow-x: auto;">
                                 <div class="mb-0">
                                     <v-row align="center" class="ma-0 mb-4 pa-2 pl-0">
-                                        <v-col cols="12" class="pa-0 mt-4 mb-10">
-                                            <div class="contract-todo-title text-left mb-1">Offering Letter Digital Product A</div>
-                                            <div class="frame-contract-todo pt-2 px-2">
+                                        <v-col v-for="item, key in dataContracts" cols="12" class="pa-0 mt-4 mb-10">
+                                            <div class="contract-todo-title text-left mb-1">{{ item.period }}</div>
+                                            <div v-for="itemChild in item.files" class="frame-contract-todo pt-2 px-2">
                                                 <div class="frame-div text-left d-flex">
                                                     <div class="jun-2023-wrapper" style="width: 130px;">
-                                                        <b class="text-sent">Sent:</b>
+                                                        <b class="text-sent" style="text-transform: capitalize;">{{ itemChild.status }}:</b>
                                                     </div>
                                                         <v-checkbox 
-                                                            hide-details
+                                                            hide-details  @change="onChecked($event, itemChild.id)"
                                                             class="input-checkbox mt-0 pt-0" color="#ae445a"
                                                         >
                                                             <template v-slot:label>
-                                                                <div class="text-list-todo">Offering Letter Santika Aldenia. Pdf</div>
+                                                                <div class="text-list-todo">{{ getFileName(itemChild.file) }}</div>
                                                             </template>
                                                         </v-checkbox>
                                                         
                                                 </div>
                                                 <div class="frame-div">
                                                     <div class="jun-2023-wrapper text-right" >
-                                                        <div class="text-list-todo">17 Jul 2023 09:00 WIB</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="frame-contract-todo pt-2 px-2">
-                                                <div class="frame-div text-left d-flex">
-                                                    <div class="jun-2023-wrapper" style="width: 130px;">
-                                                        <b class="text-sent">Employee Signed:</b>
-                                                    </div>
-                                                        <v-checkbox 
-                                                            hide-details
-                                                            class="input-checkbox mt-0 pt-0" color="#ae445a"
-                                                        >
-                                                            <template v-slot:label>
-                                                                <div class="text-list-todo">Upload File</div>
-                                                            </template>
-                                                        </v-checkbox>
-                                                        
-                                                </div>
-                                                <div class="frame-div">
-                                                    <div class="jun-2023-wrapper text-right" >
-                                                        <div class="text-list-todo">17 Jul 2023 09:00 WIB</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="frame-contract-todo pt-2 px-2">
-                                                <div class="frame-div text-left d-flex">
-                                                    <div class="jun-2023-wrapper" style="width: 130px;">
-                                                        <b class="text-sent">Full Signed:</b>
-                                                    </div>
-                                                        <v-checkbox 
-                                                            hide-details
-                                                            class="input-checkbox mt-0 pt-0" color="#ae445a"
-                                                        >
-                                                            <template v-slot:label>
-                                                                <div class="text-list-todo">--</div>
-                                                            </template>
-                                                        </v-checkbox>
-                                                        
-                                                </div>
-                                                <div class="frame-div">
-                                                    <div class="jun-2023-wrapper text-right" >
-                                                        <div class="text-list-todo">17 Jul 2023 09:00 WIB</div>
+                                                        <div class="text-list-todo">{{ itemChild.create_at }} WIB</div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </v-col>
 
-                                        <v-col cols="12" class="pa-0 mt-4 mb-10">
+                                        <!-- <v-col cols="12" class="pa-0 mt-4 mb-10">
                                             <div class="contract-todo-title text-left mb-1">PKWT Digital Product A Periode 1</div>
                                             <div class="frame-contract-todo pt-2 px-2">
                                                 <div class="frame-div text-left d-flex">
@@ -163,7 +121,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </v-col>
+                                        </v-col> -->
                                     </v-row>
                                 </div>
                             </div>
@@ -171,7 +129,7 @@
 
                             <div style="position: relative; display: flex; justify-content: end; column-gap: 20px; margin-top: 21px; padding-bottom: 30px;">
                                 <div class="orange-btn" style="">
-                                    <div class="" @click="">
+                                    <div class="" @click="downloadFile">
                                         <b class="button mx-4">Download</b>
                                     </div>
                                 </div>
@@ -194,20 +152,68 @@ export default {
     middleware: "jobSeeker",
     components: {},
     data: () => ({
+        checkbox: [],
+        idContracts: [],
+        dataContracts: [],
         showAlertApproval: false,
-
-
     }),
     watch: {},
     computed: {},
     setup() {
-        const { getListPretest } = API()
-        return { getListPretest };
+        const { getContract, downloadFileContract } = API()
+        return { getContract, downloadFileContract };
     },
     async mounted() {
-        // await this.getPretest();
+        await this.getData();
     },
     methods: {
+        async getData(){
+            await this.getContract().then((result)=>{if(result){
+                this.dataContracts = result;
+            }})
+        },
+        async downloadFile(){
+            if (this.idContracts.length == 0) {
+                return this.$notifier.showMessage({ content: 'Harap pilih data kontrak.', status: 'warning' });
+            }
+
+            try {
+                const result = await this.downloadFileContract({
+                    document_id: this.idContracts
+                });
+                const filename = "employee-data.zip";
+                const blob = new Blob([result], { type: 'application/zip' });
+                const url = window.URL.createObjectURL(blob);
+
+                const pom = document.createElement('a');
+                pom.href = url;
+                pom.setAttribute('download', filename);
+
+                document.body.appendChild(pom);
+                pom.click();
+
+                document.body.removeChild(pom);
+                window.URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error('Error downloading ZIP file:', error);
+            }
+        },
+
+        onChecked(value, id) {
+            if (!this.idContracts.includes(id)) {
+                this.idContracts.push(id);
+            } else {
+                let index = this.idContracts.indexOf(id);
+                this.idContracts.splice(index, 1);
+            }
+        },
+        isChecked(id) {
+            if (!this.idContracts.includes(id)) {
+                return false;
+            } else {
+                return true;
+            }
+        },
         onApprove(){
             this.showAlertApproval = false;
             this.$router.push('/contract/resign')
@@ -215,6 +221,14 @@ export default {
         closeDialog(){
             this.showAlertApproval = false;
         },
+        getFileName(file){
+            if(file){
+                let name = file.split('/');
+                return name[name.length - 1];
+            }else{
+                return '-'
+            }
+        }
 
 
     }

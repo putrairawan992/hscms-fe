@@ -64,6 +64,13 @@ export const jobSeekerAPI = () => {
         return await getRequest(`jobseeker/file_attachment_download/`+type_attachment, true, 'arraybuffer');
     }
 
+    // Contract
+    const getContract = async () => {
+        return await getRequest(`jobseeker/contract`);
+    }
+    const downloadFileContract= async (body) => {
+        return await postRequest(`jobseeker/downloadcontract`,body, false, 'arraybuffer');
+    }
 
     return {
         getJobs,
@@ -85,5 +92,7 @@ export const jobSeekerAPI = () => {
         putReuploadAttachment,
         downloadFileAttachment,
 
+        getContract,
+        downloadFileContract
     }
 }

@@ -9,8 +9,8 @@
                 <div class="menu-child" />
                 <div :class="pageActive == 'biodata' ? 'dashboard1' : 'help-center'" @click="$router.push('/biodata')">Biodata</div>
                 <div :class="pageActive == 'file' ? 'dashboard1' : 'help-center'" @click="$router.push('/file-attachment')">File Attachment</div>
-                <!-- <div :class="pageActive == 'contract' ? 'dashboard1' : 'help-center'" @click="$router.push('/contract')">Contract</div> -->
-                <div class="help-center" style="color: #a3a3a3;" @click="">Contract</div>
+                <div :class="pageActive == 'contract' ? 'dashboard1' : 'help-center'" @click="$router.push('/contract')">Contract</div>
+                <!-- <div class="help-center" style="color: #a3a3a3;" @click="">Contract</div> -->
                 <div class="help-center" style="color: #a3a3a3;" @click="">Payslip</div>
                 <div class="menu-child" />
                 <div :class="pageActive == 'pretest' ? 'dashboard1' : 'help-center'" @click="$router.push('/pretest')">Pre-test</div>
