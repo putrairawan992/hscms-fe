@@ -122,7 +122,7 @@ export default {
 
         arrayJalur: ['Seleksi', 'Non-Seleksi'],
         arrayTahapan: ['Tahap 1', 'Tahap 2', 'Tahap 3', 'Tahap 4', 'Tahap 5'],
-        arrayJobOpening: ['Marketing Staff', 'UI/UX Designer', 'Graphic Designer'],
+        arrayJobOpening: [],
     }),
     watch: {},
     computed: {

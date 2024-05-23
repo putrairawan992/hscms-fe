@@ -629,6 +629,8 @@ export default {
             if(url){
                 this.fileUrl = url;
                 this.fileDialog = true;
+            }else{
+                return this.$notifier.showMessage({ content: 'File tidak tersedia.', status: 'warning' });
             }
         },
         closeFile(){

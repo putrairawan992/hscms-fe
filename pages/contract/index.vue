@@ -198,7 +198,7 @@ export default {
                 window.URL.revokeObjectURL(url);
             } catch (error) {
                 console.error('Error downloading ZIP file:', error);
-                this.$notifier.showMessage({ content: 'Terjadi kesalahan saat mengunduh file.', status: 'error' });
+                this.$notifier.showMessage({ content: 'Terjadi kesalahan saat mengunduh file.', status: 'warning' });
             }
         },
 
