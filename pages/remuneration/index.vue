@@ -171,9 +171,9 @@
                                 </div>
                                 <v-row>
                                     <v-col cols="12" class="pt-8">
-                                        <div class="orange-btn" @click="createSimulation()" style="width: -webkit-fill-available; justify-content: center;">
+                                        <div :class="btnCreateSimulation ? 'orange-btn' : 'grey-btn'" @click="btnCreateSimulation ? createSimulation() : false" style="width: -webkit-fill-available; justify-content: center;">
                                             <div class="">
-                                                <b class="button mx-3">Create Simulation</b>
+                                                <b class="button mx-3">{{ btnCreateSimulation ? 'Create Simulation' : `Create Simulation again in ${timeLeft} second` }}</b>
                                             </div>
                                         </div>
                                     </v-col>
@@ -251,11 +251,14 @@ export default {
         employee_name: null,
         id_remuneration: null,
         remuneration_detail_id: null,
+        countdownInterval: null,
+        timeLeft: null,
 
         dialog: false,
         dialogAttach: false,
         dialogDetail: false,
         showAlertApproval: false,
+        btnCreateSimulation: true,
     }),
     watch: {},
     setup() {
@@ -287,10 +290,29 @@ export default {
             });
         },
         async createSimulation() {
+            this.btnCreateSimulation = false;
+            this.startCountdown();
+            setTimeout(() => {
+                this.btnCreateSimulation = true;
+            }, 60000)
             await this.postCreateSimulation(this.id_remuneration).then((result)=>{
                 this.$alert.showAlert({ content: 'Berhasil membuat perhitungan remunerasi.', show: true });
                 this.getData();
             });
+        },
+        startCountdown() {
+            this.timeLeft = 60;
+            if (this.countdownInterval) {
+                clearInterval(this.countdownInterval)
+            }
+            this.countdownInterval = setInterval(() => {
+                if (this.timeLeft > 0) {
+                    this.timeLeft -= 1
+                } else {
+                    clearInterval(this.countdownInterval)
+                    this.timeLeft = null;
+                }
+            }, 1000)
         },
         async requestApproval() {
             await this.postRequestApproval(this.id_remuneration).then((result)=>{
