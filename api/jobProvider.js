@@ -323,7 +323,7 @@ export const jobProviderAPI = () => {
         return await postRequest('jobprovider/nonselection/reminder', body);
     }
     const deleteListEmployeeNS = async (body) => {
-        return await postRequest('jobprovider/nonselection/employee_list_delete', body);
+        return await postRequest('jobprovider/nonselection/employee_list', body);
     }
     const postContinueNS = async (body) => {
         return await postRequest('jobprovider/nonselection/nextstep', body);

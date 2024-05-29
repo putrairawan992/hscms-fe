@@ -156,7 +156,7 @@
                                         <div class="edit-parent">
                                             <div class="btn-employee-container" :class="item.employee_type">
                                                 <div class="attach-mpr-parent">
-                                                    <b class="button">{{ item.employee_type }}</b>
+                                                    <b class="button">{{ item.employee_type ? item.employee_type : 'Empty' }}</b>
                                                 </div>
                                             </div>
                                         </div>

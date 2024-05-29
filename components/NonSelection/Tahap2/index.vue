@@ -168,6 +168,7 @@ export default {
                     employee_id: this.idCandidats
                 }).then((result)=>{if(result){
                     this.$alert.showAlert({ content: 'Berhasil', show: true });
+                    this.getData();
                 }})
             }else{
                 this.$notifier.showMessage({ content: 'Belum ada kandidat terpilih.', status: 'warning' });
