@@ -25,9 +25,14 @@
                                     <div class="history-1">
                                         <div :class="value.is_read == 'true' ? 'frame-parent-inbox' : 'frame-parent-inbox-unread'" @click="activatePanel(key+1, value.id)">
                                             <div class="foto-inbox-parent">
-                                                <img
+                                                <img v-if="value.photo"
                                                     class="foto-inbox-icon"
-                                                    src="@/assets/svg/foto-user.svg"
+                                                    :src="value.photo"
+                                                    alt="photo"
+                                                />
+                                                <img v-else
+                                                    class="foto-inbox-icon"
+                                                    src="@/assets/img/user-white.png"
                                                     alt="photo"
                                                 />
                                                 <b class="list-item-name mb-0" style="color: #fff;">{{ value.sender_name }}</b>

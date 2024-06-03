@@ -45,7 +45,7 @@
                     />
                   </div>
                   <div class="user-profile">
-                    <img class="foto-user-icon" alt="" src="../assets/svg/foto-user.svg" />
+                    <img class="foto-user-icon pa-1" alt="" src="../assets/img/user-red.png" />
                   </div>
                 </div>
               </div>

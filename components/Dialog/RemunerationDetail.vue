@@ -351,10 +351,10 @@
                     </v-col>
 
                     <v-col cols="6" class="pt-0 pl-4">
+                        <div class="remunerasi-list-title">
+                            Deduction Payment
+                        </div>
                         <v-row>
-                            <div class="remunerasi-list-title">
-                                Deduction Payment
-                            </div>
                             <v-col cols="12" v-for="value, key in deductionData">
                                 <v-row class="mt-0">
                                     <v-col cols="12" class="pt-2 pb-0" style="padding-right: 6px !important;">
