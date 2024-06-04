@@ -66,7 +66,9 @@
                                                     {{ value.sender_name }}
                                                 </div>
                                                 <div :style="value.user_type === 'other' ? 'justify-content: start;' : 'justify-content: end;'" v-if="value.opening_text" class="d-flex mb-2" v-html="value.opening_text" />
-                                                <div :style="value.user_type === 'other' ? 'justify-content: start;' : 'justify-content: end;'" class="d-flex mb-2" v-html="value.main_text" />
+                                                <div :style="value.user_type === 'other' ? 'justify-content: start;' : 'justify-content: end;'" class="d-flex mb-2" >
+                                                    <div :style="value.user_type === 'other' ? 'text-align: -webkit-left;' : 'text-align: -webkit-right;'" v-html="value.main_text"></div>
+                                                </div>
                                                 <div :style="value.user_type === 'other' ? 'justify-content: start;' : 'justify-content: end;'" v-if="value.closing_text" class="d-flex mb-2" v-html="value.closing_text" />
                                                 <div :style="value.user_type === 'other' ? 'justify-content: start;' : 'justify-content: end;'" v-if="value.file" class="d-flex mb-2 mt-6" >
                                                     <div class="history-1">
@@ -109,7 +111,7 @@
         </v-card>
         
         <Dialog-inboxForm v-if="$auth.user.role_user == 'jobprovider'" :show="createDialog" :closeDialog="closeDialog"/>
-        <Dialog-InboxReply :show="replyDialog" :closeDialog="closeDialog" :message_id="message_id"/>
+        <Dialog-InboxReply :show="replyDialog" :closeDialog="closeDialog" :message_id="message_id" :agreement="agreement"/>
     </div>
 </template>
 
@@ -131,6 +133,7 @@ export default {
         isLoading: false,
         replyDialog: false,
         createDialog: false,
+        agreement: false,
     }),
     setup() {
         const { getListMessage, getDetailMessage, postReplyMessage, postCreateMessage, getMessageAttachment } = API();
@@ -154,6 +157,12 @@ export default {
             await this.getDetailMessage(message_id).then((result)=>{
                 if(result){
                     this.detailMessage = result;
+                    if (result) {
+                        let last = result.length - 1;
+                        this.agreement = result?.[last]?.agreement ? true : false;
+                    }
+                    console.log('this.detailMessage', this.detailMessage);
+                    console.log('this.agreement inbox', this.agreement);
                 }
             });
         },

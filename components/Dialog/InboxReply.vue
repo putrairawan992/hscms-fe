@@ -26,16 +26,37 @@
                             Isi Pesan
                         </div>
                     </v-col>
-                    <v-col cols="12" class="pt-1" style="font-size: 12px;">
+                    <v-col cols="12" class="pt-1 pb-8" style="font-size: 12px;">
                         <TextEditor v-model="main_text" class="rich-editor" placeholder="Masukkan Isi Pesan"/>
                     </v-col>
-                    <v-col cols="12" class="text-left py-0">
+                    <v-col v-if="agreement"cols="12" class="text-left py-0">
+                        <div class="page-sub-title">
+                            Pernyataan
+                        </div>
+                    </v-col>
+                    <v-col v-if="agreement" cols="12" class="pt-1 pb-8">
+                        <div class="pernyataan">
+                            Saya
+                            <v-radio-group v-model="pernyataan" row class="radio-group-pernyataan">
+                                <v-radio
+                                    label="Setuju"
+                                    :value="true"
+                                ></v-radio>
+                                <v-radio
+                                    label="Tidak Setuju"
+                                    :value="false"
+                                ></v-radio>
+                            </v-radio-group>
+                            dengan penawaran yang diberikan dan akan bergabung dengan perusahaan mulai dengan tanggal yang ditawarkan. 
+                        </div>
+                    </v-col>
+                    <v-col cols="12" class="text-left py-0 ">
                         <div class="page-sub-title">
                             Upload File
                         </div>
                     </v-col>
                     <v-col cols="12" class="pt-1">
-                        <v-file-input v-model="file_message" clearable placeholder="Pilih File..." solo class="grade-text-field"></v-file-input>
+                        <v-file-input :disabled="readonlyFile" v-model="file_message" clearable placeholder="Pilih File..." solo class="grade-text-field"></v-file-input>
                     </v-col>
                     <!-- <v-col cols="12" class="text-left py-0">
                         <div class="page-sub-title">
@@ -118,19 +139,31 @@ export default {
 
             listEmployee: [],
             datePicker1: false,
+            readonlyFile: false,
+            pernyataan: true,
         }
     },
     watch: {
         show(to, from){
             this.getData();
         },
-        quantitative_score(to, from){
+        agreement(to, from){
+            this.pernyataan = to;
+        },
+        pernyataan(to, from){
+            if(to === false){
+                this.readonlyFile = true;
+                this.file_message = null;
+            }else{
+                this.readonlyFile = false;
+            }
         }
     },
     props: {
         content: { type: String, default() { return "" } },
         message_id: { type: Number, default() { return null } },
         show: { type: Boolean, default() { return false } },
+        agreement: { type: Boolean, default() { return false } },
         onApprove: { type: Function, default() { return {} } },
         closeDialog: { type: Function, default() { return {} } },
     },
@@ -142,7 +175,6 @@ export default {
         ...mapGetters('provider-selection', ['tahapanGetter']),
     },
     async mounted(){
-        // await this.getData();
     },
     methods: {
         async getData(){
@@ -154,16 +186,11 @@ export default {
         },
         async submit(){
             if(this.message_id){
-                // if(this.recipent_id == null){ this.$notifier.showMessage({ content: 'Data penerima belum terisi.', status: 'warning' }) }
-                // if(this.title == null){ this.$notifier.showMessage({ content: 'Judul belum terisi.', status: 'warning' }) }
                 if(this.main_text == null){ this.$notifier.showMessage({ content: 'Isi pesan belum terisi.', status: 'warning' }) }
                 
                 const body = new FormData();
-                // body.append('title', this.title);
-                // body.append('schedule', this.schedule);
-                body.append('main_text', this.main_text);
+                body.append('main_text', this.pernyataan ? "<b>Keterangan: Setuju</b><br>" + this.main_text : "<b>Keterangan: Tidak Setuju</b><br>" + this.main_text);
                 body.append('file_message', this.file_message);
-                // body.append('recipent_id', this.recipent_id.id);
     
                 await this.postReplyMessage(body, this.message_id).then((result)=>{
                     if(result){
@@ -190,6 +217,13 @@ export default {
 </script>
 
 <style scoped>
+.pernyataan{
+    color: #404041;
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    line-height: normal;
+}
 .register-text-input {
     border-radius: 10px;
     border: 1px solid #ae445a;

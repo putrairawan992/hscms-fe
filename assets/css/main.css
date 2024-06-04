@@ -1762,6 +1762,14 @@ input:-webkit-autofill:active{
 .preview-question-text p {
     margin-bottom: 0 !important;
 }
+
+.radio-group-pernyataan .v-label{
+    color: #404041 !important;
+    font-family: Poppins !important;
+    font-size: 14px !important;
+    font-style: normal;
+    line-height: normal;
+}
 /* end pretest */
 
 /* start talent selection */
