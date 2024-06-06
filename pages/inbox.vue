@@ -161,8 +161,6 @@ export default {
                         let last = result.length - 1;
                         this.agreement = result?.[last]?.agreement ? true : false;
                     }
-                    console.log('this.detailMessage', this.detailMessage);
-                    console.log('this.agreement inbox', this.agreement);
                 }
             });
         },
@@ -178,6 +176,10 @@ export default {
                 await this.getDetailMessage(this.message_id).then((result)=>{
                     if(result){
                         this.detailMessage = result;
+                        if (result) {
+                            let last = result.length - 1;
+                            this.agreement = result?.[last]?.agreement ? true : false;
+                        }
                     }
                 });
             }

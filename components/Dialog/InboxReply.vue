@@ -189,7 +189,11 @@ export default {
                 if(this.main_text == null){ this.$notifier.showMessage({ content: 'Isi pesan belum terisi.', status: 'warning' }) }
                 
                 const body = new FormData();
-                body.append('main_text', this.pernyataan ? "<b>Keterangan: Setuju</b><br>" + this.main_text : "<b>Keterangan: Tidak Setuju</b><br>" + this.main_text);
+                if(this.agreement){
+                    body.append('main_text', this.pernyataan ? "<b>Keterangan: Setuju</b><br>" + this.main_text : "<b>Keterangan: Tidak Setuju</b><br>" + this.main_text);
+                }else{
+                    body.append('main_text', this.main_text);
+                }
                 body.append('file_message', this.file_message);
     
                 await this.postReplyMessage(body, this.message_id).then((result)=>{
