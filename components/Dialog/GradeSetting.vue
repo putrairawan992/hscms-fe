@@ -33,13 +33,13 @@
                                     plain class="plain-text-field"
                                 ></v-text-field>
                             </v-col>
-                            <v-col class="input-checkbox-container" style="max-width: 200px;">
+                            <!-- <v-col class="input-checkbox-container" style="max-width: 200px;">
                                 <v-select
                                     solo disabled
                                     placeholder="Pilih Nilai" class="grade-text-field"
                                     :items="['Very Good (100 points)', 'Good (75 points)', 'Average (50 points)', 'Poor (25 points)']"
                                 ></v-select>
-                            </v-col>
+                            </v-col> -->
                         </v-row>
                     </v-col>
                 </v-row>
