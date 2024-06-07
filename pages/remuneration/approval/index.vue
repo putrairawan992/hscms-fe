@@ -49,8 +49,8 @@
 import { API } from '@/api/index'
 import Multiselect from 'vue-multiselect'
 export default {
-    name: "register",
-    layout: "register",
+    name: "approval",
+    layout: "jobProvider",
     components: { 
         Multiselect,
     },

@@ -254,6 +254,7 @@ export default {
 
             await this.putUpdateProfile(body).then((result)=>{if(result){
                 this.getData();
+                location.reload(true);
                 this.$alert.showAlert({ content: 'Berhasil edit profil.', show: true });
             }})
         },
