@@ -136,65 +136,65 @@
                     <FormJobOpening :id_job_post="data?.id" :successEditJob="successEditJob"/>
                 </v-col>
             </v-row>
-            <v-row v-else align="center" class="pa-2" style="border: 1px solid #AE445A; border-radius: 10px;">
+            <v-row v-else align="center" class="pa-2" style="border: 1px solid #AE445A; border-radius: 10px; font-family: Poppins !important;">
                 <v-col cols="12" class="d-flex" style="justify-content: space-between;align-items: center;">
                     <div class="d-flex" style="align-items: center;">
                         <img class="foto-perusaahaan-icon" src="@/assets/svg/foto-perusaahaan.svg" />
                         <div class="d-flex text-left ml-4" style="flex-direction: column;">
-                            <b class="marketing-staff">{{ data?.job_title }}</b>
-                            <div class="pt-gema-insani">{{ data?.job_provider_name }}</div>
-                            <div class="idr-6000000-">IDR {{ useConvertToMoneyView(data?.start_from_salary) }} - {{ useConvertToMoneyView(data?.end_from_salary) }}</div>
+                            <b class="marketing-staff" style="font-size: 18px;">{{ data?.job_title }}</b>
+                            <div class="pt-gema-insani" style="font-size: 16px;">{{ data?.job_provider_name }}</div>
+                            <div class="idr-6000000-" style="font-size: 16px;">IDR {{ useConvertToMoneyView(data?.start_from_salary) }} - {{ useConvertToMoneyView(data?.end_from_salary) }}</div>
                         </div>
                     </div>
 
                     <div class="text-right">
-                        <b class="jakarta-selatan-wfo">{{ data?.data_job_location?.job_location_name }} ({{ data.workplace_type }})</b><br>
+                        <b class="jakarta-selatan-wfo" style="font-size: 18px;">{{ data?.data_job_location?.job_location_name }} ({{ data.workplace_type }})</b><br>
                         <div class="active">{{ data.status_active != 'Active' ? 'Non-Active' : 'Active' }}</div>
                     </div>
                 </v-col>
                 <v-col cols="12" class="text-left">
-                    <b class="">Jenis Pekerjaan</b>
-                    <div class="">{{ data.job_type }}</div>
+                    <b style="font-size: 14px;">Jenis Pekerjaan</b>
+                    <div style="font-size: 12px;">{{ data.job_type }}</div>
                 </v-col>
                 <v-col cols="12" class="text-left">
-                    <b class="">Periode Pekerjaan</b>
-                    <div class="">{{ useConvertToDateView(data?.start_date) }} - {{ useConvertToDateView(data?.end_date) }} {{ useConvertToMonthCountView() }} ({{ useConvertToYearCountView() }})</div>
+                    <b style="font-size: 14px;">Periode Pekerjaan</b>
+                    <div style="font-size: 12px;">{{ useConvertToDateView(data?.start_date) }} - {{ useConvertToDateView(data?.end_date) }} {{ useConvertToMonthCountView() }} ({{ useConvertToYearCountView() }})</div>
                 </v-col>
                 <v-col cols="12" class="text-left">
-                    <b class="">Tingkat Pekerjaan</b>
-                    <div class="">{{ data?.data_job_level?.job_level_name }}</div>
+                    <b style="font-size: 14px;">Tingkat Pekerjaan</b>
+                    <div style="font-size: 12px;">{{ data?.data_job_level?.job_level_name }}</div>
                 </v-col>
                 <v-col cols="12" class="text-left">
-                    <b class="">Jumlah Kandidat yang Dibutuhkan</b>
-                    <div class="">{{ data?.number_of_candidates }}</div>
+                    <b style="font-size: 14px;">Jumlah Kandidat yang Dibutuhkan</b>
+                    <div style="font-size: 12px;">{{ data?.number_of_candidates }}</div>
                 </v-col>
                 <v-col cols="12" class="text-left">
-                    <b class="">Pengalaman</b>
-                    <div class="">{{ data?.data_experience?.experience_name }}</div>
+                    <b style="font-size: 14px;">Pengalaman</b>
+                    <div style="font-size: 12px;">{{ data?.data_experience?.experience_name }}</div>
                 </v-col>
                 <v-col cols="12" class="text-left">
-                    <b class="">Spesialisasi Pekerjaan</b>
-                    <div class="">{{ data?.data_job_specialist?.job_specialist_name }}</div>
+                    <b style="font-size: 14px;">Spesialisasi Pekerjaan</b>
+                    <div style="font-size: 12px;">{{ data?.data_job_specialist?.job_specialist_name }}</div>
                 </v-col>
                 <v-col cols="12" class="text-left">
-                    <b class="">Pendidikan</b>
-                    <div class="">
+                    <b style="font-size: 14px;">Pendidikan</b>
+                    <div style="font-size: 12px;">
                         <span v-for="value, key in data?.data_education">
                             {{ value.detail_education?.education_name }}{{ (key+1) == data?.data_education.length ? '' : ', ' }}
                         </span>
                     </div>
                 </v-col>
                 <v-col cols="12" class="text-left">
-                    <b class="">Keuntungan dari Perusahaan</b>
-                    <div class="">
+                    <b style="font-size: 14px;">Keuntungan dari Perusahaan</b>
+                    <div style="font-size: 12px;">
                         <span v-for="value, key in data?.data_benefit">
                             {{ value.detail_benefit.benefit_name }}{{ (key+1) == data?.data_benefit.length ? '' : ', ' }}
                         </span>
                     </div>
                 </v-col>
                 <v-col cols="12" class="text-left">
-                    <b class="">Deskripsi Pekerjaan</b>
-                    <div class="" v-html="data?.description"/>
+                    <b style="font-size: 14px;">Deskripsi Pekerjaan</b>
+                    <div style="font-size: 12px;" v-html="data?.description"/>
                 </v-col>
             </v-row>
         </v-card>
