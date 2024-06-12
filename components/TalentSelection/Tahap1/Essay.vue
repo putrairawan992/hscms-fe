@@ -15,10 +15,10 @@
                             <b>Soal dan Jawaban</b>
                         </div>
                         <v-row v-if="detailAnswer" align="start">
-                            <v-col v-for="value, key in detailAnswer.detail" cols="12" class="detail-selection-card">
+                            <v-col v-for="value, key in detailAnswer.detail" cols="12" class="detail-selection-card mb-8">
                                 <div class="history-1">
                                     <div class="frame-detail-text-question">
-                                        <ol class="w-100 pt-2"><li value="1">
+                                        <ol class="w-100 pt-2"><li :value="key+1">
                                             <div class="detail-text-question text-left" v-html="value.question"></div>
                                         </li></ol> 
                                         <v-row class="mt-2" style="border-bottom: 2px solid #AE445A;">
@@ -89,7 +89,7 @@ export default {
             let pretest_modul_detail_id = this.tahapanGetter.detail?.module?.pretest_modul_detail_id;
 
             await this.getDetailAnswerAPI(job_seeker_id, job_post_id, pretest_modul_detail_id).then((result)=>{
-                if(result){ this.setDetailAnswer(result); }
+                if(result){ this.setDetailAnswer(result); console.log('detailAnswer', this.detailAnswer); }
             })
         },
         debounceInput: debounce( async function (answer, question) {

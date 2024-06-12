@@ -237,14 +237,14 @@
                                                     />
                                                 </div>
                                                 <div class="link-job-opening-dropdown-menu">
-                                                    <h3 class="annisa-nur-hafiza">{{ value.name }}</h3>
+                                                    <h3 class="annisa-nur-hafiza mb-1">{{ value.name }}</h3>
                                                     <div class="frame-user-profile-wrapper">
                                                         <div class="frame-user-profile">
                                                             <div class="diplomasarjana-s11">
                                                                 {{ value.degree }}
                                                             </div>
-                                                            <div class="mei-2023">Rp. -</div>
-                                                            <div class="mei-2023">0 tahun</div>
+                                                            <div class="mei-2023">Rp. {{ value.salary_expectation ? useConvertToMoneyView(value.salary_expectation) : ' -' }}</div>
+                                                            <div class="mei-2023">{{ value.experience ?? '0' }} tahun</div>
                                                             <div class="mei-2023">Skor: {{ value.average_total }}</div>
                                                         </div>
                                                     </div>
@@ -410,6 +410,11 @@ export default {
                 }
             });
             return this.$router.push("/talent-selection/detail")
+        },
+        useConvertToMoneyView(value) {
+            if (!value) return value;
+            value = parseInt(value.replaceAll(',', ''), 10);
+            return Intl.NumberFormat('en-US').format(value);
         },
         onChecked(value, job_seeker_id) {
             if (!this.idCandidats.includes(job_seeker_id)) {

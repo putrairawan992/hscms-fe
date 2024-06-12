@@ -60,7 +60,7 @@
                                     <tr><th colspan="4" style="border-top: 2px solid #AE445A;"></th></tr>
                                     <tr v-if="value.score.length" v-for="item in value.score" class="panel-table-item">
                                         <td class="text-left">{{ item.title_test }}</td>
-                                        <td>00:00:00</td> 
+                                        <td>{{ item.duration }}</td> 
                                         <td class="">
                                             <div class="table-btn" style="">
                                                 <div class="" @click="clickDetail(value.job_seeker_id, item)">
