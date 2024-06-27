@@ -3,7 +3,6 @@
         <v-card class="card-register" style="min-height: 800px;">
             <div class="my-2" style="position: relative;">
                 <div class="blokade-parent ma-8 pt-1">
-                    
                     <div class="" style="position: relative;">
                         <div class="blokade-parent mt-8 pt-1">
                             <v-row align="center" class="mb-0">
@@ -19,28 +18,104 @@
                                     <v-row align="center" class="ma-0 mb-4 pa-2 pl-0">
                                         <v-col v-for="item, key in dataContracts" cols="12" class="pa-0 mt-4 mb-10">
                                             <div class="contract-todo-title text-left mb-1">{{ item.period }}</div>
-                                            <div v-for="itemChild in item.files" class="frame-contract-todo pt-2 px-2">
-                                                <div class="frame-div text-left d-flex">
-                                                    <div class="jun-2023-wrapper" style="width: 130px;">
-                                                        <b class="text-sent" style="text-transform: capitalize;">{{ itemChild.status }}:</b>
+                                            <div v-for="itemChild, key1 in item.files">
+                                                
+                                                <div v-if="(key1 + 1) == item.files.length">
+                                                    <div class="frame-contract-todo pt-2 px-2" :style="itemChild.status == 'full signed' ? 'border-bottom: 1px solid #CCC; padding-bottom: 10px' : ''">
+                                                        <div class="frame-div text-left d-flex">
+                                                            <div class="jun-2023-wrapper" style="width: 130px;">
+                                                                <b class="text-sent" style="text-transform: capitalize;">{{ itemChild.status }}:</b>
+                                                            </div>
+                                                                <v-checkbox v-if="itemChild.status == 'employee signed'"
+                                                                    hide-details @change="onChecked($event, itemChild.id)"
+                                                                    class="input-checkbox mt-0 pt-0" color="#ae445a"
+                                                                >
+                                                                    <template v-slot:label>
+                                                                        <div class="text-list-todo" style="max-width: 250px !important;">{{ getFileName(itemChild.file) }}</div>
+                                                                        <div class="orange-btn ml-8" style="height: 22px !important;">
+                                                                            <div class="" @click="selectFile(item.batch_remuneration_id, itemChild.id)">
+                                                                                <b class="button mx-4" style="align-items: center; display: flex;">
+                                                                                    Update file <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/upload.svg"/>
+                                                                                </b>
+                                                                            </div>
+                                                                        </div>
+                                                                    </template>
+                                                                </v-checkbox>
+                                                                <v-checkbox v-else
+                                                                    hide-details @change="onChecked($event, itemChild.id)"
+                                                                    class="input-checkbox mt-0 pt-0" color="#ae445a"
+                                                                >
+                                                                    <template v-slot:label>
+                                                                        <div class="text-list-todo">{{ getFileName(itemChild.file) }}</div>
+                                                                    </template>
+                                                                </v-checkbox>
+                                                                
+                                                        </div>
+                                                        <div class="frame-div">
+                                                            <div class="jun-2023-wrapper text-right" >
+                                                                <div class="text-list-todo">{{ itemChild.create_at }} WIB</div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                        <v-checkbox 
-                                                            hide-details  @change="onChecked($event, itemChild.id)"
-                                                            class="input-checkbox mt-0 pt-0" color="#ae445a"
-                                                        >
-                                                            <template v-slot:label>
-                                                                <div class="text-list-todo">{{ getFileName(itemChild.file) }}</div>
-                                                            </template>
-                                                        </v-checkbox>
-                                                        
-                                                </div>
-                                                <div class="frame-div">
-                                                    <div class="jun-2023-wrapper text-right" >
-                                                        <div class="text-list-todo">{{ itemChild.create_at }} WIB</div>
+
+                                                    <div v-if="itemChild.next_status == 'employee signed'" class="frame-contract-todo pt-2 px-2" :style="itemChild.status == 'full signed' ? 'border-bottom: 1px solid #CCC; padding-bottom: 10px' : ''">
+                                                        <div class="frame-div text-left d-flex" style="align-items: center;">
+                                                            <div class="jun-2023-wrapper" style="width: 130px;">
+                                                                <b class="text-sent" style="text-transform: capitalize;">Employee Signed:</b>
+                                                            </div>
+                                                            <div class="orange-btn" style="height: 22px !important;">
+                                                                <div class="" @click="selectFile(item.batch_remuneration_id, null)">
+                                                                    <b class="button mx-4" style="align-items: center; display: flex;">
+                                                                        Upload file <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/upload.svg"/>
+                                                                    </b>
+                                                                </div>
+                                                            </div>
+                                                                
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <div v-else>
+                                                    <div class="frame-contract-todo pt-2 px-2" :style="itemChild.status == 'full signed' ? 'border-bottom: 1px solid #CCC; padding-bottom: 10px' : ''">
+                                                        <div class="frame-div text-left d-flex">
+                                                            <div class="jun-2023-wrapper" style="width: 130px;">
+                                                                <b class="text-sent" style="text-transform: capitalize;">{{ itemChild.status }}:</b>
+                                                            </div>
+                                                                <v-checkbox v-if="itemChild.status == 'employee signed'"
+                                                                    hide-details @change="onChecked($event, itemChild.id)"
+                                                                    class="input-checkbox mt-0 pt-0" color="#ae445a"
+                                                                >
+                                                                    <template v-slot:label>
+                                                                        <div class="text-list-todo" style="max-width: 250px !important;">{{ getFileName(itemChild.file) }}</div>
+                                                                        <div class="orange-btn ml-8" style="height: 22px !important;">
+                                                                            <div class="" @click="selectFile(item.batch_remuneration_id, itemChild.id)">
+                                                                                <b class="button mx-4" style="align-items: center; display: flex;">
+                                                                                    Update file <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/upload.svg"/>
+                                                                                </b>
+                                                                            </div>
+                                                                        </div>
+                                                                    </template>
+                                                                </v-checkbox>
+                                                                <v-checkbox v-else
+                                                                    hide-details @change="onChecked($event, itemChild.id)"
+                                                                    class="input-checkbox mt-0 pt-0" color="#ae445a"
+                                                                >
+                                                                    <template v-slot:label>
+                                                                        <div class="text-list-todo">{{ getFileName(itemChild.file) }}</div>
+                                                                    </template>
+                                                                </v-checkbox>
+                                                                
+                                                        </div>
+                                                        <div class="frame-div">
+                                                            <div class="jun-2023-wrapper text-right" >
+                                                                <div class="text-list-todo">{{ itemChild.create_at }} WIB</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
                                             </div>
                                         </v-col>
+                                        <input class="d-none" type="file" ref="fileInput" @change="onSelectFile($event)">
 
                                         <!-- <v-col cols="12" class="pa-0 mt-4 mb-10">
                                             <div class="contract-todo-title text-left mb-1">PKWT Digital Product A Periode 1</div>
@@ -86,7 +161,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="frame-contract-todo pt-2 px-2">
+                                            <div class="frame-contract-todo pt-2 px-2" style="border-bottom: 1px solid #CCC; padding-bottom: 10px;">
                                                 <div class="frame-div text-left d-flex">
                                                     <div class="jun-2023-wrapper" style="width: 130px;">
                                                         <b class="text-sent">Full Signed:</b>
@@ -156,12 +231,14 @@ export default {
         idContracts: [],
         dataContracts: [],
         showAlertApproval: false,
+        idBatchRemuneration: null,
+        idTracking: null
     }),
     watch: {},
     computed: {},
     setup() {
-        const { getContract, downloadFileContract } = API()
-        return { getContract, downloadFileContract };
+        const { getContract, downloadFileContract, postUploadContract } = API()
+        return { getContract, downloadFileContract, postUploadContract };
     },
     async mounted() {
         await this.getData();
@@ -200,6 +277,30 @@ export default {
                 console.error('Error downloading ZIP file:', error);
                 this.$notifier.showMessage({ content: 'Terjadi kesalahan saat mengunduh file.', status: 'warning' });
             }
+        },
+
+        selectFile(batch_remuneration_id, tracking_id){
+            this.idBatchRemuneration = batch_remuneration_id;
+            this.idTracking = tracking_id;
+            this.$refs.fileInput.click();
+        },
+        async onSelectFile (event) {            
+            const body = new FormData();
+            body.append('file_contract', event.srcElement.files[0]);
+
+            if(this.idBatchRemuneration){
+                await this.postUploadContract(body, this.idBatchRemuneration, this.idTracking).then((result)=>{
+                    this.closeDialog();
+                    this.$alert.showAlert({ content: 'File telah berhasil di upload.', show: true });
+                })
+            }else{
+                this.$notifier.showMessage({ content: 'Terjadi kesalahan saat upload file.', status: 'warning' });
+            }
+            event.target.value = null;
+            this.idTracking = null;
+            this.idBatchRemuneration = null;
+            return await this.getData();
+
         },
 
         onChecked(value, id) {
@@ -268,6 +369,10 @@ export default {
     font-style: normal;
     font-family: Poppins;
     line-height: 35px; /* 158.333% */
+    max-width: 450px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .job-post-nav {
     width: 100%;

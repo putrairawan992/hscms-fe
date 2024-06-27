@@ -71,6 +71,12 @@ export const jobSeekerAPI = () => {
     const downloadFileContract= async (body) => {
         return await postRequest(`jobseeker/downloadcontract`,body, false, 'arraybuffer');
     }
+    const postUploadContract = async (body, batch_remuneration_id, tracking_id) => {
+        let param = '?';
+        if(batch_remuneration_id != null){ param = param + 'batch_remuneration_id='+batch_remuneration_id+'&' };
+        if(tracking_id != null){ param = param + 'tracking_id='+tracking_id };
+        return await postRequest(`jobseeker/contract` + param, body);
+    }
 
     return {
         getJobs,
@@ -93,6 +99,7 @@ export const jobSeekerAPI = () => {
         downloadFileAttachment,
 
         getContract,
-        downloadFileContract
+        downloadFileContract,
+        postUploadContract
     }
 }
