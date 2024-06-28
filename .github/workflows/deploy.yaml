@@ -1,1 +1,51 @@
+run-name: ${{ github.actor }} is deploying out ${{ github.repository }} 🚀
+on:
+  push:
+    branches:
+      - main
 
+jobs:
+  build-and-push:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+     
+      - name: Build Docker image
+        run: docker build -t docker.productscala.online/hcms-fe:${{ github.sha::7 }} .
+
+      - name: Log in to Docker Registry
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login docker.productscala.online -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: Push Docker image to registry
+        run: docker push docker.productscala.online/hcms-fe:${{ github.sha::7 }}
+
+  deploy-application:
+    name: Deploy Application
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    steps:
+      - name: SSH and Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            docker rm -f hcms-fe || true
+            docker run -d -it -p 8080:80 --name hcms-fe docker.productscala.online/hcms-fe:${{ github.sha::7 }}
+
+  send-notification:
+    name: Send Notification to Discord
+    runs-on: ubuntu-latest
+    needs: deploy-application
+    steps:
+      - name: Send message to Discord  
+        uses: sarisia/actions-status-discord@v1
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "Deployment FrontEnd HCMS"
+          description: "Done Update ${{ github.repository }}"
+          color: 0xFF0000
