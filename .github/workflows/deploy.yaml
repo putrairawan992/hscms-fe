@@ -8,18 +8,20 @@ jobs:
   build-and-push:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
+    env:
+      SHA7: ${GITHUB_SHA::7}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
      
       - name: Build Docker image
-        run: docker build -t docker.productscala.online/hcms-fe:${{ github.sha::7 }} .
+        run: docker build -t docker.productscala.online/hcms-fe:$SHA7 .
 
       - name: Log in to Docker Registry
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login docker.productscala.online -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
       - name: Push Docker image to registry
-        run: docker push docker.productscala.online/hcms-fe:${{ github.sha::7 }}
+        run: docker push docker.productscala.online/hcms-fe:$SHA7
 
   deploy-application:
     name: Deploy Application
@@ -34,7 +36,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             docker rm -f hcms-fe || true
-            docker run -d -it -p 8080:80 --name hcms-fe docker.productscala.online/hcms-fe:${{ github.sha::7 }}
+            docker run -d -it -p 8080:80 --name hcms-fe docker.productscala.online/hcms-fe:$SHA7
 
   send-notification:
     name: Send Notification to Discord
