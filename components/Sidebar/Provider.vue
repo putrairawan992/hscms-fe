@@ -26,8 +26,8 @@
                             :class="pageActive == 'job' || pageActive == 'opening' ? 'dashboard1' : 'help-center'" 
                         >
                             Job
-                            <img v-if="pageActive == 'job' || pageActive == 'opening'" class="mt-2" src="@/assets/svg/chevrondown-red.svg" />
-                            <img v-else class="mt-2" src="@/assets/svg/chevrondown.svg" />
+                            <img v-if="pageActive == 'job' || pageActive == 'opening'" class="" src="@/assets/svg/chevrondown-red.svg" style="align-self: start;" />
+                            <img v-else class="" src="@/assets/svg/chevrondown.svg" />
                         </div>
                     </template>
 
@@ -62,8 +62,8 @@
                             :class="pageActive == 'talent' || pageActive == 'non' ? 'dashboard1' : 'help-center'" 
                         >
                             Talent Selection
-                            <img v-if="pageActive == 'talent' || pageActive == 'non'" class="mt-2" src="@/assets/svg/chevrondown-red.svg" />
-                            <img v-else class="mt-2" src="@/assets/svg/chevrondown.svg" />
+                            <img v-if="pageActive == 'talent' || pageActive == 'non'" class="" src="@/assets/svg/chevrondown-red.svg" />
+                            <img v-else class="" src="@/assets/svg/chevrondown.svg" />
                         </div>
                     </template>
 

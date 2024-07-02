@@ -786,24 +786,43 @@ input:-webkit-autofill:active{
     font-weight: bold;
     position: relative;
     color: #ae445a !important;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .help-center {
     position: relative;
     font-weight: 300;
     cursor: pointer;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+.dashboard1 img {
+    align-self: flex-start;
+    margin-top: 22px !important;
+}
+.help-center img {
+    align-self: flex-start;
+    margin-top: 22px !important;
+}
+
 .menu-child {
     position: relative;
     border-top: 1px solid #ae445a;
     box-sizing: border-box;
     width: 220px;
     height: 1px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 .menu {
     position: absolute;
     top: calc(50% - 258px);
     /* left: calc(50% - 93.5px); */
-    height: 693px;
+    /* height: 693px; */
     width: 100%;
     display: flex;
     flex-direction: column;
