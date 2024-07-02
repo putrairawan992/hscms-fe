@@ -13,6 +13,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Create .env file from secret
+        env:
+          ENV_CONTENT: ${{ secrets.ENV }}
+        run: |
+          echo "$ENV_CONTENT" > .env
+          cat .env  # Untuk memastikan file .env telah terbuat dengan benar
+
+      - name: Print .env content
+        run: cat .env  # Mengganti .env dengan nama file jika berbeda
         
       - name: Set SHORT_SHA environment variable
         id: set_short_sha
