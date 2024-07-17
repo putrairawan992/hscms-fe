@@ -151,7 +151,6 @@ export default {
         async getData(){
             await this.getFileAttachment().then((result)=>{
                 this.data = result;
-                console.log('this.data', this.data);
             });
         },
         deleteData(data){
