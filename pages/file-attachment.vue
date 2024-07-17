@@ -19,7 +19,7 @@
                                 <div class="mt-4 mb-12">
                                     <v-row align="center" class="pb-12">
                                         <v-col cols="12" align="center"  md="4">
-                                            <div class="cv-big">
+                                            <div :class="data?.curriculum_vitae.path == null ? 'cv-big-empty' : 'cv-big'">
                                                 <div class="wrapper-big">
                                                     <img class="icon-big" alt="CV" src="../assets/img/1-2@2x.png" />
                                                 </div>
@@ -34,7 +34,7 @@
                                             </div>
                                         </v-col>
                                         <v-col cols="12" align="center" md="4" class="mt-4">
-                                            <div class="cv-big">
+                                            <div :class="data?.photo.path == null ? 'cv-big-empty' : 'cv-big'">
                                                 <div class="wrapper-big">
                                                     <img class="icon-big" alt="" src="../assets/img/8@2x.png" />
                                                 </div>
@@ -49,7 +49,7 @@
                                             </div>
                                         </v-col>
                                         <v-col cols="12" align="center" md="4" class="mt-4">
-                                            <div class="cv-big">
+                                            <div :class="data?.ktp.path == null ? 'cv-big-empty' : 'cv-big'">
                                                 <div class="wrapper-big">
                                                     <img class="icon-big" alt="" src="../assets/img/2@2x.png" />
                                                 </div>
@@ -64,7 +64,7 @@
                                             </div>
                                         </v-col>
                                         <v-col cols="12" align="center" md="4" class="mt-4">
-                                            <div class="cv-big">
+                                            <div :class="data?.kk.path == null ? 'cv-big-empty' : 'cv-big'">
                                                 <div class="wrapper-big">
                                                     <img class="icon-big" alt="" src="../assets/img/4@2x.png" />
                                                 </div>
@@ -79,7 +79,7 @@
                                             </div>
                                         </v-col>
                                         <v-col cols="12" align="center" md="4" class="mt-4">
-                                            <div class="cv-big">
+                                            <div :class="data?.npwp.path == null ? 'cv-big-empty' : 'cv-big'">
                                                 <div class="wrapper-big">
                                                     <img class="icon-big" alt="" src="../assets/img/frame-2036@2x.png" />
                                                 </div>
@@ -94,7 +94,7 @@
                                             </div>
                                         </v-col>
                                         <v-col cols="12" align="center" md="4" class="mt-4">
-                                            <div class="cv-big">
+                                            <div :class="data?.bpjs.path == null ? 'cv-big-empty' : 'cv-big'">
                                                 <div class="wrapper-big">
                                                     <img class="icon-big" alt="" src="../assets/img/6@2x.png" style="width: 125px;"/>
                                                 </div>
@@ -151,6 +151,7 @@ export default {
         async getData(){
             await this.getFileAttachment().then((result)=>{
                 this.data = result;
+                console.log('this.data', this.data);
             });
         },
         deleteData(data){
