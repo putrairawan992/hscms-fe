@@ -27,9 +27,9 @@
                                                     <b class="text-cv mt-2">CV</b>
                                                 </div>
                                                 <div class="cv-button-wrapper">
-                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.curriculum_vitae.path)"/>
+                                                    <img v-if="data?.curriculum_vitae.path != null" class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.curriculum_vitae.path)"/>
                                                     <img class="cv-button-icon" alt="" src="@/assets/svg/upload.svg" @click="uploadFile(data?.curriculum_vitae.type_attachment)"/>
-                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.curriculum_vitae)"/>
+                                                    <img v-if="data?.curriculum_vitae.path != null" class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.curriculum_vitae)"/>
                                                 </div>
                                             </div>
                                         </v-col>
@@ -42,9 +42,9 @@
                                                     <b class="text-cv mt-2">Pas Foto 4x6</b>
                                                 </div>
                                                 <div class="cv-button-wrapper">
-                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.photo.path)"/>
+                                                    <img v-if="data?.photo.path != null" class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.photo.path)"/>
                                                     <img class="cv-button-icon" alt="" src="@/assets/svg/upload.svg" @click="uploadFile(data?.photo.type_attachment)"/>
-                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.photo)"/>
+                                                    <img v-if="data?.photo.path != null" class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.photo)"/>
                                                 </div>
                                             </div>
                                         </v-col>
@@ -57,9 +57,9 @@
                                                     <b class="text-cv mt-2">KTP</b>
                                                 </div>
                                                 <div class="cv-button-wrapper">
-                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.ktp.path)"/>
+                                                    <img v-if="data?.ktp.path != null" class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.ktp.path)"/>
                                                     <img class="cv-button-icon" alt="" src="@/assets/svg/upload.svg" @click="uploadFile(data?.ktp.type_attachment)"/>
-                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.ktp)"/>
+                                                    <img v-if="data?.ktp.path != null" class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.ktp)"/>
                                                 </div>
                                             </div>
                                         </v-col>
@@ -72,9 +72,9 @@
                                                     <b class="text-cv mt-2">Kartu Keluarga</b>
                                                 </div>
                                                 <div class="cv-button-wrapper">
-                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.kk.path)"/>
+                                                    <img v-if="data?.kk.path != null" class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.kk.path)"/>
                                                     <img class="cv-button-icon" alt="" src="@/assets/svg/upload.svg" @click="uploadFile(data?.kk.type_attachment)"/>
-                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.kk)"/>
+                                                    <img v-if="data?.kk.path != null" class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.kk)"/>
                                                 </div>
                                             </div>
                                         </v-col>
@@ -87,9 +87,9 @@
                                                     <b class="text-cv mt-2">NPWP</b>
                                                 </div>
                                                 <div class="cv-button-wrapper">
-                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.npwp.path)"/>
+                                                    <img v-if="data?.npwp.path != null" class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.npwp.path)"/>
                                                     <img class="cv-button-icon" alt="" src="@/assets/svg/upload.svg" @click="uploadFile(data?.npwp.type_attachment)"/>
-                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.npwp)"/>
+                                                    <img v-if="data?.npwp.path != null" class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.npwp)"/>
                                                 </div>
                                             </div>
                                         </v-col>
@@ -102,9 +102,9 @@
                                                     <b class="text-cv mt-2">BPJSKES & TK</b>
                                                 </div>
                                                 <div class="cv-button-wrapper">
-                                                    <img class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.bpjs.path)"/>
+                                                    <img v-if="data?.bpjs.path != null" class="cv-button-icon mr-2" alt="" src="@/assets/svg/eyecirclefill.svg" @click="openFile(data?.bpjs.path)"/>
                                                     <img class="cv-button-icon" alt="" src="@/assets/svg/upload.svg" @click="uploadFile(data?.bpjs.type_attachment)"/>
-                                                    <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.bpjs)"/>
+                                                    <img v-if="data?.bpjs.path != null" class="cv-button-icon ml-2" alt="" src="@/assets/svg/download-white.svg" @click="downloadAttachment(data?.bpjs)"/>
                                                 </div>
                                             </div>
                                         </v-col>
