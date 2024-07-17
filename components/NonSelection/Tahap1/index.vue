@@ -66,6 +66,7 @@
             </div>
         </div>
         <Dialog-PretestNonSelection :show="createDialog" :closeDialog="closeDialog" :uploadDocument="uploadDocument" :continueStepWithPretest="continueStepWithPretest" :jobPostId="jobPostId"/>
+        <AlertNonSelection :show="alertDialog" :onApprove="alertOnApprove" :dataValidation="dataValidation" />
     </div>
 </template>
 
@@ -84,7 +85,9 @@ export default {
         dataCandidate: null,
         file: null,
         jobPostId: null,
-        createDialog: false
+        dataValidation: [],
+        createDialog: false,
+        alertDialog: false
     } },
     watch: {
         // tahapanNonSeleksiGetter(to, from){
@@ -125,9 +128,8 @@ export default {
             body.append('file_non_selection', this.file);
             await this.postUploadTemplate(body).then((result)=>{
                 if(result){
-                    this.setTahapanNonSeleksi({ tahap: 'Tahap 2' });
-                    this.$notifier.showMessage({ content: 'Berhasil ke tahap 2.', status: 'success' });
-                    return this.next('Tahap 2');
+                    this.dataValidation = result.data.validate_data == null ? [] : result.data.validate_data;
+                    this.alertDialog = true;
                 }
             });
 
@@ -158,6 +160,14 @@ export default {
         },
         closeDialog(){
             this.createDialog = false;
+        },
+        closeAlertNonSelection() {
+            this.alertDialog = false;
+        },
+        alertOnApprove(){
+            this.setTahapanNonSeleksi({ tahap: 'Tahap 2' });
+            this.$notifier.showMessage({ content: 'Berhasil ke tahap 2.', status: 'success' });
+            return this.next('Tahap 2');
         }
     },
 }
