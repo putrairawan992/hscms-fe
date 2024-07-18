@@ -111,7 +111,6 @@ export default {
             let pretest_modul_detail_id = this.tahapanGetter.detail?.module?.pretest_modul_detail_id;
 
             await this.getDetailAnswerAPI(job_seeker_id, job_post_id, pretest_modul_detail_id).then((result)=>{
-                console.log('result', result);
                 if(result){ this.setDetailAnswer(result); }
             })
         },

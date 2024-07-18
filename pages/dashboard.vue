@@ -200,7 +200,6 @@
           await this.getDashboard().then((result)=>{
               if(result){
                 this.data = result;
-                console.log('result', result);
               }
           });
       },

@@ -246,7 +246,6 @@ export default {
             if(result){
               this.data = result;
               await this.buildArrayCalendar(result?.schedule);
-              console.log('calendar', this.calendar);
             }
         });
     },

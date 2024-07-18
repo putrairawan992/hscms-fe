@@ -92,7 +92,6 @@ export default {
       async getData(){
           await this.getListEmployeeNS('tahap 3').then((result)=>{if(result){
             this.complete = result;
-            console.log('result', result);
           }})
       },
       async continueStep(){

@@ -231,7 +231,6 @@ export default {
                 this.working = result?.working;
                 this.residential_address = result?.residential_address;
                 this.date_birth = result?.date_birth ? new Date(result?.date_birth).toISOString().substr(0, 10) : "";
-                console.log('result', result);
             }})
         },
         async updateProfile(){
