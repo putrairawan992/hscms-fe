@@ -120,7 +120,7 @@
                                                             <div>
                                                                 <div class="remun-table-title">Tipe Karyawan</div>
                                                                 <div class="remun-bordered-red left">
-                                                                    <div class="remun-table-text" style="text-transform: capitalize;">{{ value.employee_type }}</div>
+                                                                    <div class="remun-table-text" style="text-transform: capitalize;">{{ value.employee_type ? value.employee_type : 'none'  }}</div>
                                                                 </div>
                                                             </div>
                                                             <div>

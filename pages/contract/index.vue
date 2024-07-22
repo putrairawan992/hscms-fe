@@ -86,7 +86,7 @@
                                                                 >
                                                                     <template v-slot:label>
                                                                         <div class="text-list-todo" style="max-width: 250px !important;">{{ getFileName(itemChild.file) }}</div>
-                                                                        <div class="orange-btn ml-8" style="height: 22px !important;">
+                                                                        <div v-if="item.files.length > (key1 + 1) && item.files[key1 + 1]['status'] != 'full signed'" class="orange-btn ml-8" style="height: 22px !important;">
                                                                             <div class="" @click="selectFile(item.batch_remuneration_id, itemChild.id)">
                                                                                 <b class="button mx-4" style="align-items: center; display: flex;">
                                                                                     Update file <img class="cv-button-icon ml-2" alt="" src="@/assets/svg/upload.svg"/>

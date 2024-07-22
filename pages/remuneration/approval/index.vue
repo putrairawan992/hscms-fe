@@ -30,8 +30,15 @@
                                         <b class="">{{ value.job_provider_name }}</b>
                                     </div>
                                     <div class="">{{ value.date }} WIB</div>
-                                    <div class="edit-parent">
+
+                                    <div v-if="value.status == 'revised'" class="edit-parent">
+                                        <img @click="editDraft(value.batch_remuneration_id, value.date)" alt="edit" class="action-icon" height="18" src="@/assets/svg/edit-red.svg"/>
                                         <img @click="getDetail(value.batch_remuneration_id)" class="action-icon ma-auto" height="18" src="@/assets/svg/eye-circle-fill.svg" />
+                                        <img class="action-icon ma-auto" height="18" src="@/assets/svg/pentungan.svg" />
+                                    </div>
+                                    <div v-else class="edit-parent">
+                                        <img @click="getDetail(value.batch_remuneration_id)" class="action-icon ma-auto" height="18" src="@/assets/svg/eye-circle-fill.svg" />
+
                                         <img @click="openNotesDialog(value)" class="action-icon ma-auto ml-6" height="18" src="@/assets/svg/checklist-green.svg" />
                                     </div>
                                 </div>
@@ -72,6 +79,8 @@ export default {
             await this.getRemunerationByStatus('approved').then((result)=>{
                 this.data = result;
             })
+
+            console.log('this.data', this.data);
         },
         async getDetail(id_remuneration){
             await localStorage.setItem('id_remuneration_approval', id_remuneration);
@@ -81,6 +90,29 @@ export default {
             await localStorage.setItem('id_job_post', id_job);
             return this.$router.push('/job/post');
         },
+        isSameMonthAndYear(dateString) {
+            const datePattern = /(\d{2}) (\w{3}) (\d{4})/;
+            const match = dateString.match(datePattern);
+
+            if (match) {
+                const [, day, month, year] = match;
+                const date = new Date(`${day} ${month} ${year}`);
+                const now = new Date();
+
+                console.log(date.getMonth() === now.getMonth(), date.getFullYear() === now.getFullYear(), '=', date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear());
+                return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+            }
+            return false;
+        },
+        async editDraft(id_remuneration, date){
+            if(this.isSameMonthAndYear(date)){
+                await localStorage.setItem('id_remuneration', id_remuneration);
+                return this.$router.push('/remuneration');
+            }else{
+                this.$notifier.showMessage({ content: 'Revisi hanya bisa dilakukan di bulan yang sama.', status: 'warning' });
+            }
+        },
+
         openNotesDialog(data){
             this.notes = data.reason;
             this.notesDialog = true;
