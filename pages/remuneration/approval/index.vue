@@ -32,13 +32,12 @@
                                     <div class="">{{ value.date }} WIB</div>
 
                                     <div v-if="value.status == 'revised'" class="edit-parent">
-                                        <img @click="editDraft(value.batch_remuneration_id, value.date)" alt="edit" class="action-icon" height="18" src="@/assets/svg/edit-red.svg"/>
-                                        <img @click="getDetail(value.batch_remuneration_id)" class="action-icon ma-auto" height="18" src="@/assets/svg/eye-circle-fill.svg" />
-                                        <img class="action-icon ma-auto" height="18" src="@/assets/svg/pentungan.svg" />
+                                        <img @click="editDraft(value.batch_remuneration_id, value.date)" alt="edit" class="action-icon ml-0" height="18" src="@/assets/svg/edit-red.svg"/>
+                                        <img @click="getDetail(value.batch_remuneration_id)" class="action-icon ma-auto ml-6" height="18" src="@/assets/svg/eye-circle-fill.svg" />
+                                        <img class="action-icon ma-auto ml-6" height="18" src="@/assets/svg/pentungan.svg" />
                                     </div>
                                     <div v-else class="edit-parent">
-                                        <img @click="getDetail(value.batch_remuneration_id)" class="action-icon ma-auto" height="18" src="@/assets/svg/eye-circle-fill.svg" />
-
+                                        <img @click="getDetail(value.batch_remuneration_id)" class="action-icon ma-auto ml-12" height="18" src="@/assets/svg/eye-circle-fill.svg" />
                                         <img @click="openNotesDialog(value)" class="action-icon ma-auto ml-6" height="18" src="@/assets/svg/checklist-green.svg" />
                                     </div>
                                 </div>
