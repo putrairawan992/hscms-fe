@@ -78,6 +78,17 @@ export const jobSeekerAPI = () => {
         return await postRequest(`jobseeker/contract` + param, body);
     }
 
+    // Payslip
+    const getPayslip = async (year, month, limit, paginate) => {
+        let param = '?';
+        if(year != null){ param = param + 'year='+year+'&' };
+        if(month != null){ param = param + 'month='+month+'&' };
+        if(limit != null){ param = param + 'limit='+limit+'&' };
+        if(paginate != null){ param = param + 'paginate='+paginate };
+        
+        return await getRequest('jobseeker/payslip' + param);
+    }
+
     return {
         getJobs,
         postApplyJob,
@@ -100,6 +111,8 @@ export const jobSeekerAPI = () => {
 
         getContract,
         downloadFileContract,
-        postUploadContract
+        postUploadContract,
+
+        getPayslip,
     }
 }
