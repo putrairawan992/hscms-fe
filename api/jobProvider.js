@@ -332,6 +332,22 @@ export const jobProviderAPI = () => {
         return await postRequest('jobprovider/nonselection/finishstep', body);
     }
 
+    // Payslip
+    const getProviderPayslip = async (employee_id, year, month, limit, paginate) => {
+        let param = '?';
+        if(year != null){ param = param + 'year='+year+'&' };
+        if(month != null){ param = param + 'month='+month+'&' };
+        if(month != null){ param = param + 'month='+month+'&' };
+        if(limit != null){ param = param + 'limit='+limit+'&' };
+        if(paginate != null){ param = param + 'paginate='+paginate+'&' };
+        if(employee_id != null){ param = param + 'employee_id='+employee_id };
+        
+        return await getRequest('jobprovider/payslip' + param);
+    }
+    const getMasterEmployee = async () => {
+        return await getRequest('jobprovider/master/employee');
+    }
+
 
     return {
         getDashboard,
@@ -420,6 +436,9 @@ export const jobProviderAPI = () => {
         postReminder,
         deleteListEmployeeNS,
         postContinueNS,
-        postFinishNS
+        postFinishNS,
+
+        getProviderPayslip,
+        getMasterEmployee
     }
 }

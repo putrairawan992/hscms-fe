@@ -31,7 +31,9 @@ export const API = () => {
 
         getContract,
         downloadFileContract,
-        postUploadContract
+        postUploadContract,
+
+        getPayslip,
     } = jobSeekerAPI();
 
     const {
@@ -121,7 +123,10 @@ export const API = () => {
         postReminder,
         deleteListEmployeeNS,
         postContinueNS,
-        postFinishNS
+        postFinishNS,
+
+        getProviderPayslip,
+        getMasterEmployee
     } = jobProviderAPI();
     
 
@@ -160,6 +165,8 @@ export const API = () => {
             getContract,
             downloadFileContract,
             postUploadContract,
+            
+            getPayslip,
 
 
 
@@ -246,6 +253,9 @@ export const API = () => {
             postReminder,
             deleteListEmployeeNS,
             postContinueNS,
-            postFinishNS
+            postFinishNS,
+
+            getProviderPayslip,
+            getMasterEmployee
     }
 }
