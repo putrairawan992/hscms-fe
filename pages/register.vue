@@ -315,6 +315,14 @@
                     </v-row>
                     <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Bootcamp <i class="opsional">(*opsional)</i> :</b>
+                        </v-col>
+                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Nama Bootcamp" v-model="bootcamp" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
                             <b>Ekspektasi Gaji :</b>
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
@@ -685,6 +693,7 @@ export default {
         masterJobSpecialist: [],
 
         // body API
+        bootcamp: null,
         fullname: null,
         place_birth: null,
         date_birth: null,
@@ -765,52 +774,6 @@ export default {
             });
         },
         async submit(){
-            // console.log({
-            //     fullname: this.fullname,
-            //     place_birth: this.place_birth,
-            //     date_birth: this.date_birth,
-            //     email: this.email,
-            //     linkedin: this.linkedin,
-            //     handphone: this.handphone,
-            //     residential_address: this.residential_address,
-            //     address_on_identity_card: this.address_on_identity_card,
-            //     marital_status: this.marital_status,
-            //     identity_number: this.identity_number,
-            //     npwp_number: this.npwp_number,
-            //     bpjskes: this.bpjskes,
-            //     bpjstik: this.bpjstik,
-            //     bank_account_number: this.bank_account_number,
-            //     work_position: this.work_position,
-            //     salary_exspectation: this.salary_exspectation,
-            //     password: this.password,
-            //     confirm_password: this.confirm_password,
-            //     // ======= experience =========
-            //     department: this.department,
-            //     company_name: this.company_name,
-            //     employment_contract: this.employment_contract,
-            //     start_working: this.start_working,
-            //     end_working: this.end_working,
-            //     location: this.location,
-            //     // ======= education ==========
-            //     institute_name: this.institute_name,
-            //     degree: this.degree,
-            //     education_program: this.education_program,
-            //     start_study: this.start_study,
-            //     end_study: this.end_study,
-            //     ipk: this.ipk,
-            //     // ======= certificate =========
-            //     certificate_name: this.certificate_name,
-            //     organizer: this.organizer,
-            //     scores: this.scores,
-            //     certificate_year: this.certificate_year,
-            //     // ======= document =========
-            //     curriculum_vitae: this.curriculum_vitae,
-            //     photo: this.photo,
-            //     ktp: this.ktp,  // optional
-            //     kk: this.kk,   // optional
-            //     npwp: this.npwp, // optional
-            //     bpjs: this.bpjs, // optional
-            // });
             const body = new FormData();
             body.append('fullname', this.fullname);
             body.append('place_birth', this.place_birth);
@@ -830,6 +793,7 @@ export default {
             body.append('emergency_status', this.emergency_status);
             body.append('emergency_number', this.emergency_number);
             body.append('emergency_name', this.emergency_name);
+            body.append('bootcamp', this.bootcamp);
 
             if (this.npwp_number != null) {
                 body.append('npwp_number', this.npwp_number);
@@ -881,6 +845,13 @@ export default {
                 }
             }
 
+            body.append('curriculum_vitae', this.curriculum_vitae);
+            body.append('photo', this.photo);
+            body.append('ktp', this.ktp);
+            body.append('kk', this.kk);
+            body.append('npwp', this.npwp);
+            body.append('bpjs', this.bpjs);
+
             await this.postRegistration(body, this.id_registration).then( async (result) => {
                 if(result){
                     this.preview = true;
@@ -914,6 +885,7 @@ export default {
         refreshForm(data){
             this.email = data.email;
             this.fullname = data.name;
+            this.bootcamp = data.bootcamp;
             this.place_birth = data.data_job_seeker[0].place_birth;
             this.date_birth = data.data_job_seeker ? new Date(data.data_job_seeker[0].date_birth).toISOString().substr(0, 10) : "";;
             this.linkedin = data.data_job_seeker[0].linkedin;
