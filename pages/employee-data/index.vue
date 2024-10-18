@@ -13,27 +13,27 @@
                             <v-row>
                                 <v-col class="employee-data">
                                     <b>
-                                        Total Karyawan: <span style="color: #AE445A;">{{ listEmployee.length }}</span> Orang
+                                        Total Karyawan: <span style="color: #AE445A;">{{ countEmployee }}</span> Orang
                                     </b>
                                 </v-col>
                                 <v-col class="employee-data">
                                     <div>
-                                        None: <span style="color: #AE445A;">0</span> Orang
+                                        None: <span style="color: #AE445A;">{{ countNoneStatus }}</span> Orang
                                     </div>
                                 </v-col>
                                 <v-col class="employee-data">
                                     <div>
-                                        Sent: <span style="color: #AE445A;">0</span> Orang
+                                        Sent: <span style="color: #AE445A;">{{ countSentStatus }}</span> Orang
                                     </div>
                                 </v-col>
                                 <v-col class="employee-data">
                                     <div>
-                                        Employee Signed: <span style="color: #AE445A;">0</span> Orang
+                                        Employee Signed: <span style="color: #AE445A;">{{ countEmployeeSignedStatus }}</span> Orang
                                     </div>
                                 </v-col>
                                 <v-col class="employee-data">
                                     <div>
-                                        Full Signed: <span style="color: #AE445A;">0</span> Orang
+                                        Full Signed: <span style="color: #AE445A;">{{ countFullSignedStatus }}</span> Orang
                                     </div>
                                 </v-col>
                             </v-row>
@@ -203,6 +203,12 @@ export default {
         page: 1,
         paginate: 1,
         listEmployee: [],
+
+        countEmployee: 0,
+        countNoneStatus: 0,
+        countSentStatus: 0,
+        countEmployeeSignedStatus: 0,
+        countFullSignedStatus: 0,
     }),
     watch: {
         file (to, from) {
@@ -230,6 +236,12 @@ export default {
             await this.getEmployee(this.page, this.file, this.file_status, this.employee_status).then((result)=>{if(result){
                 this.paginate = result.paginate.length || 1;
                 this.listEmployee = result.employee_list;
+
+                this.countEmployee = result.count_employee;
+                this.countNoneStatus = result.count_none_status;
+                this.countSentStatus = result.count_sent_status;
+                this.countEmployeeSignedStatus = result.count_employee_signed_status;
+                this.countFullSignedStatus = result.count_full_signed_status;
             }})
         },
         async clickDetail(id){
