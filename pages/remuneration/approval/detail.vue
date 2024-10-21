@@ -129,19 +129,19 @@
                                                             <div>
                                                                 <div class="remun-table-title">Take Home Pay</div>
                                                                 <div class="remun-bordered-red">
-                                                                    <div class="remun-table-text">7,000,00</div>
+                                                                    <div class="remun-table-text">Rp. {{ value?.salary ? useConvertToMoneyView(value?.salary.toString()) : '0' }}</div>
                                                                 </div>
                                                             </div>
                                                             <div>
                                                                 <div class="remun-table-title">Tanggal Masuk</div>
                                                                 <div class="remun-bordered-red">
-                                                                    <div class="remun-table-text">4 Feb 2022</div>
+                                                                    <div class="remun-table-text">{{ $moment(value?.start_date).format('DD MMM YYYY') }}</div>
                                                                 </div>
                                                             </div>
                                                             <div>
                                                                 <div class="remun-table-title">Tanggal Akhir</div>
                                                                 <div class="remun-bordered-red">
-                                                                    <div class="remun-table-text">5 Feb 2022</div>
+                                                                    <div class="remun-table-text">{{ $moment(value?.end_date).format('DD MMM YYYY') }}</div>
                                                                 </div>
                                                             </div>
                                                             <div>
