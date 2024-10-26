@@ -3,6 +3,16 @@
         <div style="position: relative; display: flex; flex-direction: column;">
             <v-card class="pa-12" style="border-radius: 20px !important;"> 
                 <v-row class="my-0">
+                    <v-col class="pr-0" cols="3" style="max-width: 115px;">
+                        <v-checkbox 
+                                v-model="selectAllCheckbox" hide-details
+                                class="input-checkbox mt-1" color="#ae445a"
+                            >
+                                <template v-slot:label>
+                                    <div class="checkbox-remunerasi-label">Pilih Semua</div>
+                                </template>
+                            </v-checkbox>
+                    </v-col>
                     <v-col class="">
                         <v-text-field
                             class="search-text-field-small"
@@ -13,15 +23,15 @@
                         >
                         </v-text-field>
                     </v-col>
-                    <v-col style="display: flex; justify-content: end; max-width: -webkit-fit-content;">
-                        <div class="orange-btn">
+                    <v-col style="display: flex; justify-content: end; max-width: -webkit-fit-content; max-width: 97px;">
+                        <!-- <div class="orange-btn">
                             <div class="" @click="selectAll">
                                 <b class="button mx-3">Select All</b>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="orange-btn ml-4">
                             <div class="" @click="submit">
-                                <b class="button mx-3">+ Add to List</b>
+                                <b class="button mx-3">Done</b>
                             </div>
                         </div>
                     </v-col>
@@ -73,6 +83,7 @@
             data: null,
             employee_name: null,
             id_remuneration: null,
+            selectAllCheckbox: false,
 
             existing: [],
             new_hiring: [],
@@ -105,6 +116,14 @@
         show (to, from) {
             if (this.show) {
                 this.getData();
+            }
+        },
+        selectAllCheckbox (to, from) {
+            if (to) {
+                this.selectAll();
+            }else{
+                this.existing = [];
+                this.new_hiring = [];
             }
         },
     },
@@ -140,8 +159,12 @@
         },1000),
         
         selectAll() {
-            this.existing = this.data.existing.map(employee => employee.employee_id);
-            this.new_hiring = this.data.new_hiring.map(employee => employee.employee_id);
+            if (this.data.existing != null) {
+                this.existing = this.data.existing.map(employee => employee.employee_id);
+            }
+            if (this.data.new_hiring != null) {
+                this.new_hiring = this.data.new_hiring.map(employee => employee.employee_id);
+            }
         },
 
         parseDate (date) {

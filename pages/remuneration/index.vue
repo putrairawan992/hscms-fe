@@ -221,7 +221,7 @@
                                     </b>
                                 </div>
                             </div>
-                            <div :class="data?.have_simulation ? 'orange-btn' : 'grey-btn'" @click="data?.btn_attacment ? showAlertApproval = true : false">
+                            <div :class="data?.have_simulation ? 'orange-btn' : 'grey-btn'" @click="data?.have_simulation ? showAlertApproval = true : false">
                                 <div class="">
                                     <b class="button mx-3">Request Approval</b>
                                 </div>
@@ -281,6 +281,10 @@ export default {
         async getData(employee_name) {
             await this.getRemuneration(this.id_remuneration, employee_name).then((result)=>{
                 this.data = result;
+                for (let index = 0; index < result?.employee_list.length; index++) {
+                    const element = result.employee_list[index];
+                    result.employee_list[index]['request_type'] = element.request_type ? element.request_type : 'Salary'                    
+                }                
                 this.btnSubmit = result?.employee_list?.length > 0 ? true : false;
             });
         },
@@ -325,9 +329,12 @@ export default {
         async requestApproval() {
             await this.postRequestApproval(this.id_remuneration).then((result)=>{
                 this.showAlertApproval = false;
-                this.$alert.showAlert({ content: 'Remunerasi telah diajukan.', show: true });
-                this.data = null;
-                localStorage.removeItem('id_remuneration');
+                if (result) {
+                    this.data = null;
+                    localStorage.removeItem('id_remuneration');
+                    this.$alert.showAlert({ content: 'Remunerasi telah diajukan.', show: true });
+                }
+                
             });
         },
         async openDialogEmployee() {

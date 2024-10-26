@@ -9,7 +9,10 @@
                     <div class="job-post-nav-text" @click="$router.push('/remuneration/draft')">Draft</div>
                 </v-col>
                 <v-col cols="3" class="job-post-nav-container active">
-                    <div class="job-post-nav-text" @click="$router.push('/remuneration/rejected')">Rejected</div>
+                    <div class="job-post-nav-text" @click="$router.push('/remuneration/rejected')">
+                        Rejected
+                        <img class="ml-2" alt="rejected-remuneration" src="@/assets/svg/rejected-remuneration.svg" style="margin-bottom: -3px;">
+                    </div>
                 </v-col>
                 <v-col cols="3" class="job-post-nav-container">
                     <div class="job-post-nav-text" @click="$router.push('/remuneration/approval')">Approval</div>
