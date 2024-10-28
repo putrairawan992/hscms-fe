@@ -171,9 +171,14 @@
                                 </div>
                                 <v-row>
                                     <v-col cols="12" class="pt-8">
-                                        <div :class="btnCreateSimulation ? 'orange-btn' : 'grey-btn'" @click="btnCreateSimulation ? createSimulation() : false" style="width: -webkit-fill-available; justify-content: center;">
+                                        <div v-if="btnSubmit == true" :class="btnCreateSimulation ? 'orange-btn' : 'grey-btn'" @click="btnCreateSimulation ? createSimulation() : false" style="width: -webkit-fill-available; justify-content: center;">
                                             <div class="">
                                                 <b class="button mx-3">{{ btnCreateSimulation ? 'Create Simulation' : `Create Simulation again in ${timeLeft} second` }}</b>
+                                            </div>
+                                        </div>
+                                        <div v-else class="grey-btn" style="width: -webkit-fill-available; justify-content: center;">
+                                            <div class="">
+                                                <b class="button mx-3">Create Simulation</b>
                                             </div>
                                         </div>
                                     </v-col>
@@ -216,7 +221,7 @@
                                     </b>
                                 </div>
                             </div>
-                            <div :class="data?.btn_attacment ? 'orange-btn' : 'grey-btn'" @click="data?.btn_attacment ? showAlertApproval = true : false">
+                            <div :class="data?.have_simulation ? 'orange-btn' : 'grey-btn'" @click="data?.have_simulation ? showAlertApproval = true : false">
                                 <div class="">
                                     <b class="button mx-3">Request Approval</b>
                                 </div>
@@ -259,6 +264,8 @@ export default {
         dialogDetail: false,
         showAlertApproval: false,
         btnCreateSimulation: true,
+        btnSubmit: false,
+        btnRequest: false,
     }),
     watch: {},
     setup() {
@@ -274,6 +281,11 @@ export default {
         async getData(employee_name) {
             await this.getRemuneration(this.id_remuneration, employee_name).then((result)=>{
                 this.data = result;
+                for (let index = 0; index < result?.employee_list.length; index++) {
+                    const element = result.employee_list[index];
+                    result.employee_list[index]['request_type'] = element.request_type ? element.request_type : 'Salary'                    
+                }                
+                this.btnSubmit = result?.employee_list?.length > 0 ? true : false;
             });
         },
         async deleteList(employee_id) {
@@ -317,9 +329,12 @@ export default {
         async requestApproval() {
             await this.postRequestApproval(this.id_remuneration).then((result)=>{
                 this.showAlertApproval = false;
-                this.$alert.showAlert({ content: 'Remunerasi telah diajukan.', show: true });
-                this.data = null;
-                localStorage.removeItem('id_remuneration');
+                if (result) {
+                    this.data = null;
+                    localStorage.removeItem('id_remuneration');
+                    this.$alert.showAlert({ content: 'Remunerasi telah diajukan.', show: true });
+                }
+                
             });
         },
         async openDialogEmployee() {

@@ -192,6 +192,14 @@
                     </v-row> -->
                     <v-row align="center">
                         <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
+                            <b>Bootcamp <i class="opsional">(*opsional)</i> :</b>
+                        </v-col>
+                        <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+                            <input class="register-text-input" placeholder="Masukkan Nama Bootcamp" v-model="bootcamp" :readonly="preview" />
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="12" xs="3" md="3" lg="3" xl="3" xxl="3" class="label d-flex">
                             <b>Ekspektasi Gaji <i class="opsional">(*opsional)</i> :</b>
                         </v-col>
                         <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
@@ -499,6 +507,7 @@ export default {
         listStatusPernikahan: ['Sudah Menikah', 'Belum Menikah'],
 
         // body API
+        bootcamp: null,
         fullname: null,
         place_birth: null,
         date_birth: null,
@@ -584,6 +593,7 @@ export default {
             this.bank_account_number = data.data_job_seeker[0].bank_account_number;
             this.work_position = data.data_job_seeker[0].work_position;
             this.salary_exspectation = data.data_job_seeker[0].salary_exspectation;
+            this.bootcamp = data.data_job_seeker[0].bootcamp;
             
             this.curriculum_vitae = data.data_document?.[0]?.curriculum_vitae;
             this.photo = data.data_document?.[0]?.photo;
