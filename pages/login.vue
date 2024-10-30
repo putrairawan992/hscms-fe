@@ -12,7 +12,14 @@
           <div class="componentinput-parent">
             <div class="componentinput">
               <input type="email" v-model="email" class="masukkan-alamat-e-mail-wrapper" placeholder="Masukkan Alamat E-mail"/>
-              <input type="password" v-model="password" class="masukkan-alamat-e-mail-wrapper" placeholder="Masukkan Password"/>
+              <input :type="showPassword?'text':'password'" v-model="password" class="masukkan-alamat-e-mail-wrapper" placeholder="Masukkan Password"/>
+              <span @click="togglePassword" style="position: absolute; top: 28%; right: 20px; transform: translateY(-50%); cursor: pointer; color: #B6B6B6;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+                    <path d="M1 12c2-4 6-8 11-8s9 4 11 8-6 8-11 8-9-4-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+
+              </span>
             </div>
             <div class="componentbutton" :style="email != '' && password != '' && 'backgroundColor: #f39f5a'" @click="login">
               <div class="login">LOGIN</div>
@@ -69,6 +76,7 @@
         password: "",
         image: vector,
         banner: banner1,
+        showPassword: false
       };
     },
     methods: {
@@ -76,7 +84,7 @@
         await this.$auth.loginWith('local', {
             data: {
                 email: this.email,
-                password: this.password
+                password: this.password,
             },
         }).then( async (result) => {
             this.$router.push('/');
@@ -85,6 +93,9 @@
             this.$notifier.showMessage({ content: err.response.data.message, status: 'warning' });
         });
     },
+    togglePassword(){
+      this.showPassword = !this.showPassword;
+    }
     }
   }
 </script>
