@@ -127,7 +127,7 @@
                             <v-col v-for="item in listEmployee" cols="12" class="pb-0">
                                 <div class="history-1">
                                     <div class="frame-parent-draft">
-                                        <div class="foto-perusaahaan-parent">
+                                        <div class="foto-perusaahaan-parent icon-container" @click="clickDetail(item.employee_id)">
                                             <img
                                                 v-if="item.photo"
                                                 class="foto-perusaahaan-icon" alt="photo"
