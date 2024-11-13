@@ -317,10 +317,14 @@
                     </a>
                     <span class="span">.</span>
                 </div>
-                <i class="tersisa-2000-karakter">Tersisa 2000 karakter</i>
+
+                <i class="tersisa-2000-karakter">Tersisa {{textLeft}} karakter</i>
+                
             </v-col>
             <v-col cols="12" class="">
-                <TextEditor v-model="description" class="rich-editor" placeholder="Enter a job responsibilities, requirements, and rewards"/>
+                <!-- <TextEditor v-model="description" class="rich-editor" placeholder="Enter a job responsibilities, requirements, and rewards"/> -->
+                <TextEditor v-model="description" class="rich-editor" :textLeft="textLeft" @update:textLeft="textLeft = $event" placeholder="Enter a job responsibilities, requirements, and rewards"/>
+
             </v-col>
         </v-row>
         <v-row>
@@ -382,6 +386,9 @@ export default {
         start_from_salary: null,
         end_from_salary: null,
         description: null,
+
+        textLeft: 2000
+
     }),
     watch: {
         nominal(newValue, oldValue) {
