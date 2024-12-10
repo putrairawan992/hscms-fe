@@ -102,11 +102,19 @@
                                         <div class="remun-detail-label mb-1">
                                             Sesudah
                                         </div>
-                                        <v-select
+                                        <!-- <v-select
                                             class="remun-detail-text-field" item-text="job_specialist_name" item-value="id"
                                             solo :items="masterData.job_specialist" v-model="dataNew.job_specialist_id"
                                             placeholder="Pilih" :readonly="readonly"
-                                        ></v-select>
+                                        ></v-select> -->
+                                        <multiselect
+                                            v-if="masterData.job_specialist"
+                                            v-model="dataNew.job_specialist_id"
+                                            :options="masterData.job_specialist"
+                                            placeholder="Pilih" :allow-empty="false"
+                                            class="remuneration-select2 small" label="job_specialist_name" track-by="id"
+                                        >
+                                        </multiselect>
                                     </v-col>
                                 </v-row>
                             </v-col>
@@ -129,11 +137,19 @@
                                         <div class="remun-detail-label mb-1">
                                             Sesudah
                                         </div>
-                                        <v-select
+                                        <!-- <v-select
                                             class="remun-detail-text-field" item-text="name" item-value="value"
                                             solo :items="masterData.master_employee_type" v-model="dataNew.employee_type"
                                             placeholder="Pilih" :readonly="readonly"
-                                        ></v-select>
+                                        ></v-select> -->
+                                        <multiselect
+                                            v-if="masterData.master_employee_type"
+                                            v-model="dataNew.employee_type"
+                                            :options="masterData.master_employee_type"
+                                            placeholder="Pilih" :allow-empty="false"
+                                            class="remuneration-select2 small" label="name" value="value"
+                                        >
+                                        </multiselect>
                                     </v-col>
                                 </v-row>
                             </v-col>
@@ -232,11 +248,19 @@
                                         <div class="remun-detail-label mb-1">
                                             Sesudah
                                         </div>
-                                        <v-select
+                                        <!-- <v-select
                                             class="remun-detail-text-field" item-text="job_level_name" item-value="id"
                                             solo :items="masterData.job_level" v-model="dataNew.job_level_id"
                                             placeholder="Pilih" :readonly="readonly"
-                                        ></v-select>
+                                        ></v-select> -->
+                                        <multiselect
+                                            v-if="masterData.job_level"
+                                            v-model="dataNew.job_level_id"
+                                            :options="masterData.job_level"
+                                            placeholder="Pilih" :allow-empty="false"
+                                            class="remuneration-select2 small" label="job_level_name"
+                                        >
+                                        </multiselect>
                                     </v-col>
                                 </v-row>
                             </v-col>
@@ -305,11 +329,20 @@
                                         <div class="remun-detail-label mb-1">
                                             Keperluan Pembayaran
                                         </div>
-                                        <v-select
+                                        <!-- <v-select
                                             class="remun-payment-select pb-2" item-text="name" item-value="value"
                                             solo :items="filteredAdditionItems" :value="additionData[key]?.title" :readonly="readonly"
                                             placeholder="Pilih Tipe Penambahan Biaya" @change="additionDataChange($event, key, 'title')"
-                                        ></v-select>
+                                        ></v-select> -->
+
+                                        <!-- v-model="additionData[key]?.title" -->
+                                        <multiselect
+                                            :options="filteredAdditionItems"
+                                            placeholder="Pilih Tipe Penambahan Biaya" :allow-empty="false"
+                                            class="remuneration-select2 mb-2" label="name" :value="additionData[key]?.selectValue"
+                                            @input="additionDataChange($event, key, 'title')"
+                                        >
+                                        </multiselect>
                                         <input class="remun-detail-text-input" placeholder="Notes (Deskripsi Pembayaran)" :readonly="readonly" :value="additionData[key]?.note" @change="additionDataChange($event, key, 'note')"/>
                                     </v-col>
                                     <v-col cols="12" class="pt-2 pb-0" style="padding-right: 6px !important;">
@@ -361,11 +394,19 @@
                                         <div class="remun-detail-label mb-1">
                                             Keperluan Pembayaran
                                         </div>
-                                        <v-select
+                                        <!-- <v-select
                                             class="remun-payment-select pb-2" item-text="name" item-value="value"
                                             solo :items="filteredDeductionItems" :value="deductionData[key]?.title" :readonly="readonly"
                                             placeholder="Pilih Tipe Pengurangan Biaya" @change="deductionDataChange($event, key, 'title')"
-                                        ></v-select>
+                                        ></v-select> -->
+                                        <!-- v-model="deductionData[key]?.title" -->
+                                        <multiselect
+                                            :options="filteredDeductionItems"
+                                            placeholder="Pilih Tipe Pengurangan Biaya" :allow-empty="false"
+                                            class="remuneration-select2 mb-2" label="name"  :value="deductionData[key]?.selectValue"
+                                            @input="deductionDataChange($event, key, 'title')"
+                                        >
+                                        </multiselect>
                                         <input class="remun-detail-text-input" placeholder="Notes (Deskripsi Pembayaran)" :readonly="readonly" :value="deductionData[key]?.note" @change="deductionDataChange($event, key, 'note')"/>
                                     </v-col>
                                     <v-col cols="12" class="pt-2 pb-0" style="padding-right: 6px !important;">
@@ -418,8 +459,12 @@
 </template>
 <script>
     import { API } from '@/api/index'
+    import Multiselect from 'vue-multiselect'
     import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
     export default {
+    components: { 
+        Multiselect,
+    },
     data () {
         return {
             masterData: [],
@@ -570,23 +615,44 @@
         async getData(){
             if(this.remunerationDetailId){
                 await this.getRemunerationDetail(this.remunerationDetailId).then((result)=>{
-                    if(result){
-                        this.dataNew = result.data_after;
+                    if(result){                        
                         this.masterData = result.master_data;
                         this.dataExisting = result.data_existing;
                         this.nominal1 = result.data_existing.salary;
                         this.nominal2 = result.data_after.salary;
-    
+                        this.dataNew = {
+                            ...result.data_after,
+                            job_specialist_id: {
+                                id: result.data_after?.job_specialist_id,
+                                job_specialist_name: this.getJobSpecialistName(result.data_after?.job_specialist_id)
+                            },
+                            job_level_id: {
+                                value: result.data_after?.job_level_id,
+                                job_level_name: this.getJobLevelName(result.data_after?.job_level_id)
+                            },
+                            employee_type: {
+                                value: result.data_after?.employee_type,
+                                name: this.getEmployeeTypeName(result.data_after?.employee_type)
+                            },
+                        };    
                         if(result.data_existing.addition_data !== null){
                             this.additionData = result.data_existing.addition_data;
                             this.additionData.map((item, index) => {
-                                this.handleInput(index, item.amount, 'addiction')
+                                this.handleInput(index, item.amount, 'addiction');
+                                this.additionData[index].selectValue = {
+                                    name: this.getAdditionalName(this.additionData[index].title),
+                                    value: this.additionData[index].title
+                                }
                             });
                         }
                         if(result.data_existing.deduction_data !== null){
                             this.deductionData = result.data_existing.deduction_data;
                             this.deductionData.map((item, index) => {
                                 this.handleInput(index, item.amount, 'deduction')
+                                this.deductionData[index].selectValue = {
+                                    name: this.getDeductionalName(this.deductionData[index].title),
+                                    value: this.deductionData[index].title
+                                }
                             });
                         }
                     }
@@ -597,6 +663,9 @@
             await this.putDetailRemuneration(
             {
                 ...this.dataNew,
+                job_specialist_id: this.dataNew.job_specialist_id?.id,
+                employee_type: this.dataNew.employee_type?.value,
+                job_level_id: this.dataNew.job_level_id?.id,
                 addition_payment: this.additionData,
                 deduction_payment: this.deductionData
             }, this.remunerationDetailId ).then((result)=>{});
@@ -616,7 +685,8 @@
         additionDataChange(event, key, model){
             switch (model) {
                 case 'title':
-                    this.additionData[key].title = event;
+                    this.additionData[key].title = event.value;
+                    this.additionData[key].selectValue = event;
                     break;
                 case 'note':
                     this.additionData[key].note = event.target.value;
@@ -626,7 +696,8 @@
         deductionDataChange(event, key, model){
             switch (model) {
                 case 'title':
-                    this.deductionData[key].title = event;
+                    this.deductionData[key].title = event.value;
+                    this.deductionData[key].selectValue = event;
                     break;
                 case 'note':
                     this.deductionData[key].note = event.target.value;
@@ -638,6 +709,7 @@
                 title: null,
                 note: null,
                 amount: null,
+                selectValue: null,
             });
         },
         addDeductionData(){
@@ -645,7 +717,33 @@
                 title: null,
                 note: null,
                 amount: null,
+                selectValue: null,
             });
+        },
+        getJobSpecialistName(jobSpecialistId) {
+            const jobSpecialists = this.masterData.job_specialist;
+            const specialist = jobSpecialists.find(item => item.id === jobSpecialistId);
+            return specialist ? specialist.job_specialist_name : null;
+        },
+        getEmployeeTypeName(employeeTypeId) {
+            const employeeTypes = this.masterData.master_employee_type;
+            const type = employeeTypes.find(item => item.value === employeeTypeId);
+            return type ? type.name : null;
+        },
+        getJobLevelName(getJobLevelId) {
+            const jobLevels = this.masterData.job_level;
+            const level = jobLevels.find(item => item.id === getJobLevelId);
+            return level ? level.job_level_name : null;
+        },
+        getAdditionalName(value) {
+            const additionals = this.masterAdditionCategory;
+            const additional = additionals.find(item => item.value === value);
+            return additional ? additional.name : null;
+        },
+        getDeductionalName(value) {
+            const deductions = this.masterDeductionCategory;
+            const deduction = deductions.find(item => item.value === value);
+            return deduction ? deduction.name : null;
         },
         parseDate (date) {
             if (!date) return null
@@ -1223,6 +1321,26 @@
 
 .blokade-parent {
     font-size: 12px;
+}
+
+.remuneration-select2 {
+    border-radius: 10px;
+    border: 1px solid #ae445a;
+    box-sizing: border-box;
+    width: 100%;
+    height: 34px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    font-size: 12px;
+    /* color: #b6b6b6; */
+}.remuneration-select2::placeholder {
+    font-style: italic;
+}
+.multiselect {
+    min-height: 34px !important;
 }
 
 </style>
