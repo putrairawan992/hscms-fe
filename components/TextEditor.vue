@@ -5,7 +5,7 @@
         :config="editorConfig"
         :value="value"
         :textLeft="textLeft"
-        @input="handleInput"
+        @input="$emit('input', arguments[0])"
         :maxLength="10"
       />
     </div>
