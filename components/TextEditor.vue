@@ -5,7 +5,7 @@
         :config="editorConfig"
         :value="value"
         :textLeft="textLeft"
-        @input="$emit('input', arguments[0])"
+        @input="handleInput( arguments[0])"
         :maxLength="10"
       />
     </div>
@@ -65,6 +65,7 @@ export default {
           ? this.maxLength - strippedContent.length
           : 0;
       this.$emit("update:textLeft", contentLength);
+      this.$emit('input', arguments[0]);
     },
     stripHtml(html) {
       const tempDiv = document.createElement("div");
