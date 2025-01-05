@@ -21,6 +21,13 @@
                       class="vuesaxlinearnotification-icon"
                       src="@/assets/svg/vuesaxlinearnotification.svg"
                     />
+                    <div
+                      v-if="countNotification"
+                      class="notification-badge"
+                      :aria-label="`${countNotification} unread notifications`"
+                    >
+                      {{ countNotification }}
+                    </div>
                   </div>
                   <v-menu transition="scale-transition" origin="left" rounded="xl" offset-y max-width="350px" max-height="441px">
                     <template v-slot:activator="{ attrs, on }">
@@ -112,6 +119,7 @@ import Alert from '~/components/Alert.vue';
 import Loading from '~/components/Loading.vue';
 import Snackbar from '~/components/Snackbar.vue';
 import userRedImage from '~/assets/img/user-red.png';
+import { API } from "@/api/index";
 export default {
   name: 'DefaultLayout',
   data () {
@@ -129,25 +137,61 @@ export default {
         }
       ],
       drawer: false,
-      title: 'Vuetify.js'
-    }
+      title: "Vuetify.js",
+      notifications: [],
+      countNotification: 0,
+    };
   },
   components: { Snackbar, Loading, Alert },
   mounted() {},
+  setup() {
+    const { getListNotification } = API();
+    return { getListNotification };
+  },
+  async mounted() {
+    this.tahunSelected = this.$moment().year();
+    this.bulanSelected = {
+      nama: this.$moment().format("MMMM"),
+      angka: this.$moment().month() + 1,
+    };
+    this.arrayTahun = [
+      this.$moment().subtract(1, "year").year(),
+      this.$moment().year(),
+      this.$moment().add(1, "year").year(),
+    ];
+
+    this.getData();
+  },
   methods: {
-    closeDrawer(){
+    async getData() {
+      await this.getListNotification(
+        new Date().getFullYear(),
+        new Date().getMonth() + 1
+      )
+        .then((result) => {
+          console.log(result);
+          if (result) {
+            this.notifications = result;
+            this.countNotification = result.filter(
+              (item) => !item.is_read
+            ).length;
+          }
+        })
+        .catch((err) => console.log(err));
+    },
+    closeDrawer() {
       this.drawer = false;
     },
-    logOut(){
-        this.$auth.logout();
-        localStorage.clear();
-        this.$router.push('/login');
+    logOut() {
+      this.$auth.logout();
+      localStorage.clear();
+      this.$router.push("/login");
     },
     handleImgError(event) {
       event.target.src = userRedImage;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -156,6 +200,23 @@ export default {
   font-weight: 600;
   font-size: 16px;
   color: #404041;
+}
+.notification-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #ae445a;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 .foto-user-icon-big {
   position: relative;
