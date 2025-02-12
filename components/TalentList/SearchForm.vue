@@ -1,5 +1,5 @@
 <template>
-  <div class="container v-card v-sheet theme--light summary-section">
+  <div class="summary-section">
     <div class="search-grid">
       <!-- Pendidikan -->
       <div class="form-group">
