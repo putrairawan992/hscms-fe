@@ -1,20 +1,44 @@
 <template>
   <v-app>
     <v-layout>
-      <Sidebar-Drawer-Seeker v-if="$auth.user.role_user === 'jobseeker'" :drawer="drawer" :closeDrawer="closeDrawer"/>
-      <Sidebar-Drawer-Provider v-if="$auth.user.role_user === 'jobprovider'" :drawer="drawer" :closeDrawer="closeDrawer"/>
-      
+      <Sidebar-Drawer-Seeker
+        v-if="$auth.user.role_user === 'jobseeker'"
+        :drawer="drawer"
+        :closeDrawer="closeDrawer"
+      />
+      <Sidebar-Drawer-Provider
+        v-if="$auth.user.role_user === 'jobprovider'"
+        :drawer="drawer"
+        :closeDrawer="closeDrawer"
+      />
+      <Sidebar-Drawer-Mitra
+        v-if="$auth.user.role_user === 'mitra'"
+        :drawer="drawer"
+        :closeDrawer="closeDrawer"
+      />
+
       <div class="new-hiring-dashboard hcms-container">
         <v-row style="">
-          <Sidebar-Seeker v-if="$auth.user.role_user === 'jobseeker'"/>
-          <Sidebar-Provider v-if="$auth.user.role_user === 'jobprovider'"/>
+          <Sidebar-Seeker v-if="$auth.user.role_user === 'jobseeker'" />
+          <Sidebar-Provider v-if="$auth.user.role_user === 'jobprovider'" />
+          <Sidebar-Mitra v-if="$auth.user.role_user === 'mitra'" />
           <!-- <Sidebar-Provider/> -->
 
-          <v-col cols="12" sm="12" md="12" lg="9" xl="9" style="position: relative; display: flex; flex-direction: column;">
+          <v-col
+            cols="12"
+            sm="12"
+            md="12"
+            lg="9"
+            xl="9"
+            style="position: relative; display: flex; flex-direction: column"
+          >
             <div class="up-button-talent">
               <div class="up-button-wrapper">
                 <div class="up-button">
-                  <div class="ellipse-parent" @click="$router.push('/notification')">
+                  <div
+                    class="ellipse-parent"
+                    @click="$router.push('/notification')"
+                  >
                     <div class="frame-child" />
                     <img
                       alt=""
@@ -29,71 +53,113 @@
                       {{ countNotification }}
                     </div>
                   </div>
-                  <v-menu transition="scale-transition" origin="left" rounded="xl" offset-y max-width="350px" max-height="441px">
+                  <v-menu
+                    transition="scale-transition"
+                    origin="left"
+                    rounded="xl"
+                    offset-y
+                    max-width="350px"
+                    max-height="441px"
+                  >
                     <template v-slot:activator="{ attrs, on }">
                       <div class="user-profile" v-bind="attrs" v-on="on">
                         <!-- <img class="foto-user-icon" alt="" src="@/assets/svg/foto-user.svg" /> -->
 
-                        <img v-if="$auth.user.photo"
-                            class="foto-user-icon"
-                            loading="eager" alt="photo"
-                            :src="$auth.user.photo"
-                            @error="handleImgError($event)"
+                        <img
+                          v-if="$auth.user.photo"
+                          class="foto-user-icon"
+                          loading="eager"
+                          alt="photo"
+                          :src="$auth.user.photo"
+                          @error="handleImgError($event)"
                         />
-                        <img  v-if="!$auth.user.photo"
-                            class="foto-user-icon pt-2 pa-1"
-                            loading="eager" alt="photo"
-                            src="@/assets/img/user-red-big.png"
+                        <img
+                          v-if="!$auth.user.photo"
+                          class="foto-user-icon pt-2 pa-1"
+                          loading="eager"
+                          alt="photo"
+                          src="@/assets/img/user-red-big.png"
                         />
                       </div>
                     </template>
 
                     <v-list>
                       <v-list-item>
-                        <div style="width: 350px;padding: 15px 5px;">
-                          <div class="user-profile pb-4">
-                            User Profile
-                          </div>
-                          <div class="d-flex" style="align-items:center">
+                        <div style="width: 350px; padding: 15px 5px">
+                          <div class="user-profile pb-4">User Profile</div>
+                          <div class="d-flex" style="align-items: center">
                             <!-- <img class="foto-user-icon-big" alt="" src="@/assets/svg/foto-user.svg" /> -->
 
-                            <img v-if="$auth.user.photo"
-                                class="foto-user-icon-big"
-                                loading="eager" alt="photo"
-                                :src="$auth.user.photo"
-                                @error="handleImgError($event)"
+                            <img
+                              v-if="$auth.user.photo"
+                              class="foto-user-icon-big"
+                              loading="eager"
+                              alt="photo"
+                              :src="$auth.user.photo"
+                              @error="handleImgError($event)"
                             />
-                            <img  v-if="!$auth.user.photo"
-                                class="foto-user-icon-big pt-2 pa-1"
-                                loading="eager" alt="photo"
-                                src="@/assets/img/user-red-big.png"
+                            <img
+                              v-if="!$auth.user.photo"
+                              class="foto-user-icon-big pt-2 pa-1"
+                              loading="eager"
+                              alt="photo"
+                              src="@/assets/img/user-red-big.png"
                             />
 
                             <div class="profile-name-container">
-                              <div class="profile-name-text">{{ $auth.user.fullname }}</div>
-                              <div class="profile-text">{{ $auth.user.work_position || '-' }}</div>
-                              <div class="profile-text">{{ $auth.user.email || '-' }}</div>
+                              <div class="profile-name-text">
+                                {{ $auth.user.fullname }}
+                              </div>
+                              <div class="profile-text">
+                                {{ $auth.user.work_position || "-" }}
+                              </div>
+                              <div class="profile-text">
+                                {{ $auth.user.email || "-" }}
+                              </div>
                             </div>
                           </div>
-                          <hr class="hr-profile mt-5 mb-8"/>
-                          <div class="d-flex profile-menu-container" style="align-items:center" @click="$router.push('/profile')">
-                            <img class="foto-user-icon-small" alt="" src="@/assets/svg/my-profile.svg" />
+                          <hr class="hr-profile mt-5 mb-8" />
+                          <div
+                            class="d-flex profile-menu-container"
+                            style="align-items: center"
+                            @click="$router.push('/profile')"
+                          >
+                            <img
+                              class="foto-user-icon-small"
+                              alt=""
+                              src="@/assets/svg/my-profile.svg"
+                            />
                             <div class="menu-container">
                               <div class="profile-name-text">My Profile</div>
                               <div class="profile-desc">Account Setting</div>
                             </div>
                           </div>
-                          <div class="d-flex profile-menu-container mt-6" style="align-items:center" @click="$router.push('/inbox')">
-                            <img class="foto-user-icon-small" alt="" src="@/assets/svg/my-inbox.svg" />
+                          <div
+                            class="d-flex profile-menu-container mt-6"
+                            style="align-items: center"
+                            @click="$router.push('/inbox')"
+                          >
+                            <img
+                              class="foto-user-icon-small"
+                              alt=""
+                              src="@/assets/svg/my-inbox.svg"
+                            />
                             <div class="menu-container">
                               <div class="profile-name-text">My Inbox</div>
                               <div class="profile-desc">See All Messages</div>
                             </div>
                           </div>
-                          <div class="orange-btn mt-8 mb-2" @click="logOut" style="width: -webkit-fill-available; justify-content: center;">
-                              <div class="">
-                                  <b class="button mx-3">Logout</b>
-                              </div>
+                          <div
+                            class="orange-btn mt-8 mb-2"
+                            @click="logOut"
+                            style="
+                              width: -webkit-fill-available;
+                              justify-content: center;
+                            "
+                          >
+                            <div class="">
+                              <b class="button mx-3">Logout</b>
+                            </div>
                           </div>
                         </div>
                       </v-list-item>
@@ -108,33 +174,33 @@
         </v-row>
       </div>
     </v-layout>
-    <Snackbar/>
-    <Loading/>
-    <Alert/>
+    <Snackbar />
+    <Loading />
+    <Alert />
   </v-app>
 </template>
 
 <script>
-import Alert from '~/components/Alert.vue';
-import Loading from '~/components/Loading.vue';
-import Snackbar from '~/components/Snackbar.vue';
-import userRedImage from '~/assets/img/user-red.png';
+import Alert from "~/components/Alert.vue";
+import Loading from "~/components/Loading.vue";
+import Snackbar from "~/components/Snackbar.vue";
+import userRedImage from "~/assets/img/user-red.png";
 import { API } from "@/api/index";
 export default {
-  name: 'DefaultLayout',
-  data () {
+  name: "DefaultLayout",
+  data() {
     return {
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
+          icon: "mdi-apps",
+          title: "Welcome",
+          to: "/",
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        }
+          icon: "mdi-chart-bubble",
+          title: "Inspire",
+          to: "/inspire",
+        },
       ],
       drawer: false,
       title: "Vuetify.js",
@@ -227,7 +293,7 @@ export default {
   border-radius: 50%;
 }
 .profile-name-container {
-  height: 67px; 
+  height: 67px;
   display: flex;
   margin-left: 10px;
   flex-direction: column; /* Membuat tata letak menjadi vertikal */
@@ -255,8 +321,8 @@ export default {
 }
 .hr-profile {
   border: 0;
-  height: 0.5px; 
-  background-color: #C2C2C2 !important;
+  height: 0.5px;
+  background-color: #c2c2c2 !important;
 }
 .profile-menu-container {
   padding: 0 10px;
@@ -268,7 +334,7 @@ export default {
   height: 50px;
 }
 .menu-container {
-  height: 45px; 
+  height: 45px;
   display: flex;
   margin-left: 10px;
   flex-direction: column; /* Membuat tata letak menjadi vertikal */

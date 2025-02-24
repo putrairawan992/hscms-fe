@@ -4,13 +4,18 @@
       <div class="col-md-12">
         <!-- Header -->
         <div class="header">
-          <div>
-            <Button variant="primary" @click="openModal" size="sm"
-              >Add Talent</Button
+          <div class="flex items-center gap-2">
+            <Button variant="primary" @click="showModal = true" size="sm">
+              Add Talent
+            </Button>
+            <Button
+              variant="primary"
+              size="sm"
+              class="d-flex align-items-center p-1"
+              @click="shareLink"
             >
-            <button type="button" @click="shareLink" class="btn-view">
-              <i class="fas fa-share-alt"></i>
-            </button>
+              <share-2-icon size="1.2x" class="custom-class"></share-2-icon>
+            </Button>
             <i v-if="copied" class="success-message">Link berhasil disalin!</i>
           </div>
         </div>
@@ -18,59 +23,114 @@
     </div>
 
     <div class="body-section">
-      <SearchForm />
+      <SearchForm @search="handleSearch" />
 
       <!-- Komponen Talent dengan event selection-change -->
       <Talent :talents="talents" />
+
+      <!-- Pagination -->
+      <div class="pagination-controls">
+        <button
+          :disabled="currentPage === 1"
+          @click="changePage(currentPage - 1)"
+          class="btn-pagination"
+        >
+          Previous
+        </button>
+        <span>Page {{ currentPage }}</span>
+        <button
+          :disabled="!hasMorePages"
+          @click="changePage(currentPage + 1)"
+          class="btn-pagination"
+        >
+          Next
+        </button>
+      </div>
     </div>
 
-    <ModalChoice ref="modalChoiceRef" />
+    <UploadModal :isOpen="showModal" @close="showModal = false" />
   </div>
 </template>
 
 <script setup>
 import { onMounted, reactive, ref } from "vue";
-import ModalChoice from "../../components/Talent/ModalChoice.vue";
+import UploadModal from "../../components/Talent/UploadModal.vue";
 import SearchForm from "../../components/TalentList/SearchForm.vue";
 import Talent from "../../components/TalentList/Talent.vue";
-import Cookies from "js-cookie";
+import { mitraAPI } from "@/api/mitra";
 
-const talents = ref([
-  {
-    id: 1,
-    name: "Roma",
-    education: "Diploma/Sarjana S1",
-    salary: 6000000,
-    experience: "0 - 2 tahun",
-    score: 90,
-    date: "24 January 2026",
-    time: "09:00",
-    image: "",
-  },
-]);
+const talents = ref([]);
 const selectedTalents = ref([]);
-
-// Fungsi untuk menangani perubahan seleksi
-
 const baseUrl = process.env.BASE_URL;
-const param = reactive({
-  mitra: "",
-});
-const modalChoiceRef = ref(null);
+const showModal = ref(false);
 const copied = ref(false);
+const currentPage = ref(1);
+const hasMorePages = ref(true);
+const { getTalents } = mitraAPI();
 
-// Methods
-const openModal = () => {
-  modalChoiceRef.value?.showModal();
+const searchParams = reactive({
+  limit: 1,
+  paginate: 10,
+  key_search: "",
+  education_id: "",
+  experience_id: "",
+  job_specialist_id: "",
+});
+
+// Fetch talents from API
+const fetchTalents = async () => {
+  try {
+    const response = await getTalents({
+      ...searchParams,
+      page: currentPage.value,
+    });
+
+    console.log();
+    // Transform API data to match component structure
+    talents.value = response.map((talent) => ({
+      id: talent.job_seeker_id,
+      name: talent.name,
+      education: talent.education,
+      salary: talent.salary_expectation,
+      experience: talent.experience,
+      score: talent.score,
+      image: talent.photo,
+      date: talent.created_at.split("||")[0].trim(),
+      time: talent.created_at.split("||")[1].trim(),
+      is_active: talent.is_active,
+    }));
+
+    // Update pagination status
+    hasMorePages.value = talents.value.length === searchParams.paginate;
+  } catch (error) {
+    console.error("Error fetching talents:", error);
+    // You might want to show an error notification here
+  }
 };
 
+// Handle search form submission
+const handleSearch = (searchCriteria) => {
+  searchParams.key_search = searchCriteria.keyword || "";
+  searchParams.education_id = searchCriteria.education || "";
+  searchParams.experience_id = searchCriteria.experience || "";
+  searchParams.job_specialist_id = searchCriteria.specialist || "";
+  currentPage.value = 1;
+  fetchTalents();
+};
+console.log(talents);
+// Handle pagination
+const changePage = (newPage) => {
+  currentPage.value = newPage;
+  fetchTalents();
+};
+
+// Share link functionality
 const shareLink = async () => {
   const fullLink = `${baseUrl}/register/talents/${param.mitra}`;
   try {
     await navigator.clipboard.writeText(fullLink);
     copied.value = true;
 
-    // Reset pesan sukses setelah 2 detik
     setTimeout(() => {
       copied.value = false;
     }, 2000);
@@ -79,9 +139,9 @@ const shareLink = async () => {
   }
 };
 
-// Lifecycle hook
+// Fetch initial data
 onMounted(() => {
-  // fetchData(); // Uncomment if you want to fetch data on mount
+  fetchTalents();
 });
 </script>
 
@@ -90,16 +150,41 @@ onMounted(() => {
   border-radius: 10px;
   padding: 20px;
 }
+
 .body-section {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-pagination {
+  padding: 0.5rem 1rem;
+  border: 1px solid #b73d58;
+  border-radius: 5px;
+  background: white;
+  color: #b73d58;
+  cursor: pointer;
+}
+
+.btn-pagination:disabled {
+  border-color: #ccc;
+  color: #ccc;
+  cursor: not-allowed;
 }
 
 .btn-view {

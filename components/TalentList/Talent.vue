@@ -32,50 +32,52 @@
           >{{ talent.date }} | {{ talent.time }} WIB</span
         >
         <button class="view-button">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="15"
-            height="15"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
-          </svg>
+          <eye-icon size="20" />
         </button>
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
-import { ref, watch } from "vue";
+<script>
+import { ref } from "@nuxtjs/composition-api";
+import { EyeIcon } from "vue-feather-icons";
 
-const props = defineProps({
-  talents: {
-    type: Array,
-    required: true,
+export default {
+  components: {
+    EyeIcon,
   },
-});
 
-const emit = defineEmits(["selection-change"]);
+  props: {
+    talents: {
+      type: Array,
+      required: true,
+    },
+  },
 
-// State untuk menyimpan talent yang dipilih
-const localSelectedTalents = ref([]);
+  setup(props, { emit }) {
+    // State untuk menyimpan talent yang dipilih
+    const localSelectedTalents = ref([]);
 
-// Fungsi untuk menangani perubahan seleksi
-const handleSelectionChange = () => {
-  emit("selection-change", localSelectedTalents.value);
-};
+    // Fungsi untuk menangani perubahan seleksi
+    const handleSelectionChange = () => {
+      emit("selection-change", localSelectedTalents.value);
+    };
 
-// Fungsi untuk memformat angka
-const formatNumber = (number) => {
-  return new Intl.NumberFormat("id-ID").format(number);
+    // Fungsi untuk memformat angka
+    const formatNumber = (number) => {
+      return new Intl.NumberFormat("id-ID").format(number);
+    };
+
+    return {
+      localSelectedTalents,
+      handleSelectionChange,
+      formatNumber,
+    };
+  },
 };
 </script>
+
 <style scoped>
 .talent-list {
   max-height: 500px;
@@ -155,8 +157,7 @@ const formatNumber = (number) => {
 }
 
 .view-button {
-  background-color: black;
-  color: white;
+  color: #ae445a;
   border: none;
   padding: 2px;
   border-radius: 100%;

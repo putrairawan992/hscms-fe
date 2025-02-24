@@ -23,12 +23,17 @@
     "debounce": "^2.0.0",
     "nuxt": "^2.15.8",
     "vue": "^2.7.10",
+    "vue-feather-icons": "^5.1.0",
     "vue-multiselect": "^2.1.7",
     "vue-server-renderer": "^2.7.10",
     "vue-template-compiler": "^2.7.10",
     "vuetify": "^2.6.10"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.12.3"
+    "@nuxtjs/tailwindcss": "^4.2.1",
+    "@nuxtjs/vuetify": "^1.12.3",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^2.2.19"
   }
 }
