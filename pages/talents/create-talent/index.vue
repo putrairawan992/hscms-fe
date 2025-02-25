@@ -1114,32 +1114,32 @@ export default {
     listStatusPernikahan: ["Sudah Menikah", "Belum Menikah"],
 
     // Form fields
-    fullname: null,
-    place_birth: null,
-    date_birth: null,
-    email: null,
-    linkedin: null,
-    handphone: null,
-    residential_address: null,
-    address_on_identity_card: null,
-    marital_status: null,
-    identity_number: null,
-    npwp_number: null,
-    bpjskes: null,
-    bpjstik: null,
-    bank_account_number: null,
-    work_position: null,
-    salary_exspectation: null,
+    fullname: "",
+    place_birth: "",
+    date_birth: "",
+    email: "",
+    linkedin: "",
+    handphone: "",
+    residential_address: "",
+    address_on_identity_card: "",
+    marital_status: "",
+    identity_number: "",
+    npwp_number: "",
+    bpjskes: "",
+    bpjstik: "",
+    bank_account_number: "",
+    work_position: "",
+    salary_exspectation: "",
 
     // Additional info
-    bootcamp: null,
+    bootcamp: "",
     scope: "",
-    gender: null,
-    bank_name: null,
-    bank_account_name: null,
-    emergency_status: null,
-    emergency_number: null,
-    emergency_name: null,
+    gender: "",
+    bank_name: "",
+    bank_account_name: "",
+    emergency_status: "",
+    emergency_number: "",
+    emergency_name: "",
 
     // Arrays for dynamic forms
     department: [],
@@ -1172,13 +1172,13 @@ export default {
     // Employee specific data
     score: [],
     employee_data: false,
-    ptkp_status: null,
-    company_registration_number: null,
-    job_level_name: null,
-    employee_type: null,
-    start_date: null,
-    end_date: null,
-    job_specialist_name: null,
+    ptkp_status: "",
+    company_registration_number: "",
+    job_level_name: "",
+    employee_type: "",
+    start_date: "",
+    end_date: "",
+    job_specialist_name: "",
 
     optionalDocs: [
       { id: "ktp", name: "KTP" },
@@ -1441,7 +1441,7 @@ export default {
             content: "Data berhasil disimpan.",
             status: "success",
           });
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          this.$router.push("/talents");
         }
       } catch (error) {
         console.error("Error submitting form:", error);
