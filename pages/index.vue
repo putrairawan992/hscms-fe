@@ -2,22 +2,32 @@
   <v-row class="mt-0">
     <v-col cols="12" xs="12" sm="12" md="6" align="center">
       <v-card class="card-dashboard" max-width="450">
-        <div class="my-2" style="position: relative;">
-          <div class="pa-6" style="display: flex; justify-content: space-between; align-items:baseline">
+        <div class="my-2" style="position: relative">
+          <div
+            class="pa-6"
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: baseline;
+            "
+          >
             <div class="data-diri">Data Diri Seeker</div>
             <b class="view-all" @click="$router.push('/biodata')">View All</b>
           </div>
           <div class="nama-lengkap-parent pb-6">
             <div class="new-hiring-dashboard-item-parent">
-              <img v-if="data?.photo_profile"
+              <img
+                v-if="data?.photo_profile"
                 alt=""
                 class="new-hiring-dashboard-item mb-4"
                 :src="data?.photo_profile"
               />
-              <img v-else
-                  class="frame-photo-red user-red mb-4"
-                  src="@/assets/img/user-red.png"
-                  loading="eager" alt="Foto"
+              <img
+                v-else
+                class="frame-photo-red user-red mb-4"
+                src="@/assets/img/user-red.png"
+                loading="eager"
+                alt="Foto"
               />
             </div>
             <!-- <div class="linkedin my-4">
@@ -31,7 +41,7 @@
                 <div class="melamar-posisi">Nama Lengkap:</div>
               </div>
               <div class="carolina-anindya-wrapper">
-                <div class="carolina-anindya">{{ data?.name || '' }}</div>
+                <div class="carolina-anindya">{{ data?.name || "" }}</div>
               </div>
             </div>
             <div class="nama-lengkap">
@@ -47,24 +57,31 @@
                 <div class="melamar-posisi">Ekspektasi Gaji:</div>
               </div>
               <div class="carolina-anindya-wrapper">
-                <div class="carolina-anindya">{{ data?.salary_exspectation || 'Rp. 0' }}</div>
+                <div class="carolina-anindya">
+                  {{ data?.salary_exspectation || "Rp. 0" }}
+                </div>
               </div>
             </div>
           </div>
-          
         </div>
       </v-card>
     </v-col>
     <v-col cols="12" xs="12" sm="12" md="6" align="center">
       <v-card class="card-dashboard" max-width="450">
-        <div class="my-2" style="position: relative;">
-          <div class="pa-6 pb-4" style="display: flex; flex-direction: column; text-align: left;">
+        <div class="my-2" style="position: relative">
+          <div
+            class="pa-6 pb-4"
+            style="display: flex; flex-direction: column; text-align: left"
+          >
             <div class="data-diri">Berkas Lampiran</div>
             <i class="ukuran-maksimal-berkas">Ukuran maksimal berkas 3MB</i>
           </div>
-          
+
           <div class="cv-parent">
-            <div :class="data?.curriculum_vitae ? 'cv' :'cv5'" @click="openFile(data?.curriculum_vitae)">
+            <div
+              :class="data?.curriculum_vitae ? 'cv' : 'cv5'"
+              @click="openFile(data?.curriculum_vitae)"
+            >
               <div class="wrapper">
                 <img class="icon" alt="" src="../assets/img/1-2@2x.png" />
               </div>
@@ -72,7 +89,10 @@
                 <b class="ktp">CV</b>
               </div>
             </div>
-            <div :class="data?.photo ? 'cv' :'cv5'" @click="openFile(data?.photo)">
+            <div
+              :class="data?.photo ? 'cv' : 'cv5'"
+              @click="openFile(data?.photo)"
+            >
               <div class="wrapper">
                 <img class="icon1" alt="" src="../assets/img/8@2x.png" />
               </div>
@@ -80,7 +100,7 @@
                 <b class="ktp">Pas Foto 4x6</b>
               </div>
             </div>
-            <div :class="data?.ktp ? 'cv' :'cv5'" @click="openFile(data?.ktp)">
+            <div :class="data?.ktp ? 'cv' : 'cv5'" @click="openFile(data?.ktp)">
               <div class="wrapper">
                 <img class="icon2" alt="" src="../assets/img/2@2x.png" />
               </div>
@@ -90,7 +110,7 @@
             </div>
           </div>
           <div class="cv-group">
-            <div :class="data?.kk ? 'cv' :'cv5'" @click="openFile(data?.kk)">
+            <div :class="data?.kk ? 'cv' : 'cv5'" @click="openFile(data?.kk)">
               <div class="wrapper">
                 <img class="icon3" alt="" src="../assets/img/4@2x.png" />
               </div>
@@ -98,13 +118,23 @@
                 <b class="ktp">Kartu Keluarga</b>
               </div>
             </div>
-            <div :class="data?.npwp ? 'cv' :'cv5'" @click="openFile(data?.npwp)">
-              <img class="cv-child" alt="" src="../assets/img/frame-2036@2x.png" />
+            <div
+              :class="data?.npwp ? 'cv' : 'cv5'"
+              @click="openFile(data?.npwp)"
+            >
+              <img
+                class="cv-child"
+                alt=""
+                src="../assets/img/frame-2036@2x.png"
+              />
               <div class="cv-wrapper">
                 <b class="ktp">NPWP</b>
               </div>
             </div>
-            <div :class="data?.bpjs ? 'cv' :'cv5'" @click="openFile(data?.bpjs)">
+            <div
+              :class="data?.bpjs ? 'cv' : 'cv5'"
+              @click="openFile(data?.bpjs)"
+            >
               <div class="wrapper">
                 <img class="icon4" alt="" src="../assets/img/6@2x.png" />
               </div>
@@ -113,21 +143,31 @@
               </div>
             </div>
           </div>
-          
         </div>
       </v-card>
     </v-col>
     <v-col cols="12" xs="12" sm="12" md="6" align="center">
       <v-card class="card-dashboard" max-width="450">
-        <div class="my-2" style="position: relative;">
-          <div class="pa-6" style="display: flex; justify-content: space-between; align-items:baseline">
+        <div class="my-2" style="position: relative">
+          <div
+            class="pa-6"
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: baseline;
+            "
+          >
             <div class="data-diri">Kontrak</div>
             <b class="view-all" @click="$router.push('/contract')">View All</b>
           </div>
           <div class="absen1">
-            <img class="kontrak-1-icon" alt="" src="../assets/img/kontrak-1@2x.png" />
+            <img
+              class="kontrak-1-icon"
+              alt=""
+              src="../assets/img/kontrak-1@2x.png"
+            />
             <div class="nama-lengkap2">
-                <div class="carolina-anindya">Anda belum memiliki kontrak.</div>
+              <div class="carolina-anindya">Anda belum memiliki kontrak.</div>
             </div>
           </div>
         </div>
@@ -135,10 +175,15 @@
     </v-col>
     <v-col cols="12" xs="12" sm="12" md="6" align="center">
       <v-card class="card-dashboard" max-width="450">
-        <div class="my-2" style="position: relative;">
-          <div class="pa-6 pb-4" style="display: flex; flex-direction: column; text-align: left;">
+        <div class="my-2" style="position: relative">
+          <div
+            class="pa-6 pb-4"
+            style="display: flex; flex-direction: column; text-align: left"
+          >
             <div class="data-diri">Jadwal</div>
-            <i class="ukuran-maksimal-berkas">Anda dapat mengubah jadwal setelah konfirmasi</i>
+            <i class="ukuran-maksimal-berkas"
+              >Anda dapat mengubah jadwal setelah konfirmasi</i
+            >
           </div>
           <div class="sen-parent">
             <div class="sen">Sen</div>
@@ -149,55 +194,71 @@
             <div class="sab">Sab</div>
             <div class="min">Min</div>
           </div>
-          <div v-for="value, key in calendar" class="week-group-dashboard">
-                <div v-for="value1, key1 in value">
+          <div v-for="(value, key) in calendar" class="week-group-dashboard">
+            <div v-for="(value1, key1) in value">
+              <div v-if="value1.schedule" class="week-dashboard">
+                <div class="week-border-green-dashboard">
+                  <div class="date-square-green-dashboard" />
+                  <div class="week-text-dashboard">{{ value1.day }}</div>
+                </div>
+                <div
+                  @click="pickDay(value1.schedule_id, value1.date.date)"
+                  class="jadwal-wrapper"
+                  style="cursor: pointer"
+                >
+                  <div class="job">Pilih Hari</div>
+                </div>
+              </div>
 
-                  <div v-if="value1.schedule" class="week-dashboard">
-                    <div class="week-border-green-dashboard">
-                      <div class="date-square-green-dashboard" />
-                      <div class="week-text-dashboard">{{ value1.day }}</div>
-                    </div>
-                    <div @click="pickDay(value1.schedule_id, value1.date.date)" class="jadwal-wrapper" style="cursor: pointer;">
-                        <div class="job">Pilih Hari</div>
-                    </div>
-                  </div>
-                  
-                  <div v-else>
-                      <div v-if="value1.today">
-                        <div class="week-dashboard">
-                            <div>
-                              <div class="week-border-blue-dashboard">
-                                <div class="date-square-blue-dashboard" />
-                                <div class="week-text-dashboard">{{ value1.day }}</div>
-                              </div>
-                            </div>
-                          </div>
+              <div v-else>
+                <div v-if="value1.today">
+                  <div class="week-dashboard">
+                    <div>
+                      <div class="week-border-blue-dashboard">
+                        <div class="date-square-blue-dashboard" />
+                        <div class="week-text-dashboard">{{ value1.day }}</div>
                       </div>
-                      <div v-else>
-                        <div v-if="key1 == 5 || key1 == 6" class="week-red-dashboard" :class="value1.day == null ? 'week-blur-dashboard' : ''">
-                            <div class="week-border-normal-dashboard">
-                                <div class="date-square-red-dashboard" />
-                                <div class="week-text-dashboard">{{ value1.day }}</div>
-                            </div>
-                        </div>
-                        <div v-else class="week-dashboard" :class="value1.day == null ? 'week-blur-dashboard' : ''">
-                            <div class="week-border-normal-dashboard">
-                              <div class="date-square-normal-dashboard" />
-                              <div class="week-text-dashboard">{{ value1.day }}</div>
-                            </div>
-                        </div>
-                      </div>
+                    </div>
                   </div>
                 </div>
+                <div v-else>
+                  <div
+                    v-if="key1 == 5 || key1 == 6"
+                    class="week-red-dashboard"
+                    :class="value1.day == null ? 'week-blur-dashboard' : ''"
+                  >
+                    <div class="week-border-normal-dashboard">
+                      <div class="date-square-red-dashboard" />
+                      <div class="week-text-dashboard">{{ value1.day }}</div>
+                    </div>
+                  </div>
+                  <div
+                    v-else
+                    class="week-dashboard"
+                    :class="value1.day == null ? 'week-blur-dashboard' : ''"
+                  >
+                    <div class="week-border-normal-dashboard">
+                      <div class="date-square-normal-dashboard" />
+                      <div class="week-text-dashboard">{{ value1.day }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
       </v-card>
     </v-col>
-    <Dialog-OpenFile :show="fileDialog" :fileUrl="fileUrl" :closeDialog="closeFile"/>
+    <Dialog-OpenFile
+      :show="fileDialog"
+      :fileUrl="fileUrl"
+      :closeDialog="closeFile"
+    />
   </v-row>
 </template>
 <script>
-import { API } from '@/api/index'
+import { API } from "@/api/index";
+
 export default {
   middleware: "jobSeeker",
   name: "NewHiringDashboard",
@@ -211,49 +272,51 @@ export default {
       calendar: [],
       timeSchedule: {
         time: [],
-        link: null
+        link: null,
       },
       arrayBulan: [
-        { id: 1, name: 'Januari' },
-        { id: 2, name: 'Februari' },
-        { id: 3, name: 'Maret' },
-        { id: 4, name: 'April' },
-        { id: 5, name: 'Mei' },
-        { id: 6, name: 'Juni' },
-        { id: 7, name: 'Juli' },
-        { id: 8, name: 'Agustus' },
-        { id: 9, name: 'September' },
-        { id: 10, name: 'Oktober' },
-        { id: 11, name: 'November' },
-        { id: 12, name: 'Desember' },
+        { id: 1, name: "Januari" },
+        { id: 2, name: "Februari" },
+        { id: 3, name: "Maret" },
+        { id: 4, name: "April" },
+        { id: 5, name: "Mei" },
+        { id: 6, name: "Juni" },
+        { id: 7, name: "Juli" },
+        { id: 8, name: "Agustus" },
+        { id: 9, name: "September" },
+        { id: 10, name: "Oktober" },
+        { id: 11, name: "November" },
+        { id: 12, name: "Desember" },
       ],
     };
   },
   setup() {
-      const { getDashboard, postApplyJob } = API();
-      return { getDashboard, postApplyJob };
+    const { getDashboard, postApplyJob } = API();
+    return { getDashboard, postApplyJob };
   },
   async mounted() {
     await this.getData();
-      let id_share_aplied_job =  localStorage.getItem('id_share_aplied_job');
-      if(id_share_aplied_job){
-        this.applyJob(id_share_aplied_job);
-      }
+    let id_share_aplied_job = localStorage.getItem("id_share_aplied_job");
+    if (id_share_aplied_job) {
+      this.applyJob(id_share_aplied_job);
+    }
   },
   methods: {
     async getData() {
-        await this.getDashboard().then(async (result)=>{
-            if(result){
-              this.data = result;
-              await this.buildArrayCalendar(result?.schedule);
-            }
-        });
+      await this.getDashboard().then(async (result) => {
+        if (result) {
+          this.data = result;
+          await this.buildArrayCalendar(result?.schedule);
+        }
+      });
     },
 
     async buildArrayCalendar(data) {
-      if(data){
+      if (data) {
         let daysBefore = this.getDayBefore(data[0].day);
-        let daysAfter = (daysBefore + data.length > 35 ? 42 : 35) - (data.length + daysBefore);
+        let daysAfter =
+          (daysBefore + data.length > 35 ? 42 : 35) -
+          (data.length + daysBefore);
         let chunkSize = 7;
         let days = [];
 
@@ -265,15 +328,15 @@ export default {
             schedule: false,
             schedule_id: null,
           });
-        };
-        await data.forEach(element => {
+        }
+        await data.forEach((element) => {
           days.push({
             date: element,
             day: this.getDay(element.date),
             today: this.isToday(element.date),
-            schedule: element.is_active == 'active' ? true : false,
-            schedule_id: element.schedule_id
-          })
+            schedule: element.is_active == "active" ? true : false,
+            schedule_id: element.schedule_id,
+          });
         });
         for (let index = 0; index < daysAfter; index++) {
           days.push({
@@ -283,7 +346,7 @@ export default {
             schedule: false,
             schedule_id: null,
           });
-        };
+        }
 
         this.calendar = [];
         for (let i = 0; i < days.length; i += chunkSize) {
@@ -293,64 +356,85 @@ export default {
       }
     },
     getDay(date) {
-      if(date){
-        let arrayDate = date.split('-');
+      if (date) {
+        let arrayDate = date.split("-");
         return parseInt(arrayDate[arrayDate.length - 1]);
       }
     },
     isToday(date) {
-      if(date){
+      if (date) {
         const today = new Date();
         const day = today.getDate();
         const month = today.getMonth() + 1; // Ingat bahwa bulan dimulai dari 0, jadi tambahkan 1
         const year = today.getFullYear();
-        let arrayDate = date.split('-');
+        let arrayDate = date.split("-");
 
-        if(arrayDate[0] == year && arrayDate[1] == month && arrayDate[2] == day){
+        if (
+          arrayDate[0] == year &&
+          arrayDate[1] == month &&
+          arrayDate[2] == day
+        ) {
           return true;
-        }else{
+        } else {
           return false;
         }
       }
     },
     getDayBefore(day) {
       let dayBefore = 0;
-      let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+      let days = [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ];
       for (let i = 0; i < days.length; i++) {
-          if (days[i] === day) {
-            dayBefore = i;
-            break;
-          }
+        if (days[i] === day) {
+          dayBefore = i;
+          break;
+        }
       }
       return dayBefore;
     },
 
-    async applyJob(id_job){
-        await this.postApplyJob(id_job).then( async (result) => {
-            if(result){
-                if(result.message == 'job sudah pernah di apply'){
-                    this.$notifier.showMessage({ content: result.message, status: 'warning' });
-                }else{
-                    this.$notifier.showMessage({ content: 'Success.', status: 'success' });
-                }
-                return this.$router.push('/pretest')
-            }else {
-                return this.getData();
-            }
-        });
-        localStorage.removeItem("id_share_aplied_job");
+    async applyJob(id_job) {
+      await this.postApplyJob(id_job).then(async (result) => {
+        if (result) {
+          if (result.message == "job sudah pernah di apply") {
+            this.$notifier.showMessage({
+              content: result.message,
+              status: "warning",
+            });
+          } else {
+            this.$notifier.showMessage({
+              content: "Success.",
+              status: "success",
+            });
+          }
+          return this.$router.push("/pretest");
+        } else {
+          return this.getData();
+        }
+      });
+      localStorage.removeItem("id_share_aplied_job");
     },
 
-    openFile(url){
-      if(url){
-          this.fileUrl = url;
-          this.fileDialog = true;
-      }else{
-          this.$notifier.showMessage({ content: 'File tidak tersedia.', status: 'warning' });
+    openFile(url) {
+      if (url) {
+        this.fileUrl = url;
+        this.fileDialog = true;
+      } else {
+        this.$notifier.showMessage({
+          content: "File tidak tersedia.",
+          status: "warning",
+        });
       }
     },
-    closeFile(){
-        this.fileDialog = false;
+    closeFile() {
+      this.fileDialog = false;
     },
   },
 };
@@ -372,11 +456,10 @@ export default {
   object-fit: cover;
 }
 .card-dashboard {
-    box-shadow: 5px 0px 5px #b3b9c5, -5px 0px 5px #b3b9c5 !important;
-    border-radius: 40px;
-    height:430px;
+  box-shadow: 5px 0px 5px #b3b9c5, -5px 0px 5px #b3b9c5 !important;
+  border-radius: 40px;
+  height: 430px;
 }
-
 
 /* calender */
 .group-wrapper-dashboard {

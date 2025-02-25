@@ -45,15 +45,8 @@ export default {
       pageActive: this.$route.name,
       menuItems: [
         { label: "Dashboard", route: "/" },
-        { label: "Help Center", route: "/help-center" },
-        { label: "Biodata", route: "/biodata" },
-        { label: "File Attachment", route: "/file-attachment" },
-        { label: "Contract", route: "/contract" },
-        { label: "Payslip", route: "/employee-payslip" },
-        { label: "Pre-test", route: "/pretest" },
-        { label: "Pre-test Admin", route: "/pretest-admin" },
-        { label: "Job Vacancy", route: "/job-vacancy" },
-        { label: "Schedule", route: "/schedule" },
+        // { label: "Talent List", route: "/talent-list" },
+        { label: "Talent", route: "/talents" },
       ],
     };
   },

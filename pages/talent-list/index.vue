@@ -12,8 +12,10 @@
         />
       </div>
     </div>
-
-    <SearchForm />
+    <br />
+    <div class="v-card v-sheet theme--light summary-section" style="padding: 0">
+      <SearchForm />
+    </div>
 
     <!-- Talent List Section -->
     <br />
@@ -49,7 +51,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch } from "vue";
+import { ref, reactive } from "vue";
 import Talent from "../../components/TalentList/Talent.vue";
 import SummaryCard from "../../components/TalentList/SummaryCard.vue";
 import SearchForm from "../../components/TalentList/SearchForm.vue";
