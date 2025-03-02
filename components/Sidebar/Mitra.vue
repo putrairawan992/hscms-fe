@@ -44,7 +44,7 @@ export default {
     return {
       pageActive: this.$route.name,
       menuItems: [
-        { label: "Dashboard", route: "/" },
+        { label: "Dashboard", route: "/dashboard-mitra" },
         // { label: "Talent List", route: "/talent-list" },
         { label: "Talent", route: "/talents" },
       ],

@@ -2,8 +2,9 @@
   <div class="talent-list">
     <div v-for="talent in talents" :key="talent.id" class="talent-card">
       <div class="talent-info">
-        <!-- Checkbox untuk memilih talent -->
+        <!-- Checkbox untuk memilih talent - only shows when withCheckbox is true -->
         <input
+          v-if="withCheckbox"
           :id="'talent-' + talent.id"
           :value="talent"
           type="checkbox"
@@ -52,6 +53,10 @@ export default {
     talents: {
       type: Array,
       required: true,
+    },
+    withCheckbox: {
+      type: Boolean,
+      default: true,
     },
   },
 
@@ -166,6 +171,7 @@ export default {
   display: flex;
   align-items: center;
 }
+
 .talent-date {
   font-size: 14px;
   color: #404041;

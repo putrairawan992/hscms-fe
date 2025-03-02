@@ -127,6 +127,7 @@ export const API = () => {
   } = jobProviderAPI();
 
   const {
+    getListPretestAdmin,
     downloadTalentTemplate,
 
     uploadTalentTemplate,
@@ -138,6 +139,7 @@ export const API = () => {
     downloadTalentTemplate,
     uploadTalentTemplate,
     talentRegistration,
+    getListPretestAdmin,
 
     // authAPI
     getRegistration,
