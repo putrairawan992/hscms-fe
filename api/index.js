@@ -124,6 +124,8 @@ export const API = () => {
 
     getProviderPayslip,
     getMasterEmployee,
+
+    getTalentMitra,
   } = jobProviderAPI();
 
   const {
@@ -263,5 +265,7 @@ export const API = () => {
 
     getProviderPayslip,
     getMasterEmployee,
+
+    getTalentMitra,
   };
 };
