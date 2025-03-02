@@ -7,7 +7,7 @@
             class="open-job-dan-draft mb-14 d-flex"
             style="justify-content: space-between"
           >
-            <div>Biodata</div>
+            <div>Create Talent</div>
           </div>
 
           <!-- Basic Information -->
@@ -261,7 +261,66 @@
               />
             </v-col>
           </v-row>
-
+          <v-row align="center">
+            <v-col
+              cols="12"
+              xs="3"
+              md="3"
+              lg="3"
+              xl="3"
+              xxl="3"
+              class="label d-flex"
+            >
+              <b>Posisi Pekerjaan:</b>
+            </v-col>
+            <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+              <multiselect
+                :disabled="preview"
+                v-model="work_position"
+                :options="listWorkPositions"
+                track-by="job_specialist_name"
+                label="job_specialist_name"
+                class="register-text-input"
+                placeholder="Pilih Posisi Pekerjaan"
+                :allow-empty="false"
+              ></multiselect>
+            </v-col>
+          </v-row>
+          <v-row align="center">
+            <v-col
+              cols="12"
+              xs="3"
+              md="3"
+              lg="3"
+              xl="3"
+              xxl="3"
+              class="label d-flex"
+            >
+              <b>Ekspektasi Gaji:</b>
+            </v-col>
+            <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
+              <v-text-field
+                oninput="if(Number(this.value.length) > Number(this.max)) this.value = this.min;"
+                @input="(_) => (salary_nominal = _)"
+                :value="salary_nominal"
+                :min="salary_nominal"
+                max="26"
+                v-on:keypress="isNumber($event)"
+                placeholder="Masukkan ekspektasi Gaji yang diharapkan"
+                class="register-text-field"
+                solo
+              >
+                <template v-slot:prepend-inner>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <p style="color: #000; margin-bottom: 0" v-on="on">Rp.</p>
+                    </template>
+                    Rupiah
+                  </v-tooltip>
+                </template>
+              </v-text-field>
+            </v-col>
+          </v-row>
           <!-- NPWP -->
           <v-row align="center">
             <v-col
@@ -420,203 +479,6 @@
               />
             </v-col>
           </v-row>
-
-          <!-- Company Information Section (if employee) -->
-          <template v-if="employee_data">
-            <v-row align="center">
-              <v-col
-                cols="12"
-                xs="3"
-                md="3"
-                lg="3"
-                xl="3"
-                xxl="3"
-                class="label d-flex"
-              >
-                <b>NIK Perusahaan:</b>
-              </v-col>
-              <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                <input
-                  class="register-text-input"
-                  placeholder="Masukkan NIK Perusahaan"
-                  v-model="company_registration_number"
-                  :readonly="preview"
-                />
-              </v-col>
-            </v-row>
-
-            <!-- Role & Level Information -->
-            <v-row align="center">
-              <v-col
-                cols="12"
-                xs="3"
-                md="3"
-                lg="3"
-                xl="3"
-                xxl="3"
-                class="label"
-              >
-                <b>Role:</b>
-              </v-col>
-              <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                <input
-                  class="register-text-input"
-                  placeholder="Masukkan Role"
-                  v-model="job_specialist_name"
-                  readonly
-                />
-              </v-col>
-            </v-row>
-
-            <v-row align="center">
-              <v-col
-                cols="12"
-                xs="3"
-                md="3"
-                lg="3"
-                xl="3"
-                xxl="3"
-                class="label"
-              >
-                <b>Level:</b>
-              </v-col>
-              <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                <input
-                  class="register-text-input"
-                  placeholder="Masukkan Level"
-                  v-model="job_level_name"
-                  readonly
-                />
-              </v-col>
-            </v-row>
-
-            <!-- Scope -->
-            <v-row align="center">
-              <v-col
-                cols="12"
-                xs="3"
-                md="3"
-                lg="3"
-                xl="3"
-                xxl="3"
-                class="label"
-              >
-                <b>Ruang Lingkup:</b>
-              </v-col>
-              <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                <textarea
-                  class="register-text-input"
-                  style="height: -webkit-fit-content"
-                  placeholder="Masukkan Ruang Lingkup"
-                  v-model="scope"
-                  rows="4"
-                  cols="50"
-                  >{{ scope }}</textarea
-                >
-              </v-col>
-            </v-row>
-
-            <!-- Contract Type -->
-            <v-row align="center">
-              <v-col
-                cols="12"
-                xs="3"
-                md="3"
-                lg="3"
-                xl="3"
-                xxl="3"
-                class="label"
-              >
-                <b>Jenis Kontrak:</b>
-              </v-col>
-              <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                <input
-                  class="register-text-input"
-                  placeholder="Masukkan Jenis Kontrak"
-                  v-model="employee_type"
-                  readonly
-                />
-              </v-col>
-            </v-row>
-
-            <!-- Salary Information -->
-            <v-row align="center">
-              <v-col
-                cols="12"
-                xs="3"
-                md="3"
-                lg="3"
-                xl="3"
-                xxl="3"
-                class="label"
-              >
-                <b>Take Home Pay:</b>
-              </v-col>
-              <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                <v-text-field
-                  oninput="if(Number(this.value.length) > Number(this.max)) this.value = this.min;"
-                  @input="(_) => (nominal = _)"
-                  :value="nominal"
-                  :min="nominal"
-                  max="26"
-                  v-on:keypress="isNumber($event)"
-                  placeholder="Masukkan ekspektasi Gaji yang diharapkan"
-                  class="register-text-field"
-                  solo
-                >
-                  <template v-slot:prepend-inner>
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on }">
-                        <p style="color: #000; margin-bottom: 0" v-on="on">
-                          Rp.
-                        </p>
-                      </template>
-                      Rupiah
-                    </v-tooltip>
-                  </template>
-                </v-text-field>
-              </v-col>
-            </v-row>
-
-            <!-- Contract Period -->
-            <v-row align="center">
-              <v-col
-                cols="12"
-                xs="3"
-                md="3"
-                lg="3"
-                xl="3"
-                xxl="3"
-                class="label"
-              >
-                <b>Kontrak:</b>
-              </v-col>
-              <v-col cols="12" xs="9" md="9" lg="9" xl="9" xxl="9">
-                <v-row>
-                  <v-col cols="6">
-                    <div
-                      class="register-text-input d-flex"
-                      style="justify-content: space-between"
-                    >
-                      <div>{{ useConvertToDateView(start_date) }}</div>
-                      <div>-</div>
-                      <div>{{ useConvertToDateView(end_date) }}</div>
-                    </div>
-                  </v-col>
-                  <v-col cols="6">
-                    <div
-                      class="register-text-input d-flex"
-                      style="justify-content: space-between"
-                    >
-                      <div>{{ useConvertToYearCountView() }}</div>
-                      <b style="color: #ae445a">Sama dengan</b>
-                      <div>{{ useConvertToMonthCountView() }}</div>
-                    </div>
-                  </v-col>
-                </v-row>
-              </v-col>
-            </v-row>
-          </template>
 
           <!-- Experience Section -->
           <div class="group-inner" />
@@ -1113,6 +975,10 @@ export default {
     listJenisKelamin: ["Laki - Laki", "Perempuan"],
     listStatusPernikahan: ["Sudah Menikah", "Belum Menikah"],
 
+    work_position: null,
+    salary_nominal: "",
+    listWorkPositions: [],
+
     // Form fields
     fullname: "",
     place_birth: "",
@@ -1193,7 +1059,14 @@ export default {
       this.nominal = this.useConvertToMoneyView(to);
     },
   },
-
+  async mounted() {
+    await this.getRegistrationData().then((result) => {
+      console.log(result);
+      this.listWorkPositions = result?.master_job_specialist
+        ? result.master_job_specialist
+        : [];
+    });
+  },
   methods: {
     handleFileUpload(type) {
       // Ambil ref langsung tanpa mencari array
@@ -1579,8 +1452,8 @@ export default {
   },
 
   setup() {
-    const { talentRegistration } = API();
-    return { talentRegistration };
+    const { talentRegistration, getRegistrationData } = API();
+    return { talentRegistration, getRegistrationData };
   },
 };
 </script>

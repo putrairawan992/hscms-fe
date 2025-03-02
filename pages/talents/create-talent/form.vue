@@ -22,6 +22,8 @@ export default defineComponent({
         phone: "",
         gender: "",
         maritalStatus: "",
+        workPosition: "",
+        salaryExpectation: "",
       },
 
       addresses: {
