@@ -231,8 +231,8 @@ const handleProceed = async ({ selectedJobs }) => {
   try {
     // Prepare payload
     const payload = {
-      job_post_ids: selectedJobs.map((job) => job.id),
-      talent_mitra_ids: selectedTalents.value.map((talent) => talent.id),
+      job_post_id: selectedJobs[0].id,
+      talent_mitra_id: selectedTalents.value.map((talent) => talent.id),
     };
 
     console.log("Sending invitation with payload:", payload);

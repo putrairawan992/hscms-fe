@@ -5,11 +5,12 @@
       <div class="job-list">
         <div v-for="job in jobs" :key="job.id" class="job-card">
           <div class="job-info">
-            <!-- Checkbox untuk memilih job -->
+            <!-- Radio button untuk memilih job -->
             <input
               :id="'job-' + job.id"
-              :value="job"
-              type="checkbox"
+              :value="job.id"
+              type="radio"
+              name="job-selection"
               class="job-select"
               :checked="isJobSelected(job)"
               @change="handleSelectionChange(job)"
@@ -38,7 +39,6 @@
           @click="proceedToNextStep"
           :variant="localSelectedJobs.length == 0 ? 'disabled' : 'primary'"
           :disabled="localSelectedJobs.length == 0"
-          :loading="loading"
           >Proceed to next step</Button
         >
       </v-card-actions>
