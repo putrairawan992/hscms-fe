@@ -23,9 +23,9 @@
     <div class="v-card v-sheet theme--light summary-section">
       <div class="title-talent-list" style="margin-bottom: 10px">
         <h1 class="title">Produk Digital</h1>
-        <v-btn color="primary" small>View All</v-btn>
+        <Button variant="primary" size="sm">View All</Button>
       </div>
-      <v-card class="job-card pa-4" elevation="1">
+      <v-card class="job-card pa-4" elevation="1" v-if="jobProviderData">
         <div class="d-flex align-center">
           <div class="position-relative">
             <v-avatar size="56" color="grey lighten-2">
@@ -40,7 +40,7 @@
               <div>
                 <div class="text-subtitle-2 text-grey-darken-1">Company</div>
                 <div class="font-weight-bold" style="font-size: medium">
-                  {{ company }}
+                  {{ jobProviderData.name }}
                 </div>
               </div>
               <div>
@@ -61,15 +61,29 @@
 
             <v-divider class="my-4"></v-divider>
             <div class="d-flex gap-5">
-              <div
-                v-for="status in statusList"
-                :key="status.label"
-                class="text-center"
-              >
+              <div class="text-center">
                 <div class="font-weight-bold" style="color: #ae445a">
-                  {{ status.label }}
+                  Diundang
                 </div>
-                <div class="text-body-1">{{ status.count }}</div>
+                <div class="text-body-1">
+                  {{ jobProviderData.count_invitation }}
+                </div>
+              </div>
+              <div class="text-center">
+                <div class="font-weight-bold" style="color: #ae445a">
+                  Diproses
+                </div>
+                <div class="text-body-1">
+                  {{ jobProviderData.count_onprocess }}
+                </div>
+              </div>
+              <div class="text-center">
+                <div class="font-weight-bold" style="color: #ae445a">
+                  Terpilih
+                </div>
+                <div class="text-body-1">
+                  {{ jobProviderData.count_selected }}
+                </div>
               </div>
             </div>
           </div>
@@ -80,80 +94,64 @@
     <div class="v-card v-sheet theme--light summary-section">
       <div class="title-talent-list" style="margin-bottom: 10px">
         <h1 class="title">Talent List</h1>
-        <v-btn color="primary" small>View All</v-btn>
+        <Button variant="primary" size="sm">View All</Button>
       </div>
-      <Talent :talents="talents" @selection-change="handleSelectionChange" />
-      <div style="display: flex; justify-content: center">
-        <v-btn
-          v-if="selectedTalents.length > 0"
-          @click="isJobDialogOpen = true"
-          color="primary"
-          small
-        >
-          Move to Available Jobs
-        </v-btn>
-      </div>
+      <Talent
+        :with-checkbox="false"
+        :talents="mappedTalents"
+        @selection-change="handleSelectionChange"
+      />
     </div>
 
     <br />
-    <JobDialog
-      :is-open="isJobDialogOpen"
-      :jobs="availableJobs"
-      title="Available Job Matches"
-      @update:is-open="updateJobDialog"
-    />
   </div>
 </template>
 
 <script>
 import Talent from "@/components/TalentList/Talent";
+import Button from "@/components/Button";
 import SummaryCard from "@/components/TalentList/SummaryCard";
 import SearchForm from "@/components/TalentList/SearchForm";
 import JobDialog from "@/components/TalentList/ModalListJob";
+import { mitraAPI } from "@/api/mitra";
+import { useContext } from "@nuxtjs/composition-api";
 
 export default {
   name: "DashboardPage",
 
   components: {
+    Button,
     Talent,
     SummaryCard,
     SearchForm,
     JobDialog,
   },
 
+  setup() {
+    const context = useContext();
+    const { getDashboardMitra } = mitraAPI();
+
+    return {
+      getDashboardMitra,
+    };
+  },
+
   data() {
     return {
       isJobDialogOpen: false,
       selectedTalents: [],
-      company: "PT. Gema Insani",
       jobTitle: "Business Team Staff",
       salaryRange: "Rp 6,000,000 - Rp 7,500,000",
       companyLogo: "",
-      statusList: [
-        { label: "Diundang", count: 0, color: "red--text" },
-        { label: "Diproses", count: 0, color: "orange--text" },
-        { label: "Terpilih", count: 0, color: "green--text" },
-      ],
       summary: {
-        registered_talent: 150,
-        hiring_process: 30,
-        hired_talent: 20,
-        pending_assesment: 10,
-        pending_pretest: 5,
+        registered_talent: 0,
+        hiring_process: 0,
+        hired_talent: 0,
+        pending_assesment: 0,
+        pending_pretest: 0,
       },
-      talents: [
-        {
-          id: 1,
-          name: "Roma",
-          education: "Diploma/Sarjana S1",
-          salary: 6000000,
-          experience: "0 - 2 tahun",
-          score: 90,
-          date: "24 January 2026",
-          time: "09:00",
-          image: "",
-        },
-      ],
+      jobProviderData: null,
+      talent_list: [],
       availableJobs: [
         {
           id: 1,
@@ -180,7 +178,33 @@ export default {
           salary: "Rp 6,000,000 - Rp 7,500,000",
         },
       ],
+      loading: false,
+      error: null,
     };
+  },
+
+  created() {
+    this.fetchDashboardData();
+  },
+
+  computed: {
+    mappedTalents() {
+      return this.talent_list.map((talent) => ({
+        id: talent.id,
+        name: talent.name,
+        education: talent.education || "Not specified",
+        salary: talent.salary_expectation || 0,
+        experience: talent.experience || "Not specified",
+        score: talent.score || 0,
+        date: talent.created_at
+          ? talent.created_at.split("||")[0].trim()
+          : "Not available",
+        time: talent.created_at
+          ? talent.created_at.split("||")[1].trim()
+          : "Not available",
+        image: talent.photo || "",
+      }));
+    },
   },
 
   methods: {
@@ -203,6 +227,44 @@ export default {
     moveToAvailableJobs() {
       console.log("Selected Talents:", this.selectedTalents);
       alert(`Moving ${this.selectedTalents.length} talents to available jobs.`);
+    },
+
+    async fetchDashboardData() {
+      this.loading = true;
+      this.error = null;
+
+      try {
+        const response = await this.getDashboardMitra();
+
+        if (response) {
+          // Update job provider data
+          this.jobProviderData = response.job_provider_list;
+
+          // Update talents list
+          this.talent_list = response.talent_list || [];
+
+          // Update summary based on available data
+          this.summary = {
+            registered_talent: this.talent_list.length || 0,
+            hiring_process: this.jobProviderData
+              ? this.jobProviderData.count_onprocess
+              : 0,
+            hired_talent: this.jobProviderData
+              ? this.jobProviderData.count_selected
+              : 0,
+            pending_assesment: 0, // Not in API, keep default
+            pending_pretest: 0, // Not in API, keep default
+          };
+        } else {
+          this.error = "Failed to fetch dashboard data";
+          console.error("API response error:", response);
+        }
+      } catch (error) {
+        this.error = "Error fetching dashboard data";
+        console.error("API request error:", error);
+      } finally {
+        this.loading = false;
+      }
     },
   },
 };

@@ -15,7 +15,11 @@
               @change="handleSelectionChange(job)"
             />
 
-            <img :src="job.image" :alt="job.title" class="job-image" />
+            <img
+              :src="job.image || '/default-company-logo.png'"
+              :alt="job.title"
+              class="job-image"
+            />
 
             <div class="job-details">
               <span class="title-data">Job Title</span>
@@ -31,9 +35,10 @@
       </div>
       <v-card-actions style="display: flex; justify-content: center">
         <Button
-          @click="closeDialog"
+          @click="proceedToNextStep"
           :variant="localSelectedJobs.length == 0 ? 'disabled' : 'primary'"
           :disabled="localSelectedJobs.length == 0"
+          :loading="loading"
           >Proceed to next step</Button
         >
       </v-card-actions>
@@ -45,7 +50,7 @@
 import { defineProps, defineEmits, ref } from "vue";
 import Button from "../Button.vue";
 
-defineProps({
+const props = defineProps({
   isOpen: {
     type: Boolean,
     required: true,
@@ -59,16 +64,26 @@ defineProps({
     type: String,
     default: "Available Jobs",
   },
+  selectedTalents: {
+    type: Array,
+    required: true,
+    default: () => [],
+  },
 });
 
 const localSelectedJobs = ref([]);
+const loading = ref(false);
 
 const isJobSelected = (job) => {
-  return localSelectedJobs.value.includes(job);
+  return localSelectedJobs.value.some(
+    (selectedJob) => selectedJob.id === job.id
+  );
 };
 
 const handleSelectionChange = (job) => {
-  const jobIndex = localSelectedJobs.value.indexOf(job);
+  const jobIndex = localSelectedJobs.value.findIndex(
+    (selectedJob) => selectedJob.id === job.id
+  );
   if (jobIndex > -1) {
     // Hapus jika sudah dipilih
     localSelectedJobs.value.splice(jobIndex, 1);
@@ -79,10 +94,24 @@ const handleSelectionChange = (job) => {
   console.log("Selected jobs:", localSelectedJobs.value);
 };
 
-const emit = defineEmits(["update:isOpen"]);
+const emit = defineEmits(["update:isOpen", "proceed"]);
 
 const closeDialog = () => {
+  localSelectedJobs.value = []; // Reset selected jobs
   emit("update:isOpen", false);
+};
+
+const proceedToNextStep = () => {
+  if (localSelectedJobs.value.length === 0) {
+    return;
+  }
+
+  // Emit event with selected jobs to parent component
+  emit("proceed", {
+    selectedJobs: localSelectedJobs.value,
+  });
+
+  closeDialog();
 };
 </script>
 

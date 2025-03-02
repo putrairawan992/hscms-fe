@@ -124,9 +124,12 @@ export const API = () => {
 
     getProviderPayslip,
     getMasterEmployee,
+
+    getTalentMitra,
   } = jobProviderAPI();
 
   const {
+    getListPretestAdmin,
     downloadTalentTemplate,
 
     uploadTalentTemplate,
@@ -138,6 +141,7 @@ export const API = () => {
     downloadTalentTemplate,
     uploadTalentTemplate,
     talentRegistration,
+    getListPretestAdmin,
 
     // authAPI
     getRegistration,
@@ -261,5 +265,7 @@ export const API = () => {
 
     getProviderPayslip,
     getMasterEmployee,
+
+    getTalentMitra,
   };
 };

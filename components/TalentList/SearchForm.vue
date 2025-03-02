@@ -4,45 +4,61 @@
       <!-- Pendidikan -->
       <div class="form-group">
         <label>Pendidikan</label>
-        <CustomDropdown
-          v-model="selectedEducation"
-          title="Pendidikan"
-          placeholder="Pilih Pendidikan"
-          :options="educationOptions"
-        />
+        <select v-model="education" class="custom-select">
+          <option value="" disabled selected>Pilih Pendidikan</option>
+          <option
+            v-for="option in educationOptions"
+            :key="option.id"
+            :value="option.id"
+          >
+            {{ option.education_name }}
+          </option>
+        </select>
       </div>
 
       <!-- Pengalaman -->
       <div class="form-group">
         <label>Pengalaman</label>
-        <CustomDropdown
-          v-model="selectedExperience"
-          title="Pengalaman"
-          placeholder="Pilih Pengalaman"
-          :options="experienceOptions"
-        />
+        <select v-model="experience" class="custom-select">
+          <option value="" disabled selected>Pilih Pengalaman</option>
+          <option
+            v-for="option in experienceOptions"
+            :key="option.id"
+            :value="option.id"
+          >
+            {{ option.experience_name }}
+          </option>
+        </select>
       </div>
 
       <!-- Tes Kompetensi -->
       <div class="form-group">
         <label>Tes Kompetensi</label>
-        <CustomDropdown
-          v-model="selectedCompetency"
-          title="Tes Kompetensi"
-          placeholder="Pilih Tes Kompetensi"
-          :options="competencyOptions"
-        />
+        <select v-model="competencyTest" class="custom-select">
+          <option value="" disabled selected>Pilih Tes Kompetensi</option>
+          <option
+            v-for="option in competenceOptions"
+            :key="option.id"
+            :value="option.id"
+          >
+            {{ option.experience_name }}
+          </option>
+        </select>
       </div>
 
       <!-- Spesialisasi -->
       <div class="form-group">
         <label>Spesialisasi</label>
-        <CustomDropdown
-          v-model="selectedSpecialization"
-          title="Spesialisasi"
-          placeholder="Pilih Spesialisasi"
-          :options="competencyOptions"
-        />
+        <select v-model="specialization" class="custom-select">
+          <option value="" disabled selected>Pilih Spesialisasi</option>
+          <option
+            v-for="option in jobSpecialistOptions"
+            :key="option.id"
+            :value="option.id"
+          >
+            {{ option.job_specialist_name }}
+          </option>
+        </select>
       </div>
 
       <!-- Cari Kandidat -->
@@ -65,46 +81,49 @@
 
 <script setup>
 import { ref } from "vue";
-import CustomDropdown from "../CustomDropdown.vue";
 
+// Define props to receive options from parent component
+const props = defineProps({
+  educationOptions: {
+    type: Array,
+    default: () => [],
+  },
+  experienceOptions: {
+    type: Array,
+    default: () => [],
+  },
+  competenceOptions: {
+    type: Array,
+    default: () => [],
+  },
+  jobSpecialistOptions: {
+    type: Array,
+    default: () => [],
+  },
+});
+
+// Form values
 const education = ref("");
 const experience = ref("");
 const competencyTest = ref("");
 const specialization = ref("");
 const searchQuery = ref("");
 
-const competencyOptions = [
-  { value: "TOEIC", label: "TOEIC" },
-  { value: "TOEFL", label: "TOEFL" },
-  { value: "IELTS", label: "IELTS" },
-  { value: "GMAT", label: "GMAT" },
-];
-const educationOptions = [
-  { value: "sma", label: "SMA/SMK" },
-  { value: "d3", label: "D3" },
-  { value: "s1", label: "S1" },
-  { value: "s2", label: "S2" },
-  { value: "s2", label: "S2" },
-  { value: "s2", label: "S2" },
-  { value: "s2", label: "S2" },
-  { value: "s2", label: "S2" },
-  { value: "s2", label: "S2" },
-  { value: "s2", label: "S2" },
-  { value: "s2", label: "S2" },
-  { value: "s2", label: "S2" },
-  { value: "s2", label: "S2" },
-  { value: "s2", label: "S2" },
-  { value: "s2", label: "S2" },
-];
-const experienceOptions = [
-  { value: "fresh", label: "Fresh Graduate" },
-  { value: "1-3", label: "1-3 Tahun" },
-  { value: "3-5", label: "3-5 Tahun" },
-  { value: "5+", label: "5+ Tahun" },
-];
+// Define emits
+const emit = defineEmits(["search"]);
 
+// Search function
 const searchCandidates = () => {
-  console.log({
+  // Emit search parameters to parent component
+  emit("search", {
+    education_id: education.value,
+    experience_id: experience.value,
+    competence_test_id: competencyTest.value,
+    job_specialist_id: specialization.value,
+    key_search: searchQuery.value,
+  });
+
+  console.log("Search params:", {
     education: education.value,
     experience: experience.value,
     competencyTest: competencyTest.value,
@@ -115,10 +134,6 @@ const searchCandidates = () => {
 </script>
 
 <style scoped>
-.container {
-  margin-top: 20px;
-}
-
 .search-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -196,8 +211,8 @@ input {
   font-size: 16px;
 }
 
-/* Reset default select arrow in some browsers */
-select {
+/* Custom styling for select elements */
+.custom-select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;

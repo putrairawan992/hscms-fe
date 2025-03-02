@@ -6,13 +6,12 @@ export const jobSeekerAPI = () => {
   const route = useRoute();
   const activePage = route.value.name;
   const getEndpoint = (path) => {
-    const prefix =
-      activePage === "pretest-admin"
-        ? "jobseeker/pretest_admin/"
-        : "jobseeker/";
+    const prefix = activePage.include("pretest-admin")
+      ? "jobseeker/pretest_admin/"
+      : "jobseeker/";
     return `${prefix}${path}`;
   };
-
+  console.log(route.value);
   // Map of endpoint paths based on active page
   const pretestEndpoints = {
     preview: {

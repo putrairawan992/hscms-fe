@@ -51,35 +51,11 @@ export const mitraAPI = () => {
   // Template Download
   const downloadTalentTemplate = async () => {
     try {
-      const response = await getRequest(
+      return await getRequest(
         "mitra/talent/registration/template_download",
-        {
-          responseType: "arraybuffer",
-          headers: {
-            Accept:
-              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          },
-        }
+        false,
+        "blob"
       );
-
-      const blob = new Blob([response.data], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      });
-
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "talent_registration_template.xlsx");
-
-      document.body.appendChild(link);
-      link.click();
-
-      setTimeout(() => {
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(link);
-      }, 100);
-
-      return true;
     } catch (error) {
       console.error("Download template error:", {
         error,
@@ -122,13 +98,24 @@ export const mitraAPI = () => {
     }
   };
 
+  // pretest
+
+  const getListPretestAdmin = async () => {
+    return await getRequest("jobseeker/pretest_admin");
+  };
+
+  const getDashboardMitra = async () => {
+    return await getRequest("mitra/dashboard?limit=10&paginate=1");
+  };
   return {
     downloadTalentTemplate,
+    getDashboardMitra,
     getFileAttachment,
     getJobs,
     getTalents,
     postApplyJob,
     uploadTalentTemplate,
     talentRegistration,
+    getListPretestAdmin,
   };
 };

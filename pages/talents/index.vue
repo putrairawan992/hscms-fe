@@ -85,7 +85,6 @@ const fetchTalents = async () => {
       page: currentPage.value,
     });
 
-    console.log();
     // Transform API data to match component structure
     talents.value = response.map((talent) => ({
       id: talent.job_seeker_id,

@@ -22,17 +22,12 @@
           </div>
           <div class="menu-child" />
           <div
-            :class="pageActive == 'talent' ? 'dashboard1' : 'help-center'"
+            :class="pageActive == 'talent-list' ? 'dashboard1' : 'help-center'"
             @click="$router.push('/talent-list')"
           >
             Talent List
           </div>
-          <div
-            :class="pageActive == 'talents' ? 'dashboard1' : 'help-center'"
-            @click="$router.push('/talents')"
-          >
-            Talents
-          </div>
+
           <v-menu
             transition="scale-transition"
             content-class="elevation-0"
