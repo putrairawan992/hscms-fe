@@ -28,19 +28,15 @@
                 style="overflow-x: auto"
               >
                 <div
-                  v-for="(pretest, key) in pretests"
                   :style="
                     key + 1 !== pretests.length
                       ? 'margin-bottom: 40px;'
                       : 'margin-bottom: 0px;'
                   "
                 >
-                  <div class="pretest-title text-left mb-2">
-                    {{ pretest.job_title }}
-                  </div>
                   <v-row align="center" class="ma-0 mb-4 pa-2 list-pretest">
                     <v-col
-                      v-for="(value, key) in pretest.detail"
+                      v-for="(value, key) in pretests"
                       cols="12"
                       class="pt-0 mt-4 mb-6"
                     >
@@ -59,21 +55,14 @@
                             </div>
                           </div>
                         </div>
-                        <div class="frame-div text-left">
-                          <div class="jun-2023-wrapper">
-                            <div class="text-list-todo">
-                              Deadline:
-                              {{ useConvertToDateTimeView(value.deadline) }}
-                            </div>
-                          </div>
-                        </div>
+
                         <div class="frame-div">
                           <div
-                            v-if="value.in_review == undefined"
+                            v-if="value.in_review == null"
                             :class="
                               value.modul != null ? 'orange-btn' : 'grey-btn'
                             "
-                            @click="startTest(value, pretest.job_post_id)"
+                            @click="startTest(value, value.modul.id)"
                           >
                             <div class="">
                               <b class="button mx-3">Start Test</b>
@@ -153,16 +142,17 @@ export default {
     ]),
 
     startTest(data, job_post_id) {
+      console.log({ data, job_post_id });
       if (!data.modul) {
         return this.$notifier.showMessage({
           content: "Module tidak tersedia",
           status: "warning",
         });
       }
-      this.setJobID(job_post_id);
+      this.setJobID(data.id);
       this.setCategoryID(data.id);
       this.setModuleID(data.modul.id);
-      return this.$router.push("/pretest/preview");
+      return this.$router.push("/pretest-admin/preview");
     },
 
     useConvertToDateTimeView(value) {

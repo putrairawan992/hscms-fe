@@ -37,7 +37,7 @@
                     <div class="publish-btn ma-auto" style="width: 101px">
                       <div
                         class="attach-mpr-parent"
-                        @click="$router.push('/pretest')"
+                        @click="$router.push('/pretest-admin')"
                       >
                         <b class="button">Close</b>
                       </div>
@@ -84,7 +84,7 @@
                     <div class="publish-btn ma-auto" style="width: 101px">
                       <div
                         class="attach-mpr-parent"
-                        @click="$router.push('/pretest')"
+                        @click="$router.push('/pretest-admin')"
                       >
                         <b class="button">Close</b>
                       </div>

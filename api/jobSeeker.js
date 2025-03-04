@@ -4,14 +4,14 @@ import { jobProviderValidator } from "@/api/validator/jobProvider";
 
 export const jobSeekerAPI = () => {
   const route = useRoute();
-  const activePage = route.value.name;
+  const activePage = route.value.path.split("/")[1];
+  const isPretestAdmin = activePage === "pretest-admin";
+
   const getEndpoint = (path) => {
-    const prefix = activePage.include("pretest-admin")
-      ? "jobseeker/pretest_admin/"
-      : "jobseeker/";
+    const prefix = isPretestAdmin ? "jobseeker/pretest_admin/" : "jobseeker/";
     return `${prefix}${path}`;
   };
-  console.log(route.value);
+
   // Map of endpoint paths based on active page
   const pretestEndpoints = {
     preview: {
@@ -58,21 +58,28 @@ export const jobSeekerAPI = () => {
 
   const getListPretest = async () => {
     return await getRequest(
-      activePage === "pretest-admin"
-        ? "jobseeker/pretest_admin"
-        : "jobseeker/getpretest"
+      isPretestAdmin ? "jobseeker/pretest_admin" : "jobseeker/getpretest"
     );
   };
 
-  // API functions with cleaner URLs
+  // Modified API functions that handle pretest-admin case without job_id
   const getPreview = async (job_id, module_id) => {
-    const path = getPath("preview") + job_id + "/" + module_id;
+    let path;
+    if (isPretestAdmin) {
+      path = getPath("preview") + module_id;
+    } else {
+      path = getPath("preview") + job_id + "/" + module_id;
+    }
     return await getRequest(getEndpoint(path));
   };
 
   const getQuestionAPI = async (job_id, module_id, page_number) => {
-    const path =
-      getPath("question") + page_number + "/" + job_id + "/" + module_id;
+    let path;
+    if (isPretestAdmin) {
+      path = getPath("question") + page_number + "/" + module_id;
+    } else {
+      path = getPath("question") + page_number + "/" + job_id + "/" + module_id;
+    }
     return await getRequest(getEndpoint(path));
   };
 
@@ -82,7 +89,12 @@ export const jobSeekerAPI = () => {
   };
 
   const postEndTest = async (job_id, module_id) => {
-    const path = getPath("finish") + job_id + "/" + module_id;
+    let path;
+    if (isPretestAdmin) {
+      path = getPath("finish") + module_id;
+    } else {
+      path = getPath("finish") + job_id + "/" + module_id;
+    }
     return await postRequest(getEndpoint(path));
   };
 
