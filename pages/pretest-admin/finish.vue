@@ -117,7 +117,7 @@ export default {
   },
   mounted() {
     if (this.finish == null) {
-      this.$router.push("/pretest");
+      this.$router.push("/pretest-admin");
     }
   },
 };
