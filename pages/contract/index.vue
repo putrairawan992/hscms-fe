@@ -371,33 +371,31 @@
         </div>
       </div>
     </v-card>
-    <v-dialog v-model="showDownloadModal" max-width="500px" persistent>
+    <v-dialog
+      v-model="showDownloadModal"
+      max-width="622px"
+      max-height="521px"
+      @click:outside="showDownloadModal = false"
+    >
       <v-card class="pa-5">
-        <div style="position: absolute; top: 10px; right: 10px; z-index: 10">
-          <v-btn
-            icon
-            @click="showDownloadModal = false"
-            class="elevation-2"
-            style="background-color: rgba(255, 255, 255, 0.9)"
-          >
-            <v-icon color="red">mdi-close</v-icon>
-          </v-btn>
-        </div>
+        <div
+          style="position: absolute; top: 10px; right: 10px; z-index: 10"
+        ></div>
         <v-card-title class="d-flex justify-center align-center flex-column">
-          <v-icon color="red" size="64">mdi-alert-circle</v-icon>
+          <v-icon color="#AE445A" size="64">mdi-alert-circle</v-icon>
         </v-card-title>
 
         <v-card-text class="text-left">
-          <p>
+          <p class="agreemnt-text">
             Saya menyatakan bahwa dokumen yang akan saya isi di halaman ini
             sudah benar dan sesuai.
           </p>
-          <p>
+          <p class="agreemnt-text">
             Saya memahami, menyetujui, dan bersedia jika sewaktu-waktu
             diperlukan untuk dikonfirmasi terkait kesepakatan kerja yang telah
             disepakati di kemudian hari.
           </p>
-          <p>
+          <p class="agreemnt-text">
             Terima kasih kepada pihak HC/HR perusahaan atas dukungan dan
             bantuannya.
           </p>
@@ -407,9 +405,12 @@
               style="width: 100%; background-color: #8b0000; height: 3px"
             ></v-divider>
           </v-card-title>
-          <p class="mt-3 text-caption">
-            <strong>"Nama kandidat"</strong> telah menyetujui pernyataan di atas
-            pada tanggal 18 Agustus 2024 pukul 18:37
+          <p
+            class="mt-3 agreemnt-text"
+            style="padding-left: 20px; padding-right: 20px"
+          >
+            "Nama kandidat" telah menyetujui pernyataan di atas pada tanggal 18
+            Agustus 2024 pukul 18:37
           </p>
         </v-card-text>
 
@@ -448,7 +449,7 @@ export default {
     showAlertApproval: false,
     idBatchRemuneration: null,
     idTracking: null,
-    showDownloadModal: false, // NEW: Control the modal visibility
+    showDownloadModal: false,
   }),
   watch: {},
   computed: {},
@@ -468,7 +469,6 @@ export default {
       });
     },
 
-    // Open Modal Before Download
     openDownloadModal() {
       if (this.idContracts.length === 0) {
         return this.$notifier.showMessage({
@@ -476,12 +476,11 @@ export default {
           status: "warning",
         });
       }
-      this.showDownloadModal = true; // Open modal
+      this.showDownloadModal = true;
     },
 
-    // Confirm and Download
     async confirmDownload() {
-      this.showDownloadModal = false; // Close modal
+      this.showDownloadModal = false;
 
       try {
         const result = await this.downloadFileContract({
@@ -976,5 +975,9 @@ export default {
 
 .blokade-parent {
   font-size: 12px;
+}
+.agreemnt-text {
+  font-family: Poppins;
+  font-size: 14px;
 }
 </style>
