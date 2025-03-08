@@ -279,11 +279,17 @@ export default {
     },
     methods: {
         async getData(employee_name) {
-            await this.getRemuneration(this.id_remuneration, employee_name).then((result)=>{
+            await this.getRemuneration(this.id_remuneration, employee_name).then(async(result)=>{
                 this.data = result;
                 for (let index = 0; index < result?.employee_list.length; index++) {
                     const element = result.employee_list[index];
-                    result.employee_list[index]['request_type'] = element.request_type ? element.request_type : 'Salary'                    
+                    result.employee_list[index]['request_type'] = element.request_type ? element.request_type : 'Salary' 
+                    
+                    if (element.request_type==null){
+                        await this.putRemunerationRequestType({
+                            request_type: 'Salary'
+                        }, element.id);
+                    }
                 }                
                 this.btnSubmit = result?.employee_list?.length > 0 ? true : false;
             });
