@@ -78,7 +78,7 @@ export default {
     },
     methods: {
         async getData(){
-            await this.getRemunerationByStatus('reject').then((result)=>{
+            await this.getRemunerationByStatus('rejected').then((result)=>{
                 this.data = result;
             })
         },
