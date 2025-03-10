@@ -156,6 +156,8 @@
                         :data="value"
                         class="rich-editor"
                         placeholder="Silahkan jawab pertanyaan dengan jawaban yang sesuai"
+                        :isPretestAdmin="true"
+                        :pretestModuleDetailId="question?.id"
                       />
                     </div>
                   </div>
@@ -306,8 +308,10 @@ export default {
     },
     async submitAnswer(data, answer, file_answer) {
       const body = new FormData();
-      body.append("job_post_id", data.job_post_id);
-      body.append("pretest_question_id", data.pretest_question_id);
+
+      body.append("pretest_question_id", data.id);
+      body.append("pretest_modul_detail_id", this.question?.id);
+
       if (answer) {
         body.append("answer", answer);
       }
@@ -315,21 +319,25 @@ export default {
         body.append("file_answer", file_answer);
       }
 
-      await this.postAnswerAPI(body, data.pretest_modul_detail_id).then(
-        (result) => {
+      await this.postAnswerAPI(data)
+        .then((result) => {
           this.getQuestions();
-        }
-      );
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     async endTest() {
-      await this.postEndTest(this.job_id, this.module_id).then(
-        async (result) => {
-          if (result) {
-            await this.endPretest(result.data);
-            return this.$router.push("/pretest-admin/finish");
-          }
+      const payload = {
+        pretest_modul_detail_id: this.question?.id,
+        pretest_question_id: this.question?.question.map((item) => item.id),
+      };
+      await this.postEndTest(payload).then(async (result) => {
+        if (result) {
+          await this.endPretest(result.data);
+          return this.$router.push("/pretest-admin/finish");
         }
-      );
+      });
     },
     timeOut() {},
     closeAlert() {
