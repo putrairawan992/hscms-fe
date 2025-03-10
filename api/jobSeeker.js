@@ -76,7 +76,9 @@ export const jobSeekerAPI = () => {
   const getQuestionAPI = async (job_id, module_id, page_number) => {
     let path;
     if (isPretestAdmin) {
-      path = getPath("question") + page_number + "/" + module_id;
+      path =
+        getPath("question") +
+        `?paginate=${page_number}&pretest_modul_detail_id=${module_id}`;
     } else {
       path = getPath("question") + page_number + "/" + job_id + "/" + module_id;
     }
@@ -84,18 +86,20 @@ export const jobSeekerAPI = () => {
   };
 
   const postAnswerAPI = async (body, module_id) => {
-    const path = getPath("answer") + module_id;
+    const path = isPretestAdmin
+      ? getPath("answer")
+      : getPath("answer") + module_id;
     return await postRequest(getEndpoint(path), body);
   };
 
-  const postEndTest = async (job_id, module_id) => {
+  const postEndTest = async (props) => {
     let path;
     if (isPretestAdmin) {
-      path = getPath("finish") + module_id;
+      path = getPath("finish");
     } else {
-      path = getPath("finish") + job_id + "/" + module_id;
+      path = getPath("finish") + props.job_id + "/" + props.module_id;
     }
-    return await postRequest(getEndpoint(path));
+    return await postRequest(getEndpoint(path), isPretestAdmin && props);
   };
 
   // Schedule
