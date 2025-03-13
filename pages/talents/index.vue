@@ -11,10 +11,16 @@
             <Button
               variant="primary"
               size="sm"
-              class="d-flex align-items-center p-1"
+              class="d-flex align-items-center"
               @click="shareLink"
+              style="color: white !important"
             >
-              <share-2-icon size="1.2x" class="custom-class"></share-2-icon>
+              <img
+                class="bishare-fill-icon"
+                alt=""
+                src="@/assets/svg/bisharefill.svg"
+                @click="shareLink"
+              />
             </Button>
             <i v-if="copied" class="success-message">Link berhasil disalin!</i>
           </div>
@@ -58,10 +64,14 @@ import UploadModal from "../../components/Talent/UploadModal.vue";
 import SearchForm from "../../components/TalentList/SearchForm.vue";
 import Talent from "../../components/TalentList/Talent.vue";
 import { mitraAPI } from "@/api/mitra";
+import { useContext } from "@nuxtjs/composition-api";
+const { req } = useContext();
+const baseUrl = process.server
+  ? `${req.protocol}://${req.headers.host}`
+  : window.location.origin;
 
 const talents = ref([]);
 const selectedTalents = ref([]);
-const baseUrl = process.env.BASE_URL;
 const showModal = ref(false);
 const copied = ref(false);
 const currentPage = ref(1);
@@ -125,11 +135,10 @@ const changePage = (newPage) => {
 
 // Share link functionality
 const shareLink = async () => {
-  const fullLink = `${baseUrl}/register/talents/${param.mitra}`;
+  const fullLink = `${baseUrl}/talents/create-talent`;
   try {
     await navigator.clipboard.writeText(fullLink);
     copied.value = true;
-
     setTimeout(() => {
       copied.value = false;
     }, 2000);
@@ -155,7 +164,11 @@ onMounted(() => {
   flex-direction: column;
   gap: 20px;
 }
-
+.bishare-fill-icon {
+  position: relative;
+  width: 12px;
+  height: 12px;
+}
 .header {
   display: flex;
   justify-content: space-between;

@@ -50,21 +50,11 @@ export const mitraAPI = () => {
 
   // Template Download
   const downloadTalentTemplate = async () => {
-    try {
-      return await getRequest(
-        "mitra/talent/registration/template_download",
-        false,
-        "blob"
-      );
-    } catch (error) {
-      console.error("Download template error:", {
-        error,
-        message: error.message,
-        response: error.response,
-        data: error.response?.data,
-      });
-      throw error;
-    }
+    return await getRequest(
+      "mitra/talent/registration/template_download",
+      true,
+      "blob"
+    );
   };
 
   const uploadTalentTemplate = async (file) => {
