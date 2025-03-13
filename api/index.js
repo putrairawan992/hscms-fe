@@ -4,7 +4,12 @@ import { jobProviderAPI } from "@/api/jobProvider";
 import { mitraAPI } from "./mitra";
 
 export const API = () => {
-  const { getRegistration, postRegistration, getRegistrationData } = authAPI();
+  const {
+    getRegistration,
+    postRegistration,
+    getRegistrationData,
+    authTalentRegistration,
+  } = authAPI();
 
   const {
     getJobs,
@@ -147,6 +152,7 @@ export const API = () => {
     getRegistration,
     postRegistration,
     getRegistrationData,
+    authTalentRegistration,
 
     // jobSeekerAPI
     getProfile,
