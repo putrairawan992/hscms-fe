@@ -65,7 +65,7 @@ import SearchForm from "../../components/TalentList/SearchForm.vue";
 import Talent from "../../components/TalentList/Talent.vue";
 import { mitraAPI } from "@/api/mitra";
 import { useContext } from "@nuxtjs/composition-api";
-const { req } = useContext();
+const { req, $auth } = useContext();
 const baseUrl = process.server
   ? `${req.protocol}://${req.headers.host}`
   : window.location.origin;
@@ -135,7 +135,9 @@ const changePage = (newPage) => {
 
 // Share link functionality
 const shareLink = async () => {
-  const fullLink = `${baseUrl}/talents/create-talent`;
+  const mitraId = $auth.user.user_id;
+  console.log(mitraId);
+  const fullLink = `${baseUrl}/talents/create-talent/${mitraId}`;
   try {
     await navigator.clipboard.writeText(fullLink);
     copied.value = true;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding: 0 40px">
     <v-card class="card-register">
       <div class="my-2" style="position: relative">
         <div class="blokade-parent ma-8 pt-10">
@@ -957,7 +957,12 @@ import Multiselect from "vue-multiselect";
 export default {
   name: "BiodataForm",
   components: { Multiselect },
-
+  auth(context) {
+    return !context.route.params.id;
+  },
+  layout(context) {
+    return context.route.params.id ? "empty" : "default";
+  },
   data: () => ({
     preview: false,
     fileDialog: false,
@@ -1060,8 +1065,8 @@ export default {
     },
   },
   async mounted() {
+    if (!this.$route.params.id) this.$router.push("/");
     await this.getRegistrationData().then((result) => {
-      console.log(result);
       this.listWorkPositions = result?.master_job_specialist
         ? result.master_job_specialist
         : [];
@@ -1192,6 +1197,7 @@ export default {
         const formData = new FormData();
 
         // Basic Information
+        formData.append("mitra_id", this.$route.params.id);
         formData.append("fullname", this.fullname);
         formData.append("place_birth", this.place_birth);
         formData.append("date_birth", this.date_birth);
