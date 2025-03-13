@@ -117,7 +117,8 @@ import { mitraAPI } from "@/api/mitra";
 import { useContext } from "@nuxtjs/composition-api";
 
 export default {
-  name: "DashboardPage",
+  name: "DashboardMitra",
+  middleware: "mitra",
 
   components: {
     Button,

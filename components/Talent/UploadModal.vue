@@ -68,11 +68,23 @@ export default {
       this.$router.push("/talents/create-talent");
     },
     async handleTemplateDownload() {
-      try {
-        await this.downloadTalentTemplate();
-      } catch (error) {
-        console.error("Error downloading template:", error);
-      }
+      await this.downloadTalentTemplate().then((result) => {
+        const filename =
+          "talent_template" + this.$moment().format("YYYYMMDD") + ".xlsx";
+        let mimeType = "application/vnd.ms-excel";
+        const blob = new Blob([result], { type: mimeType });
+
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = filename;
+
+        link.dataset.downloadurl = [mimeType, link.download, link.href].join(
+          ":"
+        );
+        link.draggable = true;
+        link.classList.add("dragout");
+        link.click();
+      });
     },
     triggerFileInput() {
       this.$refs.fileInput.click();
