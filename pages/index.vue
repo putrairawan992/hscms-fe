@@ -177,7 +177,7 @@
       <v-card class="card-dashboard" max-width="450">
         <div class="my-2" style="position: relative">
           <div
-            class="pa-6 pb-4"
+            class="pa-6 pb-2"
             style="display: flex; flex-direction: column; text-align: left"
           >
             <div class="data-diri">Jadwal</div>
@@ -474,21 +474,21 @@ export default {
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
-  margin-top: 8px;
-  gap: 5px;
+  margin-top: 2px;
+  gap: 14.5px;
 }
 .week-dashboard {
-  width: 50px;
+  width: 40px;
   position: relative;
-  height: 50px;
+  height: 40px;
 }
 .week-blur-dashboard {
   opacity: 0.7;
 }
 .week-red-dashboard {
-  width: 50px;
+  width: 40px;
   position: relative;
-  height: 50px;
+  height: 40px;
   color: #ae445a;
 }
 .week-border-normal-dashboard {
@@ -496,8 +496,8 @@ export default {
   top: 0px;
   left: 0px;
   border-radius: 10px;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 }
 .week-border-blue-dashboard {
   position: absolute;
@@ -506,8 +506,8 @@ export default {
   border-radius: 10px;
   border: 3px solid #3b78c2;
   box-sizing: border-box;
-  width: 50px;
-  height: 50px;
+  width: 42px;
+  height: 42px;
 }
 .week-border-green-dashboard {
   position: absolute;
@@ -516,8 +516,8 @@ export default {
   border-radius: 10px;
   border: 1.5px solid #3ab471;
   box-sizing: border-box;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 }
 .date-square-normal-dashboard {
   position: absolute;
