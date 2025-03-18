@@ -5,6 +5,7 @@ import { jobProviderValidator } from "@/api/validator/jobProvider";
 export const jobSeekerAPI = () => {
   const route = useRoute();
   const activePage = route.value.path.split("/")[1];
+  const { $auth } = useContext();
   const isPretestAdmin = activePage === "pretest-admin";
 
   const getEndpoint = (path) => {
@@ -189,6 +190,15 @@ export const jobSeekerAPI = () => {
     return await getRequest("jobseeker/payslip" + param);
   };
 
+  // get candidate
+  const getCandidate = async () => {
+    return await getRequest(
+      $auth.user.role_user == "jobprovider"
+        ? "jobprovider/profile"
+        : "jobseeker/profile"
+    );
+  };
+
   return {
     getJobs,
     postApplyJob,
@@ -214,5 +224,8 @@ export const jobSeekerAPI = () => {
     postUploadContract,
 
     getPayslip,
+
+    // Pastikan fungsi getCandidate diekspor di sini
+    getCandidate,
   };
 };

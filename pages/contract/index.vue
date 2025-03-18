@@ -273,7 +273,7 @@
                                                     <div class="jun-2023-wrapper" style="width: 130px;">
                                                         <b class="text-sent">Sent:</b>
                                                     </div>
-                                                        <v-checkbox 
+                                                        <v-checkbox
                                                             hide-details
                                                             class="input-checkbox mt-0 pt-0" color="#ae445a"
                                                         >
@@ -281,7 +281,7 @@
                                                                 <div class="text-list-todo">PKWT Santika Aldenia.Pdf </div>
                                                             </template>
                                                         </v-checkbox>
-                                                        
+
                                                 </div>
                                                 <div class="frame-div">
                                                     <div class="jun-2023-wrapper text-right" >
@@ -294,7 +294,7 @@
                                                     <div class="jun-2023-wrapper" style="width: 130px;">
                                                         <b class="text-sent">Employee Signed:</b>
                                                     </div>
-                                                        <v-checkbox 
+                                                        <v-checkbox
                                                             hide-details
                                                             class="input-checkbox mt-0 pt-0" color="#ae445a"
                                                         >
@@ -302,7 +302,7 @@
                                                                 <div class="text-list-todo">PKWT Santika Aldenia sign.Pdf</div>
                                                             </template>
                                                         </v-checkbox>
-                                                        
+
                                                 </div>
                                                 <div class="frame-div">
                                                     <div class="jun-2023-wrapper text-right" >
@@ -315,7 +315,7 @@
                                                     <div class="jun-2023-wrapper" style="width: 130px;">
                                                         <b class="text-sent">Full Signed:</b>
                                                     </div>
-                                                        <v-checkbox 
+                                                        <v-checkbox
                                                             hide-details
                                                             class="input-checkbox mt-0 pt-0" color="#ae445a"
                                                         >
@@ -323,7 +323,7 @@
                                                                 <div class="text-list-todo">PKWT Santika Aldenia full sign.Pdf </div>
                                                             </template>
                                                         </v-checkbox>
-                                                        
+
                                                 </div>
                                                 <div class="frame-div">
                                                     <div class="jun-2023-wrapper text-right" >
@@ -336,7 +336,7 @@
                                                     <div class="jun-2023-wrapper" style="width: 130px;">
                                                         <b class="text-sent">Resign:</b>
                                                     </div>
-                                                    
+
                                                     <div @click="showAlertApproval = true" class="text-list-todo" style="text-decoration: underline;">Request Resign</div>
                                                 </div>
                                                 <div class="frame-div">
@@ -405,20 +405,23 @@
               style="width: 100%; background-color: #8b0000; height: 3px"
             ></v-divider>
           </v-card-title>
-          <p
-            class="mt-3 agreemnt-text"
-            style="padding-left: 20px; padding-right: 20px"
-          >
-            "Nama kandidat" telah menyetujui pernyataan di atas pada tanggal 18
+          <p class="mt-3 agreemnt-text" style="padding-left: 20px; padding-right: 20px">
+            "{{ candidateData ? candidateData.name : 'Nama kandidat' }}" telah menyetujui pernyataan di atas pada tanggal 18
             Agustus 2024 pukul 18:37
           </p>
+
         </v-card-text>
 
         <!-- Tombol -->
-        <v-card-actions class="justify-center">
+        <v-card-actions class="justify-center gap-4">
           <div class="orange-btn" style="">
             <div @click="confirmDownload">
               <b class="button mx-4">Lanjut</b>
+            </div>
+          </div>
+          <div class="orange-btn" style="">
+            <div @click="declineDownload">
+              <b class="button mx-4">Tidak Lanjut</b>
             </div>
           </div>
         </v-card-actions>
@@ -433,7 +436,6 @@
     />
   </div>
 </template>
-
 <script>
 import { API } from "@/api/index";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
@@ -443,22 +445,24 @@ export default {
   middleware: "jobSeeker",
   components: {},
   data: () => ({
-    checkbox: [],
-    idContracts: [],
-    dataContracts: [],
-    showAlertApproval: false,
-    idBatchRemuneration: null,
-    idTracking: null,
-    showDownloadModal: false,
-  }),
+  checkbox: [],
+  idContracts: [],
+  dataContracts: [],
+  showAlertApproval: false,
+  idBatchRemuneration: null,
+  idTracking: null,
+  showDownloadModal: false,
+  candidateData: null,  // Tambahkan ini
+}),
   watch: {},
   computed: {},
   setup() {
-    const { getContract, downloadFileContract, postUploadContract } = API();
-    return { getContract, downloadFileContract, postUploadContract };
+    const { getContract, downloadFileContract, postUploadContract, getCandidate } = API();
+    return { getContract, downloadFileContract, postUploadContract, getCandidate };
   },
   async mounted() {
     await this.getData();
+    await this.getDataCandidate()
   },
   methods: {
     async getData() {
@@ -468,7 +472,13 @@ export default {
         }
       });
     },
-
+    async getDataCandidate() {
+      await this.getCandidate().then((result) => {
+        if (result) {
+          this.candidateData = result; // Simpan data kandidat ke state
+        }
+      });
+    },
     openDownloadModal() {
       if (this.idContracts.length === 0) {
         return this.$notifier.showMessage({
@@ -507,6 +517,10 @@ export default {
           status: "warning",
         });
       }
+    },
+
+    async declineDownload() {
+      this.showDownloadModal = false;
     },
 
     selectFile(batch_remuneration_id, tracking_id) {

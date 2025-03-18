@@ -36,6 +36,9 @@ export const API = () => {
     postUploadContract,
 
     getPayslip,
+
+    // Pastikan getCandidate diimpor dari jobSeekerAPI
+    getCandidate,
   } = jobSeekerAPI();
 
   const {
@@ -183,6 +186,9 @@ export const API = () => {
     postUploadContract,
 
     getPayslip,
+
+    // Pastikan getCandidate diekspor di sini
+    getCandidate,
 
     // jobProviderAPI
     getDashboard,
